@@ -56,6 +56,12 @@ const DailyCard = () => {
             onReveal={revealDaily}
             label="Today's Card"
           />
+          {loading && (
+            <div className="flex items-center gap-2 mt-2">
+              <div className="w-5 h-5 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
+              <span className="text-xs text-muted-foreground">Reading the stars...</span>
+            </div>
+          )}
           {reading && (
             <motion.div
               initial={{ opacity: 0, y: 10 }}
