@@ -8,6 +8,7 @@ import { generateAIReading } from "@/lib/tarotReading";
 const DailyCard = () => {
   const [dailyCard, setDailyCard] = useState<DrawnCard | null>(null);
   const [reading, setReading] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const drawDaily = () => {
     const cards = drawCards(1);
@@ -16,11 +17,14 @@ const DailyCard = () => {
     setReading("");
   };
 
-  const revealDaily = () => {
+  const revealDaily = async () => {
     if (!dailyCard) return;
     const revealed = { ...dailyCard, isRevealed: true };
     setDailyCard(revealed);
-    setReading(generateLocalReading("What does today hold for me?", [revealed]));
+    setLoading(true);
+    const text = await generateAIReading("What does today hold for me?", [revealed]);
+    setReading(text);
+    setLoading(false);
   };
 
   return (
