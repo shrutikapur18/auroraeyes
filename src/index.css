@@ -44,6 +44,8 @@
     --cosmic-blue: 230 60% 15%;
     --cosmic-blue-light: 230 50% 30%;
     --starlight: 220 30% 85%;
+    --angel-blue: 210 60% 70%;
+    --angel-glow: 45 60% 80%;
 
     --sidebar-background: 250 30% 8%;
     --sidebar-foreground: 45 30% 90%;
@@ -76,6 +78,9 @@
   .gold-glow-hover:hover {
     box-shadow: 0 0 30px hsl(var(--gold) / 0.5), 0 0 60px hsl(var(--gold) / 0.2);
   }
+  .gold-glow-strong {
+    box-shadow: 0 0 25px hsl(var(--gold) / 0.4), 0 0 50px hsl(var(--gold) / 0.15), 0 0 80px hsl(var(--gold) / 0.05);
+  }
   .mystic-gradient {
     background: linear-gradient(135deg, hsl(var(--cosmic-blue)) 0%, hsl(var(--mystic-purple-deep)) 50%, hsl(var(--background)) 100%);
   }
@@ -89,9 +94,86 @@
     background: linear-gradient(135deg, hsl(var(--mystic-purple-deep)) 0%, hsl(var(--cosmic-blue)) 50%, hsl(var(--mystic-purple-deep)) 100%);
     border: 1px solid hsl(var(--gold) / 0.3);
   }
+
+  /* Glassmorphism reading panel */
   .reading-panel {
-    background: linear-gradient(180deg, hsl(var(--card)) 0%, hsl(var(--mystic-purple-deep) / 0.8) 100%);
-    border: 1px solid hsl(var(--gold) / 0.2);
+    background: linear-gradient(180deg, hsl(var(--card) / 0.85) 0%, hsl(var(--mystic-purple-deep) / 0.7) 100%);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid hsl(var(--gold) / 0.25);
+    box-shadow: 
+      0 0 30px hsl(var(--gold) / 0.08),
+      0 8px 32px hsl(0 0% 0% / 0.4),
+      inset 0 1px 0 hsl(var(--gold) / 0.1);
+  }
+
+  /* Mystical reading table surface */
+  .reading-table {
+    position: relative;
+    background: radial-gradient(ellipse at center, hsl(var(--mystic-purple-deep) / 0.6) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .reading-table::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    background: radial-gradient(ellipse at center top, hsl(var(--gold) / 0.12) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  /* Soft overhead light effect */
+  .table-light {
+    position: relative;
+  }
+  .table-light::after {
+    content: '';
+    position: absolute;
+    top: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    height: 120px;
+    background: radial-gradient(ellipse, hsl(var(--gold) / 0.08) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Card depth shadows */
+  .card-shadow {
+    box-shadow: 
+      0 4px 8px hsl(0 0% 0% / 0.3),
+      0 8px 24px hsl(0 0% 0% / 0.2),
+      0 2px 4px hsl(0 0% 0% / 0.4);
+  }
+  .card-shadow-hover:hover {
+    box-shadow: 
+      0 8px 16px hsl(0 0% 0% / 0.3),
+      0 16px 48px hsl(0 0% 0% / 0.2),
+      0 0 20px hsl(var(--gold) / 0.15);
+  }
+
+  /* Rune stone depth */
+  .rune-stone {
+    background: radial-gradient(circle at 40% 35%, hsl(250 18% 26%), hsl(250 25% 12%) 70%);
+    box-shadow: 
+      0 4px 12px hsl(0 0% 0% / 0.5),
+      0 2px 4px hsl(0 0% 0% / 0.3),
+      inset 0 1px 2px hsl(var(--gold) / 0.1);
+  }
+
+  /* Angel card lighter tones */
+  .angel-card-front {
+    background: linear-gradient(135deg, hsl(210 50% 20%), hsl(230 40% 18%), hsl(265 40% 22%));
+    border: 1px solid hsl(var(--angel-blue) / 0.3);
+  }
+
+  /* Shuffle button pulse */
+  .shuffle-pulse {
+    animation: shufflePulse 1.5s ease-in-out infinite;
+  }
+  @keyframes shufflePulse {
+    0%, 100% { box-shadow: 0 0 20px hsl(var(--gold) / 0.2); }
+    50% { box-shadow: 0 0 40px hsl(var(--gold) / 0.5), 0 0 60px hsl(var(--gold) / 0.2); }
   }
 }
 
@@ -104,5 +186,8 @@
   }
   .rotate-y-180 {
     transform: rotateY(180deg);
+  }
+  .glass-border {
+    border: 1px solid hsl(var(--gold) / 0.2);
   }
 }

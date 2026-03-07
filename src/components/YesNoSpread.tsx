@@ -4,6 +4,8 @@ import { drawCards } from "@/data/tarotDeck";
 import { getYesNoAnswer, type YesNoAnswer } from "@/data/yesNoTarot";
 import type { DrawnCard } from "@/data/tarotDeck";
 import TarotCardComponent from "./TarotCardComponent";
+import ReadingTable from "./ReadingTable";
+import FocusMoment from "./FocusMoment";
 import { canDoReading, recordReading, generateAIReading } from "@/lib/tarotReading";
 import cardBackImage from "@/assets/card-back.jpg";
 
@@ -13,7 +15,7 @@ interface YesNoSpreadProps {
 }
 
 const YesNoSpread = ({ question, onError }: YesNoSpreadProps) => {
-  const [phase, setPhase] = useState<"idle" | "shuffling" | "card" | "loading" | "result">("idle");
+  const [phase, setPhase] = useState<"idle" | "focus" | "shuffling" | "card" | "loading" | "result">("idle");
   const [drawnCard, setDrawnCard] = useState<DrawnCard | null>(null);
   const [answer, setAnswer] = useState<YesNoAnswer | null>(null);
   const [reading, setReading] = useState("");
@@ -24,6 +26,10 @@ const YesNoSpread = ({ question, onError }: YesNoSpreadProps) => {
       return;
     }
     onError("");
+    setPhase("focus");
+  };
+
+  const handleFocusComplete = () => {
     setPhase("shuffling");
     const cards = drawCards(1);
     setDrawnCard({ ...cards[0], position: "Your Answer" });
@@ -71,14 +77,14 @@ const YesNoSpread = ({ question, onError }: YesNoSpreadProps) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
         >
-          <p className="text-sm text-muted-foreground italic text-center">
+          <p className="text-sm text-muted-foreground italic text-center max-w-md">
             Focus on a yes or no question, then draw a single card for your answer.
           </p>
           <div className="relative w-28 h-44">
             {[0, 1, 2].map((i) => (
               <motion.div
                 key={i}
-                className="absolute inset-0 rounded-lg overflow-hidden border border-primary/20"
+                className="absolute inset-0 rounded-lg overflow-hidden border border-primary/20 card-shadow"
                 style={{ top: -i * 2, left: i * 1.5, zIndex: 3 - i }}
                 animate={{ y: [0, -3, 0] }}
                 transition={{ duration: 3, delay: i * 0.3, repeat: Infinity, ease: "easeInOut" }}
@@ -96,6 +102,10 @@ const YesNoSpread = ({ question, onError }: YesNoSpreadProps) => {
             Draw Your Answer
           </motion.button>
         </motion.div>
+      )}
+
+      {phase === "focus" && (
+        <FocusMoment onComplete={handleFocusComplete} />
       )}
 
       {phase === "shuffling" && (
@@ -130,12 +140,16 @@ const YesNoSpread = ({ question, onError }: YesNoSpreadProps) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
         >
-          <TarotCardComponent
-            drawnCard={drawnCard}
-            index={0}
-            onReveal={handleReveal}
-            label="Your Answer"
-          />
+          <ReadingTable>
+            <div className="flex justify-center">
+              <TarotCardComponent
+                drawnCard={drawnCard}
+                index={0}
+                onReveal={handleReveal}
+                label="Your Answer"
+              />
+            </div>
+          </ReadingTable>
 
           {answer && (
             <motion.div
@@ -161,6 +175,11 @@ const YesNoSpread = ({ question, onError }: YesNoSpreadProps) => {
               className="reading-panel rounded-xl p-6 max-w-lg text-sm text-foreground font-body leading-relaxed whitespace-pre-line"
             >
               {reading}
+
+              <div className="mt-6 pt-4 border-t border-primary/10">
+                <h4 className="font-heading text-xs gold-text mb-2 tracking-wider">Take a moment to reflect</h4>
+                <p className="text-xs text-muted-foreground italic">Does this answer resonate with what you feel deep within?</p>
+              </div>
             </motion.div>
           )}
 
