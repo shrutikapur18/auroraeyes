@@ -202,7 +202,7 @@ const Index = () => {
             </motion.div>
           )}
 
-          {(phase === "spread" || phase === "reading") && (
+          {(phase === "spread" || phase === "reading" || phase === "loading") && (
             <motion.div
               key="spread"
               initial={{ opacity: 0 }}
