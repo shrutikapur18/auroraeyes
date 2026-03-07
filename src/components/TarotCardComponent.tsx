@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import type { DrawnCard } from "@/data/tarotDeck";
 import cardBackImage from "@/assets/card-back.jpg";
 
@@ -50,7 +50,7 @@ const TarotCardComponent = ({ drawnCard, index, onReveal, rotation = 0, label, c
         style={{ rotate: isRevealed ? 0 : rotation }}
         animate={!isRevealed ? { y: [0, -5, 0] } : {}}
         transition={!isRevealed ? { duration: 3 + index * 0.5, repeat: Infinity, ease: "easeInOut" } : {}}
-        whileHover={!isRevealed ? { scale: 1.08, y: -8 } : {}}
+        whileHover={!isRevealed ? { scale: 1.08, y: -10, transition: { duration: 0.2 } } : {}}
         onClick={handleClick}
       >
         <motion.div
@@ -60,24 +60,26 @@ const TarotCardComponent = ({ drawnCard, index, onReveal, rotation = 0, label, c
           transition={{ duration: 0.6, ease: "easeInOut" }}
         >
           {/* Card Back */}
-          <div className="absolute inset-0 backface-hidden rounded-lg overflow-hidden border-2 border-primary/30 gold-glow-hover">
+          <div className="absolute inset-0 backface-hidden rounded-lg overflow-hidden border-2 border-primary/30 card-shadow hover:card-shadow-hover transition-shadow duration-300">
             <img
               src={cardBackImage}
               alt="Card back"
               className="w-full h-full object-cover"
               loading="lazy"
             />
+            {/* Hover glow overlay */}
+            <div className="absolute inset-0 bg-primary/0 hover:bg-primary/5 transition-colors duration-300" />
           </div>
 
           {/* Card Front */}
           <div
             className={`absolute inset-0 backface-hidden rotate-y-180 rounded-lg overflow-hidden card-shine flex flex-col items-center justify-center p-2 text-center ${
-              isRevealed ? "gold-glow" : ""
+              isRevealed ? "gold-glow-strong" : ""
             }`}
             style={{ transform: `rotateY(180deg) ${isReversed ? "rotate(180deg)" : ""}` }}
           >
             <div className={`text-2xl md:text-3xl mb-1 ${suitColor}`}>
-              {card.arcana === "Major" ? card.symbol : card.symbol}
+              {card.symbol}
             </div>
             <div className="font-heading text-xs md:text-sm text-primary leading-tight px-1">
               {card.name}
@@ -93,8 +95,8 @@ const TarotCardComponent = ({ drawnCard, index, onReveal, rotation = 0, label, c
       </motion.div>
       {isRevealed && (
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 5 }}
+          animate={{ opacity: 1, y: 0 }}
           className="text-center max-w-[120px]"
         >
           <p className="text-xs font-heading text-primary">{card.name}</p>

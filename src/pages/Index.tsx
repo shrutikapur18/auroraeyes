@@ -1,9 +1,13 @@
 import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import StarBackground from "@/components/StarBackground";
+import FloatingParticles from "@/components/FloatingParticles";
 import QuestionInput from "@/components/QuestionInput";
 import DivinationMethodSelector, { type DivinationMethod } from "@/components/DivinationMethodSelector";
 import ReadingModeSelector from "@/components/ReadingModeSelector";
+import ReadingTable from "@/components/ReadingTable";
+import FocusMoment from "@/components/FocusMoment";
+import InteractiveShuffle from "@/components/InteractiveShuffle";
 import ThreeCardSpread from "@/components/ThreeCardSpread";
 import CelticCrossSpread from "@/components/CelticCrossSpread";
 import PickACardSpread from "@/components/PickACardSpread";
@@ -15,9 +19,8 @@ import DailyDivination from "@/components/DailyDivination";
 import { drawCards, threeCardPositions, celticCrossPositions } from "@/data/tarotDeck";
 import type { DrawnCard, ReadingMode } from "@/data/tarotDeck";
 import { canDoReading, recordReading, generateAIReading } from "@/lib/tarotReading";
-import cardBackImage from "@/assets/card-back.jpg";
 
-type Phase = "input" | "shuffling" | "spread" | "reading" | "loading";
+type Phase = "input" | "focus" | "shuffling" | "spread" | "reading" | "loading";
 
 const Index = () => {
   const [question, setQuestion] = useState("");
@@ -31,17 +34,25 @@ const Index = () => {
   const cardCount = tarotMode === "three-card" ? 3 : tarotMode === "celtic-cross" ? 10 : 3;
   const positions = tarotMode === "three-card" ? threeCardPositions : tarotMode === "celtic-cross" ? celticCrossPositions : ["Your Card", "Card 2", "Card 3"];
 
-  const handleShuffle = () => {
+  const handleStartShuffle = () => {
     if (!question.trim()) {
       setError("Please enter your question first.");
       return;
     }
     setError("");
+    setPhase("focus");
+  };
+
+  const handleFocusComplete = useCallback(() => {
     setPhase("shuffling");
+  }, []);
+
+  const handleShuffleComplete = useCallback((_seed: number) => {
+    // Use the seed to influence card draw
     const cards = drawCards(cardCount).map((dc, i) => ({ ...dc, position: positions[i] }));
     setDrawnCards(cards);
-    setTimeout(() => setPhase("spread"), 2000);
-  };
+    setPhase("spread");
+  }, [cardCount, positions]);
 
   const handleReveal = useCallback((index: number) => {
     if (tarotMode === "pick-a-card" && drawnCards.some((c) => c.isRevealed)) return;
@@ -77,9 +88,7 @@ const Index = () => {
     handleReset();
   };
 
-  // For non-tarot methods, render their own self-contained components
   const isTarotMethod = divinationMethod === "tarot";
-  const showTarotFlow = isTarotMethod && phase !== "input";
 
   return (
     <div className="min-h-screen relative overflow-x-hidden">
@@ -93,9 +102,13 @@ const Index = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          <h1 className="text-4xl md:text-6xl font-heading gold-text mb-3 tracking-wider">
+          <motion.h1
+            className="text-4xl md:text-6xl font-heading gold-text mb-3 tracking-wider"
+            animate={{ textShadow: ["0 0 20px hsl(45 80% 55% / 0.2)", "0 0 40px hsl(45 80% 55% / 0.4)", "0 0 20px hsl(45 80% 55% / 0.2)"] }}
+            transition={{ duration: 4, repeat: Infinity }}
+          >
             Mystic Divination
-          </h1>
+          </motion.h1>
           <p className="text-base md:text-lg text-muted-foreground font-body font-light tracking-wide max-w-xl mx-auto">
             Choose a divination method and focus on your question.
           </p>
@@ -115,28 +128,13 @@ const Index = () => {
                   <ReadingModeSelector mode={tarotMode} setMode={setTarotMode} />
                   <div className="flex justify-center mb-10">
                     <motion.button
-                      onClick={handleShuffle}
+                      onClick={handleStartShuffle}
                       className="px-8 py-4 rounded-xl bg-primary/20 border-2 border-primary text-primary font-heading text-lg tracking-widest hover:bg-primary/30 transition-all gold-glow"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                     >
-                      Shuffle the Cards
+                      Begin Reading
                     </motion.button>
-                  </div>
-                  <div className="flex justify-center mb-8">
-                    <div className="relative w-32 h-48">
-                      {[0, 1, 2, 3, 4].map((i) => (
-                        <motion.div
-                          key={i}
-                          className="absolute inset-0 rounded-lg overflow-hidden border border-primary/20"
-                          style={{ top: -i * 2, left: i * 1.5, zIndex: 5 - i }}
-                          animate={{ y: [0, -3, 0] }}
-                          transition={{ duration: 3, delay: i * 0.3, repeat: Infinity, ease: "easeInOut" }}
-                        >
-                          <img src={cardBackImage} alt="Tarot deck" className="w-full h-full object-cover" loading="lazy" />
-                        </motion.div>
-                      ))}
-                    </div>
                   </div>
                 </>
               )}
@@ -148,21 +146,19 @@ const Index = () => {
 
               {/* Pick a Card (standalone) */}
               {divinationMethod === "pick-a-card" && (
-                <>
-                  <div className="flex justify-center mb-10">
-                    <motion.button
-                      onClick={() => {
-                        setTarotMode("pick-a-card");
-                        handleShuffle();
-                      }}
-                      className="px-8 py-4 rounded-xl bg-primary/20 border-2 border-primary text-primary font-heading text-lg tracking-widest hover:bg-primary/30 transition-all gold-glow"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      Shuffle & Pick
-                    </motion.button>
-                  </div>
-                </>
+                <div className="flex justify-center mb-10">
+                  <motion.button
+                    onClick={() => {
+                      setTarotMode("pick-a-card");
+                      handleStartShuffle();
+                    }}
+                    className="px-8 py-4 rounded-xl bg-primary/20 border-2 border-primary text-primary font-heading text-lg tracking-widest hover:bg-primary/30 transition-all gold-glow"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    Shuffle & Pick
+                  </motion.button>
+                </div>
               )}
 
               {/* Angel Cards */}
@@ -179,33 +175,23 @@ const Index = () => {
             </motion.div>
           )}
 
+          {phase === "focus" && (
+            <FocusMoment key="focus" onComplete={handleFocusComplete} method="tarot" />
+          )}
+
           {phase === "shuffling" && (
             <motion.div
               key="shuffling"
-              className="flex flex-col items-center justify-center py-20"
+              className="py-10"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
             >
-              <div className="relative w-32 h-48 mb-8">
-                {[0, 1, 2, 3, 4].map((i) => (
-                  <motion.div
-                    key={i}
-                    className="absolute inset-0 rounded-lg overflow-hidden border border-primary/20"
-                    animate={{
-                      x: [0, (i % 2 === 0 ? 1 : -1) * 40, 0],
-                      y: [0, -20, 0],
-                      rotate: [0, (i % 2 === 0 ? 1 : -1) * 15, 0],
-                    }}
-                    transition={{ duration: 0.6, delay: i * 0.1, repeat: 3, ease: "easeInOut" }}
-                  >
-                    <img src={cardBackImage} alt="Shuffling" className="w-full h-full object-cover" />
-                  </motion.div>
-                ))}
-              </div>
-              <p className="font-heading text-primary text-lg tracking-widest animate-pulse">
-                Shuffling the cards...
-              </p>
+              <InteractiveShuffle
+                onComplete={handleShuffleComplete}
+                minPresses={3}
+                label="Shuffle the Cards"
+              />
             </motion.div>
           )}
 
@@ -217,11 +203,13 @@ const Index = () => {
 
               {error && <p className="text-center text-sm text-destructive mb-4">{error}</p>}
 
-              <div className="py-4">
-                {tarotMode === "three-card" && <ThreeCardSpread cards={drawnCards} onReveal={handleReveal} />}
-                {tarotMode === "celtic-cross" && <CelticCrossSpread cards={drawnCards} onReveal={handleReveal} />}
-                {tarotMode === "pick-a-card" && <PickACardSpread cards={drawnCards} onReveal={handleReveal} />}
-              </div>
+              <ReadingTable>
+                <div className="py-4">
+                  {tarotMode === "three-card" && <ThreeCardSpread cards={drawnCards} onReveal={handleReveal} />}
+                  {tarotMode === "celtic-cross" && <CelticCrossSpread cards={drawnCards} onReveal={handleReveal} />}
+                  {tarotMode === "pick-a-card" && <PickACardSpread cards={drawnCards} onReveal={handleReveal} />}
+                </div>
+              </ReadingTable>
 
               {reading && <ReadingPanel reading={reading} drawnCards={drawnCards} question={question} />}
 
@@ -242,6 +230,11 @@ const Index = () => {
             </motion.div>
           )}
         </AnimatePresence>
+      </div>
+
+      {/* Ambient floating particles */}
+      <div className="fixed inset-0 pointer-events-none z-[1]">
+        <FloatingParticles count={12} color="gold" />
       </div>
     </div>
   );
