@@ -237,6 +237,19 @@ const Index = () => {
                 />
               )}
 
+              {phase === "loading" && (
+                <motion.div
+                  className="flex flex-col items-center mt-10"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                >
+                  <div className="w-8 h-8 border-2 border-primary/30 border-t-primary rounded-full animate-spin mb-4" />
+                  <p className="font-heading text-primary text-sm tracking-widest animate-pulse">
+                    Channeling the cosmos...
+                  </p>
+                </motion.div>
+              )}
+
               {phase === "reading" && (
                 <motion.div
                   className="flex justify-center gap-4 mt-6"
