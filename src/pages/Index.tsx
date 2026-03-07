@@ -11,7 +11,7 @@ import ReadingPanel from "@/components/ReadingPanel";
 import DailyCard from "@/components/DailyCard";
 import { drawCards, threeCardPositions, celticCrossPositions } from "@/data/tarotDeck";
 import type { DrawnCard, ReadingMode } from "@/data/tarotDeck";
-import { canDoReading, recordReading, generateLocalReading } from "@/lib/tarotReading";
+import { canDoReading, recordReading, generateAIReading } from "@/lib/tarotReading";
 import cardBackImage from "@/assets/card-back.jpg";
 
 type Phase = "input" | "shuffling" | "spread" | "reading";
