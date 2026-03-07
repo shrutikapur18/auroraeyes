@@ -14,7 +14,7 @@ import type { DrawnCard, ReadingMode } from "@/data/tarotDeck";
 import { canDoReading, recordReading, generateAIReading } from "@/lib/tarotReading";
 import cardBackImage from "@/assets/card-back.jpg";
 
-type Phase = "input" | "shuffling" | "spread" | "reading";
+type Phase = "input" | "shuffling" | "spread" | "reading" | "loading";
 
 const Index = () => {
   const [question, setQuestion] = useState("");
@@ -67,14 +67,15 @@ const Index = () => {
             : revealedCount >= cardCount;
 
         if (shouldRead) {
-          setTimeout(() => {
+          setTimeout(async () => {
             const check = canDoReading();
             if (!check.allowed) {
               setError(check.reason || "");
               return;
             }
             recordReading();
-            const readingText = generateLocalReading(question, updated);
+            setPhase("loading");
+            const readingText = await generateAIReading(question, updated);
             setReading(readingText);
             setPhase("reading");
           }, 800);
