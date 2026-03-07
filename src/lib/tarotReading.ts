@@ -1,4 +1,5 @@
 import type { DrawnCard } from "@/data/tarotDeck";
+import { supabase } from "@/integrations/supabase/client";
 
 const READING_COUNT_KEY = "tarot_reading_count";
 const READING_RESET_KEY = "tarot_reading_reset";
@@ -7,7 +8,6 @@ const COOLDOWN_MS = 20_000;
 const COOLDOWN_KEY = "tarot_last_reading";
 
 export function canDoReading(): { allowed: boolean; reason?: string } {
-  // Check 24h reset
   const resetTime = localStorage.getItem(READING_RESET_KEY);
   const now = Date.now();
   if (!resetTime || now - parseInt(resetTime) > 24 * 60 * 60 * 1000) {
@@ -33,6 +33,38 @@ export function recordReading() {
   const count = parseInt(localStorage.getItem(READING_COUNT_KEY) || "0");
   localStorage.setItem(READING_COUNT_KEY, (count + 1).toString());
   localStorage.setItem(COOLDOWN_KEY, Date.now().toString());
+}
+
+export async function generateAIReading(question: string, cards: DrawnCard[]): Promise<string> {
+  const cardData = cards
+    .filter((dc) => dc.isRevealed)
+    .map((dc) => ({
+      name: dc.card.name,
+      orientation: dc.isReversed ? "reversed" : "upright",
+      position: dc.position || "Selected Card",
+      meaning: dc.isReversed ? dc.card.meaning_rev : dc.card.meaning_up,
+    }));
+
+  try {
+    const { data, error } = await supabase.functions.invoke("tarot-reading", {
+      body: { question, cards: cardData },
+    });
+
+    if (error) {
+      console.error("Edge function error:", error);
+      return generateLocalReading(question, cards);
+    }
+
+    if (data?.error) {
+      console.error("AI error:", data.error);
+      return generateLocalReading(question, cards);
+    }
+
+    return data?.reading || generateLocalReading(question, cards);
+  } catch (e) {
+    console.error("Failed to get AI reading:", e);
+    return generateLocalReading(question, cards);
+  }
 }
 
 export function generateLocalReading(question: string, cards: DrawnCard[]): string {
