@@ -3,11 +3,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { drawCards } from "@/data/tarotDeck";
 import type { DrawnCard } from "@/data/tarotDeck";
 import TarotCardComponent from "./TarotCardComponent";
-import { generateLocalReading } from "@/lib/tarotReading";
+import { generateAIReading } from "@/lib/tarotReading";
 
 const DailyCard = () => {
   const [dailyCard, setDailyCard] = useState<DrawnCard | null>(null);
   const [reading, setReading] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const drawDaily = () => {
     const cards = drawCards(1);
@@ -16,11 +17,14 @@ const DailyCard = () => {
     setReading("");
   };
 
-  const revealDaily = () => {
+  const revealDaily = async () => {
     if (!dailyCard) return;
     const revealed = { ...dailyCard, isRevealed: true };
     setDailyCard(revealed);
-    setReading(generateLocalReading("What does today hold for me?", [revealed]));
+    setLoading(true);
+    const text = await generateAIReading("What does today hold for me?", [revealed]);
+    setReading(text);
+    setLoading(false);
   };
 
   return (
@@ -52,6 +56,12 @@ const DailyCard = () => {
             onReveal={revealDaily}
             label="Today's Card"
           />
+          {loading && (
+            <div className="flex items-center gap-2 mt-2">
+              <div className="w-5 h-5 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
+              <span className="text-xs text-muted-foreground">Reading the stars...</span>
+            </div>
+          )}
           {reading && (
             <motion.div
               initial={{ opacity: 0, y: 10 }}

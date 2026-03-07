@@ -11,10 +11,10 @@ import ReadingPanel from "@/components/ReadingPanel";
 import DailyCard from "@/components/DailyCard";
 import { drawCards, threeCardPositions, celticCrossPositions } from "@/data/tarotDeck";
 import type { DrawnCard, ReadingMode } from "@/data/tarotDeck";
-import { canDoReading, recordReading, generateLocalReading } from "@/lib/tarotReading";
+import { canDoReading, recordReading, generateAIReading } from "@/lib/tarotReading";
 import cardBackImage from "@/assets/card-back.jpg";
 
-type Phase = "input" | "shuffling" | "spread" | "reading";
+type Phase = "input" | "shuffling" | "spread" | "reading" | "loading";
 
 const Index = () => {
   const [question, setQuestion] = useState("");
@@ -67,14 +67,15 @@ const Index = () => {
             : revealedCount >= cardCount;
 
         if (shouldRead) {
-          setTimeout(() => {
+          setTimeout(async () => {
             const check = canDoReading();
             if (!check.allowed) {
               setError(check.reason || "");
               return;
             }
             recordReading();
-            const readingText = generateLocalReading(question, updated);
+            setPhase("loading");
+            const readingText = await generateAIReading(question, updated);
             setReading(readingText);
             setPhase("reading");
           }, 800);
@@ -201,7 +202,7 @@ const Index = () => {
             </motion.div>
           )}
 
-          {(phase === "spread" || phase === "reading") && (
+          {(phase === "spread" || phase === "reading" || phase === "loading") && (
             <motion.div
               key="spread"
               initial={{ opacity: 0 }}
@@ -234,6 +235,19 @@ const Index = () => {
                   drawnCards={drawnCards}
                   question={question}
                 />
+              )}
+
+              {phase === "loading" && (
+                <motion.div
+                  className="flex flex-col items-center mt-10"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                >
+                  <div className="w-8 h-8 border-2 border-primary/30 border-t-primary rounded-full animate-spin mb-4" />
+                  <p className="font-heading text-primary text-sm tracking-widest animate-pulse">
+                    Channeling the cosmos...
+                  </p>
+                </motion.div>
               )}
 
               {phase === "reading" && (
