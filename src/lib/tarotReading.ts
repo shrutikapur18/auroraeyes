@@ -46,8 +46,8 @@ export async function generateAIReading(question: string, cards: DrawnCard[]): P
     }));
 
   try {
-    const { data, error } = await supabase.functions.invoke("tarot-reading", {
-      body: { question, cards: cardData },
+    const { data, error } = await supabase.functions.invoke("divination-reading", {
+      body: { question, type: "tarot", cards: cardData },
     });
 
     if (error) {
