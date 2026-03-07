@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { drawCards } from "@/data/tarotDeck";
 import type { DrawnCard } from "@/data/tarotDeck";
 import TarotCardComponent from "./TarotCardComponent";
-import { generateLocalReading } from "@/lib/tarotReading";
+import { generateAIReading } from "@/lib/tarotReading";
 
 const DailyCard = () => {
   const [dailyCard, setDailyCard] = useState<DrawnCard | null>(null);
