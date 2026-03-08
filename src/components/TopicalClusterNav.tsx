@@ -36,6 +36,7 @@ const clusters: Cluster[] = [
       { to: "/tarot-guide", label: "Tarot Guide" },
       { to: "/rune-guide", label: "Rune Guide" },
       { to: "/angel-cards-guide", label: "Angel Cards" },
+      { to: "/horary-astrology", label: "Horary Astrology" },
       { to: "/blog", label: "Blog" },
     ],
   },

@@ -1,21 +1,39 @@
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
-export type DivinationMethod = "tarot" | "yes-no" | "pick-a-card" | "angel" | "runes";
+export type DivinationMethod = "tarot" | "yes-no" | "pick-a-card" | "angel" | "runes" | "horary";
 
 interface DivinationMethodSelectorProps {
   method: DivinationMethod;
   setMethod: (m: DivinationMethod) => void;
 }
 
-const methods: { value: DivinationMethod; label: string; icon: string; desc: string }[] = [
+const methods: { value: DivinationMethod; label: string; icon: string; desc: string; route?: string }[] = [
   { value: "tarot", label: "Tarot Reading", icon: "🃏", desc: "Three Card or Celtic Cross" },
   { value: "yes-no", label: "Yes / No Tarot", icon: "⚖️", desc: "Quick single-card answer" },
   { value: "pick-a-card", label: "Pick a Card", icon: "✨", desc: "Intuitive single draw" },
   { value: "angel", label: "Angel Cards", icon: "👼", desc: "Divine oracle messages" },
   { value: "runes", label: "Rune Reading", icon: "ᚱ", desc: "Elder Futhark wisdom" },
+  { value: "horary", label: "Horary Astrology", icon: "🪐", desc: "Ask the stars a question" },
 ];
 
 const DivinationMethodSelector = ({ method, setMethod }: DivinationMethodSelectorProps) => {
+  const navigate = useNavigate();
+
+  const handleSelect = (m: DivinationMethod) => {
+    if (m === "horary") {
+      // Scroll to the horary section on homepage, or navigate to dedicated page
+      const el = document.getElementById("horary-section");
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+      } else {
+        navigate("/horary-reading");
+      }
+      return;
+    }
+    setMethod(m);
+  };
+
   return (
     <motion.div
       className="max-w-3xl mx-auto mb-8 relative z-10"
@@ -30,7 +48,7 @@ const DivinationMethodSelector = ({ method, setMethod }: DivinationMethodSelecto
         {methods.map((m) => (
           <button
             key={m.value}
-            onClick={() => setMethod(m.value)}
+            onClick={() => handleSelect(m.value)}
             className={`px-4 py-3 rounded-lg font-body text-sm transition-all border ${
               method === m.value
                 ? "bg-primary/20 border-primary text-primary gold-glow"
