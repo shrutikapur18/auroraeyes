@@ -539,6 +539,9 @@ export function getAllSEOUrls(): { loc: string; changefreq: string; priority: st
   // Combination pages
   generateCombinationPages().forEach(c => urls.push({ loc: `${base}/tarot-combinations/${c.slug}`, changefreq: "monthly", priority: "0.6" }));
 
+  // Comparison pages
+  generateComparisonPages().forEach(c => urls.push({ loc: `${base}/tarot-comparisons/${c.slug}`, changefreq: "monthly", priority: "0.6" }));
+
   // Blog articles
   const blogSlugs = ["how-tarot-readings-work","major-arcana-guide","how-rune-casting-works","angel-card-guidance-beginners","tarot-spreads-explained","reversed-tarot-cards","zodiac-and-tarot-connection","daily-divination-practice"];
   blogSlugs.forEach(s => urls.push({ loc: `${base}/blog/${s}`, changefreq: "monthly", priority: "0.5" }));
