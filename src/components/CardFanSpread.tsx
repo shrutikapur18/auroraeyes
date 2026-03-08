@@ -1,5 +1,5 @@
-import { useState, useCallback, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useCallback, useMemo, useEffect } from "react";
+import { motion } from "framer-motion";
 import cardBackImage from "@/assets/card-back.jpg";
 import type { DrawnCard } from "@/data/tarotDeck";
 import { drawCards } from "@/data/tarotDeck";
@@ -12,28 +12,42 @@ interface CardFanSpreadProps {
 
 const FAN_CARD_COUNT = 30;
 
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+  return isMobile;
+}
+
 const CardFanSpread = ({ requiredCount, positions, onComplete }: CardFanSpreadProps) => {
   const fanCards = useMemo(() => drawCards(FAN_CARD_COUNT), []);
   const [selectedIndices, setSelectedIndices] = useState<number[]>([]);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [isComplete, setIsComplete] = useState(false);
+  const isMobile = useIsMobile();
 
-  // Fan geometry — cards spread in an arc
-  const totalArc = 120; // degrees
+  // Responsive fan geometry
+  const totalArc = isMobile ? 90 : 120;
   const startAngle = -totalArc / 2;
   const angleStep = totalArc / (FAN_CARD_COUNT - 1);
-  const radius = 380; // arc radius from pivot point
+  const radius = isMobile ? 240 : 380;
+  const cardW = isMobile ? 46 : 70;
+  const cardH = isMobile ? 72 : 110;
+  const containerH = isMobile ? 260 : 340;
+  const slotSpacing = isMobile ? 60 : 100;
+  const slotY = isMobile ? -200 : -280;
 
   const handleSelect = useCallback(
     (index: number) => {
       if (selectedIndices.includes(index) || isComplete) return;
-
       const newSelected = [...selectedIndices, index];
       setSelectedIndices(newSelected);
-
       if (newSelected.length >= requiredCount) {
         setIsComplete(true);
-        // Gather the selected cards with positions
         const result = newSelected.map((fanIdx, i) => ({
           ...fanCards[fanIdx],
           position: positions[i],
@@ -46,13 +60,13 @@ const CardFanSpread = ({ requiredCount, positions, onComplete }: CardFanSpreadPr
 
   return (
     <motion.div
-      className="flex flex-col items-center gap-4"
+      className="flex flex-col items-center gap-3 md:gap-4"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
     >
       <motion.p
-        className="text-sm text-muted-foreground italic text-center max-w-md font-body relative z-20"
+        className="text-xs md:text-sm text-muted-foreground italic text-center max-w-md font-body relative z-20 px-4"
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3 }}
@@ -65,14 +79,14 @@ const CardFanSpread = ({ requiredCount, positions, onComplete }: CardFanSpreadPr
       {/* Selected cards indicator */}
       {selectedIndices.length > 0 && (
         <motion.div
-          className="flex gap-2 mb-2 relative z-20"
+          className="flex gap-1.5 md:gap-2 mb-1 md:mb-2 relative z-20 flex-wrap justify-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
         >
           {positions.map((pos, i) => (
             <div
               key={pos}
-              className={`px-3 py-1.5 rounded-md text-xs font-heading tracking-wider border transition-all ${
+              className={`px-2 md:px-3 py-1 md:py-1.5 rounded-md text-[10px] md:text-xs font-heading tracking-wider border transition-all ${
                 i < selectedIndices.length
                   ? "bg-primary/20 border-primary text-primary gold-glow"
                   : "bg-muted/30 border-border/30 text-muted-foreground"
@@ -85,10 +99,10 @@ const CardFanSpread = ({ requiredCount, positions, onComplete }: CardFanSpreadPr
       )}
 
       {/* The fan of cards */}
-      <div className="relative w-full overflow-visible" style={{ height: 340 }}>
+      <div className="relative w-full overflow-visible" style={{ height: containerH }}>
         <div
           className="absolute left-1/2"
-          style={{ bottom: -radius + 200, transform: "translateX(-50%)" }}
+          style={{ bottom: -radius + (isMobile ? 150 : 200), transform: "translateX(-50%)" }}
         >
           {fanCards.map((_, i) => {
             const isSelected = selectedIndices.includes(i);
@@ -96,7 +110,6 @@ const CardFanSpread = ({ requiredCount, positions, onComplete }: CardFanSpreadPr
             const angle = startAngle + i * angleStep;
             const rad = (angle * Math.PI) / 180;
 
-            // Position on the arc
             const x = Math.sin(rad) * radius;
             const y = -Math.cos(rad) * radius + radius;
 
@@ -106,18 +119,16 @@ const CardFanSpread = ({ requiredCount, positions, onComplete }: CardFanSpreadPr
               Math.abs(i - hoveredIndex) <= 1 &&
               i !== hoveredIndex;
 
-            // When selected, animate to a slot position above the fan
-            const slotX = selectionOrder >= 0 ? (selectionOrder - (requiredCount - 1) / 2) * 100 : 0;
-            const slotY = selectionOrder >= 0 ? -280 : 0;
+            const selectedSlotX = selectionOrder >= 0 ? (selectionOrder - (requiredCount - 1) / 2) * slotSpacing : 0;
 
             return (
               <motion.div
                 key={i}
-                className={`absolute cursor-pointer`}
+                className="absolute cursor-pointer"
                 style={{
-                  width: 70,
-                  height: 110,
-                  left: -35,
+                  width: cardW,
+                  height: cardH,
+                  left: -cardW / 2,
                   top: 0,
                   zIndex: isSelected ? 100 + selectionOrder : isHovered ? 60 : i,
                   pointerEvents: isSelected || isComplete ? "none" : "auto",
@@ -133,11 +144,11 @@ const CardFanSpread = ({ requiredCount, positions, onComplete }: CardFanSpreadPr
                 animate={
                   isSelected
                     ? {
-                        x: slotX,
+                        x: selectedSlotX,
                         y: slotY,
                         rotate: 0,
                         opacity: 1,
-                        scale: 1.1,
+                        scale: isMobile ? 1.05 : 1.1,
                       }
                     : {
                         x,
@@ -162,17 +173,17 @@ const CardFanSpread = ({ requiredCount, positions, onComplete }: CardFanSpreadPr
                 onClick={() => handleSelect(i)}
                 whileHover={
                   !isSelected && !isComplete
-                    ? { y: y - 25, transition: { duration: 0.15 } }
+                    ? { y: y - (isMobile ? 15 : 25), transition: { duration: 0.15 } }
                     : {}
                 }
               >
                 <div
-                  className={`w-full h-full rounded-md overflow-hidden border-2 transition-all duration-200 ${
+                  className={`w-full h-full rounded-md overflow-hidden border transition-all duration-200 ${
                     isSelected
-                      ? "border-primary gold-glow-strong"
+                      ? "border-2 border-primary gold-glow-strong"
                       : isHovered
-                      ? "border-primary/60 shadow-[0_0_20px_hsl(var(--gold)/0.3)]"
-                      : "border-primary/15 card-shadow"
+                      ? "border-2 border-primary/60 shadow-[0_0_20px_hsl(var(--gold)/0.3)]"
+                      : "border border-primary/15 card-shadow"
                   }`}
                 >
                   <img
@@ -182,7 +193,6 @@ const CardFanSpread = ({ requiredCount, positions, onComplete }: CardFanSpreadPr
                     loading="lazy"
                     draggable={false}
                   />
-                  {/* Hover glow overlay */}
                   {isHovered && !isSelected && (
                     <motion.div
                       className="absolute inset-0 bg-primary/10 rounded-md"
@@ -193,10 +203,9 @@ const CardFanSpread = ({ requiredCount, positions, onComplete }: CardFanSpreadPr
                   )}
                 </div>
 
-                {/* Selection number badge */}
                 {isSelected && (
                   <motion.div
-                    className="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-primary text-primary-foreground text-xs font-heading flex items-center justify-center gold-glow"
+                    className="absolute -top-1.5 -right-1.5 md:-top-2 md:-right-2 w-5 h-5 md:w-6 md:h-6 rounded-full bg-primary text-primary-foreground text-[10px] md:text-xs font-heading flex items-center justify-center gold-glow"
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     transition={{ type: "spring", stiffness: 300 }}
@@ -210,7 +219,6 @@ const CardFanSpread = ({ requiredCount, positions, onComplete }: CardFanSpreadPr
         </div>
       </div>
 
-      {/* Mobile: touch-friendly instruction */}
       <p className="text-[10px] text-muted-foreground/60 text-center md:hidden relative z-20">
         Tap the card you feel drawn to
       </p>
