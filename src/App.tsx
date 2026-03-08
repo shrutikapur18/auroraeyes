@@ -51,6 +51,7 @@ const App = () => (
             <Route path="/angel-card-reading" element={<AngelCardReading />} />
             <Route path="/tarot-card-meanings" element={<TarotCardMeanings />} />
             <Route path="/tarot-card-meanings/:slug" element={<TarotCardMeaning />} />
+            <Route path="/tarot-card-meanings/:slug/:context" element={<TarotCardContext />} />
             <Route path="/rune-meanings" element={<RuneMeanings />} />
             <Route path="/rune-meanings/:slug" element={<RuneMeaning />} />
             <Route path="/zodiac/:sign" element={<ZodiacTarotReading />} />
