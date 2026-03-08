@@ -10,7 +10,7 @@ import PickACardSpread from "@/components/PickACardSpread";
 import ReadingPanel from "@/components/ReadingPanel";
 import ShareButtons from "@/components/ShareButtons";
 import type { DrawnCard } from "@/data/tarotDeck";
-import { canDoReading, recordReading, generateAIReading } from "@/lib/tarotReading";
+import { generateLocalReading } from "@/lib/tarotReading";
 import { Link } from "react-router-dom";
 
 type Phase = "input" | "focus" | "shuffling" | "fan" | "spread" | "reading" | "loading";
