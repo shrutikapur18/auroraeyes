@@ -26,6 +26,7 @@ import SpreadGuidePage from "./pages/SpreadGuidePage";
 import TarotCombinations from "./pages/TarotCombinations";
 import TarotCombinationPage from "./pages/TarotCombinationPage";
 import QuestionReadingPage from "./pages/QuestionReadingPage";
+import SharedReadingPreview from "./pages/SharedReadingPreview";
 import NotFound from "./pages/NotFound";
 import { questionPages } from "./data/seoData";
 
@@ -69,6 +70,8 @@ const App = () => (
             {questionPages.map((page) => (
               <Route key={page.slug} path={`/${page.slug}`} element={<QuestionReadingPage />} />
             ))}
+            {/* Shared reading preview */}
+            <Route path="/shared-reading" element={<SharedReadingPreview />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </SiteLayout>
