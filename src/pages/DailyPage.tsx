@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
+import { useLocation, Link } from "react-router-dom";
 import SEOHead from "@/components/SEOHead";
 import { drawCards } from "@/data/tarotDeck";
 import { drawRunes } from "@/data/runes";
@@ -10,27 +11,19 @@ import AngelCardComponent from "@/components/AngelCardComponent";
 import { generateAIReading } from "@/lib/tarotReading";
 import { generateRuneReading } from "@/lib/runeReading";
 import { generateAngelReading } from "@/lib/angelReading";
-import { Link, useParams } from "react-router-dom";
 import type { DrawnCard } from "@/data/tarotDeck";
 import type { DrawnRune } from "@/data/runes";
 import type { DrawnAngelCard } from "@/data/angelCards";
 
-const pageConfig = {
-  "daily-tarot-card": { title: "Daily Tarot Card", description: "Draw your daily tarot card for today's guidance. A new card every day to illuminate your path.", type: "tarot" as const },
-  "daily-rune": { title: "Daily Rune", description: "Cast your daily rune for ancient Norse guidance. Discover what wisdom the runes hold for you today.", type: "rune" as const },
-  "daily-angel-message": { title: "Daily Angel Message", description: "Receive your daily angel message. Let divine guidance and comfort light your way today.", type: "angel" as const },
+const pageConfig: Record<string, { title: string; description: string; type: "tarot" | "rune" | "angel" }> = {
+  "/daily-tarot-card": { title: "Daily Tarot Card", description: "Draw your daily tarot card for today's guidance. A new card every day to illuminate your path.", type: "tarot" },
+  "/daily-rune": { title: "Daily Rune", description: "Cast your daily rune for ancient Norse guidance. Discover what wisdom the runes hold for you today.", type: "rune" },
+  "/daily-angel-message": { title: "Daily Angel Message", description: "Receive your daily angel message. Let divine guidance and comfort light your way today.", type: "angel" },
 };
 
 const DailyPage = () => {
-  const { "*": splat } = useParams();
-  const path = (splat || "daily-tarot-card") as keyof typeof pageConfig;
-  const config = pageConfig[path] || pageConfig["daily-tarot-card"];
-
-  // Seed by date so the same card appears all day
-  const todaySeed = useMemo(() => {
-    const d = new Date();
-    return d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
-  }, []);
+  const location = useLocation();
+  const config = pageConfig[location.pathname] || pageConfig["/daily-tarot-card"];
 
   const [tarotCard, setTarotCard] = useState<DrawnCard | null>(null);
   const [runeCard, setRuneCard] = useState<DrawnRune | null>(null);
@@ -56,36 +49,28 @@ const DailyPage = () => {
   const revealTarot = async () => {
     if (!tarotCard) return;
     const revealed = { ...tarotCard, isRevealed: true };
-    setTarotCard(revealed);
-    setLoading(true);
+    setTarotCard(revealed); setLoading(true);
     const text = await generateAIReading("What does today hold for me?", [revealed]);
-    setReading(text);
-    setLoading(false);
+    setReading(text); setLoading(false);
   };
-
   const revealRune = async () => {
     if (!runeCard) return;
     const revealed = { ...runeCard, isRevealed: true };
-    setRuneCard(revealed);
-    setLoading(true);
+    setRuneCard(revealed); setLoading(true);
     const text = await generateRuneReading("What wisdom do the runes offer today?", [revealed]);
-    setReading(text);
-    setLoading(false);
+    setReading(text); setLoading(false);
   };
-
   const revealAngel = async () => {
     if (!angelCard) return;
     const revealed = { ...angelCard, isRevealed: true };
-    setAngelCard(revealed);
-    setLoading(true);
+    setAngelCard(revealed); setLoading(true);
     const text = await generateAngelReading("What message do the angels have for me today?", [revealed]);
-    setReading(text);
-    setLoading(false);
+    setReading(text); setLoading(false);
   };
 
   return (
     <>
-      <SEOHead title={config.title} description={config.description} canonicalPath={`/${path}`} />
+      <SEOHead title={config.title} description={config.description} canonicalPath={location.pathname} />
       <motion.header className="text-center pt-8 pb-6" initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
         <h1 className="text-3xl md:text-5xl font-heading gold-text mb-3 tracking-wider">{config.title}</h1>
         <p className="text-base text-muted-foreground font-body max-w-2xl mx-auto">{config.description}</p>
@@ -98,17 +83,11 @@ const DailyPage = () => {
             Draw Today's {config.type === "tarot" ? "Card" : config.type === "rune" ? "Rune" : "Message"}
           </motion.button>
         )}
-
         {config.type === "tarot" && tarotCard && <TarotCardComponent drawnCard={tarotCard} index={0} onReveal={revealTarot} label="Today" />}
         {config.type === "rune" && runeCard && <RuneComponent drawnRune={runeCard} index={0} onReveal={revealRune} label="Today" />}
         {config.type === "angel" && angelCard && <AngelCardComponent drawnCard={angelCard} index={0} onReveal={revealAngel} label="Today" />}
-
-        {loading && (
-          <div className="flex items-center gap-2"><div className="w-5 h-5 border-2 border-primary/30 border-t-primary rounded-full animate-spin" /><span className="text-xs text-muted-foreground">Reading…</span></div>
-        )}
-        {reading && (
-          <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="reading-panel rounded-xl p-6 max-w-lg text-sm text-foreground font-body leading-relaxed whitespace-pre-line">{reading}</motion.div>
-        )}
+        {loading && (<div className="flex items-center gap-2"><div className="w-5 h-5 border-2 border-primary/30 border-t-primary rounded-full animate-spin" /><span className="text-xs text-muted-foreground">Reading…</span></div>)}
+        {reading && (<motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="reading-panel rounded-xl p-6 max-w-lg text-sm text-foreground font-body leading-relaxed whitespace-pre-line">{reading}</motion.div>)}
       </div>
 
       <div className="max-w-3xl mx-auto mt-12 text-center space-y-2">
