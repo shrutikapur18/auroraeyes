@@ -11,7 +11,7 @@ serve(async (req) => {
   }
 
   try {
-    const { question, type, cards, runes } = await req.json();
+    const { question, type, cards, runes, followUp, conversationHistory } = await req.json();
 
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) {
@@ -73,12 +73,38 @@ Follow this structure:
 Keep readings between 120 and 220 words. Avoid deterministic predictions.`;
     }
 
-    const userPrompt = `User question: "${question}"
+    // Build messages array
+    const messages: { role: string; content: string }[] = [
+      { role: "system", content: systemPrompt },
+    ];
+
+    if (followUp && conversationHistory?.length) {
+      // For follow-ups, include the original reading context and conversation history
+      const contextPrompt = `Original question: "${question}"
+
+${type === "rune" ? "Runes" : "Cards"} drawn:
+${symbolsDescription}
+
+The reading has already been given. The user is now asking follow-up questions about the same reading. Stay in character as their reader, referencing the same ${type === "rune" ? "runes" : "cards"} and their meanings. Keep responses between 80 and 150 words.`;
+
+      messages.push({ role: "user", content: contextPrompt });
+      messages.push({ role: "assistant", content: "I understand. I'll continue interpreting these symbols for you." });
+
+      // Add conversation history
+      for (const msg of conversationHistory) {
+        messages.push({ role: msg.role, content: msg.content });
+      }
+    } else {
+      // Initial reading
+      const userPrompt = `User question: "${question}"
 
 ${type === "rune" ? "Runes" : "Cards"} drawn:
 ${symbolsDescription}
 
 Interpret these ${type === "rune" ? "runes" : "cards"} and connect their meanings to the user's question.`;
+
+      messages.push({ role: "user", content: userPrompt });
+    }
 
     const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
       method: "POST",
@@ -88,10 +114,7 @@ Interpret these ${type === "rune" ? "runes" : "cards"} and connect their meaning
       },
       body: JSON.stringify({
         model: "google/gemini-2.5-flash",
-        messages: [
-          { role: "system", content: systemPrompt },
-          { role: "user", content: userPrompt },
-        ],
+        messages,
       }),
     });
 

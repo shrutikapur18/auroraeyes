@@ -2,14 +2,30 @@ import { useCallback } from "react";
 import { motion } from "framer-motion";
 import type { DrawnCard } from "@/data/tarotDeck";
 import ReadingAudioPlayer from "@/components/ReadingAudioPlayer";
+import FollowUpChat from "@/components/FollowUpChat";
 
 interface ReadingPanelProps {
   reading: string;
   drawnCards: DrawnCard[];
   question: string;
+  type?: "tarot" | "rune" | "angel";
+  runes?: Array<{
+    name: string;
+    symbol: string;
+    orientation: string;
+    position: string;
+    meaning: string;
+    keywords: string;
+  }>;
+  angelCards?: Array<{
+    name: string;
+    position: string;
+    meaning: string;
+    keywords: string;
+  }>;
 }
 
-const ReadingPanel = ({ reading, drawnCards, question }: ReadingPanelProps) => {
+const ReadingPanel = ({ reading, drawnCards, question, type = "tarot", runes, angelCards }: ReadingPanelProps) => {
   const handleShare = useCallback(async () => {
     const cardNames = drawnCards
       .filter((dc) => dc.isRevealed)
@@ -115,6 +131,16 @@ const ReadingPanel = ({ reading, drawnCards, question }: ReadingPanelProps) => {
           </button>
         </motion.div>
       </div>
+
+      {/* Follow-up chat */}
+      <FollowUpChat
+        originalQuestion={question}
+        drawnCards={drawnCards}
+        initialReading={reading}
+        type={type}
+        runes={runes}
+        angelCards={angelCards}
+      />
     </motion.div>
   );
 };
