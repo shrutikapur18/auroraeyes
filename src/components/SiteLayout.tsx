@@ -12,7 +12,8 @@ const navLinks = [
   { to: "/pick-a-card-reading", label: "Pick a Card", icon: "✨" },
   { to: "/rune-reading", label: "Runes", icon: "ᚱ" },
   { to: "/angel-card-reading", label: "Angel Cards", icon: "👼" },
-  { to: "/daily-tarot-card", label: "Daily", icon: "🌅" },
+  { to: "/daily-tarot-reading", label: "Today", icon: "📅" },
+  { to: "/daily-tarot-card", label: "Daily Draw", icon: "🌅" },
   { to: "/tarot-card-meanings", label: "Meanings", icon: "📖" },
   { to: "/blog", label: "Blog", icon: "📝" },
 ];
