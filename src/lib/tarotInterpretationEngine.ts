@@ -476,16 +476,23 @@ export function generateRuleBasedReading(question: string, cards: DrawnCard[]): 
   if (revealed.length === 0) return "No cards have been revealed yet.";
 
   const context = detectQuestionContext(question);
+  const tone = detectEmotionalTone(question);
   const themes = detectThemes(cards);
+  const toneData = TONE_MODIFIERS[tone];
   const parts: string[] = [];
 
   // 1. Opening
   parts.push(pick(OPENINGS_BY_CONTEXT[context]));
 
-  // 2. Question acknowledgment
-  parts.push(buildQuestionAcknowledgment(question, context));
+  // 2. Question acknowledgment (tone-aware)
+  parts.push(buildQuestionAcknowledgment(question, context, tone));
 
-  // 3. Theme weaving
+  // 3. Emotional bridge (tone-specific)
+  if (tone !== "neutral") {
+    parts.push(pick(toneData.bridge));
+  }
+
+  // 4. Theme weaving
   if (themes.length > 0) {
     const primary = themes[0];
     const bridge = pick(THEME_BRIDGES)
@@ -500,20 +507,13 @@ export function generateRuleBasedReading(question: string, cards: DrawnCard[]): 
     }
   }
 
-  // 4. Card-by-card narrative with transitions
-  parts.push(""); // visual break
+  // 5. Card-by-card narrative
+  parts.push("");
   for (let i = 0; i < revealed.length; i++) {
-    const cardText = interpretCard(revealed[i], context);
-
-    if (i > 0 && revealed.length > 2) {
-      // Add a soft transition between cards (not for the first one)
-      parts.push(cardText);
-    } else {
-      parts.push(cardText);
-    }
+    parts.push(interpretCard(revealed[i], context));
   }
 
-  // 5. Synthesis — connect cards to each other for multi-card readings
+  // 6. Synthesis for multi-card readings
   if (revealed.length >= 3) {
     parts.push("");
     const first = revealed[0];
@@ -526,15 +526,19 @@ export function generateRuleBasedReading(question: string, cards: DrawnCard[]): 
     parts.push(pick(syntheses));
   }
 
-  // 6. Timing
+  // 7. Timing
   const timingText = getTimingNarrative(cards);
   if (timingText) {
     parts.push("");
     parts.push(timingText);
   }
 
-  // 7. Closing
+  // 8. Tone-aware reassurance + closing
   parts.push("");
+  if (tone !== "neutral") {
+    parts.push(toneData.reassurance);
+    parts.push("");
+  }
   parts.push(pick(CLOSINGS_BY_CONTEXT[context]));
 
   return parts.join("\n\n");
