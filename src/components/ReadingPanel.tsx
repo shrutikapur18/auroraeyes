@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import { motion } from "framer-motion";
 import type { DrawnCard } from "@/data/tarotDeck";
+import ReadingAudioPlayer from "@/components/ReadingAudioPlayer";
 
 interface ReadingPanelProps {
   reading: string;
@@ -9,11 +10,6 @@ interface ReadingPanelProps {
 }
 
 const ReadingPanel = ({ reading, drawnCards, question }: ReadingPanelProps) => {
-  if (!reading) return null;
-
-  // Split reading into main interpretation and sections
-  const sections = reading.split(/\n\n/);
-
   const handleShare = useCallback(async () => {
     const cardNames = drawnCards
       .filter((dc) => dc.isRevealed)
@@ -33,6 +29,8 @@ const ReadingPanel = ({ reading, drawnCards, question }: ReadingPanelProps) => {
       // Could use toast here
     }
   }, [drawnCards, question, reading]);
+
+  if (!reading) return null;
 
   return (
     <motion.div
@@ -100,7 +98,8 @@ const ReadingPanel = ({ reading, drawnCards, question }: ReadingPanelProps) => {
           </div>
         </motion.div>
 
-        {/* Share button */}
+        {/* Voice reading */}
+        <ReadingAudioPlayer reading={reading} />
         <motion.div
           className="flex justify-center mt-6"
           initial={{ opacity: 0 }}
