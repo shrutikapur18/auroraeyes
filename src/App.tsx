@@ -34,9 +34,11 @@ import QuestionReadingPage from "./pages/QuestionReadingPage";
 import SharedReadingPreview from "./pages/SharedReadingPreview";
 import HoraryReading from "./pages/HoraryReading";
 import HoraryGuide from "./pages/HoraryGuide";
+import HoraryContentPage from "./pages/HoraryContentPage";
 import HTMLSitemap from "./pages/HTMLSitemap";
 import NotFound from "./pages/NotFound";
 import { questionPages } from "./data/seoData";
+import { horaryContentPages } from "./data/horaryContentPages";
 
 const queryClient = new QueryClient();
 
@@ -89,6 +91,9 @@ const App = () => (
             {/* Horary Astrology */}
             <Route path="/horary-reading" element={<HoraryReading />} />
             <Route path="/horary-astrology" element={<HoraryGuide />} />
+            {horaryContentPages.map((page) => (
+              <Route key={page.slug} path={`/${page.slug}`} element={<HoraryContentPage />} />
+            ))}
             {/* HTML Sitemap */}
             <Route path="/sitemap-html" element={<HTMLSitemap />} />
             {/* Shared reading preview */}
