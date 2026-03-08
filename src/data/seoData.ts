@@ -440,6 +440,51 @@ export function generateCombinationPages(): CombinationPage[] {
   }).filter(Boolean) as CombinationPage[];
 }
 
+/* ── Comparison pages ── */
+export interface ComparisonPage {
+  slug: string;
+  card1Name: string;
+  card2Name: string;
+  card1Slug: string;
+  card2Slug: string;
+  summary: string;
+  description: string;
+}
+
+const comparisonPairs: [number, number, string][] = [
+  [0, 21, "The Fool begins the journey while The World completes it — together they represent the full cycle of experience."],
+  [1, 2, "The Magician acts through will and conscious skill, while The High Priestess works through intuition and passive knowing."],
+  [3, 4, "The Empress nurtures through abundance and softness, while The Emperor builds through structure and authority."],
+  [6, 15, "The Lovers represent conscious choice and harmony, while The Devil reveals unconscious attachment and shadow bonds."],
+  [13, 16, "Death transforms gradually and naturally, while The Tower brings sudden, unavoidable change."],
+  [17, 18, "The Star offers clarity and hope, while The Moon obscures with illusion and uncertainty."],
+  [8, 7, "Strength works through patience and inner power, while The Chariot conquers through willpower and external drive."],
+  [9, 17, "The Hermit seeks wisdom in solitude, while The Star finds inspiration in openness and vulnerability."],
+  [10, 11, "The Wheel of Fortune turns through fate and chance, while Justice operates through cause and effect."],
+  [19, 18, "The Sun radiates clarity and joy, while The Moon speaks to mystery and the unconscious."],
+  [12, 13, "The Hanged Man surrenders to gain perspective, while Death releases what no longer serves."],
+  [5, 0, "The Hierophant follows tradition and structure, while The Fool breaks free of convention."],
+];
+
+export function generateComparisonPages(): ComparisonPage[] {
+  return comparisonPairs.map(([id1, id2, summary]) => {
+    const c1 = tarotDeck.find(c => c.id === id1);
+    const c2 = tarotDeck.find(c => c.id === id2);
+    if (!c1 || !c2) return null;
+    const s1 = slugify(c1.name);
+    const s2 = slugify(c2.name);
+    return {
+      slug: `${s1}-vs-${s2}`,
+      card1Name: c1.name,
+      card2Name: c2.name,
+      card1Slug: s1,
+      card2Slug: s2,
+      summary,
+      description: `Compare ${c1.name} and ${c2.name} tarot cards. Understand the key differences in love, career, and general readings.`,
+    };
+  }).filter(Boolean) as ComparisonPage[];
+}
+
 /* ── All dynamic URLs for sitemap ── */
 export function getAllSEOUrls(): { loc: string; changefreq: string; priority: string }[] {
   const base = "https://tarotguidance.lovable.app";
