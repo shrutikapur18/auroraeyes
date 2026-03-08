@@ -30,6 +30,8 @@ const ReadingPanel = ({ reading, drawnCards, question }: ReadingPanelProps) => {
     }
   }, [drawnCards, question, reading]);
 
+  if (!reading) return null;
+
   return (
     <motion.div
       className="max-w-2xl mx-auto mt-10 mb-16 relative z-10"
