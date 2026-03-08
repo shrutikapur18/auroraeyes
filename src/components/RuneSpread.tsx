@@ -1,9 +1,11 @@
 import { useState, useCallback } from "react";
 import { motion } from "framer-motion";
-import { drawRunes, runePositions, type DrawnRune } from "@/data/runes";
+import { runePositions, type DrawnRune } from "@/data/runes";
 import RuneComponent from "./RuneComponent";
+import RuneStonePicker from "./RuneStonePicker";
 import ReadingTable from "./ReadingTable";
 import FocusMoment from "./FocusMoment";
+import GradualReading from "./GradualReading";
 import { generateRuneReading } from "@/lib/runeReading";
 
 interface RuneSpreadProps {
@@ -12,7 +14,7 @@ interface RuneSpreadProps {
 }
 
 const RuneSpread = ({ question, onError }: RuneSpreadProps) => {
-  const [phase, setPhase] = useState<"idle" | "focus" | "casting" | "spread" | "loading" | "result">("idle");
+  const [phase, setPhase] = useState<"idle" | "focus" | "picking" | "spread" | "loading" | "result">("idle");
   const [runes, setRunes] = useState<DrawnRune[]>([]);
   const [reading, setReading] = useState("");
 
@@ -26,10 +28,12 @@ const RuneSpread = ({ question, onError }: RuneSpreadProps) => {
   };
 
   const handleFocusComplete = () => {
-    setPhase("casting");
-    const drawn = drawRunes(3).map((d, i) => ({ ...d, position: runePositions[i] }));
-    setRunes(drawn);
-    setTimeout(() => setPhase("spread"), 1800);
+    setPhase("picking");
+  };
+
+  const handlePickComplete = (picked: DrawnRune[]) => {
+    setRunes(picked);
+    setPhase("spread");
   };
 
   const handleReveal = useCallback((index: number) => {
@@ -47,7 +51,7 @@ const RuneSpread = ({ question, onError }: RuneSpreadProps) => {
       }
       return updated;
     });
-  }, [question, onError]);
+  }, [question]);
 
   const handleReset = () => {
     setPhase("idle");
@@ -60,7 +64,7 @@ const RuneSpread = ({ question, onError }: RuneSpreadProps) => {
       {phase === "idle" && (
         <motion.div className="flex flex-col items-center gap-6" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
           <p className="text-sm text-muted-foreground italic text-center max-w-md">
-            The Elder Futhark runes hold ancient wisdom. Focus on your question and cast the runes.
+            The Elder Futhark runes hold ancient wisdom. Focus on your question and choose your runes.
           </p>
           <div className="flex gap-3">
             {["ᚠ", "ᚢ", "ᚦ", "ᚨ", "ᚱ"].map((s, i) => (
@@ -76,7 +80,7 @@ const RuneSpread = ({ question, onError }: RuneSpreadProps) => {
           </div>
           <motion.button
             onClick={handleCast}
-            className="px-8 py-4 rounded-xl bg-primary/20 border-2 border-primary text-primary font-heading text-lg tracking-widest hover:bg-primary/30 transition-all gold-glow"
+            className="px-8 py-4 rounded-xl bg-primary/20 border-2 border-primary text-primary font-heading text-base md:text-lg tracking-widest hover:bg-primary/30 transition-all gold-glow active:scale-95"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -89,32 +93,18 @@ const RuneSpread = ({ question, onError }: RuneSpreadProps) => {
         <FocusMoment onComplete={handleFocusComplete} method="runes" />
       )}
 
-      {phase === "casting" && (
-        <motion.div className="flex flex-col items-center py-10" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-          <div className="flex gap-4 mb-6">
-            {[0, 1, 2].map((i) => (
-              <motion.div
-                key={i}
-                className="w-14 h-14 rounded-full rune-stone border border-primary/30 flex items-center justify-center text-primary/30 text-lg"
-                animate={{
-                  y: [0, -30, 10, 0],
-                  x: [0, (i - 1) * 20, (i - 1) * 40, (i - 1) * 30],
-                  rotate: [0, 180, 360],
-                }}
-                transition={{ duration: 1.2, delay: i * 0.2, ease: "easeInOut" }}
-              >
-                ?
-              </motion.div>
-            ))}
-          </div>
-          <p className="font-heading text-primary text-sm tracking-widest animate-pulse">Casting the runes...</p>
-        </motion.div>
+      {phase === "picking" && (
+        <RuneStonePicker
+          requiredCount={3}
+          positions={runePositions}
+          onComplete={handlePickComplete}
+        />
       )}
 
       {(phase === "spread" || phase === "loading" || phase === "result") && (
         <motion.div className="flex flex-col items-center gap-6" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
           {phase === "spread" && (
-            <p className="text-sm text-muted-foreground italic">Reveal each rune to uncover its wisdom.</p>
+            <p className="text-sm text-muted-foreground italic">Tap each rune to reveal its wisdom.</p>
           )}
           <ReadingTable>
             <div className="flex justify-center items-end gap-6 md:gap-10">
@@ -135,7 +125,7 @@ const RuneSpread = ({ question, onError }: RuneSpreadProps) => {
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="reading-panel rounded-xl p-6 max-w-lg text-sm text-foreground font-body leading-relaxed whitespace-pre-line"
+              className="reading-panel rounded-xl p-5 md:p-6 max-w-lg w-full"
             >
               <h3 className="font-heading text-lg gold-text mb-3 text-center">Rune Reading</h3>
               <div className="flex justify-center gap-4 mb-4">
@@ -148,9 +138,10 @@ const RuneSpread = ({ question, onError }: RuneSpreadProps) => {
                   </div>
                 ))}
               </div>
-              <div className="border-t border-border/30 pt-4">{reading}</div>
+              <div className="border-t border-border/30 pt-4">
+                <GradualReading text={reading} interval={500} />
+              </div>
 
-              {/* Reflection */}
               <div className="mt-6 pt-4 border-t border-primary/10">
                 <h4 className="font-heading text-xs gold-text mb-2 tracking-wider">Take a moment to reflect</h4>
                 <p className="text-xs text-muted-foreground italic">Does this message connect with something currently unfolding in your life?</p>
@@ -161,7 +152,7 @@ const RuneSpread = ({ question, onError }: RuneSpreadProps) => {
           {phase === "result" && (
             <button
               onClick={handleReset}
-              className="px-6 py-3 rounded-lg bg-secondary border border-primary/30 text-primary font-heading text-sm tracking-wider hover:bg-primary/20 transition-all"
+              className="px-6 py-3.5 rounded-lg bg-secondary border border-primary/30 text-primary font-heading text-sm tracking-wider hover:bg-primary/20 transition-all active:scale-95"
             >
               Cast Again
             </button>
