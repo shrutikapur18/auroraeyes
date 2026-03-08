@@ -6,7 +6,7 @@ import type { DrawnCard } from "@/data/tarotDeck";
 import TarotCardComponent from "./TarotCardComponent";
 import ReadingTable from "./ReadingTable";
 import FocusMoment from "./FocusMoment";
-import { canDoReading, recordReading, generateAIReading } from "@/lib/tarotReading";
+import { generateLocalReading } from "@/lib/tarotReading";
 import cardBackImage from "@/assets/card-back.jpg";
 
 interface YesNoSpreadProps {
