@@ -166,7 +166,7 @@ Provide a detailed horary astrology interpretation (4-6 paragraphs) following tr
 6. Consider receptions, dignities, and any prohibiting factors
 7. Give a clear answer to the question with reasoning
 
-Write in a mystical but clear tone. Be specific about which planets and aspects support your interpretation.`;
+IMPORTANT: Write in simple, everyday language that anyone can understand. Avoid jargon and overly technical astrology terms — explain things like you're talking to a friend over coffee. Keep it warm, relatable, and easy to follow. When you mention a planet or aspect, briefly explain what it means in plain words.`;
 
       try {
         const aiRes = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
