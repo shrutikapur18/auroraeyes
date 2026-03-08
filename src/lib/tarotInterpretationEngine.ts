@@ -91,7 +91,7 @@ function getTimingPhrase(cards: DrawnCard[]): string {
   const suitCounts = new Map<string, number>();
   for (const s of suits) suitCounts.set(s, (suitCounts.get(s) || 0) + 1);
 
-  let dominant = suits[0];
+  let dominant: string = suits[0];
   let max = 0;
   for (const [s, c] of suitCounts) {
     if (c > max) { dominant = s; max = c; }
