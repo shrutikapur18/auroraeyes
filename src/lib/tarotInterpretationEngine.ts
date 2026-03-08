@@ -421,12 +421,15 @@ const CARD_TRANSITIONS = [
 
 // ─── Question Acknowledgment ───
 
-function buildQuestionAcknowledgment(question: string, context: QuestionContext): string {
+function buildQuestionAcknowledgment(question: string, context: QuestionContext, tone: EmotionalTone): string {
   const contextLabel = CONTEXT_LABELS[context];
+  const toneLabel = TONE_LABELS[tone];
+  const modifier = pick(TONE_MODIFIERS[tone].prefix);
+
   const phrases = [
-    `In the context of your question about ${contextLabel}, the cards have drawn a meaningful pattern.`,
-    `Your question touches on ${contextLabel}, and the cards respond with clarity and depth.`,
-    `As you seek guidance regarding ${contextLabel}, the spread reveals important insights.`,
+    `${modifier} in the context of your question about ${contextLabel}, the cards have drawn a meaningful pattern.`,
+    `You come to the cards ${toneLabel}. ${modifier} your question about ${contextLabel} draws a clear response from the spread.`,
+    `${modifier} as you seek guidance regarding ${contextLabel}, the spread reveals important insights.`,
   ];
   return pick(phrases);
 }
