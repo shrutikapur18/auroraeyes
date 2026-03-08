@@ -71,6 +71,9 @@ const QuestionReadingPage = () => {
           ))}
         </div>
 
+        {/* Interactive tool */}
+        <MiniCardDraw prompt={`Draw a card for quick insight about ${page.h1.split("—")[0].trim().toLowerCase()}.`} />
+
         {/* CTA to actual reading */}
         <ReadingCTA
           title="Ready for Your Reading?"
