@@ -4,6 +4,8 @@ import SEOHead from "@/components/SEOHead";
 import Breadcrumbs, { generateBreadcrumbJsonLd } from "@/components/Breadcrumbs";
 import InternalLinks from "@/components/InternalLinks";
 import FAQSection, { generateFAQJsonLd } from "@/components/FAQSection";
+import SnippetBox from "@/components/SnippetBox";
+import ReadingCTA from "@/components/ReadingCTA";
 import { questionPages } from "@/data/seoData";
 
 const QuestionReadingPage = () => {
@@ -40,6 +42,7 @@ const QuestionReadingPage = () => {
     headline: page.h1,
     description: page.description,
     breadcrumb: generateBreadcrumbJsonLd(breadcrumbs),
+    mainEntity: generateFAQJsonLd(page.faq).mainEntity,
   };
 
   return (
@@ -55,6 +58,12 @@ const QuestionReadingPage = () => {
 
         <h1 className="font-heading text-2xl md:text-4xl gold-text mb-4 tracking-wider">{page.h1}</h1>
 
+        {/* Featured snippet */}
+        <SnippetBox
+          question={page.faq[0]?.q || page.h1}
+          answer={page.faq[0]?.a || page.intro[0]}
+        />
+
         <div className="space-y-4 mb-8">
           {page.intro.map((p, i) => (
             <p key={i} className="text-sm text-muted-foreground leading-relaxed">{p}</p>
@@ -62,16 +71,10 @@ const QuestionReadingPage = () => {
         </div>
 
         {/* CTA to actual reading */}
-        <div className="reading-panel rounded-xl p-6 text-center mb-8">
-          <h2 className="font-heading text-lg text-foreground mb-2">Ready for Your Reading?</h2>
-          <p className="text-sm text-muted-foreground mb-4">Focus on your question and let the cards guide you.</p>
-          <Link
-            to="/free-tarot-reading"
-            className="inline-block px-6 py-3 rounded-lg bg-primary text-primary-foreground font-heading text-sm hover:opacity-90 transition-opacity"
-          >
-            Start Free Tarot Reading
-          </Link>
-        </div>
+        <ReadingCTA
+          title="Ready for Your Reading?"
+          description="Focus on your question and let the cards guide you."
+        />
 
         <FAQSection items={page.faq} />
         <InternalLinks links={relatedLinks} />

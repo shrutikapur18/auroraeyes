@@ -147,7 +147,8 @@ const Index = () => {
                   </Link>
                 ))}
               </div>
-            </section>
+             </section>
+            <TopicalClusterNav />
           </motion.div>
         )}
         {phase === "focus" && <FocusMoment key="focus" onComplete={() => setPhase("shuffling")} method="tarot" />}
