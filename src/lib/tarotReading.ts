@@ -1,6 +1,7 @@
 import type { DrawnCard } from "@/data/tarotDeck";
 import { supabase } from "@/integrations/supabase/client";
 import { generateRuleBasedReading } from "@/lib/tarotInterpretationEngine";
+import { getCachedReading, setCachedReading } from "@/lib/readingCache";
 
 const READING_COUNT_KEY = "tarot_reading_count";
 const READING_RESET_KEY = "tarot_reading_reset";
@@ -36,7 +37,14 @@ export function recordReading() {
   localStorage.setItem(COOLDOWN_KEY, Date.now().toString());
 }
 
-export async function generateAIReading(question: string, cards: DrawnCard[]): Promise<string> {
+export async function generateAIReading(question: string, cards: DrawnCard[], spreadType?: string): Promise<string> {
+  // Check cache first
+  const cached = getCachedReading(cards, spreadType);
+  if (cached) {
+    console.log("[ReadingCache] Cache hit — returning stored reading");
+    return cached;
+  }
+
   const cardData = cards
     .filter((dc) => dc.isRevealed)
     .map((dc) => ({
@@ -53,18 +61,27 @@ export async function generateAIReading(question: string, cards: DrawnCard[]): P
 
     if (error) {
       console.error("Edge function error:", error);
-      return generateLocalReading(question, cards);
+      const local = generateLocalReading(question, cards);
+      setCachedReading(cards, local, "local", spreadType);
+      return local;
     }
 
     if (data?.error) {
       console.error("AI error:", data.error);
-      return generateLocalReading(question, cards);
+      const local = generateLocalReading(question, cards);
+      setCachedReading(cards, local, "local", spreadType);
+      return local;
     }
 
-    return data?.reading || generateLocalReading(question, cards);
+    const reading = data?.reading || generateLocalReading(question, cards);
+    const source = data?.reading ? "ai" : "local";
+    setCachedReading(cards, reading, source, spreadType);
+    return reading;
   } catch (e) {
     console.error("Failed to get AI reading:", e);
-    return generateLocalReading(question, cards);
+    const local = generateLocalReading(question, cards);
+    setCachedReading(cards, local, "local", spreadType);
+    return local;
   }
 }
 
