@@ -26,6 +26,7 @@ import SpreadGuidePage from "./pages/SpreadGuidePage";
 import TarotCombinations from "./pages/TarotCombinations";
 import TarotCombinationPage from "./pages/TarotCombinationPage";
 import QuestionReadingPage from "./pages/QuestionReadingPage";
+import SharedReadingPreview from "./pages/SharedReadingPreview";
 import NotFound from "./pages/NotFound";
 import { questionPages } from "./data/seoData";
 

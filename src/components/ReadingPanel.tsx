@@ -49,14 +49,6 @@ const ReadingPanel = ({ reading, drawnCards, question, type = "tarot", runes, an
     }
   }, [question, drawnCards]);
 
-  const shareText = useMemo(() => {
-    const cardNames = drawnCards
-      .filter((dc) => dc.isRevealed)
-      .map((dc) => `${dc.card.name} (${dc.isReversed ? "Reversed" : "Upright"})`)
-      .join(", ");
-    return `🔮 My Mystic Reading\n\nQuestion: "${question}"\nCards: ${cardNames}\n\n${displayedReading.slice(0, 200)}…`;
-  }, [drawnCards, question, displayedReading]);
-
   const shareImageData: ShareImageData | undefined = useMemo(() => {
     const revealed = drawnCards.filter((dc) => dc.isRevealed);
     if (revealed.length === 0) return undefined;
@@ -195,14 +187,21 @@ const ReadingPanel = ({ reading, drawnCards, question, type = "tarot", runes, an
         {/* Voice reading */}
         <ReadingAudioPlayer reading={displayedReading} />
 
-        {/* Share section */}
+        {/* Share section — now with viral share links */}
         <motion.div
-          className="mt-6"
+          className="mt-6 pt-6 border-t border-primary/10"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2 }}
         >
-          <ShareButtons text={shareText} cardData={shareImageData} />
+          <ShareButtons
+            text=""
+            cardData={shareImageData}
+            drawnCards={drawnCards}
+            question={question}
+            reading={displayedReading}
+            type={type}
+          />
         </motion.div>
       </div>
 
