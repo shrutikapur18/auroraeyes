@@ -131,6 +131,16 @@ const ReadingPanel = ({ reading, drawnCards, question, type = "tarot", runes, an
           </button>
         </motion.div>
       </div>
+
+      {/* Follow-up chat */}
+      <FollowUpChat
+        originalQuestion={question}
+        drawnCards={drawnCards}
+        initialReading={reading}
+        type={type}
+        runes={runes}
+        angelCards={angelCards}
+      />
     </motion.div>
   );
 };
