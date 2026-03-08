@@ -18,6 +18,7 @@ import AngelCardSpread from "@/components/AngelCardSpread";
 import RuneSpread from "@/components/RuneSpread";
 import ReadingPanel from "@/components/ReadingPanel";
 import DailyDivination from "@/components/DailyDivination";
+import TopicalClusterNav from "@/components/TopicalClusterNav";
 import { threeCardPositions, celticCrossPositions } from "@/data/tarotDeck";
 import type { DrawnCard, ReadingMode } from "@/data/tarotDeck";
 import { generateLocalReading } from "@/lib/tarotReading";
@@ -146,7 +147,8 @@ const Index = () => {
                   </Link>
                 ))}
               </div>
-            </section>
+             </section>
+            <TopicalClusterNav />
           </motion.div>
         )}
         {phase === "focus" && <FocusMoment key="focus" onComplete={() => setPhase("shuffling")} method="tarot" />}

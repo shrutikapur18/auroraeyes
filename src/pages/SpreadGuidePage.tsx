@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import SEOHead from "@/components/SEOHead";
 import Breadcrumbs, { generateBreadcrumbJsonLd } from "@/components/Breadcrumbs";
 import InternalLinks from "@/components/InternalLinks";
+import FAQSection, { generateFAQJsonLd } from "@/components/FAQSection";
+import ReadingCTA from "@/components/ReadingCTA";
 import { spreadGuides } from "@/data/seoData";
 
 const SpreadGuidePage = () => {
@@ -24,6 +26,12 @@ const SpreadGuidePage = () => {
     { label: spread.h1.split("—")[0].trim() },
   ];
 
+  const faqItems = [
+    { q: `How many cards are in the ${spread.h1.split("—")[0].trim()}?`, a: `The ${spread.h1.split("—")[0].trim()} uses ${spread.cardCount} card${spread.cardCount > 1 ? "s" : ""}, each placed in a specific position with a distinct meaning.` },
+    { q: `What is the ${spread.h1.split("—")[0].trim()} best for?`, a: spread.bestFor },
+    { q: `Is the ${spread.h1.split("—")[0].trim()} good for beginners?`, a: `This spread is rated ${spread.difficulty}. ${spread.difficulty === "Beginner" ? "It's an excellent starting point for new tarot readers." : "Some experience with simpler spreads is recommended before attempting this layout."}` },
+  ];
+
   const howToJsonLd = {
     "@context": "https://schema.org",
     "@type": "HowTo",
@@ -35,6 +43,7 @@ const SpreadGuidePage = () => {
       text,
     })),
     breadcrumb: generateBreadcrumbJsonLd(breadcrumbs),
+    mainEntity: generateFAQJsonLd(faqItems).mainEntity,
   };
 
   return (
@@ -90,14 +99,12 @@ const SpreadGuidePage = () => {
           </ul>
         </section>
 
-        <div className="text-center mb-8">
-          <Link
-            to="/free-tarot-reading"
-            className="inline-block px-6 py-3 rounded-lg bg-primary text-primary-foreground font-heading text-sm hover:opacity-90 transition-opacity"
-          >
-            Try This Spread Now
-          </Link>
-        </div>
+        <ReadingCTA
+          title="Try This Spread Now"
+          description={`Experience the ${spread.h1.split("—")[0].trim()} with an interactive AI-powered reading.`}
+        />
+
+        <FAQSection items={faqItems} />
 
         <InternalLinks
           links={[
