@@ -28,25 +28,32 @@ interface ReadingPanelProps {
 }
 
 const ReadingPanel = ({ reading, drawnCards, question, type = "tarot", runes, angelCards }: ReadingPanelProps) => {
-  const handleShare = useCallback(async () => {
+  const shareText = useMemo(() => {
     const cardNames = drawnCards
       .filter((dc) => dc.isRevealed)
       .map((dc) => `${dc.card.name} (${dc.isReversed ? "Reversed" : "Upright"})`)
       .join(", ");
-
-    const shareText = `🔮 My Mystic Reading\n\nQuestion: "${question}"\nCards: ${cardNames}\n\n${reading.slice(0, 200)}…`;
-
-    if (navigator.share) {
-      try {
-        await navigator.share({ title: "My Mystic Divination Reading", text: shareText });
-      } catch {
-        // User cancelled
-      }
-    } else {
-      await navigator.clipboard.writeText(shareText);
-      // Could use toast here
-    }
+    return `🔮 My Mystic Reading\n\nQuestion: "${question}"\nCards: ${cardNames}\n\n${reading.slice(0, 200)}…`;
   }, [drawnCards, question, reading]);
+
+  const shareImageData: ShareImageData | undefined = useMemo(() => {
+    const revealed = drawnCards.filter((dc) => dc.isRevealed);
+    if (revealed.length === 0) return undefined;
+    const primary = revealed[0];
+    // Extract first meaningful sentence from reading
+    const firstSentence = reading
+      .replace(/\*\*/g, "")
+      .split(/\.\s/)
+      .filter((s) => s.length > 20)
+      .slice(0, 3)
+      .join(". ") + ".";
+    return {
+      cardName: primary.card.name,
+      orientation: primary.isReversed ? "Reversed" : "Upright",
+      message: firstSentence.slice(0, 280),
+      position: primary.position,
+    };
+  }, [drawnCards, reading]);
 
   if (!reading) return null;
 
