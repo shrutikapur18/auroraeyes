@@ -3,6 +3,9 @@ import { motion } from "framer-motion";
 import SEOHead from "@/components/SEOHead";
 import Breadcrumbs, { generateBreadcrumbJsonLd } from "@/components/Breadcrumbs";
 import InternalLinks from "@/components/InternalLinks";
+import FAQSection, { generateFAQJsonLd } from "@/components/FAQSection";
+import SnippetBox from "@/components/SnippetBox";
+import ReadingCTA from "@/components/ReadingCTA";
 import { generateCombinationPages } from "@/data/seoData";
 
 const TarotCombinationPage = () => {
@@ -28,12 +31,20 @@ const TarotCombinationPage = () => {
   const title = `${combo.card1Name} and ${combo.card2Name} Tarot Combination`;
   const description = `What does it mean when ${combo.card1Name} and ${combo.card2Name} appear together? Discover the ${combo.theme} energy of this powerful tarot combination.`;
 
+  const faqItems = [
+    { q: `What does ${combo.card1Name} and ${combo.card2Name} mean together?`, a: combo.meaning },
+    ...(combo.love ? [{ q: `What does ${combo.card1Name} and ${combo.card2Name} mean in love?`, a: combo.love }] : []),
+    ...(combo.career ? [{ q: `What does ${combo.card1Name} and ${combo.card2Name} mean for career?`, a: combo.career }] : []),
+    { q: `Is ${combo.card1Name} with ${combo.card2Name} a positive combination?`, a: `This combination carries ${combo.theme} energy. ${combo.meaning.split(".")[0]}.` },
+  ];
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: title,
     description,
     breadcrumb: generateBreadcrumbJsonLd(breadcrumbs),
+    mainEntity: generateFAQJsonLd(faqItems).mainEntity,
   };
 
   return (
@@ -46,6 +57,12 @@ const TarotCombinationPage = () => {
           {combo.card1Name} & {combo.card2Name}
         </h1>
         <p className="text-sm text-primary/70 font-heading mb-6">Theme: {combo.theme}</p>
+
+        {/* Featured snippet */}
+        <SnippetBox
+          question={`What does ${combo.card1Name} and ${combo.card2Name} mean together in tarot?`}
+          answer={combo.meaning.split(".").slice(0, 2).join(".") + "."}
+        />
 
         <div className="reading-panel rounded-xl p-6 md:p-8 space-y-6 mb-8">
           <section>
@@ -67,6 +84,13 @@ const TarotCombinationPage = () => {
             </section>
           )}
         </div>
+
+        <ReadingCTA
+          title="See These Cards in Action"
+          description={`Draw your own spread and discover how ${combo.card1Name} and ${combo.card2Name} interact with the rest of the deck.`}
+        />
+
+        <FAQSection items={faqItems} />
 
         <InternalLinks
           title="Explore These Cards"

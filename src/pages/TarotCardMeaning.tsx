@@ -4,8 +4,9 @@ import SEOHead from "@/components/SEOHead";
 import Breadcrumbs, { generateBreadcrumbJsonLd } from "@/components/Breadcrumbs";
 import InternalLinks from "@/components/InternalLinks";
 import FAQSection, { generateFAQJsonLd } from "@/components/FAQSection";
+import SnippetBox from "@/components/SnippetBox";
+import ReadingCTA from "@/components/ReadingCTA";
 import { tarotDeck } from "@/data/tarotDeck";
-import { cardCombinations } from "@/data/tarotCombinations";
 import { generateCombinationPages } from "@/data/seoData";
 
 const slugify = (name: string) => name.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
@@ -44,7 +45,6 @@ const TarotCardMeaning = () => {
   const prevCard = tarotDeck.find((c) => c.id === card.id - 1);
   const nextCard = tarotDeck.find((c) => c.id === card.id + 1);
 
-  // Find combinations this card appears in
   const combos = generateCombinationPages().filter(
     (c) => c.card1Slug === slug || c.card2Slug === slug
   );
@@ -59,6 +59,8 @@ const TarotCardMeaning = () => {
     { q: `What does ${card.name} mean upright?`, a: card.meaning_up },
     { q: `What does ${card.name} mean reversed?`, a: card.meaning_rev },
     { q: `What does ${card.name} mean in a love reading?`, a: loveInterpretation(card) },
+    { q: `What does ${card.name} mean in a career reading?`, a: careerInterpretation(card) },
+    { q: `Is ${card.name} a yes or no card?`, a: `${card.name} is generally considered a ${card.keywords.includes("beginnings") || card.keywords.includes("love") || card.keywords.includes("abundance") || card.keywords.includes("willpower") ? "yes" : "maybe"} card. Its core themes of ${card.keywords.slice(0, 2).join(" and ")} suggest ${card.keywords.includes("beginnings") || card.keywords.includes("love") ? "positive momentum" : "careful consideration of the circumstances"}.` },
   ];
 
   const jsonLd = {
@@ -66,13 +68,15 @@ const TarotCardMeaning = () => {
     "@type": "Article",
     headline: `${card.name} Tarot Card Meaning`,
     description: `${card.name} tarot card meaning: ${card.meaning_up}`,
+    image: `https://tarotguidance.lovable.app/og-image.png`,
     breadcrumb: generateBreadcrumbJsonLd(breadcrumbs),
+    mainEntity: generateFAQJsonLd(faqItems).mainEntity,
   };
 
   return (
     <>
       <SEOHead
-        title={`${card.name} Tarot Card Meaning`}
+        title={`${card.name} Tarot Card Meaning — Upright, Reversed & Love`}
         description={`${card.name} tarot card meaning: ${card.meaning_up}. Learn upright, reversed, love, career, and personal growth interpretations.`}
         canonicalPath={`/tarot-card-meanings/${slug}`}
         jsonLd={jsonLd}
@@ -83,7 +87,7 @@ const TarotCardMeaning = () => {
 
         <div className="reading-panel rounded-xl p-6 md:p-8 mb-8">
           <div className="text-center mb-6">
-            <span className="text-5xl block mb-3">{card.symbol}</span>
+            <span className="text-5xl block mb-3" role="img" aria-label={`${card.name} tarot card symbol`}>{card.symbol}</span>
             <h1 className="font-heading text-2xl md:text-4xl gold-text mb-2">{card.name}</h1>
             <p className="text-sm text-muted-foreground">{card.arcana} Arcana {card.suit ? `· ${card.suit}` : ""} {card.number !== undefined ? `· ${card.number}` : ""}</p>
             <div className="flex justify-center gap-2 mt-3 flex-wrap">
@@ -92,6 +96,12 @@ const TarotCardMeaning = () => {
               ))}
             </div>
           </div>
+
+          {/* Featured snippet paragraph */}
+          <SnippetBox
+            question={`What does ${card.name} mean in tarot?`}
+            answer={`${card.name} represents ${card.keywords.join(", ")}. When drawn upright, it signifies ${card.meaning_up.split(",").slice(0, 2).join(" and").toLowerCase()}. Reversed, it warns of ${card.meaning_rev.split(",").slice(0, 2).join(" and").toLowerCase()}.`}
+          />
 
           <div className="space-y-6">
             <section>
@@ -116,6 +126,12 @@ const TarotCardMeaning = () => {
             </section>
           </div>
         </div>
+
+        {/* Embedded reading CTA */}
+        <ReadingCTA
+          title={`Get a Reading with ${card.name}`}
+          description={`See how ${card.name} interacts with other cards in a personalized spread.`}
+        />
 
         {/* Card Combinations */}
         {combos.length > 0 && (
