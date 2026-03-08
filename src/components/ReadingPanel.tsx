@@ -101,7 +101,8 @@ const ReadingPanel = ({ reading, drawnCards, question }: ReadingPanelProps) => {
           </div>
         </motion.div>
 
-        {/* Share button */}
+        {/* Voice reading */}
+        <ReadingAudioPlayer reading={reading} />
         <motion.div
           className="flex justify-center mt-6"
           initial={{ opacity: 0 }}
