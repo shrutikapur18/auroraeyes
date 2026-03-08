@@ -6,72 +6,19 @@ const corsHeaders = {
     "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
+const SIGN_ABBR_TO_FULL: Record<string, string> = {
+  Ari: "Aries", Tau: "Taurus", Gem: "Gemini", Can: "Cancer",
+  Leo: "Leo", Vir: "Virgo", Lib: "Libra", Sco: "Scorpio",
+  Sag: "Sagittarius", Cap: "Capricorn", Aqu: "Aquarius", Pis: "Pisces",
+};
+
 const ZODIAC_SIGNS = [
   "Aries","Taurus","Gemini","Cancer","Leo","Virgo",
   "Libra","Scorpio","Sagittarius","Capricorn","Aquarius","Pisces"
 ];
 
-const FREE_ASTRO_BASE = "https://json.freeastrologyapi.com";
-
-interface AstroPlanet {
-  name: string;
-  fullDegree: number;
-  normDegree: number;
-  speed: number;
-  isRetro: string;
-  sign: string;
-  current_sign: number;
-  house_number?: number;
-}
-
-async function fetchAstroData(endpoint: string, body: Record<string, unknown>, apiKey: string) {
-  const res = await fetch(`${FREE_ASTRO_BASE}/${endpoint}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": apiKey,
-    },
-    body: JSON.stringify(body),
-  });
-  if (!res.ok) {
-    const text = await res.text();
-    throw new Error(`FreeAstroAPI ${endpoint} failed [${res.status}]: ${text}`);
-  }
-  return res.json();
-}
-
-function parsePlanets(data: Record<string, AstroPlanet>) {
-  return Object.values(data)
-    .filter((p) => p.name)
-    .map((p) => ({
-      name: p.name,
-      sign: ZODIAC_SIGNS[(p.current_sign || 1) - 1] || p.sign,
-      signNumber: p.current_sign || 1,
-      fullDegree: p.fullDegree || 0,
-      normDegree: p.normDegree || 0,
-      isRetro: p.isRetro === "true",
-      house: p.house_number || 1,
-    }));
-}
-
-function parseHouses(data: Record<string, { sign: string; degree: number; current_sign?: number }>) {
-  return Object.entries(data).map(([key, h]) => ({
-    house: parseInt(key) + 1,
-    sign: ZODIAC_SIGNS[(h.current_sign || 1) - 1] || h.sign || "",
-    signNumber: h.current_sign || 1,
-    degree: h.degree || 0,
-  }));
-}
-
-function parseAspects(data: unknown[]) {
-  if (!Array.isArray(data)) return [];
-  return data.slice(0, 20).map((a: any) => ({
-    planet1: a.aspecting_planet || a.planet1 || "",
-    planet2: a.aspected_planet || a.planet2 || "",
-    type: a.type || a.aspect || "",
-    orb: a.orb || 0,
-    applying: a.movement === "Applying" || a.applying || false,
-  }));
+function expandSign(abbr: string): string {
+  return SIGN_ABBR_TO_FULL[abbr] || abbr;
 }
 
 function getMoonPhase(moonDeg: number, sunDeg: number): string {
@@ -94,9 +41,7 @@ serve(async (req) => {
 
   try {
     const ASTRO_API_KEY = Deno.env.get("FREE_ASTRO_API_KEY");
-    if (!ASTRO_API_KEY) {
-      throw new Error("FREE_ASTRO_API_KEY is not configured");
-    }
+    if (!ASTRO_API_KEY) throw new Error("FREE_ASTRO_API_KEY is not configured");
 
     const body = await req.json();
     const { question, location, latitude, longitude, year, month, date, hours, minutes, seconds, timezone } = body;
@@ -105,70 +50,106 @@ serve(async (req) => {
       throw new Error("Missing required fields: question, latitude, longitude");
     }
 
-    const astroBody = {
+    // Use freeastroapi.com natal/calculate endpoint for chart data
+    const natalBody = {
+      name: "Horary Chart",
       year: year || new Date().getFullYear(),
       month: month || new Date().getMonth() + 1,
-      date: date || new Date().getDate(),
-      hours: hours || new Date().getHours(),
-      minutes: minutes || new Date().getMinutes(),
-      seconds: seconds || 0,
-      latitude,
-      longitude,
-      timezone: timezone || 0,
-      settings: {
-        observation_point: "geocentric",
-        ayanamsha: "tropical",
-      },
+      day: date || new Date().getDate(),
+      hour: hours ?? new Date().getHours(),
+      minute: minutes ?? new Date().getMinutes(),
+      time_known: true,
+      city: location || "Unknown",
+      lat: latitude,
+      lng: longitude,
+      tz_str: "AUTO",
+      house_system: "placidus",
+      zodiac_type: "tropical",
+      include_speed: true,
+      include_minor_aspects: true,
+      include_features: ["chiron", "true_node"],
     };
 
-    // Fetch planets, houses, and aspects in parallel
-    const [planetsRaw, housesRaw, aspectsRaw] = await Promise.all([
-      fetchAstroData("planets", astroBody, ASTRO_API_KEY),
-      fetchAstroData("western/houses", astroBody, ASTRO_API_KEY),
-      fetchAstroData("western/aspects", astroBody, ASTRO_API_KEY).catch(() => []),
-    ]);
+    const astroRes = await fetch("https://api.freeastroapi.com/api/v1/natal/calculate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": ASTRO_API_KEY,
+      },
+      body: JSON.stringify(natalBody),
+    });
 
-    const planetsData = planetsRaw.output || planetsRaw;
-    const housesData = housesRaw.output || housesRaw;
-    const aspectsData = aspectsRaw.output || aspectsRaw;
+    if (!astroRes.ok) {
+      const errText = await astroRes.text();
+      throw new Error(`FreeAstroAPI failed [${astroRes.status}]: ${errText}`);
+    }
 
-    const planets = parsePlanets(planetsData);
-    const houses = parseHouses(housesData);
-    const aspects = parseAspects(Array.isArray(aspectsData) ? aspectsData : []);
+    const astroData = await astroRes.json();
 
-    const moonPlanet = planets.find((p) => p.name === "Moon");
-    const sunPlanet = planets.find((p) => p.name === "Sun");
-    const ascendant = planets.find((p) => p.name === "Ascendant") || houses[0];
+    // Parse planets
+    const planets = (astroData.planets || []).map((p: any) => ({
+      name: p.name || p.id,
+      sign: expandSign(p.sign),
+      signNumber: ZODIAC_SIGNS.indexOf(expandSign(p.sign)) + 1,
+      fullDegree: p.abs_pos || 0,
+      normDegree: p.pos || 0,
+      isRetro: p.retrograde || false,
+      house: p.house || 1,
+    }));
+
+    // Parse houses
+    const houses = (astroData.houses || []).map((h: any) => ({
+      house: h.house,
+      sign: expandSign(h.sign),
+      signNumber: ZODIAC_SIGNS.indexOf(expandSign(h.sign)) + 1,
+      degree: h.pos || 0,
+    }));
+
+    // Parse aspects
+    const aspects = (astroData.aspects || []).slice(0, 20).map((a: any) => ({
+      planet1: a.p1 || "",
+      planet2: a.p2 || "",
+      type: a.type || "",
+      orb: a.orb || 0,
+      applying: false, // API doesn't provide applying info directly
+    }));
+
+    // Extract key data
+    const moonPlanet = planets.find((p: any) => p.name === "Moon");
+    const sunPlanet = planets.find((p: any) => p.name === "Sun");
+
+    const ascSign = astroData.angles_details?.asc
+      ? expandSign(astroData.angles_details.asc.sign)
+      : (houses[0]?.sign || "Aries");
 
     const chartData = {
       planets,
       houses,
       aspects,
-      ascendantSign: ascendant ? (ascendant as any).sign || ZODIAC_SIGNS[0] : ZODIAC_SIGNS[0],
+      ascendantSign: ascSign,
       moonSign: moonPlanet?.sign || "Unknown",
       moonPhase: moonPlanet && sunPlanet
         ? getMoonPhase(moonPlanet.fullDegree, sunPlanet.fullDegree)
         : "Unknown",
     };
 
-    // Generate AI interpretation using Lovable AI
+    // Generate AI interpretation
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     let interpretation = "Chart cast successfully. Interpretation unavailable.";
 
     if (LOVABLE_API_KEY) {
       const planetSummary = planets
-        .filter((p) => !["Ascendant", "Midheaven"].includes(p.name))
-        .map((p) => `${p.name} in ${p.sign} (House ${p.house})${p.isRetro ? " ℞" : ""}`)
+        .map((p: any) => `${p.name} in ${p.sign} (House ${p.house})${p.isRetro ? " ℞" : ""}`)
         .join(", ");
 
       const aspectSummary = aspects
         .slice(0, 10)
-        .map((a) => `${a.planet1} ${a.type} ${a.planet2} (orb ${a.orb.toFixed(1)}°, ${a.applying ? "applying" : "separating"})`)
+        .map((a: any) => `${a.planet1} ${a.type} ${a.planet2} (orb ${a.orb.toFixed(1)}°)`)
         .join("; ");
 
       const prompt = `You are a master horary astrologer. A querent has asked: "${question}"
 
-The horary chart was cast at ${year}-${month}-${date} ${hours}:${String(minutes).padStart(2, "0")} (timezone UTC${timezone >= 0 ? "+" : ""}${timezone}) at ${location} (${latitude}, ${longitude}).
+The horary chart was cast at ${year}-${month}-${date} ${hours}:${String(minutes).padStart(2, "0")} at ${location} (${latitude}, ${longitude}).
 
 Chart data:
 - Ascendant: ${chartData.ascendantSign}
@@ -188,7 +169,7 @@ Provide a detailed horary astrology interpretation (4-6 paragraphs) following tr
 Write in a mystical but clear tone. Be specific about which planets and aspects support your interpretation.`;
 
       try {
-        const aiRes = await fetch("https://ai-gateway.lovable.dev/api/chat/completions", {
+        const aiRes = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
           method: "POST",
           headers: {
             Authorization: `Bearer ${LOVABLE_API_KEY}`,
