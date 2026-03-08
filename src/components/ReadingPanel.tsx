@@ -125,19 +125,15 @@ const ReadingPanel = ({ reading, drawnCards, question, type = "tarot", runes, an
 
         {/* Voice reading */}
         <ReadingAudioPlayer reading={reading} />
+
+        {/* Share section */}
         <motion.div
-          className="flex justify-center mt-6"
+          className="mt-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2 }}
         >
-          <button
-            onClick={handleShare}
-            className="px-5 py-2.5 rounded-lg bg-muted/50 border border-primary/20 text-primary font-heading text-xs tracking-widest hover:bg-primary/10 transition-all flex items-center gap-2"
-          >
-            <span>✦</span>
-            Share My Reading
-          </button>
+          <ShareButtons text={shareText} cardData={shareImageData} />
         </motion.div>
       </div>
 
