@@ -10,7 +10,7 @@ import { interpretationMap, type TarotInterpretation } from "@/data/tarotInterpr
 
 export type QuestionContext = "love" | "career" | "money" | "decision" | "growth" | "general";
 
-const CONTEXT_KEYWORDS: Record<QuestionContext, string[]> = {
+const CONTEXT_KEYWORDS: Partial<Record<QuestionContext, string[]>> = {
   love: ["love", "relationship", "partner", "boyfriend", "girlfriend", "husband", "wife", "marriage", "dating", "romantic", "crush", "soulmate", "twin flame", "ex", "breakup", "divorce", "heart", "attraction", "chemistry", "commitment", "together", "him", "her", "feelings"],
   career: ["career", "job", "work", "profession", "boss", "colleague", "promotion", "interview", "business", "company", "workplace", "hire", "fired", "resign", "office", "manager", "freelance", "project", "client", "professional"],
   money: ["money", "financial", "finances", "income", "debt", "savings", "investment", "wealth", "afford", "salary", "pay", "bills", "mortgage", "loan", "rent", "budget", "prosperity", "abundance", "fortune"],
