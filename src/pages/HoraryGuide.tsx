@@ -138,8 +138,8 @@ const HoraryGuide = () => (
       <ReadingCTA
         title="Try a Horary Reading Now"
         description="Ask the stars a question and receive a personalized horary chart with AI-powered interpretation."
-        linkTo="/horary-reading"
-        linkLabel="Cast Your Horary Chart"
+        to="/horary-reading"
+        label="Cast Your Horary Chart"
       />
 
       {/* FAQ */}
