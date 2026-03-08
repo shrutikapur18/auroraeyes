@@ -91,6 +91,9 @@ const App = () => (
             {/* Horary Astrology */}
             <Route path="/horary-reading" element={<HoraryReading />} />
             <Route path="/horary-astrology" element={<HoraryGuide />} />
+            {horaryContentPages.map((page) => (
+              <Route key={page.slug} path={`/${page.slug}`} element={<HoraryContentPage />} />
+            ))}
             {/* HTML Sitemap */}
             <Route path="/sitemap-html" element={<HTMLSitemap />} />
             {/* Shared reading preview */}
