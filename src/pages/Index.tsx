@@ -19,7 +19,7 @@ import ReadingPanel from "@/components/ReadingPanel";
 import DailyDivination from "@/components/DailyDivination";
 import { threeCardPositions, celticCrossPositions } from "@/data/tarotDeck";
 import type { DrawnCard, ReadingMode } from "@/data/tarotDeck";
-import { canDoReading, recordReading, generateAIReading } from "@/lib/tarotReading";
+import { generateLocalReading } from "@/lib/tarotReading";
 
 type Phase = "input" | "focus" | "shuffling" | "fan" | "spread" | "reading" | "loading";
 
