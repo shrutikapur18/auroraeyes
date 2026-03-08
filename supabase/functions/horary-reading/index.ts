@@ -147,7 +147,7 @@ serve(async (req) => {
         .map((a: any) => `${a.planet1} ${a.type} ${a.planet2} (orb ${a.orb.toFixed(1)}°)`)
         .join("; ");
 
-      const prompt = `You are a master horary astrologer. A querent has asked: "${question}"
+      const prompt = `You are a warm, insightful horary astrologer. A person has asked: "${question}"
 
 The horary chart was cast at ${year}-${month}-${date} ${hours}:${String(minutes).padStart(2, "0")} at ${location} (${latitude}, ${longitude}).
 
@@ -157,16 +157,30 @@ Chart data:
 - Planets: ${planetSummary}
 - Key aspects: ${aspectSummary}
 
-Provide a detailed horary astrology interpretation (4-6 paragraphs) following traditional horary principles:
-1. Identify the house ruling the question's subject matter
-2. Examine the querent's significator (ruler of the Ascendant)
-3. Examine the quesited's significator (ruler of the relevant house)
-4. Analyze the Moon's condition and recent/upcoming aspects
-5. Look for applying aspects between significators
-6. Consider receptions, dignities, and any prohibiting factors
-7. Give a clear answer to the question with reasoning
+Write your interpretation using these EXACT section headers (use ## markdown headers):
 
-IMPORTANT: Write in simple, everyday language that anyone can understand. Avoid jargon and overly technical astrology terms — explain things like you're talking to a friend over coffee. Keep it warm, relatable, and easy to follow. When you mention a planet or aspect, briefly explain what it means in plain words.`;
+## Chart Overview
+A warm opening that sets the scene. Describe what the chart looks like at a glance and what stands out.
+
+## Significators of the Question
+Identify which planets represent the person asking and the subject of their question. Explain this simply — e.g. "Since your Ascendant is in Leo, the Sun speaks for you in this chart."
+
+## Aspect Analysis
+Look at the key connections between planets. Describe what they suggest about the situation. Use phrases like "The chart suggests…" or "The relationship between these planets may indicate…"
+
+## Moon Analysis
+Describe what the Moon is doing — its sign, phase, and recent/upcoming connections. Use language like "The Moon's movement may describe how events could unfold."
+
+## Final Judgment
+Give a clear, thoughtful answer to the question. Be honest but gentle. Avoid absolute predictions — use "may", "suggests", "points toward" language.
+
+IMPORTANT RULES:
+- Write in simple, everyday language like you're talking to a friend over coffee
+- When you mention a planet or astrological concept, briefly explain what it means in plain words
+- Avoid jargon and overly technical terms
+- Keep it warm, relatable, and easy to follow
+- Never make absolute or deterministic predictions`;
+
 
       try {
         const aiRes = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
