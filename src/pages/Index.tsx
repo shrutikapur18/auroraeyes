@@ -8,6 +8,7 @@ import ReadingModeSelector from "@/components/ReadingModeSelector";
 import FocusMoment from "@/components/FocusMoment";
 import InteractiveShuffle from "@/components/InteractiveShuffle";
 import CardFanSpread from "@/components/CardFanSpread";
+import TarotDeckPicker from "@/components/TarotDeckPicker";
 import ReadingTable from "@/components/ReadingTable";
 import ThreeCardSpread from "@/components/ThreeCardSpread";
 import CelticCrossSpread from "@/components/CelticCrossSpread";
@@ -157,7 +158,7 @@ const Index = () => {
         {phase === "fan" && (
           <motion.div key="fan" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             <p className="text-center text-xs text-muted-foreground italic mb-4 px-4">"{question}"</p>
-            <CardFanSpread requiredCount={cardCount} positions={positions} onComplete={(cards) => { setDrawnCards(cards); setPhase("spread"); }} />
+            <TarotDeckPicker requiredCount={cardCount} positions={positions} onComplete={(cards) => { setDrawnCards(cards); setPhase("spread"); }} />
           </motion.div>
         )}
         {(phase === "spread" || phase === "reading" || phase === "loading") && (
