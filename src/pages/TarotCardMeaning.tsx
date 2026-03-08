@@ -6,6 +6,7 @@ import InternalLinks from "@/components/InternalLinks";
 import FAQSection, { generateFAQJsonLd } from "@/components/FAQSection";
 import SnippetBox from "@/components/SnippetBox";
 import ReadingCTA from "@/components/ReadingCTA";
+import MiniCardDraw from "@/components/MiniCardDraw";
 import { tarotDeck } from "@/data/tarotDeck";
 import { generateCombinationPages } from "@/data/seoData";
 
@@ -126,6 +127,20 @@ const TarotCardMeaning = () => {
             </section>
           </div>
         </div>
+
+        {/* Context sub-pages */}
+        <nav className="mb-6">
+          <h2 className="font-heading text-sm text-foreground mb-3">Explore {card.name} in Context</h2>
+          <div className="flex flex-wrap gap-2">
+            <Link to={`/tarot-card-meanings/${slug}/love`} className="text-xs px-3 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-muted-foreground hover:text-primary hover:border-primary/40 transition-colors">💗 Love</Link>
+            <Link to={`/tarot-card-meanings/${slug}/career`} className="text-xs px-3 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-muted-foreground hover:text-primary hover:border-primary/40 transition-colors">💼 Career</Link>
+            <Link to={`/tarot-card-meanings/${slug}/advice`} className="text-xs px-3 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-muted-foreground hover:text-primary hover:border-primary/40 transition-colors">🌿 Advice</Link>
+            <Link to={`/tarot-card-meanings/${slug}/yes-or-no`} className="text-xs px-3 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-muted-foreground hover:text-primary hover:border-primary/40 transition-colors">⚖️ Yes or No</Link>
+          </div>
+        </nav>
+
+        {/* Interactive mini draw */}
+        <MiniCardDraw prompt={`Draw a card to see how it interacts with ${card.name}.`} />
 
         {/* Embedded reading CTA */}
         <ReadingCTA

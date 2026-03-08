@@ -6,6 +6,7 @@ import InternalLinks from "@/components/InternalLinks";
 import FAQSection, { generateFAQJsonLd } from "@/components/FAQSection";
 import SnippetBox from "@/components/SnippetBox";
 import ReadingCTA from "@/components/ReadingCTA";
+import MiniCardDraw from "@/components/MiniCardDraw";
 import { questionPages } from "@/data/seoData";
 
 const QuestionReadingPage = () => {
@@ -69,6 +70,9 @@ const QuestionReadingPage = () => {
             <p key={i} className="text-sm text-muted-foreground leading-relaxed">{p}</p>
           ))}
         </div>
+
+        {/* Interactive tool */}
+        <MiniCardDraw prompt={`Draw a card for quick insight about ${page.h1.split("—")[0].trim().toLowerCase()}.`} />
 
         {/* CTA to actual reading */}
         <ReadingCTA

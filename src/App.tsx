@@ -25,6 +25,9 @@ import TarotSpreads from "./pages/TarotSpreads";
 import SpreadGuidePage from "./pages/SpreadGuidePage";
 import TarotCombinations from "./pages/TarotCombinations";
 import TarotCombinationPage from "./pages/TarotCombinationPage";
+import TarotCardContext from "./pages/TarotCardContext";
+import TarotComparison from "./pages/TarotComparison";
+import TarotComparisons from "./pages/TarotComparisons";
 import QuestionReadingPage from "./pages/QuestionReadingPage";
 import SharedReadingPreview from "./pages/SharedReadingPreview";
 import NotFound from "./pages/NotFound";
@@ -48,6 +51,7 @@ const App = () => (
             <Route path="/angel-card-reading" element={<AngelCardReading />} />
             <Route path="/tarot-card-meanings" element={<TarotCardMeanings />} />
             <Route path="/tarot-card-meanings/:slug" element={<TarotCardMeaning />} />
+            <Route path="/tarot-card-meanings/:slug/:context" element={<TarotCardContext />} />
             <Route path="/rune-meanings" element={<RuneMeanings />} />
             <Route path="/rune-meanings/:slug" element={<RuneMeaning />} />
             <Route path="/zodiac/:sign" element={<ZodiacTarotReading />} />
@@ -66,6 +70,9 @@ const App = () => (
             {/* Combinations */}
             <Route path="/tarot-combinations" element={<TarotCombinations />} />
             <Route path="/tarot-combinations/:slug" element={<TarotCombinationPage />} />
+            {/* Comparisons */}
+            <Route path="/tarot-comparisons" element={<TarotComparisons />} />
+            <Route path="/tarot-comparisons/:slug" element={<TarotComparison />} />
             {/* Question-based reading pages */}
             {questionPages.map((page) => (
               <Route key={page.slug} path={`/${page.slug}`} element={<QuestionReadingPage />} />
