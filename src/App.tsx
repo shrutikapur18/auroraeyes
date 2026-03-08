@@ -88,6 +88,7 @@ const App = () => (
             ))}
             {/* Horary Astrology */}
             <Route path="/horary-reading" element={<HoraryReading />} />
+            <Route path="/horary-astrology" element={<HoraryGuide />} />
             {/* HTML Sitemap */}
             <Route path="/sitemap-html" element={<HTMLSitemap />} />
             {/* Shared reading preview */}
