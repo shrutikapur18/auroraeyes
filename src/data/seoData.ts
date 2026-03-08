@@ -517,6 +517,12 @@ export function getAllSEOUrls(): { loc: string; changefreq: string; priority: st
   // Tarot card meanings
   tarotDeck.forEach(c => urls.push({ loc: `${base}/tarot-card-meanings/${slugify(c.name)}`, changefreq: "monthly", priority: "0.6" }));
 
+  // Card context pages (love, career, advice, yes-or-no) — Major Arcana only for manageable scale
+  const contexts = ["love", "career", "advice", "yes-or-no"];
+  tarotDeck.filter(c => c.arcana === "Major").forEach(c => {
+    contexts.forEach(ctx => urls.push({ loc: `${base}/tarot-card-meanings/${slugify(c.name)}/${ctx}`, changefreq: "monthly", priority: "0.5" }));
+  });
+
   // Rune meanings
   elderFuthark.forEach(r => urls.push({ loc: `${base}/rune-meanings/${r.name.toLowerCase()}`, changefreq: "monthly", priority: "0.6" }));
 
