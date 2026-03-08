@@ -61,10 +61,10 @@ const FreeTarotReading = () => {
         jsonLd={{ "@context": "https://schema.org", "@type": "WebApplication", name: "Free Tarot Reading", applicationCategory: "LifestyleApplication", description: "Interactive tarot reading with Three Card and Celtic Cross spreads." }}
       />
 
-      <motion.header className="text-center pt-8 pb-6" initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
-        <h1 className="text-3xl md:text-5xl font-heading gold-text mb-3 tracking-wider">Free Tarot Reading</h1>
-        <p className="text-base text-muted-foreground font-body max-w-2xl mx-auto">
-          Discover what the tarot cards reveal about your past, present, and future. Choose your spread and let your intuition guide the reading.
+      <motion.header className="text-center pt-10 md:pt-8 pb-6 px-2" initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
+        <h1 className="text-2xl md:text-5xl font-heading gold-text mb-3 tracking-wider">Free Tarot Reading</h1>
+        <p className="text-sm md:text-base text-muted-foreground font-body max-w-2xl mx-auto">
+          Discover what the tarot cards reveal about your past, present, and future.
         </p>
       </motion.header>
 
@@ -75,20 +75,20 @@ const FreeTarotReading = () => {
             {error && <p className="text-center text-sm text-destructive mb-4">{error}</p>}
             <ReadingModeSelector mode={tarotMode} setMode={setTarotMode} />
             <div className="flex justify-center mb-10">
-              <motion.button onClick={handleStart} className="px-8 py-4 rounded-xl bg-primary/20 border-2 border-primary text-primary font-heading text-lg tracking-widest hover:bg-primary/30 transition-all gold-glow" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <motion.button onClick={handleStart} className="px-8 py-4 rounded-xl bg-primary/20 border-2 border-primary text-primary font-heading text-base md:text-lg tracking-widest hover:bg-primary/30 transition-all gold-glow active:scale-95" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 Begin Reading
               </motion.button>
             </div>
 
             {/* SEO content */}
-            <section className="max-w-3xl mx-auto mt-12 space-y-8">
-              <div className="reading-panel rounded-xl p-6 md:p-8">
-                <h2 className="font-heading text-xl gold-text mb-4">How Does a Tarot Reading Work?</h2>
-                <p className="text-sm text-muted-foreground font-body leading-relaxed mb-4">A tarot reading uses a deck of 78 cards — 22 Major Arcana and 56 Minor Arcana — to provide insight into your life, relationships, and future possibilities. Each card carries symbolic meaning that, when combined with your question, creates a personalized narrative.</p>
-                <h3 className="font-heading text-base text-foreground mb-2">Three Card Spread</h3>
-                <p className="text-sm text-muted-foreground font-body leading-relaxed mb-4">The Three Card Spread reveals your <strong>Past</strong>, <strong>Present</strong>, and <strong>Future</strong>. It's perfect for quick clarity on any question and is the most popular tarot spread for beginners.</p>
-                <h3 className="font-heading text-base text-foreground mb-2">Celtic Cross Spread</h3>
-                <p className="text-sm text-muted-foreground font-body leading-relaxed mb-4">The Celtic Cross uses 10 cards to provide deep, layered insight. It covers your present situation, challenges, subconscious influences, past and future energies, and the ultimate outcome.</p>
+            <section className="max-w-3xl mx-auto mt-12 space-y-8 px-1">
+              <div className="reading-panel rounded-xl p-5 md:p-8">
+                <h2 className="font-heading text-lg md:text-xl gold-text mb-4">How Does a Tarot Reading Work?</h2>
+                <p className="text-sm text-muted-foreground font-body leading-relaxed mb-4">A tarot reading uses a deck of 78 cards — 22 Major Arcana and 56 Minor Arcana — to provide insight into your life, relationships, and future possibilities.</p>
+                <h3 className="font-heading text-sm md:text-base text-foreground mb-2">Three Card Spread</h3>
+                <p className="text-sm text-muted-foreground font-body leading-relaxed mb-4">The Three Card Spread reveals your <strong>Past</strong>, <strong>Present</strong>, and <strong>Future</strong>. It's perfect for quick clarity on any question.</p>
+                <h3 className="font-heading text-sm md:text-base text-foreground mb-2">Celtic Cross Spread</h3>
+                <p className="text-sm text-muted-foreground font-body leading-relaxed mb-4">The Celtic Cross uses 10 cards to provide deep, layered insight covering your present situation, challenges, subconscious influences, and ultimate outcome.</p>
               </div>
               <div className="text-center space-y-2">
                 <p className="text-xs text-muted-foreground">Explore more:</p>
@@ -103,22 +103,22 @@ const FreeTarotReading = () => {
         )}
         {phase === "focus" && <FocusMoment key="focus" onComplete={() => setPhase("shuffling")} method="tarot" />}
         {phase === "shuffling" && (
-          <motion.div key="shuffling" className="py-10" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+          <motion.div key="shuffling" className="py-8 md:py-10" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             <InteractiveShuffle onComplete={() => setPhase("fan")} minPresses={3} />
           </motion.div>
         )}
         {phase === "fan" && (
           <motion.div key="fan" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <p className="text-center text-xs text-muted-foreground italic mb-4">"{question}"</p>
+            <p className="text-center text-xs text-muted-foreground italic mb-4 px-4">"{question}"</p>
             <CardFanSpread requiredCount={cardCount} positions={positions} onComplete={(cards) => { setDrawnCards(cards); setPhase("spread"); }} />
           </motion.div>
         )}
         {(phase === "spread" || phase === "reading" || phase === "loading") && (
           <motion.div key="spread" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <p className="text-center text-sm text-muted-foreground italic mb-4">"{question}"</p>
+            <p className="text-center text-xs md:text-sm text-muted-foreground italic mb-4 px-4">"{question}"</p>
             {error && <p className="text-center text-sm text-destructive mb-4">{error}</p>}
             <ReadingTable>
-              <div className="py-4">
+              <div className="py-2 md:py-4">
                 {tarotMode === "three-card" && <ThreeCardSpread cards={drawnCards} onReveal={handleReveal} />}
                 {tarotMode === "celtic-cross" && <CelticCrossSpread cards={drawnCards} onReveal={handleReveal} />}
               </div>
@@ -130,14 +130,14 @@ const FreeTarotReading = () => {
               </>
             )}
             {phase === "loading" && (
-              <motion.div className="flex flex-col items-center mt-10" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+              <motion.div className="flex flex-col items-center mt-8 md:mt-10" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                 <div className="w-8 h-8 border-2 border-primary/30 border-t-primary rounded-full animate-spin mb-4" />
                 <p className="font-heading text-primary text-sm tracking-widest animate-pulse">Channeling the cosmos...</p>
               </motion.div>
             )}
             {phase === "reading" && (
-              <div className="flex justify-center mt-6">
-                <button onClick={handleReset} className="px-6 py-3 rounded-lg bg-secondary border border-primary/30 text-primary font-heading text-sm tracking-wider hover:bg-primary/20 transition-all">Draw New Cards</button>
+              <div className="flex justify-center mt-6 mb-4">
+                <button onClick={handleReset} className="px-6 py-3.5 md:py-3 rounded-lg bg-secondary border border-primary/30 text-primary font-heading text-sm tracking-wider hover:bg-primary/20 transition-all active:scale-95">Draw New Cards</button>
               </div>
             )}
           </motion.div>
