@@ -1,10 +1,138 @@
 /**
- * Rule-Based Tarot Interpretation Engine v2
- * Generates personalized, human-like readings locally without API calls.
+ * Rule-Based Tarot Interpretation Engine v3
+ * Generates personalized, emotionally aware readings locally without API calls.
  */
 
 import type { DrawnCard } from "@/data/tarotDeck";
 import { interpretationMap, type TarotInterpretation } from "@/data/tarotInterpretations";
+
+// ─── Emotional Tone Detection ───
+
+export type EmotionalTone = "hopeful" | "anxious" | "confused" | "curious" | "optimistic" | "neutral";
+
+const TONE_KEYWORDS: Record<Exclude<EmotionalTone, "neutral">, string[]> = {
+  anxious: ["worried", "scared", "afraid", "fear", "anxiety", "anxious", "nervous", "struggling", "falling apart", "overwhelmed", "stress", "stressed", "panic", "terrified", "desperate", "dread", "can't sleep", "losing", "lost", "stuck", "hopeless", "helpless", "breaking", "broken", "hurt", "painful", "suffering", "trouble", "crisis"],
+  confused: ["confused", "don't understand", "no idea", "unclear", "mixed signals", "don't know", "lost", "unsure", "make sense", "why does", "why is", "what does it mean", "contradicting", "torn", "conflicted", "baffled", "puzzled"],
+  hopeful: ["hope", "hoping", "wish", "wishing", "pray", "praying", "dream", "dreaming", "looking forward", "optimistic", "fingers crossed", "believe", "believing", "trust", "faith", "possible", "maybe things", "getting better", "improve"],
+  optimistic: ["excited", "exciting", "amazing", "wonderful", "great", "fantastic", "thrilled", "can't wait", "looking forward", "positive", "good feeling", "confident", "ready", "eager", "inspired", "blessed", "grateful", "thankful", "happy", "joyful"],
+  curious: ["curious", "wondering", "what if", "interested", "want to know", "tell me", "show me", "reveal", "discover", "explore", "insight", "guidance", "advice", "perspective", "opinion"],
+};
+
+const TONE_LABELS: Record<EmotionalTone, string> = {
+  anxious: "seeking reassurance",
+  confused: "looking for clarity",
+  hopeful: "holding onto hope",
+  optimistic: "embracing possibility",
+  curious: "open to discovery",
+  neutral: "open and receptive",
+};
+
+export function detectEmotionalTone(question: string): EmotionalTone {
+  const lower = question.toLowerCase();
+  let bestTone: EmotionalTone = "neutral";
+  let bestScore = 0;
+
+  for (const [tone, keywords] of Object.entries(TONE_KEYWORDS) as [Exclude<EmotionalTone, "neutral">, string[]][]) {
+    let score = 0;
+    for (const kw of keywords) {
+      if (lower.includes(kw)) score += kw.includes(" ") ? 2 : 1; // multi-word matches score higher
+    }
+    if (score > bestScore) {
+      bestScore = score;
+      bestTone = tone;
+    }
+  }
+
+  return bestTone;
+}
+
+// Tone-adaptive sentence starters to soften or encourage based on emotional state
+const TONE_MODIFIERS: Record<EmotionalTone, { prefix: string[]; bridge: string[]; reassurance: string }> = {
+  anxious: {
+    prefix: [
+      "It is understandable to feel uncertain, and",
+      "Even in moments of worry,",
+      "Though this may feel heavy right now,",
+      "Take a breath — even amidst the turbulence,",
+    ],
+    bridge: [
+      "The cards gently remind you that this difficult moment is not permanent.",
+      "What feels overwhelming now is part of a larger unfolding — one that holds space for relief.",
+      "The universe sees your struggle and responds not with judgment but with compassion.",
+    ],
+    reassurance: "Remember: the cards do not predict doom — they illuminate paths through it. You are not alone in this.",
+  },
+  confused: {
+    prefix: [
+      "When clarity feels out of reach,",
+      "In the midst of confusion,",
+      "Though the picture may seem unclear right now,",
+      "It is natural to feel lost, and",
+    ],
+    bridge: [
+      "The cards offer a thread to follow — not all answers arrive at once, and that is okay.",
+      "Sometimes confusion is the mind's way of preparing for a deeper understanding.",
+      "What seems contradictory on the surface may hold a hidden coherence the cards can reveal.",
+    ],
+    reassurance: "Clarity often arrives not as a lightning bolt but as a gentle dawn. Trust the process of understanding unfolding within you.",
+  },
+  hopeful: {
+    prefix: [
+      "Your hope is well-placed, and",
+      "There is something beautiful about holding hope, and",
+      "The cards honor the hope you carry, and",
+      "Your faith in possibility is powerful, and",
+    ],
+    bridge: [
+      "The cards affirm that your optimism is not naive — it reflects an alignment with the emerging energy.",
+      "Hope is not passive waiting but an active force — the cards suggest yours is guiding you well.",
+      "What you sense may be possible is echoed in the symbols before you.",
+    ],
+    reassurance: "The hope you carry is a compass. Let it guide you, but also let the cards deepen your understanding of what lies ahead.",
+  },
+  optimistic: {
+    prefix: [
+      "Your positive energy is magnetic, and",
+      "The enthusiasm you bring amplifies the reading, and",
+      "Riding this wave of confidence,",
+      "Your readiness for what comes next is palpable, and",
+    ],
+    bridge: [
+      "The cards celebrate your energy and offer insights to channel it wisely.",
+      "Optimism like yours attracts opportunity — the cards show where to direct this powerful force.",
+      "The universe rewards bold, open hearts — the symbols reflect this back to you.",
+    ],
+    reassurance: "Your positive outlook is a strength. The cards encourage you to carry it forward with both enthusiasm and discernment.",
+  },
+  curious: {
+    prefix: [
+      "Your openness to discovery is the perfect lens for this reading, and",
+      "Approaching the cards with curiosity invites their deepest messages, and",
+      "The spirit of inquiry you bring honors the symbols before you, and",
+      "With fresh eyes,",
+    ],
+    bridge: [
+      "The cards reward your curiosity with layers of meaning waiting to be explored.",
+      "An open mind is the best companion for a tarot reading — yours creates space for genuine insight.",
+      "The symbols speak most clearly to those who ask without demanding a specific answer.",
+    ],
+    reassurance: "Stay curious — the insights from this reading may continue to deepen in the hours and days ahead as new connections reveal themselves.",
+  },
+  neutral: {
+    prefix: [
+      "With an open heart,",
+      "In this moment of reflection,",
+      "As you sit with this reading,",
+      "The cards respond to your openness, and",
+    ],
+    bridge: [
+      "The cards have drawn a meaningful pattern that speaks to your current experience.",
+      "There is a quiet clarity in this spread — the symbols align with purpose.",
+      "The reading unfolds with a natural rhythm, revealing its message layer by layer.",
+    ],
+    reassurance: "Trust the insights that resonated most deeply — they are the ones meant for you right now.",
+  },
+};
 
 // ─── Question Context Detection ───
 
@@ -293,12 +421,15 @@ const CARD_TRANSITIONS = [
 
 // ─── Question Acknowledgment ───
 
-function buildQuestionAcknowledgment(question: string, context: QuestionContext): string {
+function buildQuestionAcknowledgment(question: string, context: QuestionContext, tone: EmotionalTone): string {
   const contextLabel = CONTEXT_LABELS[context];
+  const toneLabel = TONE_LABELS[tone];
+  const modifier = pick(TONE_MODIFIERS[tone].prefix);
+
   const phrases = [
-    `In the context of your question about ${contextLabel}, the cards have drawn a meaningful pattern.`,
-    `Your question touches on ${contextLabel}, and the cards respond with clarity and depth.`,
-    `As you seek guidance regarding ${contextLabel}, the spread reveals important insights.`,
+    `${modifier} in the context of your question about ${contextLabel}, the cards have drawn a meaningful pattern.`,
+    `You come to the cards ${toneLabel}. ${modifier} your question about ${contextLabel} draws a clear response from the spread.`,
+    `${modifier} as you seek guidance regarding ${contextLabel}, the spread reveals important insights.`,
   ];
   return pick(phrases);
 }
@@ -345,16 +476,23 @@ export function generateRuleBasedReading(question: string, cards: DrawnCard[]): 
   if (revealed.length === 0) return "No cards have been revealed yet.";
 
   const context = detectQuestionContext(question);
+  const tone = detectEmotionalTone(question);
   const themes = detectThemes(cards);
+  const toneData = TONE_MODIFIERS[tone];
   const parts: string[] = [];
 
   // 1. Opening
   parts.push(pick(OPENINGS_BY_CONTEXT[context]));
 
-  // 2. Question acknowledgment
-  parts.push(buildQuestionAcknowledgment(question, context));
+  // 2. Question acknowledgment (tone-aware)
+  parts.push(buildQuestionAcknowledgment(question, context, tone));
 
-  // 3. Theme weaving
+  // 3. Emotional bridge (tone-specific)
+  if (tone !== "neutral") {
+    parts.push(pick(toneData.bridge));
+  }
+
+  // 4. Theme weaving
   if (themes.length > 0) {
     const primary = themes[0];
     const bridge = pick(THEME_BRIDGES)
@@ -369,20 +507,13 @@ export function generateRuleBasedReading(question: string, cards: DrawnCard[]): 
     }
   }
 
-  // 4. Card-by-card narrative with transitions
-  parts.push(""); // visual break
+  // 5. Card-by-card narrative
+  parts.push("");
   for (let i = 0; i < revealed.length; i++) {
-    const cardText = interpretCard(revealed[i], context);
-
-    if (i > 0 && revealed.length > 2) {
-      // Add a soft transition between cards (not for the first one)
-      parts.push(cardText);
-    } else {
-      parts.push(cardText);
-    }
+    parts.push(interpretCard(revealed[i], context));
   }
 
-  // 5. Synthesis — connect cards to each other for multi-card readings
+  // 6. Synthesis for multi-card readings
   if (revealed.length >= 3) {
     parts.push("");
     const first = revealed[0];
@@ -395,15 +526,19 @@ export function generateRuleBasedReading(question: string, cards: DrawnCard[]): 
     parts.push(pick(syntheses));
   }
 
-  // 6. Timing
+  // 7. Timing
   const timingText = getTimingNarrative(cards);
   if (timingText) {
     parts.push("");
     parts.push(timingText);
   }
 
-  // 7. Closing
+  // 8. Tone-aware reassurance + closing
   parts.push("");
+  if (tone !== "neutral") {
+    parts.push(toneData.reassurance);
+    parts.push("");
+  }
   parts.push(pick(CLOSINGS_BY_CONTEXT[context]));
 
   return parts.join("\n\n");
