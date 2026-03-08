@@ -1,10 +1,33 @@
 /**
- * Rule-Based Tarot Interpretation Engine v3
- * Generates personalized, emotionally aware readings locally without API calls.
+ * Rule-Based Tarot Interpretation Engine v4
+ * Generates professional-quality, emotionally aware readings locally without API calls.
+ * 
+ * Narrative flow:
+ * 1. Reader greeting & question acknowledgment
+ * 2. Spread overview (Major Arcana count, suit dominance, overall energy)
+ * 3. Position-by-position interpretation (reader voice)
+ * 4. Card combination analysis
+ * 5. Symbol resonance / theme weaving
+ * 6. Current situation synthesis
+ * 7. Possible outcome
+ * 8. Timing guidance
+ * 9. Guidance, reflection & closing question
  */
 
 import type { DrawnCard } from "@/data/tarotDeck";
 import { interpretationMap, type TarotInterpretation } from "@/data/tarotInterpretations";
+import { findAllCombinations } from "@/data/tarotCombinations";
+
+// ─── Utilities ───
+
+function pick<T>(arr: T[]): T {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function pickN<T>(arr: T[], n: number): T[] {
+  const shuffled = [...arr].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, n);
+}
 
 // ─── Emotional Tone Detection ───
 
@@ -18,121 +41,19 @@ const TONE_KEYWORDS: Record<Exclude<EmotionalTone, "neutral">, string[]> = {
   curious: ["curious", "wondering", "what if", "interested", "want to know", "tell me", "show me", "reveal", "discover", "explore", "insight", "guidance", "advice", "perspective", "opinion"],
 };
 
-const TONE_LABELS: Record<EmotionalTone, string> = {
-  anxious: "seeking reassurance",
-  confused: "looking for clarity",
-  hopeful: "holding onto hope",
-  optimistic: "embracing possibility",
-  curious: "open to discovery",
-  neutral: "open and receptive",
-};
-
 export function detectEmotionalTone(question: string): EmotionalTone {
   const lower = question.toLowerCase();
   let bestTone: EmotionalTone = "neutral";
   let bestScore = 0;
-
   for (const [tone, keywords] of Object.entries(TONE_KEYWORDS) as [Exclude<EmotionalTone, "neutral">, string[]][]) {
     let score = 0;
     for (const kw of keywords) {
-      if (lower.includes(kw)) score += kw.includes(" ") ? 2 : 1; // multi-word matches score higher
+      if (lower.includes(kw)) score += kw.includes(" ") ? 2 : 1;
     }
-    if (score > bestScore) {
-      bestScore = score;
-      bestTone = tone;
-    }
+    if (score > bestScore) { bestScore = score; bestTone = tone; }
   }
-
   return bestTone;
 }
-
-// Tone-adaptive sentence starters to soften or encourage based on emotional state
-const TONE_MODIFIERS: Record<EmotionalTone, { prefix: string[]; bridge: string[]; reassurance: string }> = {
-  anxious: {
-    prefix: [
-      "It is understandable to feel uncertain, and",
-      "Even in moments of worry,",
-      "Though this may feel heavy right now,",
-      "Take a breath — even amidst the turbulence,",
-    ],
-    bridge: [
-      "The cards gently remind you that this difficult moment is not permanent.",
-      "What feels overwhelming now is part of a larger unfolding — one that holds space for relief.",
-      "The universe sees your struggle and responds not with judgment but with compassion.",
-    ],
-    reassurance: "Remember: the cards do not predict doom — they illuminate paths through it. You are not alone in this.",
-  },
-  confused: {
-    prefix: [
-      "When clarity feels out of reach,",
-      "In the midst of confusion,",
-      "Though the picture may seem unclear right now,",
-      "It is natural to feel lost, and",
-    ],
-    bridge: [
-      "The cards offer a thread to follow — not all answers arrive at once, and that is okay.",
-      "Sometimes confusion is the mind's way of preparing for a deeper understanding.",
-      "What seems contradictory on the surface may hold a hidden coherence the cards can reveal.",
-    ],
-    reassurance: "Clarity often arrives not as a lightning bolt but as a gentle dawn. Trust the process of understanding unfolding within you.",
-  },
-  hopeful: {
-    prefix: [
-      "Your hope is well-placed, and",
-      "There is something beautiful about holding hope, and",
-      "The cards honor the hope you carry, and",
-      "Your faith in possibility is powerful, and",
-    ],
-    bridge: [
-      "The cards affirm that your optimism is not naive — it reflects an alignment with the emerging energy.",
-      "Hope is not passive waiting but an active force — the cards suggest yours is guiding you well.",
-      "What you sense may be possible is echoed in the symbols before you.",
-    ],
-    reassurance: "The hope you carry is a compass. Let it guide you, but also let the cards deepen your understanding of what lies ahead.",
-  },
-  optimistic: {
-    prefix: [
-      "Your positive energy is magnetic, and",
-      "The enthusiasm you bring amplifies the reading, and",
-      "Riding this wave of confidence,",
-      "Your readiness for what comes next is palpable, and",
-    ],
-    bridge: [
-      "The cards celebrate your energy and offer insights to channel it wisely.",
-      "Optimism like yours attracts opportunity — the cards show where to direct this powerful force.",
-      "The universe rewards bold, open hearts — the symbols reflect this back to you.",
-    ],
-    reassurance: "Your positive outlook is a strength. The cards encourage you to carry it forward with both enthusiasm and discernment.",
-  },
-  curious: {
-    prefix: [
-      "Your openness to discovery is the perfect lens for this reading, and",
-      "Approaching the cards with curiosity invites their deepest messages, and",
-      "The spirit of inquiry you bring honors the symbols before you, and",
-      "With fresh eyes,",
-    ],
-    bridge: [
-      "The cards reward your curiosity with layers of meaning waiting to be explored.",
-      "An open mind is the best companion for a tarot reading — yours creates space for genuine insight.",
-      "The symbols speak most clearly to those who ask without demanding a specific answer.",
-    ],
-    reassurance: "Stay curious — the insights from this reading may continue to deepen in the hours and days ahead as new connections reveal themselves.",
-  },
-  neutral: {
-    prefix: [
-      "With an open heart,",
-      "In this moment of reflection,",
-      "As you sit with this reading,",
-      "The cards respond to your openness, and",
-    ],
-    bridge: [
-      "The cards have drawn a meaningful pattern that speaks to your current experience.",
-      "There is a quiet clarity in this spread — the symbols align with purpose.",
-      "The reading unfolds with a natural rhythm, revealing its message layer by layer.",
-    ],
-    reassurance: "Trust the insights that resonated most deeply — they are the ones meant for you right now.",
-  },
-};
 
 // ─── Question Context Detection ───
 
@@ -159,18 +80,11 @@ export function detectQuestionContext(question: string): QuestionContext {
   const lower = question.toLowerCase();
   let bestContext: QuestionContext = "general";
   let bestScore = 0;
-
   for (const [context, keywords] of Object.entries(CONTEXT_KEYWORDS) as [QuestionContext, string[]][]) {
     let score = 0;
-    for (const kw of keywords) {
-      if (lower.includes(kw)) score++;
-    }
-    if (score > bestScore) {
-      bestScore = score;
-      bestContext = context;
-    }
+    for (const kw of keywords) { if (lower.includes(kw)) score++; }
+    if (score > bestScore) { bestScore = score; bestContext = context; }
   }
-
   return bestContext;
 }
 
@@ -179,7 +93,6 @@ export function detectQuestionContext(question: string): QuestionContext {
 function getCardMeaning(dc: DrawnCard, interp: TarotInterpretation, context: QuestionContext): string {
   if (context === "love") return dc.isReversed ? interp.love_rev : interp.love_up;
   if (context === "career") return dc.isReversed ? interp.career_rev : interp.career_up;
-  // money/decision/growth/general all use general meanings
   return dc.isReversed ? interp.general_rev : interp.general_up;
 }
 
@@ -222,12 +135,10 @@ export interface DetectedTheme {
 
 export function detectThemes(cards: DrawnCard[]): DetectedTheme[] {
   const themeCount = new Map<string, { count: number; cards: string[] }>();
-
   for (const dc of cards) {
     if (!dc.isRevealed) continue;
     const interp = interpretationMap.get(dc.card.id);
     if (!interp) continue;
-
     for (const theme of interp.themes) {
       const entry = themeCount.get(theme) || { count: 0, cards: [] };
       entry.count++;
@@ -235,158 +146,225 @@ export function detectThemes(cards: DrawnCard[]): DetectedTheme[] {
       themeCount.set(theme, entry);
     }
   }
-
   return Array.from(themeCount.entries())
     .filter(([, v]) => v.count >= 2)
     .sort((a, b) => b[1].count - a[1].count)
-    .map(([theme, v]) => ({
-      theme,
-      label: THEME_LABELS[theme] || theme,
-      count: v.count,
-      cards: v.cards,
-    }));
+    .map(([theme, v]) => ({ theme, label: THEME_LABELS[theme] || theme, count: v.count, cards: v.cards }));
 }
 
-// ─── Timing ───
+// ─── Tone-Adaptive Language ───
 
-const SUIT_TIMING: Record<string, string> = {
-  Wands: "in the coming days to weeks",
-  Cups: "over the next few weeks to months",
-  Swords: "swiftly, perhaps as a sudden development",
-  Pentacles: "gradually, unfolding over the coming months",
+const TONE_MODIFIERS: Record<EmotionalTone, { prefix: string[]; bridge: string[]; reassurance: string }> = {
+  anxious: {
+    prefix: [
+      "I can feel that this question carries real weight for you, and",
+      "Even in moments of worry,",
+      "Though this may feel heavy right now,",
+      "Take a breath — I want you to know that",
+    ],
+    bridge: [
+      "The cards gently remind you that this difficult moment is not permanent.",
+      "What feels overwhelming now is part of a larger unfolding — one that holds space for relief.",
+      "I sense the universe responding not with judgment but with compassion to your question.",
+    ],
+    reassurance: "Remember: the cards do not predict doom — they illuminate paths through difficulty. You are not alone in this, and what you feel right now is valid.",
+  },
+  confused: {
+    prefix: [
+      "I understand that things feel unclear right now, and",
+      "When clarity feels just out of reach,",
+      "Though the picture may seem tangled,",
+      "It is natural to feel lost, and I want you to know that",
+    ],
+    bridge: [
+      "The cards offer a thread to follow — not all answers arrive at once, and that is perfectly okay.",
+      "Sometimes confusion is the mind's way of preparing for a deeper understanding.",
+      "What seems contradictory on the surface may hold a hidden coherence that these cards reveal.",
+    ],
+    reassurance: "Clarity often arrives not as a lightning bolt but as a gentle dawn. Trust the process of understanding that is already unfolding within you.",
+  },
+  hopeful: {
+    prefix: [
+      "Your hope is well-placed, and I feel the cards responding to it —",
+      "There is something beautiful about the hope you carry, and",
+      "The cards honor the faith you bring to this moment, and",
+      "I sense real possibility in your question, and",
+    ],
+    bridge: [
+      "The cards affirm that your optimism is not naive — it reflects a genuine alignment with the emerging energy around you.",
+      "Hope is not passive waiting but an active force, and the cards suggest yours is guiding you well.",
+      "What you sense may be possible is echoed in the symbols before you.",
+    ],
+    reassurance: "The hope you carry is a compass. Let it guide you, but also let the cards deepen your understanding of what lies ahead.",
+  },
+  optimistic: {
+    prefix: [
+      "Your positive energy is magnetic, and I feel it amplifying this reading —",
+      "The enthusiasm you bring is palpable, and",
+      "Riding this wave of confidence,",
+      "I can feel your readiness for what comes next, and",
+    ],
+    bridge: [
+      "The cards celebrate your energy and offer insights to channel it wisely.",
+      "Optimism like yours attracts opportunity — the cards show where to direct this powerful force.",
+      "The universe rewards open hearts, and the symbols reflect this back to you.",
+    ],
+    reassurance: "Your positive outlook is a genuine strength. The cards encourage you to carry it forward with both enthusiasm and discernment.",
+  },
+  curious: {
+    prefix: [
+      "I love the openness you bring to this reading, and",
+      "Your curiosity invites the cards' deepest messages, and",
+      "The spirit of genuine inquiry you carry honors this reading, and",
+      "With fresh eyes and an open mind,",
+    ],
+    bridge: [
+      "The cards reward your curiosity with layers of meaning waiting to be explored.",
+      "An open mind is the best companion for a tarot reading — yours creates space for genuine insight.",
+      "The symbols speak most clearly to those who ask without demanding a specific answer.",
+    ],
+    reassurance: "Stay curious — the insights from this reading may continue to deepen in the hours and days ahead as new connections reveal themselves.",
+  },
+  neutral: {
+    prefix: [
+      "With an open heart,",
+      "As we sit with this reading together,",
+      "The cards respond to your openness, and",
+      "In this moment of reflection,",
+    ],
+    bridge: [
+      "The cards have drawn a meaningful pattern that speaks to your current experience.",
+      "There is a quiet clarity in this spread — the symbols align with purpose.",
+      "I feel a natural rhythm in how these cards appeared — their message unfolds with intention.",
+    ],
+    reassurance: "Trust the insights that resonated most deeply — they are the ones meant for you right now.",
+  },
 };
 
-function getTimingNarrative(cards: DrawnCard[]): string {
-  const revealed = cards.filter((dc) => dc.isRevealed);
-  const hasMajor = revealed.some((dc) => dc.card.arcana === "Major");
-  const suits = revealed.filter((dc) => dc.card.suit).map((dc) => dc.card.suit!);
+// ─── 1. Reader Greeting & Question Acknowledgment ───
 
-  if (suits.length === 0 && hasMajor) {
-    return "The presence of Major Arcana cards suggests this touches upon a significant life chapter — the timing is less about weeks or months and more about a meaningful phase of your journey.";
-  }
+function buildGreeting(question: string, context: QuestionContext, tone: EmotionalTone): string {
+  const contextLabel = CONTEXT_LABELS[context];
+  const modifier = pick(TONE_MODIFIERS[tone].prefix);
 
-  if (suits.length === 0) return "";
+  const greetings: string[] = [
+    `Thank you for bringing this question to the cards. ${modifier} regarding your question about ${contextLabel}, I feel the cards have drawn a deeply meaningful pattern for you.`,
+    `${modifier} as I look at the cards you have drawn about ${contextLabel}, I can already sense a clear message forming. Let me share what I see.`,
+    `I appreciate you trusting the cards with this question. ${modifier} the spread before us speaks directly to ${contextLabel}, and I want to walk you through what it reveals.`,
+  ];
+  return pick(greetings);
+}
 
+// ─── 2. Spread Overview ───
+
+function buildSpreadOverview(revealed: DrawnCard[], themes: DetectedTheme[]): string {
+  const majorCount = revealed.filter(dc => dc.card.arcana === "Major").length;
+  const suits = revealed.filter(dc => dc.card.suit).map(dc => dc.card.suit!);
   const suitCounts = new Map<string, number>();
   for (const s of suits) suitCounts.set(s, (suitCounts.get(s) || 0) + 1);
 
-  let dominant: string = suits[0];
-  let max = 0;
-  for (const [s, c] of suitCounts) {
-    if (c > max) { dominant = s; max = c; }
+  const parts: string[] = [];
+
+  // Major Arcana observation
+  if (majorCount >= 3) {
+    parts.push(`I notice something significant right away — **${majorCount} Major Arcana cards** have appeared in your spread. This tells me that you are navigating forces larger than everyday concerns. These are life-defining energies at work, and the universe is paying close attention to this chapter of your story.`);
+  } else if (majorCount === 2) {
+    parts.push(`Two Major Arcana cards have appeared, which tells me this is not a minor matter. There are significant life currents at play here — the kind of energies that mark turning points and pivotal moments.`);
+  } else if (majorCount === 1) {
+    parts.push(`A Major Arcana card anchors this reading, lending it weight and depth. While the surrounding cards address your day-to-day experience, this card points to something more profound beneath the surface.`);
   }
 
-  const timingPhrase = SUIT_TIMING[dominant] || "in the near future";
-  const parts = [`Based on the energy of the cards, these developments are most likely to manifest ${timingPhrase}.`];
+  // Suit dominance
+  let dominantSuit = "";
+  let maxCount = 0;
+  for (const [suit, count] of suitCounts) {
+    if (count > maxCount && count >= 2) { dominantSuit = suit; maxCount = count; }
+  }
 
-  if (hasMajor) {
-    parts.push("The Major Arcana presence adds weight to this timeline — these shifts carry deep personal significance beyond ordinary day-to-day events.");
+  const SUIT_ENERGY: Record<string, string> = {
+    Wands: "creative fire and passionate energy. Action, inspiration, and forward momentum define the atmosphere of this reading",
+    Cups: "deep emotional currents. Feelings, relationships, and matters of the heart are at the center of what the cards want to address",
+    Swords: "mental intensity and the need for clarity. Thoughts, decisions, and honest truths are cutting through the noise",
+    Pentacles: "grounded, material energy. Practical matters, security, and the tangible foundations of your life are in focus",
+  };
+
+  if (dominantSuit && SUIT_ENERGY[dominantSuit]) {
+    parts.push(`The spread is infused with ${SUIT_ENERGY[dominantSuit]}.`);
+  }
+
+  // Reversed card observation
+  const reversedCount = revealed.filter(dc => dc.isReversed).length;
+  if (reversedCount >= Math.ceil(revealed.length / 2) && revealed.length >= 3) {
+    parts.push(`I also notice that several cards have appeared reversed, which suggests that some energies are internalized, blocked, or in the process of being worked through. This is not negative — it often means the real work is happening beneath the surface.`);
+  }
+
+  // Theme preview
+  if (themes.length > 0) {
+    const primary = themes[0];
+    parts.push(`**A strong theme of ${primary.label} runs through this entire spread** — I see it echoed in ${primary.cards.slice(0, 3).join(", ")}. This is the thread the cards most want you to follow.`);
+  }
+
+  if (parts.length === 0) {
+    parts.push(pick([
+      "As I look at the spread as a whole, I sense a balanced mix of energies — no single force dominates, which suggests nuance rather than a single dramatic message.",
+      "This spread presents a thoughtful blend of influences. Let me walk through each position to uncover the full picture.",
+    ]));
   }
 
   return parts.join(" ");
 }
 
-// ─── Template Phrases ───
-
-function pick<T>(arr: T[]): T {
-  return arr[Math.floor(Math.random() * arr.length)];
-}
-
-function pickUnique<T>(arr: T[], count: number): T[] {
-  const shuffled = [...arr].sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, count);
-}
-
-const OPENINGS_BY_CONTEXT: Record<QuestionContext, string[]> = {
-  love: [
-    "The cards carry a tender and revealing message about your heart's journey.",
-    "There is a clear emotional current flowing through this reading — the cards speak to the connections closest to your heart.",
-    "Love is a complex landscape, and the cards before you illuminate its terrain with honesty and warmth.",
-  ],
-  career: [
-    "The cards reveal a compelling picture of your professional path and the energies shaping it.",
-    "Your question about work and purpose has drawn powerful symbols — the cards have much to say about where you are heading.",
-    "The professional landscape before you is shifting, and the cards illuminate both challenges and openings.",
-  ],
-  money: [
-    "The cards speak clearly about the material and financial currents surrounding you.",
-    "Your question about abundance has drawn revealing symbols — there is important guidance here about prosperity and value.",
-    "The energy around your finances is dynamic, and the cards offer practical wisdom for navigating it.",
-  ],
-  decision: [
-    "The cards sense you are standing at a crossroads, and they offer clarity for the path ahead.",
-    "A choice weighs on you, and the symbols drawn today illuminate what each direction holds.",
-    "The universe recognizes the weight of your decision — the cards reveal what lies beneath the surface of each option.",
-  ],
-  growth: [
-    "The cards reflect a soul in motion — there is real growth unfolding within you.",
-    "Your inner journey is mirrored beautifully in the cards drawn today.",
-    "The symbols before you speak to the deepest currents of your personal evolution.",
-  ],
-  general: [
-    "The cards speak with clarity and purpose today, weaving a story that is uniquely yours.",
-    "A powerful message emerges from this spread — the symbols before you reveal what needs to be seen.",
-    "The energy surrounding your question is unmistakable, and the cards have chosen their message with intention.",
-  ],
-};
-
-const THEME_BRIDGES = [
-  "Looking across the spread, a powerful thread of {theme} connects these cards — {card1} and {card2} both echo this energy, suggesting it is central to your experience right now.",
-  "It is striking how {theme} surfaces repeatedly. Both {card1} and {card2} carry this vibration, creating a clear pattern the cards want you to notice.",
-  "A dominant theme of {theme} weaves through your reading. When multiple cards share this energy — as {card1} and {card2} do here — it deserves special attention.",
-];
-
-const SECONDARY_THEME_BRIDGES = [
-  "Alongside this, a quieter but meaningful thread of {theme} adds nuance to the reading.",
-  "There is also an undercurrent of {theme} running beneath the surface, adding depth to the overall message.",
-  "Intertwined with the main theme, {theme} brings an additional layer of insight worth reflecting on.",
-];
-
-// ─── Position-Aware Interpretation ───
+// ─── 3. Position-Based Interpretation (Reader Voice) ───
 
 const POSITION_NARRATIVES: Record<string, string[]> = {
   Past: [
-    "Looking to the past, **{card}** appears {orientation}, suggesting that {meaning} This earlier influence continues to shape the ground you stand on today.",
-    "The energy of your recent past is defined by **{card}** ({orientation}). {meaning} Understanding this foundation helps make sense of where you find yourself now.",
-    "In what came before, **{card}** ({orientation}) reveals an important truth: {meaning} This experience has left its mark on your current situation.",
+    "Looking at your **Past** position, I see **{card}** appearing {orientation}. {meaning} I feel this earlier influence is still shaping the ground you stand on today — it has left its imprint on how you approach your current situation.",
+    "In the **Past** position, **{card}** ({orientation}) tells me about the energy that led you here. {meaning} Understanding this foundation helps make sense of what you are experiencing now.",
   ],
   Present: [
-    "At the heart of the present moment, **{card}** ({orientation}) captures the essence of what you are navigating: {meaning}",
-    "Right now, **{card}** ({orientation}) speaks directly to your lived experience: {meaning} This is the energy you are breathing in daily.",
-    "The present card, **{card}** ({orientation}), reflects the central truth of this moment: {meaning} Sit with this — it holds the key to moving forward.",
+    "At the heart of your reading, the **Present** position holds **{card}** ({orientation}). {meaning} This is what you are living and breathing right now — the card captures the essence of your current experience.",
+    "In the **Present**, **{card}** ({orientation}) speaks directly to what you are navigating: {meaning} I feel this card wants you to really sit with its message — it holds the key to moving forward.",
   ],
   Future: [
-    "Looking ahead, **{card}** ({orientation}) points toward what is forming on the horizon: {meaning}",
-    "The future position holds **{card}** ({orientation}), and its message is clear: {meaning} This is not fixed destiny but the most probable path given current energies.",
-    "What is coming into being is represented by **{card}** ({orientation}): {meaning} The future is still being written — this card shows the direction of the current flow.",
+    "Looking ahead to the **Future** position, **{card}** ({orientation}) reveals what is forming on the horizon. {meaning} I want to be clear — this is not fixed destiny, but the most probable path given current energies.",
+    "The **Future** card, **{card}** ({orientation}), shows me where things are heading: {meaning} Remember, the future is still being shaped by your choices — this card shows the direction of the current flow.",
   ],
   "Present Situation": [
-    "At the very center of this reading, **{card}** ({orientation}) defines the core of your situation: {meaning}",
+    "At the very center of this Celtic Cross, **{card}** ({orientation}) defines the core of your situation. {meaning} This is the heart of the matter — everything else in the spread orbits around this energy.",
   ],
   Challenge: [
-    "Crossing this is the challenge of **{card}** ({orientation}): {meaning} This is what must be faced or integrated.",
+    "Crossing your present situation, I see **{card}** ({orientation}) as your primary challenge. {meaning} This is what must be faced, integrated, or navigated — it is not an enemy, but an invitation to grow.",
+  ],
+  Foundation: [
+    "The foundation of this reading rests on **{card}** ({orientation}). {meaning} This card represents the deeper, often unconscious, forces that underpin everything else in the spread.",
+  ],
+  "Recent Past": [
+    "Your recent past reveals **{card}** ({orientation}). {meaning} This energy is still fresh — it may be fading, but its influence on your present moment is unmistakable.",
+  ],
+  "Possible Future": [
+    "In the position of what may come, **{card}** ({orientation}) emerges. {meaning} I see this as a strong possibility — not a certainty, but a direction the energy is naturally flowing toward.",
   ],
   "Conscious Influence": [
-    "Above, **{card}** ({orientation}) represents what you are aware of: {meaning} This conscious understanding shapes your approach.",
+    "Above, representing what you are consciously aware of, sits **{card}** ({orientation}). {meaning} This is the part of the situation you can see and are actively thinking about.",
   ],
   "Subconscious Influence": [
-    "Below the surface, **{card}** ({orientation}) reveals hidden forces at play: {meaning} These deeper currents influence you more than you may realize.",
+    "Below the surface, **{card}** ({orientation}) reveals hidden forces at play. {meaning} I sense these deeper currents are influencing you more than you may realize — pay attention to what stirs when you read this.",
   ],
   Advice: [
-    "As guidance, the cards offer **{card}** ({orientation}): {meaning} This is the wisdom to carry forward.",
+    "The cards offer **{card}** ({orientation}) as guidance. {meaning} I feel this is the wisdom to carry forward from this reading — let it be your compass.",
   ],
   "External Influences": [
-    "From the world around you, **{card}** ({orientation}) brings external energy into the reading: {meaning}",
+    "From the world around you, **{card}** ({orientation}) brings external energy into the reading. {meaning} Other people, circumstances, or environmental factors are shaping your situation in this way.",
   ],
   "Hopes or Fears": [
-    "In the space between hope and fear, **{card}** ({orientation}) surfaces: {meaning} Often, what we hope for and what we fear are two sides of the same coin.",
+    "In the space between hope and fear, **{card}** ({orientation}) surfaces. {meaning} I find that what we hope for and what we fear are often two sides of the same coin — this card illuminates that duality.",
   ],
   Outcome: [
-    "The final outcome card, **{card}** ({orientation}), reveals the most likely destination of these energies: {meaning} This trajectory holds if current patterns continue.",
+    "The final Outcome card, **{card}** ({orientation}), reveals the most likely destination of all these energies combined. {meaning} If current patterns and choices continue, this is where the path leads.",
   ],
   "Selected Card": [
-    "**{card}** ({orientation}) steps forward to answer your question directly: {meaning}",
-    "The card that presented itself to you is **{card}** ({orientation}): {meaning} Trust that this card appeared for a reason.",
+    "**{card}** ({orientation}) steps forward to answer your question directly. {meaning} I feel this card presented itself to you for a specific reason — trust that connection.",
+    "The card that called to you is **{card}** ({orientation}). {meaning} There is a reason this particular card drew your attention.",
   ],
 };
 
@@ -396,83 +374,251 @@ function interpretCard(dc: DrawnCard, context: QuestionContext): string {
     const meaning = dc.isReversed ? dc.card.meaning_rev : dc.card.meaning_up;
     return `**${dc.card.name}** (${dc.isReversed ? "reversed" : "upright"}): ${meaning}`;
   }
-
   const position = dc.position || "Selected Card";
   const templates = POSITION_NARRATIVES[position] || POSITION_NARRATIVES["Selected Card"];
   const template = pick(templates);
   const meaning = getCardMeaning(dc, interp, context);
-
   return template
     .replace("{card}", dc.card.name)
     .replace("{orientation}", dc.isReversed ? "reversed" : "upright")
     .replace("{meaning}", meaning);
 }
 
-// ─── Connection Phrases ───
+// ─── 4. Card Combination Analysis ───
 
-const CARD_TRANSITIONS = [
-  "Building on this,",
-  "This energy flows into the next card.",
-  "Together with this,",
-  "Adding another dimension,",
-  "Deepening the picture,",
-  "Complementing this message,",
-];
+function buildCombinationNarrative(revealed: DrawnCard[], context: QuestionContext): string[] {
+  const cardIds = revealed.map(dc => dc.card.id);
+  const combos = findAllCombinations(cardIds);
+  if (combos.length === 0) return [];
 
-// ─── Question Acknowledgment ───
+  const parts: string[] = [];
+  const idToName = new Map(revealed.map(dc => [dc.card.id, dc.card.name]));
 
-function buildQuestionAcknowledgment(question: string, context: QuestionContext, tone: EmotionalTone): string {
-  const contextLabel = CONTEXT_LABELS[context];
-  const toneLabel = TONE_LABELS[tone];
-  const modifier = pick(TONE_MODIFIERS[tone].prefix);
+  // Use up to 2 combinations to avoid overwhelming
+  const used = combos.slice(0, 2);
 
-  const phrases = [
-    `${modifier} in the context of your question about ${contextLabel}, the cards have drawn a meaningful pattern.`,
-    `You come to the cards ${toneLabel}. ${modifier} your question about ${contextLabel} draws a clear response from the spread.`,
-    `${modifier} as you seek guidance regarding ${contextLabel}, the spread reveals important insights.`,
-  ];
-  return pick(phrases);
+  for (const { combo } of used) {
+    const name1 = idToName.get(combo.cards[0]) || "";
+    const name2 = idToName.get(combo.cards[1]) || "";
+
+    const intro = pick([
+      `I want to highlight an important interaction between **${name1}** and **${name2}** —`,
+      `Something significant catches my eye: **${name1}** and **${name2}** appearing together —`,
+      `The pairing of **${name1}** with **${name2}** is noteworthy —`,
+    ]);
+
+    // Use context-specific combo meaning if available
+    let meaning = combo.meaning;
+    if (context === "love" && combo.love) meaning = combo.love;
+    if (context === "career" && combo.career) meaning = combo.career;
+
+    parts.push(`${intro} ${meaning}`);
+  }
+
+  return parts;
 }
 
-// ─── Closing Reflections ───
+// ─── 5. Current Situation Synthesis ───
 
-const CLOSINGS_BY_CONTEXT: Record<QuestionContext, string[]> = {
-  love: [
-    "The heart has its own wisdom. Trust what these cards have stirred within you, and let your emotional truth guide your next steps in love.",
-    "Love asks for both courage and vulnerability. Carry the insights from this reading with tenderness and honesty.",
-    "Whether the path ahead is one of deepening connection or gentle release, the cards remind you that your heart already knows the way.",
-  ],
-  career: [
-    "Your professional journey is unfolding as it should. Take these insights as encouragement to align your work with your deeper purpose.",
-    "The cards suggest that clarity in your career comes not from external validation alone, but from trusting your own capabilities and vision.",
-    "Step forward with confidence — the symbols here affirm that your efforts are building toward something meaningful.",
-  ],
-  money: [
-    "True abundance flows from a combination of practical wisdom and trust in the universe's support. Let this reading guide both.",
-    "The cards encourage a balanced approach to your finances — thoughtful action paired with an openness to unexpected gifts.",
-    "Material security is built one conscious choice at a time. These insights illuminate the next right step.",
-  ],
-  decision: [
-    "Ultimately, the best decisions arise from a blend of clear thinking and intuitive knowing. The cards have given you both — now trust yourself to choose.",
-    "The path will become clearer with each step you take. These cards don't remove the choice, but they illuminate what each direction holds.",
-    "Remember: there is rarely a perfect option — only the one that aligns most honestly with who you are becoming.",
-  ],
-  growth: [
-    "Growth is not always comfortable, but it is always worthwhile. Honor the journey these cards have reflected back to you.",
-    "The soul grows in spirals, not straight lines. Trust the process, even when it feels circular — each pass brings deeper understanding.",
-    "Carry the wisdom of this reading gently. The transformation unfolding within you is real, and it deserves your patience and compassion.",
-  ],
-  general: [
-    "The cards illuminate possibilities — the choices remain yours. Trust the insights that resonated most deeply.",
-    "Reflect on these messages and let your intuition guide your next steps. The symbols have spoken; now it is your turn to act.",
-    "These cards offer a mirror, not a map. What you see reflected is yours to interpret — honor your own knowing above all.",
-  ],
+function buildCurrentSituation(revealed: DrawnCard[], context: QuestionContext, tone: EmotionalTone): string {
+  const presentCard = revealed.find(dc => dc.position === "Present" || dc.position === "Present Situation");
+  const challengeCard = revealed.find(dc => dc.position === "Challenge");
+
+  const contextLabel = CONTEXT_LABELS[context];
+  const parts: string[] = [];
+
+  if (presentCard) {
+    const cardName = presentCard.card.name;
+    const energyWord = presentCard.isReversed ? "internal processing" : "active energy";
+
+    const situationPhrases = [
+      `Based on what I see, the cards suggest that you may currently be experiencing a period of ${energyWord} in ${contextLabel}. **${cardName}** at the center tells me that the core dynamic involves ${presentCard.isReversed ? "working through blocks or reconsidering your approach" : "engaging directly with what is in front of you"}.`,
+      `I sense that your current situation involves a real engagement with ${contextLabel}. With **${cardName}** defining this moment, ${presentCard.isReversed ? "there may be something being processed internally that hasn't fully surfaced yet" : "the energy is active and present — you are right in the middle of this"}.`,
+    ];
+    parts.push(pick(situationPhrases));
+
+    if (challengeCard) {
+      parts[0] += ` The presence of **${challengeCard.card.name}** as your challenge suggests that ${challengeCard.isReversed ? "an internalized struggle" : "an external obstacle"} adds complexity to the picture.`;
+    }
+  } else if (revealed.length >= 2) {
+    const first = revealed[0];
+    const second = revealed[1];
+    parts.push(`The cards suggest that your current experience with ${contextLabel} is shaped by the interplay between **${first.card.name}** and **${second.card.name}**. I feel these two energies are in conversation — ${first.isReversed ? "one working internally" : "one active and visible"}, ${second.isReversed ? "the other quietly processing" : "the other contributing its own momentum"}.`);
+  }
+
+  return parts.join(" ");
+}
+
+// ─── 6. Possible Outcome ───
+
+function buildPossibleOutcome(revealed: DrawnCard[], context: QuestionContext, themes: DetectedTheme[]): string {
+  const outcomeCard = revealed.find(dc => dc.position === "Outcome" || dc.position === "Future" || dc.position === "Possible Future");
+
+  if (outcomeCard) {
+    const cardName = outcomeCard.card.name;
+    const themeStr = themes.length > 0 ? themes[0].label : "the energies at play";
+
+    const phrases = [
+      `Looking at how this situation may evolve — **${cardName}** suggests that ${outcomeCard.isReversed ? "a period of reassessment or recalibration is likely before forward movement resumes" : "the current trajectory points toward genuine progress and development"}. This is not a fixed prediction, but it is possible that ${themeStr} will continue to shape what unfolds.`,
+      `As I consider the possible outcome, **${cardName}** tells me that ${outcomeCard.isReversed ? "you may need to address something unresolved before the situation can fully shift" : "the energy is moving toward a meaningful resolution"}. It is possible that the coming period brings ${outcomeCard.isReversed ? "deeper self-understanding before external change" : "tangible shifts you can feel and see"}.`,
+      `The direction this is heading — based on **${cardName}** — is one of ${outcomeCard.isReversed ? "internal transformation that eventually manifests outwardly" : "visible development and forward motion"}. This may lead to ${themes.length > 0 ? `a deepening of ${themeStr} in your life` : "changes that feel both natural and significant"}.`,
+    ];
+    return pick(phrases);
+  }
+
+  // For spreads without a designated outcome card
+  const last = revealed[revealed.length - 1];
+  return `Based on the overall energy of this spread, I sense that developments will move toward ${last.isReversed ? "a period of internal work and quiet reassessment" : "a gradual opening and forward movement"}. The cards do not show a dramatic overnight shift, but rather a meaningful unfolding that rewards patience and awareness.`;
+}
+
+// ─── 7. Timing ───
+
+const SUIT_TIMING: Record<string, string> = {
+  Wands: "in the coming days to weeks",
+  Cups: "over the next few weeks to months",
+  Swords: "swiftly, perhaps as a sudden development",
+  Pentacles: "gradually, unfolding over the coming months",
 };
+
+function getTimingNarrative(cards: DrawnCard[]): string {
+  const revealed = cards.filter(dc => dc.isRevealed);
+  const hasMajor = revealed.some(dc => dc.card.arcana === "Major");
+  const suits = revealed.filter(dc => dc.card.suit).map(dc => dc.card.suit!);
+
+  if (suits.length === 0 && hasMajor) {
+    return "The presence of Major Arcana cards tells me this touches upon a significant life chapter — the timing is less about weeks or months and more about a meaningful phase of your journey that unfolds at its own pace.";
+  }
+  if (suits.length === 0) return "";
+
+  const suitCounts = new Map<string, number>();
+  for (const s of suits) suitCounts.set(s, (suitCounts.get(s) || 0) + 1);
+  let dominant: string = suits[0];
+  let max = 0;
+  for (const [s, c] of suitCounts) { if (c > max) { dominant = s; max = c; } }
+
+  const timingPhrase = SUIT_TIMING[dominant] || "in the near future";
+  const parts = [`I sense these developments are most likely to manifest ${timingPhrase}.`];
+  if (hasMajor) {
+    parts.push("The Major Arcana presence adds weight to this timeline — these shifts carry deep personal significance beyond ordinary day-to-day events.");
+  }
+  return parts.join(" ");
+}
+
+// ─── 8. Guidance, Reflection & Closing Question ───
+
+const CLOSINGS_BY_CONTEXT: Record<QuestionContext, { guidance: string[]; questions: string[] }> = {
+  love: {
+    guidance: [
+      "The cards encourage you to reflect on what love truly means to you — not as an abstract concept, but as a lived experience in your daily life.",
+      "I feel the cards urging you to lead with your heart while honoring your boundaries. Love asks for both courage and vulnerability.",
+      "Whether the path ahead is one of deepening connection or gentle release, your heart already holds the answer.",
+    ],
+    questions: [
+      "What would it look like to show up more authentically in your closest relationship?",
+      "If fear were removed from the equation, what would your heart choose?",
+      "What pattern in love are you ready to release?",
+    ],
+  },
+  career: {
+    guidance: [
+      "The cards suggest that your professional journey is unfolding as it should. Trust your capabilities even when the path feels uncertain.",
+      "I sense that clarity in your career comes not from external validation alone, but from aligning your daily work with your deeper purpose.",
+      "Step forward with confidence — the cards affirm that your efforts are building toward something meaningful.",
+    ],
+    questions: [
+      "If success were guaranteed, what would you pursue professionally?",
+      "What skill or talent have you been undervaluing in your work life?",
+      "What does meaningful work actually look like for you — not what others expect, but what genuinely fulfills you?",
+    ],
+  },
+  money: {
+    guidance: [
+      "True abundance flows from a combination of practical wisdom and trust in the process. The cards encourage both careful planning and openness to unexpected gifts.",
+      "The cards remind you that your relationship with money often mirrors your relationship with self-worth. Nurture both.",
+      "Material security is built one conscious choice at a time. These insights illuminate the next right step.",
+    ],
+    questions: [
+      "What belief about money might be limiting your ability to receive abundance?",
+      "Where in your financial life could a small shift create the biggest impact?",
+      "What does financial freedom actually feel like to you — and are you moving toward that feeling?",
+    ],
+  },
+  decision: {
+    guidance: [
+      "Ultimately, the best decisions arise from a blend of clear thinking and intuitive knowing. The cards have offered both — now trust yourself to choose.",
+      "The path will become clearer with each step you take. The cards don't remove the choice, but they illuminate what each direction holds.",
+      "Remember: there is rarely a perfect option — only the one that aligns most honestly with who you are becoming.",
+    ],
+    questions: [
+      "Which option feels most aligned with the person you want to become?",
+      "What are you afraid of losing in each direction — and which loss feels more bearable?",
+      "If you could not fail, which path would you choose without hesitation?",
+    ],
+  },
+  growth: {
+    guidance: [
+      "Growth is not always comfortable, but it is always worthwhile. The cards honor the journey you are on and the courage it takes to keep evolving.",
+      "The soul grows in spirals, not straight lines. Trust the process, even when it feels circular — each pass brings deeper understanding.",
+      "Carry the wisdom of this reading gently. The transformation unfolding within you is real, and it deserves your patience.",
+    ],
+    questions: [
+      "What old version of yourself are you ready to lovingly release?",
+      "What lesson keeps appearing in different forms — and what might it be trying to teach you?",
+      "If your soul could speak, what would it say it needs most right now?",
+    ],
+  },
+  general: {
+    guidance: [
+      "The cards illuminate possibilities — the choices remain yours. Trust the insights that resonated most deeply; they are the ones meant for you.",
+      "I encourage you to sit with this reading for a while. The messages may continue to unfold in meaning over the coming days.",
+      "These cards offer a mirror, not a map. What you see reflected is yours to interpret — honor your own knowing above all else.",
+    ],
+    questions: [
+      "What part of this reading stirred the strongest emotional response — and what might that be telling you?",
+      "What is one small, concrete step you could take today based on what the cards have shown you?",
+      "If you returned to this reading in a month, what do you hope will have changed?",
+    ],
+  },
+};
+
+function buildClosing(context: QuestionContext, tone: EmotionalTone): string {
+  const toneData = TONE_MODIFIERS[tone];
+  const closing = CLOSINGS_BY_CONTEXT[context];
+  const parts: string[] = [];
+
+  // Tone reassurance
+  if (tone !== "neutral") {
+    parts.push(toneData.reassurance);
+  }
+
+  // Contextual guidance
+  parts.push(pick(closing.guidance));
+
+  // Reflective question
+  const question = pick(closing.questions);
+  parts.push(`**A question to carry with you:** *${question}*`);
+
+  return parts.join("\n\n");
+}
+
+// ─── Theme Weaving ───
+
+const THEME_BRIDGES = [
+  "Looking across the full spread, a powerful thread of **{theme}** connects these cards — {card1} and {card2} both echo this energy, and I feel it is central to what you are experiencing right now.",
+  "It strikes me how {theme} surfaces repeatedly. Both {card1} and {card2} carry this vibration, creating a pattern the cards clearly want you to notice.",
+  "A dominant theme of **{theme}** weaves through your reading. When I see multiple cards sharing this energy — as {card1} and {card2} do here — I know it deserves special attention.",
+];
+
+const SECONDARY_THEME_BRIDGES = [
+  "Alongside this, I also sense a quieter but meaningful thread of {theme} adding nuance to the overall message.",
+  "There is also an undercurrent of **{theme}** running beneath the surface, adding depth and complexity to the reading.",
+  "Intertwined with the main theme, {theme} brings an additional layer of insight that is worth sitting with.",
+];
 
 // ─── Main Generator ───
 
 export function generateRuleBasedReading(question: string, cards: DrawnCard[]): string {
-  const revealed = cards.filter((dc) => dc.isRevealed);
+  const revealed = cards.filter(dc => dc.isRevealed);
   if (revealed.length === 0) return "No cards have been revealed yet.";
 
   const context = detectQuestionContext(question);
@@ -481,65 +627,68 @@ export function generateRuleBasedReading(question: string, cards: DrawnCard[]): 
   const toneData = TONE_MODIFIERS[tone];
   const parts: string[] = [];
 
-  // 1. Opening
-  parts.push(pick(OPENINGS_BY_CONTEXT[context]));
+  // 1. Reader greeting & question acknowledgment
+  parts.push(buildGreeting(question, context, tone));
 
-  // 2. Question acknowledgment (tone-aware)
-  parts.push(buildQuestionAcknowledgment(question, context, tone));
-
-  // 3. Emotional bridge (tone-specific)
+  // 2. Emotional bridge (tone-specific)
   if (tone !== "neutral") {
     parts.push(pick(toneData.bridge));
   }
 
-  // 4. Theme weaving
-  if (themes.length > 0) {
-    const primary = themes[0];
-    const bridge = pick(THEME_BRIDGES)
-      .replace("{theme}", primary.label)
-      .replace("{card1}", primary.cards[0])
-      .replace("{card2}", primary.cards[1] || primary.cards[0]);
-    parts.push(bridge);
+  // 3. Spread overview
+  const overview = buildSpreadOverview(revealed, themes);
+  if (overview) parts.push(overview);
 
-    if (themes.length > 1) {
-      const secondary = themes[1];
-      parts.push(pick(SECONDARY_THEME_BRIDGES).replace("{theme}", secondary.label));
-    }
-  }
-
-  // 5. Card-by-card narrative
+  // 4. Card-by-card interpretation
   parts.push("");
-  for (let i = 0; i < revealed.length; i++) {
-    parts.push(interpretCard(revealed[i], context));
+  for (const dc of revealed) {
+    parts.push(interpretCard(dc, context));
   }
 
-  // 6. Synthesis for multi-card readings
-  if (revealed.length >= 3) {
+  // 5. Card combination analysis
+  const combos = buildCombinationNarrative(revealed, context);
+  if (combos.length > 0) {
     parts.push("");
+    parts.push(...combos);
+  }
+
+  // 6. Theme weaving (for themes not already in overview)
+  if (themes.length > 1) {
+    const secondary = themes[1];
+    parts.push(pick(SECONDARY_THEME_BRIDGES).replace("{theme}", secondary.label));
+  }
+
+  // 7. Current situation synthesis
+  if (revealed.length >= 2) {
+    parts.push("");
+    parts.push(buildCurrentSituation(revealed, context, tone));
+  }
+
+  // 8. Possible outcome
+  parts.push("");
+  parts.push(buildPossibleOutcome(revealed, context, themes));
+
+  // 9. Synthesis arc for multi-card readings
+  if (revealed.length >= 3) {
     const first = revealed[0];
     const last = revealed[revealed.length - 1];
     const syntheses = [
-      `Reading these cards as a whole, the journey from **${first.card.name}** to **${last.card.name}** tells a story of evolution — from ${first.isReversed ? "confronting limitations" : "initial energy"} toward ${last.isReversed ? "careful reassessment" : "emerging possibility"}.`,
-      `When you step back and view the full spread, the arc from **${first.card.name}** through to **${last.card.name}** suggests a clear trajectory: ${themes.length > 0 ? `one shaped by ${themes[0].label}` : "one that is uniquely yours to navigate"}.`,
-      `Together, these cards paint a coherent picture. **${first.card.name}** sets the stage, and **${last.card.name}** reveals where the energy is flowing — ${themes.length > 0 ? `with ${themes[0].label} as the unifying thread` : "in a direction that will become clearer with time"}.`,
+      `Reading these cards as a whole, the journey from **${first.card.name}** to **${last.card.name}** tells a story of evolution — from ${first.isReversed ? "confronting internal blocks" : "initial energy and intention"} toward ${last.isReversed ? "deeper self-understanding" : "emerging possibility and growth"}.`,
+      `When I step back and view the full arc, from **${first.card.name}** through to **${last.card.name}**, I see a clear trajectory: ${themes.length > 0 ? `one shaped by ${themes[0].label}` : "one that is uniquely yours to navigate"}.`,
     ];
     parts.push(pick(syntheses));
   }
 
-  // 7. Timing
+  // 10. Timing
   const timingText = getTimingNarrative(cards);
   if (timingText) {
     parts.push("");
     parts.push(timingText);
   }
 
-  // 8. Tone-aware reassurance + closing
+  // 11. Guidance, reflection & closing question
   parts.push("");
-  if (tone !== "neutral") {
-    parts.push(toneData.reassurance);
-    parts.push("");
-  }
-  parts.push(pick(CLOSINGS_BY_CONTEXT[context]));
+  parts.push(buildClosing(context, tone));
 
   return parts.join("\n\n");
 }
