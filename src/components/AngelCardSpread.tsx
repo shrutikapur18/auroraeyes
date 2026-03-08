@@ -4,7 +4,6 @@ import { drawAngelCards, type DrawnAngelCard } from "@/data/angelCards";
 import AngelCardComponent from "./AngelCardComponent";
 import ReadingTable from "./ReadingTable";
 import FocusMoment from "./FocusMoment";
-import { canDoReading, recordReading } from "@/lib/tarotReading";
 import { generateAngelReading } from "@/lib/angelReading";
 import cardBackImage from "@/assets/card-back.jpg";
 
