@@ -36,7 +36,7 @@ const YesNoSpread = ({ question, onError }: YesNoSpreadProps) => {
     setTimeout(() => setPhase("card"), 2000);
   };
 
-  const handleReveal = useCallback(async () => {
+  const handleReveal = useCallback(() => {
     if (!drawnCard) return;
     const revealed = { ...drawnCard, isRevealed: true };
     setDrawnCard(revealed);
