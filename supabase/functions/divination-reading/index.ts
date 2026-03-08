@@ -32,11 +32,12 @@ serve(async (req) => {
 
 Follow this structure:
 1. Begin with a loving overview of the angelic energy surrounding the question (1-2 sentences).
-2. Interpret each angel card's message in relation to the user's question and its position.
-3. Connect the messages into a cohesive narrative of divine guidance.
-4. End with an encouraging affirmation or blessing (1-2 sentences).
+2. Look across the angel cards for repeating spiritual themes — such as healing, forgiveness, courage, abundance, trust, divine timing, or self-love. If multiple cards share a theme, highlight it warmly (e.g. "The angels are sending a powerful message of healing and renewal…").
+3. Interpret each angel card's message in relation to the user's question and its position.
+4. Connect the messages into a cohesive narrative of divine guidance, centered on the resonant themes.
+5. End with an encouraging affirmation or blessing grounded in the dominant theme (1-2 sentences).
 
-Keep readings between 120 and 200 words. Focus on hope, healing, and empowerment.`;
+Keep readings between 150 and 250 words. Focus on hope, healing, and empowerment.`;
     } else if (type === "rune") {
       symbolsDescription = (runes || [])
         .map((r: { name: string; symbol: string; orientation: string; position: string; meaning: string; keywords: string }) =>
@@ -48,12 +49,12 @@ Keep readings between 120 and 200 words. Focus on hope, healing, and empowerment
 
 Follow this structure:
 1. Begin with a brief sense of the overall energy the runes reveal (1-2 sentences).
-2. Interpret each rune individually based on its position (Past, Present, Future), orientation, and the user's question.
-3. Explain the symbolism and ancient meaning of each rune.
-4. Connect the runes together into a cohesive narrative.
-5. End with practical wisdom or guidance (1-2 sentences).
+2. Look across the runes for repeating symbolic themes — such as transformation, protection, harvest, struggle, new beginnings, fate, spiritual growth, or sacrifice. If multiple runes share a theme, name it naturally (e.g. "The runes speak strongly of a period of inner transformation…").
+3. Interpret each rune individually based on its position (Past, Present, Future), orientation, and the user's question.
+4. Weave the runes into a cohesive narrative centered on the detected themes, showing how they reinforce or tension each other.
+5. End with practical wisdom or guidance grounded in the dominant theme (1-2 sentences).
 
-Keep readings between 120 and 200 words. Be mystical but grounded. Avoid deterministic predictions.`;
+Keep readings between 150 and 250 words. Be mystical but grounded. Avoid deterministic predictions.`;
     } else {
       // Fallback tarot-style
       symbolsDescription = (cards || [])
@@ -66,11 +67,12 @@ Keep readings between 120 and 200 words. Be mystical but grounded. Avoid determi
 
 Follow this structure:
 1. Begin with a short intuitive summary of the overall energy surrounding the user's question (1-2 sentences).
-2. Interpret each card individually based on the user's question, the card position, and whether the card is upright or reversed.
-3. Connect the cards together into a cohesive narrative.
-4. End with thoughtful reflection or guidance (1-2 sentences).
+2. Analyze the spread for repeating symbolic themes across cards — such as transformation, healing, new beginnings, conflict, opportunity, spiritual growth, independence, surrender, or cycles. If multiple cards share a theme, highlight it naturally (e.g. "There is a strong theme of renewal present in this spread…").
+3. Interpret each card individually based on the user's question, the card position, and whether the card is upright or reversed.
+4. Weave the individual meanings into a cohesive narrative that centers on the detected themes. Show how the cards reinforce or contrast each other rather than treating them in isolation.
+5. End with thoughtful reflection or guidance grounded in the dominant theme (1-2 sentences).
 
-Keep readings between 120 and 220 words. Avoid deterministic predictions.`;
+Keep readings between 150 and 250 words. Avoid deterministic predictions.`;
     }
 
     // Build messages array
