@@ -6,6 +6,7 @@ import ReadingModeSelector from "@/components/ReadingModeSelector";
 import FocusMoment from "@/components/FocusMoment";
 import InteractiveShuffle from "@/components/InteractiveShuffle";
 import CardFanSpread from "@/components/CardFanSpread";
+import TarotDeckPicker from "@/components/TarotDeckPicker";
 import ReadingTable from "@/components/ReadingTable";
 import ThreeCardSpread from "@/components/ThreeCardSpread";
 import CelticCrossSpread from "@/components/CelticCrossSpread";
