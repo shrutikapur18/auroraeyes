@@ -60,6 +60,10 @@ const App = () => (
             <Route path="/daily-tarot-card" element={<DailyPage />} />
             <Route path="/daily-rune" element={<DailyPage />} />
             <Route path="/daily-angel-message" element={<DailyPage />} />
+            {/* Daily tarot reading pages */}
+            <Route path="/daily-tarot-reading" element={<DailyTarotReading />} />
+            <Route path="/tarot-reading-for-:dateSlug" element={<DailyTarotReading />} />
+            <Route path="/tarot-reading-archive" element={<TarotReadingArchive />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogArticle />} />
             {/* Hub / Pillar pages */}
