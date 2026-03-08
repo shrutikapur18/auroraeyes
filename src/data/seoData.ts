@@ -510,6 +510,7 @@ export function getAllSEOUrls(): { loc: string; changefreq: string; priority: st
     { path: "/angel-cards-guide", freq: "monthly", pri: "0.8" },
     { path: "/tarot-spreads", freq: "monthly", pri: "0.8" },
     { path: "/tarot-combinations", freq: "monthly", pri: "0.8" },
+    { path: "/tarot-comparisons", freq: "monthly", pri: "0.8" },
   ];
   statics.forEach(s => urls.push({ loc: `${base}${s.path}`, changefreq: s.freq, priority: s.pri }));
 
