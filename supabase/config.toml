@@ -5,3 +5,6 @@ verify_jwt = false
 
 [functions.divination-reading]
 verify_jwt = false
+
+[functions.horary-reading]
+verify_jwt = false
