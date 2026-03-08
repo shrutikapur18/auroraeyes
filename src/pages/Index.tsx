@@ -8,6 +8,7 @@ import ReadingModeSelector from "@/components/ReadingModeSelector";
 import ReadingTable from "@/components/ReadingTable";
 import FocusMoment from "@/components/FocusMoment";
 import InteractiveShuffle from "@/components/InteractiveShuffle";
+import CardFanSpread from "@/components/CardFanSpread";
 import ThreeCardSpread from "@/components/ThreeCardSpread";
 import CelticCrossSpread from "@/components/CelticCrossSpread";
 import PickACardSpread from "@/components/PickACardSpread";
@@ -16,11 +17,11 @@ import AngelCardSpread from "@/components/AngelCardSpread";
 import RuneSpread from "@/components/RuneSpread";
 import ReadingPanel from "@/components/ReadingPanel";
 import DailyDivination from "@/components/DailyDivination";
-import { drawCards, threeCardPositions, celticCrossPositions } from "@/data/tarotDeck";
+import { threeCardPositions, celticCrossPositions } from "@/data/tarotDeck";
 import type { DrawnCard, ReadingMode } from "@/data/tarotDeck";
 import { canDoReading, recordReading, generateAIReading } from "@/lib/tarotReading";
 
-type Phase = "input" | "focus" | "shuffling" | "spread" | "reading" | "loading";
+type Phase = "input" | "focus" | "shuffling" | "fan" | "spread" | "reading" | "loading";
 
 const Index = () => {
   const [question, setQuestion] = useState("");
@@ -48,11 +49,18 @@ const Index = () => {
   }, []);
 
   const handleShuffleComplete = useCallback((_seed: number) => {
-    // Use the seed to influence card draw
-    const cards = drawCards(cardCount).map((dc, i) => ({ ...dc, position: positions[i] }));
-    setDrawnCards(cards);
-    setPhase("spread");
-  }, [cardCount, positions]);
+    // After shuffle, go to fan spread for card selection
+    setPhase("fan");
+  }, []);
+
+  // Called when user finishes picking cards from the fan
+  const handleFanComplete = useCallback(
+    (selectedCards: DrawnCard[]) => {
+      setDrawnCards(selectedCards);
+      setPhase("spread");
+    },
+    []
+  );
 
   const handleReveal = useCallback((index: number) => {
     if (tarotMode === "pick-a-card" && drawnCards.some((c) => c.isRevealed)) return;
@@ -122,7 +130,6 @@ const Index = () => {
 
               {error && <p className="text-center text-sm text-destructive mb-4">{error}</p>}
 
-              {/* Tarot-specific sub-mode selector and shuffle button */}
               {isTarotMethod && (
                 <>
                   <ReadingModeSelector mode={tarotMode} setMode={setTarotMode} />
@@ -139,12 +146,10 @@ const Index = () => {
                 </>
               )}
 
-              {/* Yes/No Tarot */}
               {divinationMethod === "yes-no" && (
                 <YesNoSpread question={question} onError={setError} />
               )}
 
-              {/* Pick a Card (standalone) */}
               {divinationMethod === "pick-a-card" && (
                 <div className="flex justify-center mb-10">
                   <motion.button
@@ -161,12 +166,10 @@ const Index = () => {
                 </div>
               )}
 
-              {/* Angel Cards */}
               {divinationMethod === "angel" && (
                 <AngelCardSpread question={question} onError={setError} />
               )}
 
-              {/* Rune Reading */}
               {divinationMethod === "runes" && (
                 <RuneSpread question={question} onError={setError} />
               )}
@@ -191,6 +194,25 @@ const Index = () => {
                 onComplete={handleShuffleComplete}
                 minPresses={3}
                 label="Shuffle the Cards"
+              />
+            </motion.div>
+          )}
+
+          {/* Fan spread: user picks cards from a realistic fan */}
+          {phase === "fan" && (
+            <motion.div
+              key="fan"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              <div className="mb-4 text-center">
+                <p className="text-xs text-muted-foreground italic">"{question}"</p>
+              </div>
+              <CardFanSpread
+                requiredCount={cardCount}
+                positions={positions}
+                onComplete={handleFanComplete}
               />
             </motion.div>
           )}
