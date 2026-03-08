@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import { motion } from "framer-motion";
 import type { DrawnCard } from "@/data/tarotDeck";
+import ReadingAudioPlayer from "@/components/ReadingAudioPlayer";
 
 interface ReadingPanelProps {
   reading: string;
