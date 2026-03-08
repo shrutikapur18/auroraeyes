@@ -25,7 +25,7 @@ interface ReadingPanelProps {
   }>;
 }
 
-const ReadingPanel = ({ reading, drawnCards, question }: ReadingPanelProps) => {
+const ReadingPanel = ({ reading, drawnCards, question, type = "tarot", runes, angelCards }: ReadingPanelProps) => {
   const handleShare = useCallback(async () => {
     const cardNames = drawnCards
       .filter((dc) => dc.isRevealed)
