@@ -1,19 +1,25 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Play, Pause, RotateCcw, Volume2, VolumeX, Loader2 } from "lucide-react";
+import { Play, Pause, RotateCcw, Volume2, VolumeX, Loader2, Mic } from "lucide-react";
 
 interface ReadingAudioPlayerProps {
   reading: string;
 }
 
+type PlayerStatus = "idle" | "loading" | "playing" | "paused" | "error";
+type VoiceMode = "browser" | "premium";
+
 const ReadingAudioPlayer = ({ reading }: ReadingAudioPlayerProps) => {
-  const [status, setStatus] = useState<"idle" | "loading" | "playing" | "paused" | "error">("idle");
+  const [status, setStatus] = useState<PlayerStatus>("idle");
   const [progress, setProgress] = useState(0);
   const [ambientOn, setAmbientOn] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const [voiceMode, setVoiceMode] = useState<VoiceMode>("browser");
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const ambientRef = useRef<HTMLAudioElement | null>(null);
+  const ambientRef = useRef<any>(null);
+  const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
   const progressInterval = useRef<ReturnType<typeof setInterval>>();
+  const speechSupported = typeof window !== "undefined" && "speechSynthesis" in window;
 
   // Cleanup
   useEffect(() => {
@@ -23,7 +29,8 @@ const ReadingAudioPlayer = ({ reading }: ReadingAudioPlayerProps) => {
         audioRef.current.pause();
         URL.revokeObjectURL(audioRef.current.src);
       }
-      ambientRef.current?.pause();
+      ambientRef.current?.stop?.();
+      window.speechSynthesis?.cancel();
     };
   }, []);
 
@@ -37,8 +44,79 @@ const ReadingAudioPlayer = ({ reading }: ReadingAudioPlayerProps) => {
     }, 200);
   }, []);
 
-  const handleListen = useCallback(async () => {
-    // If we already have audio loaded, just play it
+  // ─── Browser Web Speech API ───
+
+  const getCalmerVoice = useCallback((): SpeechSynthesisVoice | null => {
+    const voices = window.speechSynthesis.getVoices();
+    const preferred = ["Samantha", "Karen", "Moira", "Fiona", "Google UK English Female", "Microsoft Zira"];
+    for (const name of preferred) {
+      const v = voices.find((v) => v.name.includes(name));
+      if (v) return v;
+    }
+    return voices.find((v) => v.lang.startsWith("en") && v.name.toLowerCase().includes("female")) || voices.find((v) => v.lang.startsWith("en")) || null;
+  }, []);
+
+  const handleBrowserSpeak = useCallback(() => {
+    if (!speechSupported) return;
+
+    if (status === "paused" && utteranceRef.current) {
+      window.speechSynthesis.resume();
+      setStatus("playing");
+      return;
+    }
+
+    window.speechSynthesis.cancel();
+
+    const cleanText = reading.replace(/\*\*/g, "").replace(/[✦🔮]/g, "");
+    const utterance = new SpeechSynthesisUtterance(cleanText);
+    utterance.rate = 0.85;
+    utterance.pitch = 0.95;
+    utterance.volume = 1;
+
+    const voice = getCalmerVoice();
+    if (voice) utterance.voice = voice;
+
+    // Estimate progress via word boundary events
+    const words = cleanText.split(/\s+/).length;
+    let wordIndex = 0;
+
+    utterance.onboundary = (e) => {
+      if (e.name === "word") {
+        wordIndex++;
+        setProgress((wordIndex / words) * 100);
+      }
+    };
+
+    utterance.onend = () => {
+      setStatus("idle");
+      setProgress(0);
+    };
+
+    utterance.onerror = () => {
+      setStatus("error");
+      setErrorMsg("Speech synthesis failed. Please try again.");
+    };
+
+    utteranceRef.current = utterance;
+    window.speechSynthesis.speak(utterance);
+    setStatus("playing");
+  }, [reading, status, speechSupported, getCalmerVoice]);
+
+  const handleBrowserPause = useCallback(() => {
+    window.speechSynthesis.pause();
+    setStatus("paused");
+  }, []);
+
+  const handleBrowserRestart = useCallback(() => {
+    window.speechSynthesis.cancel();
+    setStatus("idle");
+    setProgress(0);
+    setTimeout(() => handleBrowserSpeak(), 50);
+  }, [handleBrowserSpeak]);
+
+  // ─── Premium ElevenLabs TTS ───
+
+  const handlePremiumListen = useCallback(async () => {
     if (audioRef.current && status === "paused") {
       audioRef.current.play();
       setStatus("playing");
@@ -63,9 +141,7 @@ const ReadingAudioPlayer = ({ reading }: ReadingAudioPlayerProps) => {
         }
       );
 
-      if (!response.ok) {
-        throw new Error(`Request failed: ${response.status}`);
-      }
+      if (!response.ok) throw new Error(`Request failed: ${response.status}`);
 
       const blob = await response.blob();
       const url = URL.createObjectURL(blob);
@@ -83,18 +159,18 @@ const ReadingAudioPlayer = ({ reading }: ReadingAudioPlayerProps) => {
       startProgressTracking();
     } catch (err) {
       console.error("TTS error:", err);
-      setErrorMsg("Could not generate audio. Please try again.");
+      setErrorMsg("Premium voice unavailable. Try the free voice instead.");
       setStatus("error");
     }
   }, [reading, status, startProgressTracking]);
 
-  const handlePause = useCallback(() => {
+  const handlePremiumPause = useCallback(() => {
     audioRef.current?.pause();
     setStatus("paused");
     clearInterval(progressInterval.current);
   }, []);
 
-  const handleRestart = useCallback(() => {
+  const handlePremiumRestart = useCallback(() => {
     if (audioRef.current) {
       audioRef.current.currentTime = 0;
       audioRef.current.play();
@@ -103,14 +179,19 @@ const ReadingAudioPlayer = ({ reading }: ReadingAudioPlayerProps) => {
     }
   }, [startProgressTracking]);
 
+  // ─── Unified Handlers ───
+
+  const handlePlay = voiceMode === "browser" ? handleBrowserSpeak : handlePremiumListen;
+  const handlePause = voiceMode === "browser" ? handleBrowserPause : handlePremiumPause;
+  const handleRestart = voiceMode === "browser" ? handleBrowserRestart : handlePremiumRestart;
+
   const toggleAmbient = useCallback(() => {
     if (!ambientRef.current) {
-      // Use a gentle ambient tone via Web Audio API
       const ctx = new AudioContext();
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       osc.type = "sine";
-      osc.frequency.setValueAtTime(174, ctx.currentTime); // Solfeggio healing frequency
+      osc.frequency.setValueAtTime(174, ctx.currentTime);
       gain.gain.setValueAtTime(0.03, ctx.currentTime);
       const osc2 = ctx.createOscillator();
       osc2.type = "sine";
@@ -121,14 +202,27 @@ const ReadingAudioPlayer = ({ reading }: ReadingAudioPlayerProps) => {
       osc2.connect(gain2).connect(ctx.destination);
       osc.start();
       osc2.start();
-      // Store context for cleanup
-      (ambientRef as any).current = { ctx, stop: () => { osc.stop(); osc2.stop(); ctx.close(); } };
+      ambientRef.current = { ctx, stop: () => { osc.stop(); osc2.stop(); ctx.close(); } };
       setAmbientOn(true);
     } else {
-      (ambientRef.current as any).stop?.();
+      ambientRef.current.stop?.();
       ambientRef.current = null;
       setAmbientOn(false);
     }
+  }, []);
+
+  const switchMode = useCallback((mode: VoiceMode) => {
+    // Stop current playback
+    window.speechSynthesis?.cancel();
+    if (audioRef.current) {
+      audioRef.current.pause();
+      URL.revokeObjectURL(audioRef.current.src);
+      audioRef.current = null;
+    }
+    clearInterval(progressInterval.current);
+    setStatus("idle");
+    setProgress(0);
+    setVoiceMode(mode);
   }, []);
 
   return (
@@ -138,10 +232,40 @@ const ReadingAudioPlayer = ({ reading }: ReadingAudioPlayerProps) => {
       animate={{ opacity: 1 }}
       transition={{ delay: 0.8 }}
     >
+      {/* Voice mode selector */}
+      {status === "idle" && (
+        <div className="flex justify-center gap-2 mb-4">
+          {speechSupported && (
+            <button
+              onClick={() => switchMode("browser")}
+              className={`px-3 py-1.5 rounded-lg text-xs font-heading tracking-wider transition-all border ${
+                voiceMode === "browser"
+                  ? "bg-primary/15 border-primary/40 text-primary"
+                  : "bg-muted/20 border-border/20 text-muted-foreground hover:text-primary hover:border-primary/30"
+              }`}
+            >
+              <Mic className="w-3 h-3 inline mr-1.5" />
+              Free Voice
+            </button>
+          )}
+          <button
+            onClick={() => switchMode("premium")}
+            className={`px-3 py-1.5 rounded-lg text-xs font-heading tracking-wider transition-all border ${
+              voiceMode === "premium"
+                ? "bg-primary/15 border-primary/40 text-primary"
+                : "bg-muted/20 border-border/20 text-muted-foreground hover:text-primary hover:border-primary/30"
+            }`}
+          >
+            <Volume2 className="w-3 h-3 inline mr-1.5" />
+            Premium Voice
+          </button>
+        </div>
+      )}
+
       {/* Main listen button */}
       {status === "idle" && (
         <motion.button
-          onClick={handleListen}
+          onClick={handlePlay}
           className="mx-auto flex items-center gap-3 px-6 py-3 rounded-xl bg-primary/10 border border-primary/30 text-primary font-heading text-sm tracking-widest hover:bg-primary/20 transition-all"
           whileHover={{ scale: 1.03 }}
           whileTap={{ scale: 0.97 }}
@@ -188,7 +312,7 @@ const ReadingAudioPlayer = ({ reading }: ReadingAudioPlayerProps) => {
               </button>
 
               <button
-                onClick={status === "playing" ? handlePause : handleListen}
+                onClick={status === "playing" ? handlePause : handlePlay}
                 className="p-3 rounded-full bg-primary/15 border border-primary/30 text-primary hover:bg-primary/25 transition-all"
                 title={status === "playing" ? "Pause" : "Play"}
               >
@@ -205,7 +329,8 @@ const ReadingAudioPlayer = ({ reading }: ReadingAudioPlayerProps) => {
             </div>
 
             <p className="text-center text-[10px] text-muted-foreground/60">
-              {ambientOn ? "♫ Ambient healing tones" : "Ambient sound off"}
+              {voiceMode === "browser" ? "Free voice · Browser TTS" : "Premium voice · ElevenLabs"}
+              {ambientOn ? " · ♫ Ambient tones" : ""}
             </p>
           </motion.div>
         )}
