@@ -11,7 +11,7 @@ serve(async (req) => {
   }
 
   try {
-    const { question, type, cards, runes } = await req.json();
+    const { question, type, cards, runes, followUp, conversationHistory } = await req.json();
 
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) {
