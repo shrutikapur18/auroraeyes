@@ -2,11 +2,27 @@ import { useCallback } from "react";
 import { motion } from "framer-motion";
 import type { DrawnCard } from "@/data/tarotDeck";
 import ReadingAudioPlayer from "@/components/ReadingAudioPlayer";
+import FollowUpChat from "@/components/FollowUpChat";
 
 interface ReadingPanelProps {
   reading: string;
   drawnCards: DrawnCard[];
   question: string;
+  type?: "tarot" | "rune" | "angel";
+  runes?: Array<{
+    name: string;
+    symbol: string;
+    orientation: string;
+    position: string;
+    meaning: string;
+    keywords: string;
+  }>;
+  angelCards?: Array<{
+    name: string;
+    position: string;
+    meaning: string;
+    keywords: string;
+  }>;
 }
 
 const ReadingPanel = ({ reading, drawnCards, question }: ReadingPanelProps) => {
