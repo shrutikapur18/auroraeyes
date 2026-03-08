@@ -1,8 +1,10 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { motion } from "framer-motion";
 import type { DrawnCard } from "@/data/tarotDeck";
+import type { ShareImageData } from "@/lib/generateShareImage";
 import ReadingAudioPlayer from "@/components/ReadingAudioPlayer";
 import FollowUpChat from "@/components/FollowUpChat";
+import ShareButtons from "@/components/ShareButtons";
 
 interface ReadingPanelProps {
   reading: string;
@@ -26,25 +28,32 @@ interface ReadingPanelProps {
 }
 
 const ReadingPanel = ({ reading, drawnCards, question, type = "tarot", runes, angelCards }: ReadingPanelProps) => {
-  const handleShare = useCallback(async () => {
+  const shareText = useMemo(() => {
     const cardNames = drawnCards
       .filter((dc) => dc.isRevealed)
       .map((dc) => `${dc.card.name} (${dc.isReversed ? "Reversed" : "Upright"})`)
       .join(", ");
-
-    const shareText = `🔮 My Mystic Reading\n\nQuestion: "${question}"\nCards: ${cardNames}\n\n${reading.slice(0, 200)}…`;
-
-    if (navigator.share) {
-      try {
-        await navigator.share({ title: "My Mystic Divination Reading", text: shareText });
-      } catch {
-        // User cancelled
-      }
-    } else {
-      await navigator.clipboard.writeText(shareText);
-      // Could use toast here
-    }
+    return `🔮 My Mystic Reading\n\nQuestion: "${question}"\nCards: ${cardNames}\n\n${reading.slice(0, 200)}…`;
   }, [drawnCards, question, reading]);
+
+  const shareImageData: ShareImageData | undefined = useMemo(() => {
+    const revealed = drawnCards.filter((dc) => dc.isRevealed);
+    if (revealed.length === 0) return undefined;
+    const primary = revealed[0];
+    // Extract first meaningful sentence from reading
+    const firstSentence = reading
+      .replace(/\*\*/g, "")
+      .split(/\.\s/)
+      .filter((s) => s.length > 20)
+      .slice(0, 3)
+      .join(". ") + ".";
+    return {
+      cardName: primary.card.name,
+      orientation: primary.isReversed ? "Reversed" : "Upright",
+      message: firstSentence.slice(0, 280),
+      position: primary.position,
+    };
+  }, [drawnCards, reading]);
 
   if (!reading) return null;
 
@@ -116,19 +125,15 @@ const ReadingPanel = ({ reading, drawnCards, question, type = "tarot", runes, an
 
         {/* Voice reading */}
         <ReadingAudioPlayer reading={reading} />
+
+        {/* Share section */}
         <motion.div
-          className="flex justify-center mt-6"
+          className="mt-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2 }}
         >
-          <button
-            onClick={handleShare}
-            className="px-5 py-2.5 rounded-lg bg-muted/50 border border-primary/20 text-primary font-heading text-xs tracking-widest hover:bg-primary/10 transition-all flex items-center gap-2"
-          >
-            <span>✦</span>
-            Share My Reading
-          </button>
+          <ShareButtons text={shareText} cardData={shareImageData} />
         </motion.div>
       </div>
 
