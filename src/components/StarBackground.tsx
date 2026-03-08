@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 interface Star {
@@ -20,8 +20,17 @@ interface Nebula {
 }
 
 const StarBackground = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+  }, []);
+
+  // Fewer stars on mobile for performance
+  const starCount = isMobile ? 50 : 100;
+
   const stars = useMemo<Star[]>(() => {
-    return Array.from({ length: 100 }, (_, i) => ({
+    return Array.from({ length: starCount }, (_, i) => ({
       id: i,
       x: Math.random() * 100,
       y: Math.random() * 100,
@@ -29,10 +38,11 @@ const StarBackground = () => {
       delay: Math.random() * 5,
       duration: Math.random() * 3 + 2,
     }));
-  }, []);
+  }, [starCount]);
 
   const nebulae = useMemo<Nebula[]>(() => {
-    return Array.from({ length: 4 }, (_, i) => ({
+    const count = isMobile ? 2 : 4;
+    return Array.from({ length: count }, (_, i) => ({
       id: i,
       x: 15 + Math.random() * 70,
       y: 10 + Math.random() * 80,
@@ -40,7 +50,7 @@ const StarBackground = () => {
       hue: [265, 230, 280, 210][i],
       delay: i * 2,
     }));
-  }, []);
+  }, [isMobile]);
 
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
@@ -96,7 +106,7 @@ const StarBackground = () => {
         />
       ))}
 
-      {/* Shooting star (occasional) */}
+      {/* Shooting star */}
       <motion.div
         className="absolute w-1 h-1 rounded-full bg-primary"
         style={{ top: "15%", left: "80%" }}
@@ -109,7 +119,7 @@ const StarBackground = () => {
         transition={{
           duration: 1.5,
           repeat: Infinity,
-          repeatDelay: 12,
+          repeatDelay: 15,
           ease: "easeOut",
         }}
       />

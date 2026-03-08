@@ -15,15 +15,15 @@ const ThreeCardSpread = ({ cards, onReveal }: ThreeCardSpreadProps) => {
     <div className="relative z-10">
       {!allRevealed && (
         <motion.p
-          className="text-center text-sm text-muted-foreground mb-6 font-body italic"
+          className="text-center text-sm text-muted-foreground mb-6 font-body italic px-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
         >
-          Take a moment and choose the card you feel drawn to.
+          Tap the card you feel drawn to reveal its message.
         </motion.p>
       )}
-      <div className="flex justify-center items-end gap-4 md:gap-8 flex-wrap">
+      <div className="flex justify-center items-end gap-3 md:gap-8">
         {cards.map((dc, i) => (
           <TarotCardComponent
             key={i}

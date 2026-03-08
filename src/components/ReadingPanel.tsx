@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import type { DrawnCard } from "@/data/tarotDeck";
 import type { ShareImageData } from "@/lib/generateShareImage";
 import { generateAIReading } from "@/lib/tarotReading";
+import GradualReading from "@/components/GradualReading";
 import ReadingAudioPlayer from "@/components/ReadingAudioPlayer";
 import FollowUpChat from "@/components/FollowUpChat";
 import ShareButtons from "@/components/ShareButtons";
@@ -78,45 +79,43 @@ const ReadingPanel = ({ reading, drawnCards, question, type = "tarot", runes, an
 
   return (
     <motion.div
-      className="max-w-2xl mx-auto mt-10 mb-16 relative z-10"
+      className="max-w-2xl mx-auto mt-8 md:mt-10 mb-12 md:mb-16 relative z-10"
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
     >
-      <div className="reading-panel rounded-xl p-6 md:p-8">
-        <h2 className="font-heading text-xl md:text-2xl gold-text mb-2 text-center">
+      <div className="reading-panel rounded-xl p-5 md:p-8">
+        <h2 className="font-heading text-lg md:text-2xl gold-text mb-2 text-center">
           Your Reading
         </h2>
-        <p className="text-xs text-muted-foreground text-center mb-6 italic">
+        <p className="text-xs text-muted-foreground text-center mb-5 md:mb-6 italic">
           "{question}"
         </p>
 
         {/* Cards summary */}
-        <div className="flex flex-wrap justify-center gap-4 mb-6">
+        <div className="flex flex-wrap justify-center gap-2 md:gap-4 mb-5 md:mb-6">
           {drawnCards
             .filter((dc) => dc.isRevealed)
             .map((dc, i) => (
               <motion.div
                 key={i}
-                className="text-center px-3 py-2 rounded-lg bg-muted/30 border border-border/20"
+                className="text-center px-2.5 md:px-3 py-1.5 md:py-2 rounded-lg bg-muted/30 border border-border/20"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
               >
-                <span className="text-xs font-heading text-primary/70 block">{dc.position}</span>
-                <span className="text-sm font-heading text-foreground">{dc.card.name}</span>
-                <span className="text-xs text-muted-foreground block">
+                <span className="text-[10px] md:text-xs font-heading text-primary/70 block">{dc.position}</span>
+                <span className="text-xs md:text-sm font-heading text-foreground">{dc.card.name}</span>
+                <span className="text-[10px] text-muted-foreground block">
                   {dc.isReversed ? "↻ Reversed" : "↑ Upright"}
                 </span>
               </motion.div>
             ))}
         </div>
 
-        {/* Main reading */}
-        <div className="border-t border-border/30 pt-6">
-          <div className="text-foreground font-body leading-relaxed text-sm md:text-base whitespace-pre-line">
-            {displayedReading}
-          </div>
+        {/* Main reading — gradual reveal */}
+        <div className="border-t border-border/30 pt-5 md:pt-6">
+          <GradualReading text={displayedReading} interval={500} />
         </div>
 
         {/* Unlock deeper AI interpretation */}
@@ -134,7 +133,7 @@ const ReadingPanel = ({ reading, drawnCards, question, type = "tarot", runes, an
               <motion.button
                 onClick={handleUnlockAI}
                 disabled={aiLoading}
-                className="px-6 py-3 rounded-xl bg-gradient-to-r from-primary/20 to-accent/20 border border-primary/40 text-primary font-heading text-sm tracking-wider hover:from-primary/30 hover:to-accent/30 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                className="px-6 py-3.5 md:py-3 rounded-xl bg-gradient-to-r from-primary/20 to-accent/20 border border-primary/40 text-primary font-heading text-sm tracking-wider hover:from-primary/30 hover:to-accent/30 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 active:scale-95"
                 whileHover={{ scale: aiLoading ? 1 : 1.03 }}
                 whileTap={{ scale: aiLoading ? 1 : 0.97 }}
               >
@@ -157,7 +156,7 @@ const ReadingPanel = ({ reading, drawnCards, question, type = "tarot", runes, an
           </motion.div>
         )}
 
-        {/* AI badge when upgraded */}
+        {/* AI badge */}
         {aiReading && (
           <motion.div
             className="mt-4 flex justify-center"
@@ -172,7 +171,7 @@ const ReadingPanel = ({ reading, drawnCards, question, type = "tarot", runes, an
 
         {/* Reflection prompts */}
         <motion.div
-          className="mt-8 pt-6 border-t border-primary/10"
+          className="mt-8 pt-5 md:pt-6 border-t border-primary/10"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1 }}

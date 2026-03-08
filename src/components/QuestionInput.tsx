@@ -55,7 +55,7 @@ const QuestionInput = ({ question, setQuestion, disabled }: QuestionInputProps) 
 
   return (
     <motion.div
-      className="max-w-lg mx-auto mb-8 relative z-10"
+      className="max-w-lg mx-auto mb-6 md:mb-8 relative z-10 px-1"
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.3, duration: 0.6 }}
@@ -73,26 +73,26 @@ const QuestionInput = ({ question, setQuestion, disabled }: QuestionInputProps) 
           onChange={(e) => setQuestion(e.target.value)}
           disabled={disabled}
           placeholder="What do you seek guidance on?"
-          className="w-full px-5 py-4 pr-14 rounded-xl bg-muted/60 border border-border/60 text-foreground placeholder:text-muted-foreground font-body focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/40 transition-all disabled:opacity-50 backdrop-blur-sm"
+          className="w-full px-4 md:px-5 py-4 pr-14 rounded-xl bg-muted/60 border border-border/60 text-foreground text-base placeholder:text-muted-foreground font-body focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/40 transition-all disabled:opacity-50 backdrop-blur-sm"
         />
         <div className="absolute inset-0 rounded-xl pointer-events-none" style={{
           background: "linear-gradient(135deg, hsl(var(--gold) / 0.03), transparent, hsl(var(--gold) / 0.03))",
         }} />
 
-        {/* Microphone button */}
+        {/* Microphone button — larger tap target on mobile */}
         {speechSupported && (
           <button
             type="button"
             onClick={toggleListening}
             disabled={disabled}
-            className={`absolute right-3 top-1/2 -translate-y-1/2 p-2 rounded-full transition-all z-10 ${
+            className={`absolute right-2 top-1/2 -translate-y-1/2 p-3 rounded-full transition-all z-10 ${
               listening
                 ? "bg-primary/20 text-primary"
-                : "text-muted-foreground hover:text-primary hover:bg-muted/40"
+                : "text-muted-foreground hover:text-primary hover:bg-muted/40 active:bg-primary/15"
             } disabled:opacity-50`}
             title={listening ? "Stop listening" : "Speak your question"}
           >
-            {listening ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
+            {listening ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
           </button>
         )}
       </div>
