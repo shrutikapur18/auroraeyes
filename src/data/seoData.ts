@@ -511,6 +511,8 @@ export function getAllSEOUrls(): { loc: string; changefreq: string; priority: st
     { path: "/tarot-spreads", freq: "monthly", pri: "0.8" },
     { path: "/tarot-combinations", freq: "monthly", pri: "0.8" },
     { path: "/tarot-comparisons", freq: "monthly", pri: "0.8" },
+    { path: "/daily-tarot-reading", freq: "daily", pri: "0.9" },
+    { path: "/tarot-reading-archive", freq: "daily", pri: "0.7" },
   ];
   statics.forEach(s => urls.push({ loc: `${base}${s.path}`, changefreq: s.freq, priority: s.pri }));
 
