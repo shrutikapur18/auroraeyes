@@ -189,6 +189,125 @@ export const questionPages: QuestionPage[] = [
     ],
     relatedSlugs: ["love-tarot-reading", "career-tarot-reading"]
   },
+  {
+    slug: "twin-flame-tarot-reading",
+    title: "Twin Flame Tarot Reading — Free",
+    h1: "Twin Flame Tarot Reading — Is This Your Mirror Soul?",
+    description: "Free twin flame tarot reading. Discover what the cards reveal about your twin flame connection, soul mirror, and spiritual union.",
+    topic: "love" as const,
+    intro: [
+      "Twin flame connections are among the most intense spiritual experiences. Unlike soulmates, twin flames mirror your deepest self — reflecting both your light and shadow.",
+      "Cards like The Lovers, The Tower, and Judgement frequently appear in twin flame readings, signaling the transformative intensity of these connections. The Devil may indicate the magnetic but sometimes painful attachment phase.",
+      "A twin flame reading can help you understand where you are in the twin flame journey — whether you're in separation, reunion, or the challenging runner-chaser dynamic."
+    ],
+    faq: [
+      { q: "What tarot cards indicate a twin flame connection?", a: "The Lovers (soul union), The Tower (intense transformation), Judgement (spiritual awakening), and the Two of Cups (deep connection) are common twin flame indicators." },
+      { q: "Can tarot tell me if someone is my twin flame?", a: "Tarot can reveal the energy and depth of a connection, but twin flame recognition ultimately comes from within. Look for cards suggesting intense transformation and spiritual growth." }
+    ],
+    relatedSlugs: ["soulmate-tarot-reading", "love-tarot-reading"]
+  },
+  {
+    slug: "breakup-tarot-reading",
+    title: "Breakup Tarot Reading — Free Guidance",
+    h1: "Breakup Tarot Reading — Healing After Heartbreak",
+    description: "Free breakup tarot reading. Find guidance, clarity, and healing after a breakup through the wisdom of the tarot cards.",
+    topic: "love" as const,
+    intro: [
+      "Breakups shake our foundations. A tarot reading during this time doesn't predict whether you'll reconcile — it illuminates the lessons embedded in the experience and guides your healing.",
+      "The Three of Swords often appears, acknowledging heartbreak directly. The Star follows, promising renewal. Death signals the transformation already underway, and The Empress reminds you to nurture yourself.",
+      "The most healing breakup readings focus not on the other person, but on your own journey toward wholeness and self-love."
+    ],
+    faq: [
+      { q: "What tarot cards help with breakup healing?", a: "The Star (renewal and hope), The Empress (self-nurturing), Temperance (emotional balance), and the Ace of Cups (new emotional beginnings) support healing after heartbreak." },
+      { q: "Should I do a tarot reading right after a breakup?", a: "Give yourself a few days for the initial shock to settle. Readings done from a place of slight calm yield clearer, more helpful guidance than those driven by acute emotional pain." }
+    ],
+    relatedSlugs: ["will-my-ex-come-back-tarot", "love-tarot-reading", "personal-growth-tarot-reading"]
+  },
+  {
+    slug: "new-relationship-tarot-reading",
+    title: "New Relationship Tarot Reading — Free",
+    h1: "New Relationship Tarot — What Energy Surrounds This Connection?",
+    description: "Free tarot reading for new relationships. Explore the potential, challenges, and energy of a budding romantic connection.",
+    topic: "love" as const,
+    intro: [
+      "The beginning of a relationship brims with possibility and uncertainty. Tarot can illuminate the energy surrounding this new connection without spoiling its natural unfolding.",
+      "The Ace of Cups signals fresh emotional beginnings, while the Two of Cups confirms mutual attraction. The Page of Cups brings playful romantic energy, and The Fool invites you to embrace the adventure.",
+      "Use this reading to understand what you bring to the connection, what the other person may be experiencing, and what potential lies ahead."
+    ],
+    faq: [
+      { q: "What tarot cards mean a new relationship is promising?", a: "Ace of Cups (new love), Two of Cups (mutual connection), The Sun (joy), and The Star (hope) all suggest a promising new relationship with strong positive energy." },
+      { q: "When should I do a tarot reading about a new relationship?", a: "Wait until you've had meaningful interactions. Readings about someone you've barely met tend to reflect your projections rather than the actual connection's energy." }
+    ],
+    relatedSlugs: ["love-tarot-reading", "soulmate-tarot-reading"]
+  },
+  {
+    slug: "moving-house-tarot-reading",
+    title: "Moving House Tarot Reading — Free",
+    h1: "Moving House Tarot — Should You Make the Move?",
+    description: "Free tarot reading about moving house. Discover what the cards reveal about relocating, new homes, and life transitions.",
+    topic: "decision" as const,
+    intro: [
+      "Moving house is one of life's most significant transitions. Tarot can reveal the energies surrounding your potential move — whether it's aligned with your path and what to prepare for.",
+      "The Wheel of Fortune suggests change is favored. The Four of Wands points to a happy new home. The Chariot indicates forward movement, while the Ten of Pentacles suggests long-term stability awaits.",
+      "Consider what the cards reveal about both the practical and emotional aspects of your move. A home is more than a location — it's an energetic foundation for your life."
+    ],
+    faq: [
+      { q: "What tarot cards suggest a successful move?", a: "The Four of Wands (happy home), Ten of Pentacles (stable foundation), The Chariot (successful transition), and Ace of Pentacles (new material beginning) all suggest positive relocation energy." },
+      { q: "Can tarot help me decide where to move?", a: "Tarot won't give you an address, but it can reveal what qualities to prioritize in your new location — stability, community, adventure, or solitude." }
+    ],
+    relatedSlugs: ["career-tarot-reading", "personal-growth-tarot-reading"]
+  },
+  {
+    slug: "pregnancy-tarot-reading",
+    title: "Pregnancy Tarot Reading — Free",
+    h1: "Pregnancy Tarot Reading — What Do the Cards Reveal?",
+    description: "Free pregnancy tarot reading. Explore what the cards suggest about fertility, new beginnings, and the energy of creation.",
+    topic: "growth" as const,
+    intro: [
+      "Pregnancy readings in tarot explore the broader themes of creation, fertility, and new life — whether literal or metaphorical. The cards speak to the energy of bringing something new into being.",
+      "The Empress is the quintessential fertility and motherhood card. The Ace of Cups represents new emotional beginnings, while The Sun radiates joy and vitality. The Page of Cups often signals happy news.",
+      "Approach pregnancy readings with openness — the cards may speak to creative projects, new ventures, or personal rebirth alongside or instead of literal pregnancy."
+    ],
+    faq: [
+      { q: "What tarot cards indicate pregnancy?", a: "The Empress (fertility), Ace of Cups (new emotional life), The Sun (vitality), Page of Cups (happy news), and the Three of Cups (celebration) are commonly associated with pregnancy and new life." },
+      { q: "Can tarot predict pregnancy?", a: "Tarot reads energy and potential rather than medical outcomes. Fertility-associated cards may appear to reflect creative energy, new beginnings, or literal pregnancy — context and intuition guide interpretation." }
+    ],
+    relatedSlugs: ["love-tarot-reading", "personal-growth-tarot-reading"]
+  },
+  {
+    slug: "spiritual-awakening-tarot",
+    title: "Spiritual Awakening Tarot Reading — Free",
+    h1: "Spiritual Awakening Tarot — Where Are You on the Journey?",
+    description: "Free spiritual awakening tarot reading. Discover what stage of spiritual development you're in and what the universe is guiding you toward.",
+    topic: "growth" as const,
+    intro: [
+      "Spiritual awakening is not a single moment but an unfolding journey. Tarot's Major Arcana maps this path perfectly — from The Fool's innocent beginning through The World's integrated completion.",
+      "The High Priestess signals deepening intuition. The Hermit calls for contemplative withdrawal. The Tower shatters illusions to reveal truth, and The Star promises the hope and clarity that follow dark nights of the soul.",
+      "This reading helps you understand where you are on your awakening path and what the next stage of your spiritual evolution may look like."
+    ],
+    faq: [
+      { q: "What tarot cards indicate spiritual awakening?", a: "The High Priestess (intuition), The Hermit (inner wisdom), The Tower (ego dissolution), The Star (spiritual renewal), and Judgement (higher calling) are the primary spiritual awakening cards." },
+      { q: "How can tarot support spiritual growth?", a: "Tarot provides a symbolic language for inner experiences that may be hard to articulate. Regular readings create a practice of self-reflection that supports ongoing spiritual development." }
+    ],
+    relatedSlugs: ["personal-growth-tarot-reading", "soulmate-tarot-reading"]
+  },
+  {
+    slug: "anxiety-tarot-reading",
+    title: "Tarot for Anxiety — Free Guidance Reading",
+    h1: "Tarot for Anxiety — Finding Calm Through the Cards",
+    description: "Free tarot reading for anxiety. Discover what the cards reveal about your worries and find guidance toward inner peace.",
+    topic: "growth" as const,
+    intro: [
+      "When anxiety takes hold, tarot offers a structured way to externalize swirling thoughts and examine them one by one. The act of focusing on a reading itself can be grounding.",
+      "The Nine of Swords directly represents anxiety and overthinking. Temperance offers the antidote — patience, balance, and emotional moderation. The Star brings hope, and Strength reminds you of your inner resilience.",
+      "Tarot doesn't replace professional mental health support, but it can complement it by providing moments of structured reflection and self-compassion."
+    ],
+    faq: [
+      { q: "Can tarot help with anxiety?", a: "Tarot can serve as a mindfulness tool, helping you externalize worries and examine them with detachment. The focused ritual of a reading provides grounding structure during anxious moments." },
+      { q: "What tarot cards relate to anxiety?", a: "Nine of Swords (worry, overthinking), The Moon (uncertainty, fear), Eight of Swords (feeling trapped), and Five of Cups (dwelling on loss) commonly appear when anxiety is present." }
+    ],
+    relatedSlugs: ["personal-growth-tarot-reading", "spiritual-awakening-tarot"]
+  },
 ];
 
 /* ── Spread guide pages ── */
