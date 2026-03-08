@@ -147,7 +147,7 @@ const HoraryGuide = () => (
         <h2 className="font-heading text-xl gold-text text-center mb-6 tracking-wider">
           Horary Astrology FAQ
         </h2>
-        <FAQSection faqs={faqs} />
+        <FAQSection items={faqs.map(f => ({ q: f.question, a: f.answer }))} />
       </section>
 
       {/* Internal links */}
