@@ -70,7 +70,7 @@ const HoraryHomepageSection = () => {
   const handleReset = () => setReading(null);
 
   return (
-    <section className="max-w-4xl mx-auto mt-14 md:mt-20 mb-10 px-2">
+    <section id="horary-section" className="max-w-4xl mx-auto mt-14 md:mt-20 mb-10 px-2">
       {/* Section header */}
       <motion.div
         className="text-center mb-8"
