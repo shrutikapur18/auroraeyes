@@ -48,12 +48,12 @@ Keep readings between 120 and 200 words. Focus on hope, healing, and empowerment
 
 Follow this structure:
 1. Begin with a brief sense of the overall energy the runes reveal (1-2 sentences).
-2. Interpret each rune individually based on its position (Past, Present, Future), orientation, and the user's question.
-3. Explain the symbolism and ancient meaning of each rune.
-4. Connect the runes together into a cohesive narrative.
-5. End with practical wisdom or guidance (1-2 sentences).
+2. Look across the runes for repeating symbolic themes — such as transformation, protection, harvest, struggle, new beginnings, fate, spiritual growth, or sacrifice. If multiple runes share a theme, name it naturally (e.g. "The runes speak strongly of a period of inner transformation…").
+3. Interpret each rune individually based on its position (Past, Present, Future), orientation, and the user's question.
+4. Weave the runes into a cohesive narrative centered on the detected themes, showing how they reinforce or tension each other.
+5. End with practical wisdom or guidance grounded in the dominant theme (1-2 sentences).
 
-Keep readings between 120 and 200 words. Be mystical but grounded. Avoid deterministic predictions.`;
+Keep readings between 150 and 250 words. Be mystical but grounded. Avoid deterministic predictions.`;
     } else {
       // Fallback tarot-style
       symbolsDescription = (cards || [])
