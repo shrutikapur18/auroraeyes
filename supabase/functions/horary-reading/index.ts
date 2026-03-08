@@ -123,7 +123,7 @@ serve(async (req) => {
 
     // Fetch planets, houses, and aspects in parallel
     const [planetsRaw, housesRaw, aspectsRaw] = await Promise.all([
-      fetchAstroData("western/planets", astroBody, ASTRO_API_KEY),
+      fetchAstroData("planets", astroBody, ASTRO_API_KEY),
       fetchAstroData("western/houses", astroBody, ASTRO_API_KEY),
       fetchAstroData("western/aspects", astroBody, ASTRO_API_KEY).catch(() => []),
     ]);
