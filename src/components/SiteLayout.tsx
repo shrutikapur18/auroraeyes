@@ -132,6 +132,8 @@ const SiteLayout = ({ children }: { children: React.ReactNode }) => {
             <div>
               <h3 className="font-heading text-sm gold-text mb-3">Daily</h3>
               <div className="space-y-2">
+                <Link to="/daily-tarot-reading" className="block text-xs text-muted-foreground hover:text-primary transition-colors">Today's Tarot Reading</Link>
+                <Link to="/tarot-reading-archive" className="block text-xs text-muted-foreground hover:text-primary transition-colors">Reading Archive</Link>
                 <Link to="/daily-tarot-card" className="block text-xs text-muted-foreground hover:text-primary transition-colors">Daily Tarot Card</Link>
                 <Link to="/daily-rune" className="block text-xs text-muted-foreground hover:text-primary transition-colors">Daily Rune</Link>
                 <Link to="/daily-angel-message" className="block text-xs text-muted-foreground hover:text-primary transition-colors">Daily Angel Message</Link>
