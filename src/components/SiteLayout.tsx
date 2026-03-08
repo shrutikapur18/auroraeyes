@@ -128,6 +128,7 @@ const SiteLayout = ({ children }: { children: React.ReactNode }) => {
                 <Link to="/pick-a-card-reading" className="block text-xs text-muted-foreground hover:text-primary transition-colors">Pick a Card</Link>
                 <Link to="/rune-reading" className="block text-xs text-muted-foreground hover:text-primary transition-colors">Rune Reading</Link>
                 <Link to="/angel-card-reading" className="block text-xs text-muted-foreground hover:text-primary transition-colors">Angel Card Reading</Link>
+                <Link to="/horary-reading" className="block text-xs text-muted-foreground hover:text-primary transition-colors">Horary Astrology</Link>
               </div>
             </div>
             <div>

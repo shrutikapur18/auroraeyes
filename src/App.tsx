@@ -85,6 +85,8 @@ const App = () => (
             {questionPages.map((page) => (
               <Route key={page.slug} path={`/${page.slug}`} element={<QuestionReadingPage />} />
             ))}
+            {/* Horary Astrology */}
+            <Route path="/horary-reading" element={<HoraryReading />} />
             {/* HTML Sitemap */}
             <Route path="/sitemap-html" element={<HTMLSitemap />} />
             {/* Shared reading preview */}
