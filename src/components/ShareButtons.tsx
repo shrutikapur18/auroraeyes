@@ -123,7 +123,7 @@ const ShareButtons = ({ text, url, cardData, drawnCards, question, reading, type
           onClick={handleCopy}
           className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-muted/50 border border-border/30 text-xs font-heading tracking-wider text-muted-foreground hover:bg-primary/10 transition-all"
         >
-          {copied ? <Check className="w-3 h-3 text-green-500" /> : null}
+          {copied ? <Check className="w-3 h-3 text-primary" /> : null}
           {copied ? "Copied!" : "Copy Link"}
         </button>
       </div>
