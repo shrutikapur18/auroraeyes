@@ -6,6 +6,7 @@ import InternalLinks from "@/components/InternalLinks";
 import FAQSection, { generateFAQJsonLd } from "@/components/FAQSection";
 import SnippetBox from "@/components/SnippetBox";
 import ReadingCTA from "@/components/ReadingCTA";
+import MiniCardDraw from "@/components/MiniCardDraw";
 import { tarotDeck } from "@/data/tarotDeck";
 import { generateCombinationPages } from "@/data/seoData";
 
