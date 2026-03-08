@@ -511,6 +511,8 @@ export function getAllSEOUrls(): { loc: string; changefreq: string; priority: st
     { path: "/tarot-spreads", freq: "monthly", pri: "0.8" },
     { path: "/tarot-combinations", freq: "monthly", pri: "0.8" },
     { path: "/tarot-comparisons", freq: "monthly", pri: "0.8" },
+    { path: "/daily-tarot-reading", freq: "daily", pri: "0.9" },
+    { path: "/tarot-reading-archive", freq: "daily", pri: "0.7" },
   ];
   statics.forEach(s => urls.push({ loc: `${base}${s.path}`, changefreq: s.freq, priority: s.pri }));
 
@@ -541,6 +543,16 @@ export function getAllSEOUrls(): { loc: string; changefreq: string; priority: st
 
   // Comparison pages
   generateComparisonPages().forEach(c => urls.push({ loc: `${base}/tarot-comparisons/${c.slug}`, changefreq: "monthly", priority: "0.6" }));
+
+  // Daily reading pages (last 30 days for sitemap)
+  const today = new Date();
+  const months = ["january","february","march","april","may","june","july","august","september","october","november","december"];
+  for (let i = 0; i < 30; i++) {
+    const d = new Date(today);
+    d.setDate(d.getDate() - i);
+    const dateSlug = `${months[d.getMonth()]}-${d.getDate()}`;
+    urls.push({ loc: `${base}/tarot-reading-for-${dateSlug}`, changefreq: "daily", priority: "0.5" });
+  }
 
   // Blog articles
   const blogSlugs = ["how-tarot-readings-work","major-arcana-guide","how-rune-casting-works","angel-card-guidance-beginners","tarot-spreads-explained","reversed-tarot-cards","zodiac-and-tarot-connection","daily-divination-practice"];
