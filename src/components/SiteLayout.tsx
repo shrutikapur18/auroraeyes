@@ -146,6 +146,7 @@ const SiteLayout = ({ children }: { children: React.ReactNode }) => {
               <div className="space-y-2">
                 <Link to="/tarot-card-meanings" className="block text-xs text-muted-foreground hover:text-primary transition-colors">Tarot Card Meanings</Link>
                 <Link to="/rune-meanings" className="block text-xs text-muted-foreground hover:text-primary transition-colors">Rune Meanings</Link>
+                <Link to="/horary-astrology" className="block text-xs text-muted-foreground hover:text-primary transition-colors">Horary Astrology Guide</Link>
                 <Link to="/blog" className="block text-xs text-muted-foreground hover:text-primary transition-colors">Blog & Articles</Link>
               </div>
             </div>

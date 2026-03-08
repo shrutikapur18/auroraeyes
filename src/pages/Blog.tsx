@@ -11,6 +11,11 @@ const articles = [
   { slug: "reversed-tarot-cards", title: "What Do Reversed Tarot Cards Mean?", excerpt: "Understanding reversed cards is essential for nuanced readings. Learn how reversals add depth to your interpretations.", category: "Tarot", icon: "↻" },
   { slug: "zodiac-and-tarot-connection", title: "The Connection Between Zodiac Signs and Tarot", excerpt: "Each zodiac sign has a corresponding tarot card. Discover how astrology and tarot interweave for deeper insight.", category: "Astrology", icon: "⭐" },
   { slug: "daily-divination-practice", title: "Building a Daily Divination Practice", excerpt: "Create a meaningful daily ritual with tarot, runes, or angel cards. Tips for consistency and deeper connection.", category: "Practice", icon: "🌅" },
+  { slug: "what-is-horary-astrology", title: "What is Horary Astrology? A Complete Introduction", excerpt: "Discover how horary astrology answers specific questions using a chart cast for the exact moment the question is asked.", category: "Astrology", icon: "🪐" },
+  { slug: "horary-astrology-questions-examples", title: "Horary Astrology Questions: Examples & Best Practices", excerpt: "Learn what types of questions horary astrology can answer and see real examples of well-formed horary questions.", category: "Astrology", icon: "❓" },
+  { slug: "horary-vs-natal-astrology", title: "Horary vs Natal Astrology: What's the Difference?", excerpt: "Understand the key differences between horary and natal astrology, and when to use each approach for the best results.", category: "Astrology", icon: "🌟" },
+  { slug: "beginners-guide-horary-charts", title: "Beginner's Guide to Reading Horary Charts", excerpt: "A step-by-step guide to understanding horary charts — from identifying significators to interpreting aspects and houses.", category: "Astrology", icon: "📊" },
+  { slug: "moon-in-horary-astrology", title: "The Moon in Horary Astrology: Your Key to Timing", excerpt: "The Moon plays a crucial role in every horary chart. Learn how its sign, phase, and aspects reveal the timing and flow of events.", category: "Astrology", icon: "🌙" },
 ];
 
 const Blog = () => (

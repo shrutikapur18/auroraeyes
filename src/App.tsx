@@ -33,6 +33,7 @@ import TarotComparisons from "./pages/TarotComparisons";
 import QuestionReadingPage from "./pages/QuestionReadingPage";
 import SharedReadingPreview from "./pages/SharedReadingPreview";
 import HoraryReading from "./pages/HoraryReading";
+import HoraryGuide from "./pages/HoraryGuide";
 import HTMLSitemap from "./pages/HTMLSitemap";
 import NotFound from "./pages/NotFound";
 import { questionPages } from "./data/seoData";
@@ -87,6 +88,7 @@ const App = () => (
             ))}
             {/* Horary Astrology */}
             <Route path="/horary-reading" element={<HoraryReading />} />
+            <Route path="/horary-astrology" element={<HoraryGuide />} />
             {/* HTML Sitemap */}
             <Route path="/sitemap-html" element={<HTMLSitemap />} />
             {/* Shared reading preview */}
