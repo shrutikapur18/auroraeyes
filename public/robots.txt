@@ -14,3 +14,7 @@ User-agent: *
 Allow: /
 
 Sitemap: https://tarotguidance.lovable.app/sitemap.xml
+Sitemap: https://tarotguidance.lovable.app/sitemaps/sitemap-core.xml
+Sitemap: https://tarotguidance.lovable.app/sitemaps/sitemap-meanings.xml
+Sitemap: https://tarotguidance.lovable.app/sitemaps/sitemap-combinations.xml
+Sitemap: https://tarotguidance.lovable.app/sitemaps/sitemap-daily.xml

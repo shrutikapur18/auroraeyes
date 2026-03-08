@@ -158,7 +158,8 @@ const SiteLayout = ({ children }: { children: React.ReactNode }) => {
           </div>
           <div className="border-t border-border/20 pt-6 text-center">
             <p className="font-heading text-xs gold-text mb-1">✦ Mystic Divination ✦</p>
-            <p className="text-[10px] text-muted-foreground">For entertainment and spiritual guidance purposes. © {new Date().getFullYear()}</p>
+            <p className="text-[10px] text-muted-foreground mb-2">For entertainment and spiritual guidance purposes. © {new Date().getFullYear()}</p>
+            <Link to="/sitemap-html" className="text-[10px] text-muted-foreground/60 hover:text-primary transition-colors">Sitemap</Link>
           </div>
         </div>
       </footer>
