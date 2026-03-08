@@ -13,6 +13,7 @@ const navLinks = [
   { to: "/rune-reading", label: "Runes", icon: "ᚱ" },
   { to: "/angel-card-reading", label: "Angel Cards", icon: "👼" },
   { to: "/daily-tarot-reading", label: "Today", icon: "📅" },
+  { to: "/horary-reading", label: "Horary", icon: "🪐" },
   { to: "/daily-tarot-card", label: "Daily Draw", icon: "🌅" },
   { to: "/tarot-card-meanings", label: "Meanings", icon: "📖" },
   { to: "/blog", label: "Blog", icon: "📝" },
@@ -127,6 +128,7 @@ const SiteLayout = ({ children }: { children: React.ReactNode }) => {
                 <Link to="/pick-a-card-reading" className="block text-xs text-muted-foreground hover:text-primary transition-colors">Pick a Card</Link>
                 <Link to="/rune-reading" className="block text-xs text-muted-foreground hover:text-primary transition-colors">Rune Reading</Link>
                 <Link to="/angel-card-reading" className="block text-xs text-muted-foreground hover:text-primary transition-colors">Angel Card Reading</Link>
+                <Link to="/horary-reading" className="block text-xs text-muted-foreground hover:text-primary transition-colors">Horary Astrology</Link>
               </div>
             </div>
             <div>

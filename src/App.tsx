@@ -32,6 +32,7 @@ import TarotComparison from "./pages/TarotComparison";
 import TarotComparisons from "./pages/TarotComparisons";
 import QuestionReadingPage from "./pages/QuestionReadingPage";
 import SharedReadingPreview from "./pages/SharedReadingPreview";
+import HoraryReading from "./pages/HoraryReading";
 import HTMLSitemap from "./pages/HTMLSitemap";
 import NotFound from "./pages/NotFound";
 import { questionPages } from "./data/seoData";
@@ -84,6 +85,8 @@ const App = () => (
             {questionPages.map((page) => (
               <Route key={page.slug} path={`/${page.slug}`} element={<QuestionReadingPage />} />
             ))}
+            {/* Horary Astrology */}
+            <Route path="/horary-reading" element={<HoraryReading />} />
             {/* HTML Sitemap */}
             <Route path="/sitemap-html" element={<HTMLSitemap />} />
             {/* Shared reading preview */}
