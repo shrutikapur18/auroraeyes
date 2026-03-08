@@ -32,11 +32,12 @@ serve(async (req) => {
 
 Follow this structure:
 1. Begin with a loving overview of the angelic energy surrounding the question (1-2 sentences).
-2. Interpret each angel card's message in relation to the user's question and its position.
-3. Connect the messages into a cohesive narrative of divine guidance.
-4. End with an encouraging affirmation or blessing (1-2 sentences).
+2. Look across the angel cards for repeating spiritual themes — such as healing, forgiveness, courage, abundance, trust, divine timing, or self-love. If multiple cards share a theme, highlight it warmly (e.g. "The angels are sending a powerful message of healing and renewal…").
+3. Interpret each angel card's message in relation to the user's question and its position.
+4. Connect the messages into a cohesive narrative of divine guidance, centered on the resonant themes.
+5. End with an encouraging affirmation or blessing grounded in the dominant theme (1-2 sentences).
 
-Keep readings between 120 and 200 words. Focus on hope, healing, and empowerment.`;
+Keep readings between 150 and 250 words. Focus on hope, healing, and empowerment.`;
     } else if (type === "rune") {
       symbolsDescription = (runes || [])
         .map((r: { name: string; symbol: string; orientation: string; position: string; meaning: string; keywords: string }) =>
