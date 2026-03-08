@@ -44,14 +44,8 @@ const YesNoSpread = ({ question, onError }: YesNoSpreadProps) => {
     const yesNo = getYesNoAnswer(revealed.card.id, revealed.isReversed);
     setAnswer(yesNo);
 
-    const check = canDoReading();
-    if (!check.allowed) {
-      onError(check.reason || "");
-      return;
-    }
-    recordReading();
     setPhase("loading");
-    const text = await generateAIReading(
+    const text = generateLocalReading(
       `Yes/No question: "${question}" — The answer is ${yesNo.toUpperCase()}.`,
       [revealed]
     );

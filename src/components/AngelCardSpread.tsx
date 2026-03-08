@@ -46,15 +46,9 @@ const AngelCardSpread = ({ question, onError }: AngelCardSpreadProps) => {
       const revealedCount = updated.filter((c) => c.isRevealed).length;
 
       if (revealedCount >= cardCount) {
-        setTimeout(async () => {
-          const check = canDoReading();
-          if (!check.allowed) {
-            onError(check.reason || "");
-            return;
-          }
-          recordReading();
+        setTimeout(() => {
           setPhase("loading");
-          const text = await generateAngelReading(question, updated);
+          const text = generateAngelReading(question, updated);
           setReading(text);
           setPhase("result");
         }, 800);

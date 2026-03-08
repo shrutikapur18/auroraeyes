@@ -31,11 +31,9 @@ const PickACardReading = () => {
     if (drawnCards.some((c) => c.isRevealed)) return;
     setDrawnCards((prev) => {
       const updated = prev.map((dc, i) => (i === index ? { ...dc, isRevealed: true } : dc));
-      setTimeout(async () => {
-        const check = canDoReading();
-        if (!check.allowed) { setError(check.reason || ""); return; }
-        recordReading(); setPhase("loading");
-        const text = await generateAIReading(question, updated);
+      setTimeout(() => {
+        setPhase("loading");
+        const text = generateLocalReading(question, updated);
         setReading(text); setPhase("reading");
       }, 800);
       return updated;

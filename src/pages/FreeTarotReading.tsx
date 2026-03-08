@@ -39,12 +39,9 @@ const FreeTarotReading = () => {
     setDrawnCards((prev) => {
       const updated = prev.map((dc, i) => (i === index ? { ...dc, isRevealed: true } : dc));
       if (updated.filter((c) => c.isRevealed).length >= cardCount) {
-        setTimeout(async () => {
-          const check = canDoReading();
-          if (!check.allowed) { setError(check.reason || ""); return; }
-          recordReading();
+        setTimeout(() => {
           setPhase("loading");
-          const text = await generateAIReading(question, updated);
+          const text = generateLocalReading(question, updated);
           setReading(text);
           setPhase("reading");
         }, 800);

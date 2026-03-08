@@ -38,15 +38,9 @@ const RuneSpread = ({ question, onError }: RuneSpreadProps) => {
       const revealedCount = updated.filter((r) => r.isRevealed).length;
 
       if (revealedCount >= 3) {
-        setTimeout(async () => {
-          const check = canDoReading();
-          if (!check.allowed) {
-            onError(check.reason || "");
-            return;
-          }
-          recordReading();
+        setTimeout(() => {
           setPhase("loading");
-          const text = await generateRuneReading(question, updated);
+          const text = generateRuneReading(question, updated);
           setReading(text);
           setPhase("result");
         }, 800);
