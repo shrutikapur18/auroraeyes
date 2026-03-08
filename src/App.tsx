@@ -70,6 +70,9 @@ const App = () => (
             {/* Combinations */}
             <Route path="/tarot-combinations" element={<TarotCombinations />} />
             <Route path="/tarot-combinations/:slug" element={<TarotCombinationPage />} />
+            {/* Comparisons */}
+            <Route path="/tarot-comparisons" element={<TarotComparisons />} />
+            <Route path="/tarot-comparisons/:slug" element={<TarotComparison />} />
             {/* Question-based reading pages */}
             {questionPages.map((page) => (
               <Route key={page.slug} path={`/${page.slug}`} element={<QuestionReadingPage />} />
