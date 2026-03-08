@@ -18,7 +18,16 @@ import ZodiacTarotReading from "./pages/ZodiacTarotReading";
 import DailyPage from "./pages/DailyPage";
 import Blog from "./pages/Blog";
 import BlogArticle from "./pages/BlogArticle";
+import TarotGuide from "./pages/TarotGuide";
+import RuneGuide from "./pages/RuneGuide";
+import AngelCardsGuide from "./pages/AngelCardsGuide";
+import TarotSpreads from "./pages/TarotSpreads";
+import SpreadGuidePage from "./pages/SpreadGuidePage";
+import TarotCombinations from "./pages/TarotCombinations";
+import TarotCombinationPage from "./pages/TarotCombinationPage";
+import QuestionReadingPage from "./pages/QuestionReadingPage";
 import NotFound from "./pages/NotFound";
+import { questionPages } from "./data/seoData";
 
 const queryClient = new QueryClient();
 
@@ -46,6 +55,20 @@ const App = () => (
             <Route path="/daily-angel-message" element={<DailyPage />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogArticle />} />
+            {/* Hub / Pillar pages */}
+            <Route path="/tarot-guide" element={<TarotGuide />} />
+            <Route path="/rune-guide" element={<RuneGuide />} />
+            <Route path="/angel-cards-guide" element={<AngelCardsGuide />} />
+            {/* Spread guides */}
+            <Route path="/tarot-spreads" element={<TarotSpreads />} />
+            <Route path="/tarot-spreads/:slug" element={<SpreadGuidePage />} />
+            {/* Combinations */}
+            <Route path="/tarot-combinations" element={<TarotCombinations />} />
+            <Route path="/tarot-combinations/:slug" element={<TarotCombinationPage />} />
+            {/* Question-based reading pages */}
+            {questionPages.map((page) => (
+              <Route key={page.slug} path={`/${page.slug}`} element={<QuestionReadingPage />} />
+            ))}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </SiteLayout>
