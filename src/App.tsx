@@ -34,9 +34,11 @@ import QuestionReadingPage from "./pages/QuestionReadingPage";
 import SharedReadingPreview from "./pages/SharedReadingPreview";
 import HoraryReading from "./pages/HoraryReading";
 import HoraryGuide from "./pages/HoraryGuide";
+import HoraryContentPage from "./pages/HoraryContentPage";
 import HTMLSitemap from "./pages/HTMLSitemap";
 import NotFound from "./pages/NotFound";
 import { questionPages } from "./data/seoData";
+import { horaryContentPages } from "./data/horaryContentPages";
 
 const queryClient = new QueryClient();
 
