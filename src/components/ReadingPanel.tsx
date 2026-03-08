@@ -1,8 +1,10 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { motion } from "framer-motion";
 import type { DrawnCard } from "@/data/tarotDeck";
+import type { ShareImageData } from "@/lib/generateShareImage";
 import ReadingAudioPlayer from "@/components/ReadingAudioPlayer";
 import FollowUpChat from "@/components/FollowUpChat";
+import ShareButtons from "@/components/ShareButtons";
 
 interface ReadingPanelProps {
   reading: string;
