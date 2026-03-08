@@ -147,6 +147,9 @@ const SiteLayout = ({ children }: { children: React.ReactNode }) => {
                 <Link to="/tarot-card-meanings" className="block text-xs text-muted-foreground hover:text-primary transition-colors">Tarot Card Meanings</Link>
                 <Link to="/rune-meanings" className="block text-xs text-muted-foreground hover:text-primary transition-colors">Rune Meanings</Link>
                 <Link to="/horary-astrology" className="block text-xs text-muted-foreground hover:text-primary transition-colors">Horary Astrology Guide</Link>
+                <Link to="/what-is-horary-astrology" className="block text-xs text-muted-foreground hover:text-primary transition-colors">What Is Horary Astrology</Link>
+                <Link to="/how-horary-astrology-works" className="block text-xs text-muted-foreground hover:text-primary transition-colors">How Horary Works</Link>
+                <Link to="/horary-astrology-beginners-guide" className="block text-xs text-muted-foreground hover:text-primary transition-colors">Horary Beginner's Guide</Link>
                 <Link to="/blog" className="block text-xs text-muted-foreground hover:text-primary transition-colors">Blog & Articles</Link>
               </div>
             </div>
