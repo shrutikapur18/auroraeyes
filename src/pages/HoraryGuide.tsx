@@ -98,7 +98,7 @@ const HoraryGuide = () => (
     >
       <Breadcrumbs
         items={[
-          { label: "Home", to: "/" },
+          { label: "Home", href: "/" },
           { label: "Horary Astrology Guide" },
         ]}
       />
