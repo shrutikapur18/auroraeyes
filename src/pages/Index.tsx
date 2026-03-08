@@ -20,6 +20,7 @@ import ReadingPanel from "@/components/ReadingPanel";
 import DailyDivination from "@/components/DailyDivination";
 import TopicalClusterNav from "@/components/TopicalClusterNav";
 import RecentReadings from "@/components/RecentReadings";
+import HoraryHomepageSection from "@/components/HoraryHomepageSection";
 import { threeCardPositions, celticCrossPositions } from "@/data/tarotDeck";
 import type { DrawnCard, ReadingMode } from "@/data/tarotDeck";
 import { generateLocalReading } from "@/lib/tarotReading";
@@ -127,6 +128,9 @@ const Index = () => {
             {divinationMethod === "runes" && <RuneSpread question={question} onError={setError} />}
             <DailyDivination />
 
+            {/* Horary Astrology Section */}
+            <HoraryHomepageSection />
+
             {/* SEO: Quick links */}
             <section className="max-w-4xl mx-auto mt-12 md:mt-16 mb-8 px-1">
               <h2 className="font-heading text-lg md:text-xl gold-text text-center mb-5 md:mb-6">Explore Our Readings</h2>
@@ -137,10 +141,10 @@ const Index = () => {
                   { to: "/pick-a-card-reading", label: "Pick a Card", icon: "✨" },
                   { to: "/rune-reading", label: "Rune Reading", icon: "ᚱ" },
                   { to: "/angel-card-reading", label: "Angel Cards", icon: "👼" },
+                  { to: "/horary-reading", label: "Horary Astrology", icon: "🌟" },
                   { to: "/tarot-card-meanings", label: "Card Meanings", icon: "📖" },
                   { to: "/rune-meanings", label: "Rune Meanings", icon: "ᚠ" },
                   { to: "/daily-tarot-card", label: "Daily Tarot", icon: "🌅" },
-                  { to: "/blog", label: "Blog & Guides", icon: "📝" },
                 ].map((l) => (
                   <Link key={l.to} to={l.to} className="reading-panel rounded-lg p-3 md:p-4 text-center hover:gold-glow transition-all group active:scale-[0.97]">
                     <span className="text-xl md:text-2xl block mb-1">{l.icon}</span>
