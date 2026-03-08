@@ -16,6 +16,8 @@ import RuneMeanings from "./pages/RuneMeanings";
 import RuneMeaning from "./pages/RuneMeaning";
 import ZodiacTarotReading from "./pages/ZodiacTarotReading";
 import DailyPage from "./pages/DailyPage";
+import DailyTarotReading from "./pages/DailyTarotReading";
+import TarotReadingArchive from "./pages/TarotReadingArchive";
 import Blog from "./pages/Blog";
 import BlogArticle from "./pages/BlogArticle";
 import TarotGuide from "./pages/TarotGuide";
