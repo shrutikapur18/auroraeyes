@@ -1,40 +1,45 @@
+import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X } from "lucide-react";
 import StarBackground from "./StarBackground";
 import FloatingParticles from "./FloatingParticles";
 
 const navLinks = [
-  { to: "/", label: "Home" },
-  { to: "/free-tarot-reading", label: "Tarot" },
-  { to: "/yes-no-tarot-reading", label: "Yes/No" },
-  { to: "/pick-a-card-reading", label: "Pick a Card" },
-  { to: "/rune-reading", label: "Runes" },
-  { to: "/angel-card-reading", label: "Angel Cards" },
-  { to: "/daily-tarot-card", label: "Daily" },
-  { to: "/tarot-card-meanings", label: "Meanings" },
-  { to: "/blog", label: "Blog" },
+  { to: "/", label: "Home", icon: "✦" },
+  { to: "/free-tarot-reading", label: "Tarot", icon: "🃏" },
+  { to: "/yes-no-tarot-reading", label: "Yes/No", icon: "⚖️" },
+  { to: "/pick-a-card-reading", label: "Pick a Card", icon: "✨" },
+  { to: "/rune-reading", label: "Runes", icon: "ᚱ" },
+  { to: "/angel-card-reading", label: "Angel Cards", icon: "👼" },
+  { to: "/daily-tarot-card", label: "Daily", icon: "🌅" },
+  { to: "/tarot-card-meanings", label: "Meanings", icon: "📖" },
+  { to: "/blog", label: "Blog", icon: "📝" },
 ];
 
 const SiteLayout = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <div className="min-h-screen relative overflow-x-hidden">
       <StarBackground />
 
       {/* Navigation */}
-      <nav className="relative z-20 border-b border-border/30 bg-background/60 backdrop-blur-md">
+      <nav className="relative z-30 border-b border-border/30 bg-background/80 backdrop-blur-lg sticky top-0">
         <div className="max-w-7xl mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
-            <Link to="/" className="font-heading text-lg md:text-xl gold-text tracking-wider">
+            <Link to="/" className="font-heading text-lg md:text-xl gold-text tracking-wider" onClick={() => setMenuOpen(false)}>
               ✦ Mystic Divination
             </Link>
-            <div className="flex gap-1 md:gap-2 overflow-x-auto scrollbar-hide">
+
+            {/* Desktop nav */}
+            <div className="hidden md:flex gap-1.5">
               {navLinks.slice(1).map((link) => (
                 <Link
                   key={link.to}
                   to={link.to}
-                  className={`px-2 md:px-3 py-1.5 rounded-md text-[10px] md:text-xs font-heading tracking-wider whitespace-nowrap transition-all ${
+                  className={`px-3 py-1.5 rounded-md text-xs font-heading tracking-wider whitespace-nowrap transition-all ${
                     location.pathname === link.to || location.pathname.startsWith(link.to + "/")
                       ? "bg-primary/20 text-primary border border-primary/30"
                       : "text-muted-foreground hover:text-foreground hover:bg-muted/30"
@@ -44,8 +49,65 @@ const SiteLayout = ({ children }: { children: React.ReactNode }) => {
                 </Link>
               ))}
             </div>
+
+            {/* Mobile hamburger */}
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="md:hidden p-2.5 rounded-lg text-primary hover:bg-muted/30 transition-colors active:scale-95"
+              aria-label="Toggle menu"
+            >
+              {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
           </div>
         </div>
+
+        {/* Mobile drawer */}
+        <AnimatePresence>
+          {menuOpen && (
+            <>
+              {/* Backdrop */}
+              <motion.div
+                className="fixed inset-0 bg-background/60 backdrop-blur-sm z-40 md:hidden"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setMenuOpen(false)}
+              />
+              {/* Menu panel */}
+              <motion.div
+                className="fixed top-0 right-0 h-full w-72 bg-card/95 backdrop-blur-xl border-l border-border/30 z-50 md:hidden overflow-y-auto"
+                initial={{ x: "100%" }}
+                animate={{ x: 0 }}
+                exit={{ x: "100%" }}
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              >
+                <div className="flex items-center justify-between p-4 border-b border-border/30">
+                  <span className="font-heading text-sm gold-text tracking-wider">Navigate</span>
+                  <button onClick={() => setMenuOpen(false)} className="p-2 rounded-lg text-muted-foreground hover:text-primary">
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+                <div className="p-3 space-y-1">
+                  {navLinks.map((link) => (
+                    <Link
+                      key={link.to}
+                      to={link.to}
+                      onClick={() => setMenuOpen(false)}
+                      className={`flex items-center gap-3 px-4 py-3.5 rounded-xl text-sm font-heading tracking-wider transition-all active:scale-[0.98] ${
+                        location.pathname === link.to
+                          ? "bg-primary/15 text-primary border border-primary/20 gold-glow"
+                          : "text-foreground/80 hover:bg-muted/30 hover:text-primary"
+                      }`}
+                    >
+                      <span className="text-base">{link.icon}</span>
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
       </nav>
 
       <div className="relative z-10 px-4 pb-20">
@@ -99,7 +161,7 @@ const SiteLayout = ({ children }: { children: React.ReactNode }) => {
       </footer>
 
       <div className="fixed inset-0 pointer-events-none z-[1]">
-        <FloatingParticles count={12} color="gold" />
+        <FloatingParticles count={8} color="gold" />
       </div>
     </div>
   );

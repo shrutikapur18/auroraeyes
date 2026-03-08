@@ -25,8 +25,9 @@ const TarotCardComponent = ({ drawnCard, index, onReveal, rotation = 0, label, c
     }, 600);
   };
 
-  const cardWidth = compact ? "w-24 md:w-28" : "w-28 md:w-36";
-  const cardHeight = compact ? "h-36 md:h-44" : "h-44 md:h-56";
+  // Mobile-first: larger default, scale up on desktop
+  const cardWidth = compact ? "w-[5.5rem] md:w-28" : "w-[6.5rem] md:w-36";
+  const cardHeight = compact ? "h-[8.5rem] md:h-44" : "h-[10rem] md:h-56";
 
   const suitColor = card.suit === "Wands" ? "text-orange-400" :
     card.suit === "Cups" ? "text-blue-400" :
@@ -41,7 +42,7 @@ const TarotCardComponent = ({ drawnCard, index, onReveal, rotation = 0, label, c
       transition={{ delay: index * 0.1, duration: 0.5 }}
     >
       {label && (
-        <span className="text-xs font-heading text-primary/80 tracking-widest uppercase">
+        <span className="text-[10px] md:text-xs font-heading text-primary/80 tracking-widest uppercase">
           {label}
         </span>
       )}
@@ -51,6 +52,7 @@ const TarotCardComponent = ({ drawnCard, index, onReveal, rotation = 0, label, c
         animate={!isRevealed ? { y: [0, -5, 0] } : {}}
         transition={!isRevealed ? { duration: 3 + index * 0.5, repeat: Infinity, ease: "easeInOut" } : {}}
         whileHover={!isRevealed ? { scale: 1.08, y: -10, transition: { duration: 0.2 } } : {}}
+        whileTap={!isRevealed ? { scale: 0.95, transition: { duration: 0.1 } } : {}}
         onClick={handleClick}
       >
         <motion.div
@@ -67,7 +69,6 @@ const TarotCardComponent = ({ drawnCard, index, onReveal, rotation = 0, label, c
               className="w-full h-full object-cover"
               loading="lazy"
             />
-            {/* Hover glow overlay */}
             <div className="absolute inset-0 bg-primary/0 hover:bg-primary/5 transition-colors duration-300" />
           </div>
 
@@ -81,7 +82,7 @@ const TarotCardComponent = ({ drawnCard, index, onReveal, rotation = 0, label, c
             <div className={`text-2xl md:text-3xl mb-1 ${suitColor}`}>
               {card.symbol}
             </div>
-            <div className="font-heading text-xs md:text-sm text-primary leading-tight px-1">
+            <div className="font-heading text-[11px] md:text-sm text-primary leading-tight px-1">
               {card.name}
             </div>
             {card.arcana === "Major" && (
@@ -99,7 +100,7 @@ const TarotCardComponent = ({ drawnCard, index, onReveal, rotation = 0, label, c
           animate={{ opacity: 1, y: 0 }}
           className="text-center max-w-[120px]"
         >
-          <p className="text-xs font-heading text-primary">{card.name}</p>
+          <p className="text-[11px] md:text-xs font-heading text-primary">{card.name}</p>
           <p className="text-[10px] text-muted-foreground">
             {isReversed ? "↻ Reversed" : "↑ Upright"}
           </p>
