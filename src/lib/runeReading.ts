@@ -1,7 +1,26 @@
 import type { DrawnRune } from "@/data/runes";
 import { supabase } from "@/integrations/supabase/client";
 
-export async function generateRuneReading(question: string, runes: DrawnRune[]): Promise<string> {
+/** Free local reading — always available */
+export function generateLocalRuneReading(runes: DrawnRune[]): string {
+  const descriptions = runes
+    .filter((dr) => dr.isRevealed)
+    .map((dr) => {
+      const meaning = dr.isReversed ? dr.rune.reversed_meaning : dr.rune.meaning;
+      return `**${dr.rune.name} (${dr.rune.symbol})** — ${dr.isReversed ? "Reversed" : "Upright"}: ${meaning}`;
+    })
+    .join("\n\n");
+
+  return `The runes have been cast and their wisdom revealed.\n\n${descriptions}\n\nMeditate on these ancient symbols and let their guidance illuminate your path forward.`;
+}
+
+/** Default reading — uses local engine */
+export function generateRuneReading(_question: string, runes: DrawnRune[]): string {
+  return generateLocalRuneReading(runes);
+}
+
+/** Premium AI reading — calls the edge function */
+export async function generateAIRuneReading(question: string, runes: DrawnRune[]): Promise<string> {
   const runeData = runes
     .filter((dr) => dr.isRevealed)
     .map((dr) => ({
@@ -13,31 +32,18 @@ export async function generateRuneReading(question: string, runes: DrawnRune[]):
       keywords: dr.rune.keywords.join(", "),
     }));
 
-  try {
-    const { data, error } = await supabase.functions.invoke("divination-reading", {
-      body: { question, type: "rune", runes: runeData },
-    });
+  const { data, error } = await supabase.functions.invoke("divination-reading", {
+    body: { question, type: "rune", runes: runeData },
+  });
 
-    if (error || data?.error) {
-      console.error("Rune reading error:", error || data?.error);
-      return generateLocalRuneReading(runes);
-    }
-
-    return data?.reading || generateLocalRuneReading(runes);
-  } catch (e) {
-    console.error("Failed to get rune reading:", e);
-    return generateLocalRuneReading(runes);
+  if (error || data?.error) {
+    console.error("Rune AI reading error:", error || data?.error);
+    throw new Error("AI interpretations are temporarily unavailable. Please try again later.");
   }
-}
 
-function generateLocalRuneReading(runes: DrawnRune[]): string {
-  const descriptions = runes
-    .filter((dr) => dr.isRevealed)
-    .map((dr) => {
-      const meaning = dr.isReversed ? dr.rune.reversed_meaning : dr.rune.meaning;
-      return `**${dr.rune.name} (${dr.rune.symbol})** — ${dr.isReversed ? "Reversed" : "Upright"}: ${meaning}`;
-    })
-    .join("\n\n");
+  if (!data?.reading) {
+    throw new Error("AI interpretations are temporarily unavailable. Please try again later.");
+  }
 
-  return `The runes have been cast and their wisdom revealed.\n\n${descriptions}\n\nMeditate on these ancient symbols and let their guidance illuminate your path forward.`;
+  return data.reading;
 }

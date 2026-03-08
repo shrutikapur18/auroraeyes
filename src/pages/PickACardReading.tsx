@@ -10,7 +10,7 @@ import PickACardSpread from "@/components/PickACardSpread";
 import ReadingPanel from "@/components/ReadingPanel";
 import ShareButtons from "@/components/ShareButtons";
 import type { DrawnCard } from "@/data/tarotDeck";
-import { canDoReading, recordReading, generateAIReading } from "@/lib/tarotReading";
+import { generateLocalReading } from "@/lib/tarotReading";
 import { Link } from "react-router-dom";
 
 type Phase = "input" | "focus" | "shuffling" | "fan" | "spread" | "reading" | "loading";
@@ -31,11 +31,9 @@ const PickACardReading = () => {
     if (drawnCards.some((c) => c.isRevealed)) return;
     setDrawnCards((prev) => {
       const updated = prev.map((dc, i) => (i === index ? { ...dc, isRevealed: true } : dc));
-      setTimeout(async () => {
-        const check = canDoReading();
-        if (!check.allowed) { setError(check.reason || ""); return; }
-        recordReading(); setPhase("loading");
-        const text = await generateAIReading(question, updated);
+      setTimeout(() => {
+        setPhase("loading");
+        const text = generateLocalReading(question, updated);
         setReading(text); setPhase("reading");
       }, 800);
       return updated;

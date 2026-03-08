@@ -19,7 +19,7 @@ import ReadingPanel from "@/components/ReadingPanel";
 import DailyDivination from "@/components/DailyDivination";
 import { threeCardPositions, celticCrossPositions } from "@/data/tarotDeck";
 import type { DrawnCard, ReadingMode } from "@/data/tarotDeck";
-import { canDoReading, recordReading, generateAIReading } from "@/lib/tarotReading";
+import { generateLocalReading } from "@/lib/tarotReading";
 
 type Phase = "input" | "focus" | "shuffling" | "fan" | "spread" | "reading" | "loading";
 
@@ -47,11 +47,9 @@ const Index = () => {
       const revealedCount = updated.filter((c) => c.isRevealed).length;
       const shouldRead = tarotMode === "pick-a-card" ? revealedCount >= 1 : revealedCount >= cardCount;
       if (shouldRead) {
-        setTimeout(async () => {
-          const check = canDoReading();
-          if (!check.allowed) { setError(check.reason || ""); return; }
-          recordReading(); setPhase("loading");
-          const readingText = await generateAIReading(question, updated);
+        setTimeout(() => {
+          setPhase("loading");
+          const readingText = generateLocalReading(question, updated);
           setReading(readingText); setPhase("reading");
         }, 800);
       }

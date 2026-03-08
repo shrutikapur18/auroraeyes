@@ -6,7 +6,7 @@ import type { DrawnCard } from "@/data/tarotDeck";
 import TarotCardComponent from "./TarotCardComponent";
 import ReadingTable from "./ReadingTable";
 import FocusMoment from "./FocusMoment";
-import { canDoReading, recordReading, generateAIReading } from "@/lib/tarotReading";
+import { generateLocalReading } from "@/lib/tarotReading";
 import cardBackImage from "@/assets/card-back.jpg";
 
 interface YesNoSpreadProps {
@@ -36,7 +36,7 @@ const YesNoSpread = ({ question, onError }: YesNoSpreadProps) => {
     setTimeout(() => setPhase("card"), 2000);
   };
 
-  const handleReveal = useCallback(async () => {
+  const handleReveal = useCallback(() => {
     if (!drawnCard) return;
     const revealed = { ...drawnCard, isRevealed: true };
     setDrawnCard(revealed);
@@ -44,14 +44,8 @@ const YesNoSpread = ({ question, onError }: YesNoSpreadProps) => {
     const yesNo = getYesNoAnswer(revealed.card.id, revealed.isReversed);
     setAnswer(yesNo);
 
-    const check = canDoReading();
-    if (!check.allowed) {
-      onError(check.reason || "");
-      return;
-    }
-    recordReading();
     setPhase("loading");
-    const text = await generateAIReading(
+    const text = generateLocalReading(
       `Yes/No question: "${question}" — The answer is ${yesNo.toUpperCase()}.`,
       [revealed]
     );

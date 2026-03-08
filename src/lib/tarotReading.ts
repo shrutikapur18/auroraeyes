@@ -3,45 +3,22 @@ import { supabase } from "@/integrations/supabase/client";
 import { generateRuleBasedReading } from "@/lib/tarotInterpretationEngine";
 import { getCachedReading, setCachedReading } from "@/lib/readingCache";
 
-const READING_COUNT_KEY = "tarot_reading_count";
-const READING_RESET_KEY = "tarot_reading_reset";
-const MAX_READINGS = 3;
-const COOLDOWN_MS = 20_000;
-const COOLDOWN_KEY = "tarot_last_reading";
-
-export function canDoReading(): { allowed: boolean; reason?: string } {
-  const resetTime = localStorage.getItem(READING_RESET_KEY);
-  const now = Date.now();
-  if (!resetTime || now - parseInt(resetTime) > 24 * 60 * 60 * 1000) {
-    localStorage.setItem(READING_COUNT_KEY, "0");
-    localStorage.setItem(READING_RESET_KEY, now.toString());
-  }
-
-  const count = parseInt(localStorage.getItem(READING_COUNT_KEY) || "0");
-  if (count >= MAX_READINGS) {
-    return { allowed: false, reason: "You have reached the free reading limit. Please return later for another reading." };
-  }
-
-  const lastReading = localStorage.getItem(COOLDOWN_KEY);
-  if (lastReading && now - parseInt(lastReading) < COOLDOWN_MS) {
-    const remaining = Math.ceil((COOLDOWN_MS - (now - parseInt(lastReading))) / 1000);
-    return { allowed: false, reason: `Please wait ${remaining} seconds before your next reading.` };
-  }
-
-  return { allowed: true };
+/**
+ * Generate a free reading using the local rule-based engine.
+ * No limits, no API calls — always available.
+ */
+export function generateLocalReading(question: string, cards: DrawnCard[]): string {
+  return generateRuleBasedReading(question, cards);
 }
 
-export function recordReading() {
-  const count = parseInt(localStorage.getItem(READING_COUNT_KEY) || "0");
-  localStorage.setItem(READING_COUNT_KEY, (count + 1).toString());
-  localStorage.setItem(COOLDOWN_KEY, Date.now().toString());
-}
-
+/**
+ * Generate a premium AI-powered reading via the edge function.
+ * Returns the AI text on success, or throws on failure so the caller can show an error.
+ */
 export async function generateAIReading(question: string, cards: DrawnCard[], spreadType?: string): Promise<string> {
-  // Check cache first
   const cached = getCachedReading(cards, spreadType);
   if (cached) {
-    console.log("[ReadingCache] Cache hit — returning stored reading");
+    console.log("[ReadingCache] Cache hit — returning stored AI reading");
     return cached;
   }
 
@@ -54,38 +31,25 @@ export async function generateAIReading(question: string, cards: DrawnCard[], sp
       meaning: dc.isReversed ? dc.card.meaning_rev : dc.card.meaning_up,
     }));
 
-  try {
-    const { data, error } = await supabase.functions.invoke("divination-reading", {
-      body: { question, type: "tarot", cards: cardData },
-    });
+  const { data, error } = await supabase.functions.invoke("divination-reading", {
+    body: { question, type: "tarot", cards: cardData },
+  });
 
-    if (error) {
-      console.error("Edge function error:", error);
-      const local = generateLocalReading(question, cards);
-      setCachedReading(cards, local, "local", spreadType);
-      return local;
-    }
-
-    if (data?.error) {
-      console.error("AI error:", data.error);
-      const local = generateLocalReading(question, cards);
-      setCachedReading(cards, local, "local", spreadType);
-      return local;
-    }
-
-    const reading = data?.reading || generateLocalReading(question, cards);
-    const source = data?.reading ? "ai" : "local";
-    setCachedReading(cards, reading, source, spreadType);
-    return reading;
-  } catch (e) {
-    console.error("Failed to get AI reading:", e);
-    const local = generateLocalReading(question, cards);
-    setCachedReading(cards, local, "local", spreadType);
-    return local;
+  if (error) {
+    console.error("Edge function error:", error);
+    throw new Error("AI interpretations are temporarily unavailable. Please try again later.");
   }
-}
 
-/** Rule-based local reading using the interpretation engine */
-export function generateLocalReading(question: string, cards: DrawnCard[]): string {
-  return generateRuleBasedReading(question, cards);
+  if (data?.error) {
+    console.error("AI error:", data.error);
+    throw new Error("AI interpretations are temporarily unavailable. Please try again later.");
+  }
+
+  const reading = data?.reading;
+  if (!reading) {
+    throw new Error("AI interpretations are temporarily unavailable. Please try again later.");
+  }
+
+  setCachedReading(cards, reading, "ai", spreadType);
+  return reading;
 }
