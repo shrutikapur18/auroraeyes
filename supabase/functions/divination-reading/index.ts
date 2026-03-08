@@ -66,11 +66,12 @@ Keep readings between 120 and 200 words. Be mystical but grounded. Avoid determi
 
 Follow this structure:
 1. Begin with a short intuitive summary of the overall energy surrounding the user's question (1-2 sentences).
-2. Interpret each card individually based on the user's question, the card position, and whether the card is upright or reversed.
-3. Connect the cards together into a cohesive narrative.
-4. End with thoughtful reflection or guidance (1-2 sentences).
+2. Analyze the spread for repeating symbolic themes across cards — such as transformation, healing, new beginnings, conflict, opportunity, spiritual growth, independence, surrender, or cycles. If multiple cards share a theme, highlight it naturally (e.g. "There is a strong theme of renewal present in this spread…").
+3. Interpret each card individually based on the user's question, the card position, and whether the card is upright or reversed.
+4. Weave the individual meanings into a cohesive narrative that centers on the detected themes. Show how the cards reinforce or contrast each other rather than treating them in isolation.
+5. End with thoughtful reflection or guidance grounded in the dominant theme (1-2 sentences).
 
-Keep readings between 120 and 220 words. Avoid deterministic predictions.`;
+Keep readings between 150 and 250 words. Avoid deterministic predictions.`;
     }
 
     // Build messages array
