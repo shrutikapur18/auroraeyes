@@ -1,5 +1,6 @@
 import type { DrawnCard } from "@/data/tarotDeck";
 import { supabase } from "@/integrations/supabase/client";
+import { generateRuleBasedReading } from "@/lib/tarotInterpretationEngine";
 
 const READING_COUNT_KEY = "tarot_reading_count";
 const READING_RESET_KEY = "tarot_reading_reset";
@@ -67,30 +68,7 @@ export async function generateAIReading(question: string, cards: DrawnCard[]): P
   }
 }
 
+/** Rule-based local reading using the interpretation engine */
 export function generateLocalReading(question: string, cards: DrawnCard[]): string {
-  const cardDescriptions = cards
-    .filter((dc) => dc.isRevealed)
-    .map((dc) => {
-      const orientation = dc.isReversed ? "reversed" : "upright";
-      const meaning = dc.isReversed ? dc.card.meaning_rev : dc.card.meaning_up;
-      const posStr = dc.position ? ` in the ${dc.position} position` : "";
-      return `**${dc.card.name}** (${orientation})${posStr}: ${meaning}`;
-    });
-
-  const overall = cards.length === 1
-    ? "The universe has drawn a single card to illuminate your path."
-    : cards.length === 3
-    ? "The three cards before you weave a story from your past, through your present, and into your future."
-    : "The Celtic Cross spread offers a profound and layered insight into your question.";
-
-  const cardReadings = cardDescriptions.join("\n\n");
-
-  const keywords = cards
-    .filter((dc) => dc.isRevealed)
-    .flatMap((dc) => dc.card.keywords)
-    .slice(0, 5);
-
-  const guidance = `The recurring themes of ${keywords.join(", ")} suggest that this is a time for deep reflection. Trust your inner wisdom as you navigate the path ahead. The cards do not dictate your future — they illuminate possibilities and invite you to make conscious choices.`;
-
-  return `${overall}\n\n${cardReadings}\n\n${guidance}`;
+  return generateRuleBasedReading(question, cards);
 }
