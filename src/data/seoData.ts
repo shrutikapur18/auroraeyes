@@ -544,6 +544,16 @@ export function getAllSEOUrls(): { loc: string; changefreq: string; priority: st
   // Comparison pages
   generateComparisonPages().forEach(c => urls.push({ loc: `${base}/tarot-comparisons/${c.slug}`, changefreq: "monthly", priority: "0.6" }));
 
+  // Daily reading pages (last 30 days for sitemap)
+  const today = new Date();
+  const months = ["january","february","march","april","may","june","july","august","september","october","november","december"];
+  for (let i = 0; i < 30; i++) {
+    const d = new Date(today);
+    d.setDate(d.getDate() - i);
+    const dateSlug = `${months[d.getMonth()]}-${d.getDate()}`;
+    urls.push({ loc: `${base}/tarot-reading-for-${dateSlug}`, changefreq: "daily", priority: "0.5" });
+  }
+
   // Blog articles
   const blogSlugs = ["how-tarot-readings-work","major-arcana-guide","how-rune-casting-works","angel-card-guidance-beginners","tarot-spreads-explained","reversed-tarot-cards","zodiac-and-tarot-connection","daily-divination-practice"];
   blogSlugs.forEach(s => urls.push({ loc: `${base}/blog/${s}`, changefreq: "monthly", priority: "0.5" }));
