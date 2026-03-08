@@ -20,6 +20,7 @@ import ReadingPanel from "@/components/ReadingPanel";
 import DailyDivination from "@/components/DailyDivination";
 import TopicalClusterNav from "@/components/TopicalClusterNav";
 import RecentReadings from "@/components/RecentReadings";
+import HoraryHomepageSection from "@/components/HoraryHomepageSection";
 import { threeCardPositions, celticCrossPositions } from "@/data/tarotDeck";
 import type { DrawnCard, ReadingMode } from "@/data/tarotDeck";
 import { generateLocalReading } from "@/lib/tarotReading";
