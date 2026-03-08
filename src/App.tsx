@@ -32,6 +32,7 @@ import TarotComparison from "./pages/TarotComparison";
 import TarotComparisons from "./pages/TarotComparisons";
 import QuestionReadingPage from "./pages/QuestionReadingPage";
 import SharedReadingPreview from "./pages/SharedReadingPreview";
+import HTMLSitemap from "./pages/HTMLSitemap";
 import NotFound from "./pages/NotFound";
 import { questionPages } from "./data/seoData";
 
