@@ -4,7 +4,6 @@ import { drawRunes, runePositions, type DrawnRune } from "@/data/runes";
 import RuneComponent from "./RuneComponent";
 import ReadingTable from "./ReadingTable";
 import FocusMoment from "./FocusMoment";
-import { canDoReading, recordReading } from "@/lib/tarotReading";
 import { generateRuneReading } from "@/lib/runeReading";
 
 interface RuneSpreadProps {
