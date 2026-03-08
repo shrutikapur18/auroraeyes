@@ -169,7 +169,7 @@ Provide a detailed horary astrology interpretation (4-6 paragraphs) following tr
 Write in a mystical but clear tone. Be specific about which planets and aspects support your interpretation.`;
 
       try {
-        const aiRes = await fetch("https://ai-gateway.lovable.dev/api/chat/completions", {
+        const aiRes = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
           method: "POST",
           headers: {
             Authorization: `Bearer ${LOVABLE_API_KEY}`,
