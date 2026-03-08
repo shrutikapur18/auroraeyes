@@ -10,11 +10,6 @@ interface ReadingPanelProps {
 }
 
 const ReadingPanel = ({ reading, drawnCards, question }: ReadingPanelProps) => {
-  if (!reading) return null;
-
-  // Split reading into main interpretation and sections
-  const sections = reading.split(/\n\n/);
-
   const handleShare = useCallback(async () => {
     const cardNames = drawnCards
       .filter((dc) => dc.isRevealed)
