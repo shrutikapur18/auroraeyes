@@ -1,9 +1,22 @@
 /**
  * Generates a shareable image for a tarot reading using Canvas API.
- * Returns a Blob that can be shared or downloaded.
+ * Supports full spread display with all cards.
  */
 
+export interface ShareCardData {
+  cardName: string;
+  orientation: string;
+  position?: string;
+  symbol?: string;
+}
+
 export interface ShareImageData {
+  cards: ShareCardData[];
+  message: string;
+}
+
+/** @deprecated Use ShareImageData with cards array */
+export interface LegacyShareImageData {
   cardName: string;
   orientation: string;
   message: string;
@@ -13,7 +26,13 @@ export interface ShareImageData {
 const CANVAS_W = 1080;
 const CANVAS_H = 1080;
 
-export async function generateShareImage(data: ShareImageData): Promise<Blob> {
+export async function generateShareImage(data: ShareImageData | LegacyShareImageData): Promise<Blob> {
+  // Normalize legacy single-card format
+  const cards: ShareCardData[] = "cards" in data
+    ? data.cards
+    : [{ cardName: data.cardName, orientation: data.orientation, position: data.position }];
+  const message = data.message;
+
   const canvas = document.createElement("canvas");
   canvas.width = CANVAS_W;
   canvas.height = CANVAS_H;
@@ -43,65 +62,122 @@ export async function generateShareImage(data: ShareImageData): Promise<Blob> {
   ctx.fillText("✦", 70, CANVAS_H - 55);
   ctx.fillText("✦", CANVAS_W - 70, CANVAS_H - 55);
 
-  // ─── Top label ───
+  // ─── Title ───
   ctx.fillStyle = "rgba(212, 175, 55, 0.5)";
   ctx.font = "500 18px sans-serif";
   ctx.letterSpacing = "8px";
   ctx.textAlign = "center";
-  ctx.fillText("YOUR READING", CANVAS_W / 2, 130);
+  ctx.fillText("YOUR TAROT READING", CANVAS_W / 2, 120);
   ctx.letterSpacing = "0px";
 
-  // ─── Card symbol ───
-  ctx.fillStyle = "rgba(212, 175, 55, 0.2)";
-  ctx.font = "180px serif";
-  ctx.fillText("✧", CANVAS_W / 2, 340);
+  // ─── Cards spread ───
+  const cardCount = cards.length;
+  const cardWidth = Math.min(280, (CANVAS_W - 160) / cardCount - 20);
+  const totalWidth = cardCount * cardWidth + (cardCount - 1) * 24;
+  const startX = (CANVAS_W - totalWidth) / 2;
+  const cardY = 160;
+  const cardHeight = cardCount <= 3 ? 340 : 280;
 
-  // ─── Card name ───
-  ctx.fillStyle = "#d4af37";
-  ctx.font = "bold 48px serif";
-  ctx.fillText(data.cardName, CANVAS_W / 2, 440);
+  cards.forEach((card, i) => {
+    const cx = startX + i * (cardWidth + 24) + cardWidth / 2;
 
-  // ─── Orientation ───
-  ctx.fillStyle = "rgba(212, 175, 55, 0.6)";
-  ctx.font = "22px sans-serif";
-  ctx.fillText(data.orientation, CANVAS_W / 2, 480);
+    // Card background
+    const cardBg = ctx.createLinearGradient(cx - cardWidth / 2, cardY, cx - cardWidth / 2, cardY + cardHeight);
+    cardBg.addColorStop(0, "rgba(212, 175, 55, 0.08)");
+    cardBg.addColorStop(1, "rgba(212, 175, 55, 0.02)");
+    ctx.fillStyle = cardBg;
 
-  // ─── Position (if any) ───
-  if (data.position) {
-    ctx.fillStyle = "rgba(255, 255, 255, 0.35)";
-    ctx.font = "italic 20px sans-serif";
-    ctx.fillText(data.position, CANVAS_W / 2, 515);
-  }
+    // Rounded rect
+    const r = 12;
+    const x = cx - cardWidth / 2;
+    ctx.beginPath();
+    ctx.moveTo(x + r, cardY);
+    ctx.lineTo(x + cardWidth - r, cardY);
+    ctx.quadraticCurveTo(x + cardWidth, cardY, x + cardWidth, cardY + r);
+    ctx.lineTo(x + cardWidth, cardY + cardHeight - r);
+    ctx.quadraticCurveTo(x + cardWidth, cardY + cardHeight, x + cardWidth - r, cardY + cardHeight);
+    ctx.lineTo(x + r, cardY + cardHeight);
+    ctx.quadraticCurveTo(x, cardY + cardHeight, x, cardY + cardHeight - r);
+    ctx.lineTo(x, cardY + r);
+    ctx.quadraticCurveTo(x, cardY, x + r, cardY);
+    ctx.closePath();
+    ctx.fill();
+
+    // Card border
+    ctx.strokeStyle = "rgba(212, 175, 55, 0.25)";
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    // Position label
+    if (card.position) {
+      ctx.fillStyle = "rgba(212, 175, 55, 0.5)";
+      ctx.font = "bold 13px sans-serif";
+      ctx.letterSpacing = "3px";
+      ctx.fillText(card.position.toUpperCase(), cx, cardY + 32);
+      ctx.letterSpacing = "0px";
+    }
+
+    // Symbol
+    const sym = card.symbol || "✧";
+    ctx.fillStyle = "rgba(212, 175, 55, 0.15)";
+    const symSize = cardCount <= 3 ? 100 : 70;
+    ctx.font = `${symSize}px serif`;
+    ctx.fillText(sym, cx, cardY + cardHeight / 2 + symSize * 0.15);
+
+    // Card name (wrapped if needed)
+    ctx.fillStyle = "#d4af37";
+    const nameSize = cardCount <= 3 ? 22 : 16;
+    ctx.font = `bold ${nameSize}px serif`;
+    const nameLines = wrapText(ctx, card.cardName, cardWidth - 24);
+    const nameStartY = cardY + cardHeight - 70;
+    nameLines.forEach((line, li) => {
+      ctx.fillText(line, cx, nameStartY + li * (nameSize + 4));
+    });
+
+    // Orientation
+    ctx.fillStyle = "rgba(212, 175, 55, 0.6)";
+    const oriSize = cardCount <= 3 ? 14 : 12;
+    ctx.font = `${oriSize}px sans-serif`;
+    const arrow = card.orientation === "Reversed" ? "↻" : "↑";
+    ctx.fillText(`${arrow} ${card.orientation}`, cx, cardY + cardHeight - 18);
+  });
 
   // ─── Divider ───
-  const divGrad = ctx.createLinearGradient(CANVAS_W * 0.25, 0, CANVAS_W * 0.75, 0);
+  const divY = cardY + cardHeight + 30;
+  const divGrad = ctx.createLinearGradient(CANVAS_W * 0.2, 0, CANVAS_W * 0.8, 0);
   divGrad.addColorStop(0, "transparent");
   divGrad.addColorStop(0.5, "rgba(212, 175, 55, 0.5)");
   divGrad.addColorStop(1, "transparent");
   ctx.fillStyle = divGrad;
-  ctx.fillRect(CANVAS_W * 0.25, 545, CANVAS_W * 0.5, 1);
+  ctx.fillRect(CANVAS_W * 0.2, divY, CANVAS_W * 0.6, 1);
 
-  // ─── Message (wrapped) ───
+  // ─── Message ───
   ctx.fillStyle = "rgba(255, 255, 255, 0.85)";
-  ctx.font = "22px sans-serif";
-  const maxWidth = CANVAS_W - 200;
-  const lines = wrapText(ctx, data.message, maxWidth);
-  const lineHeight = 34;
-  const startY = 600;
-  lines.slice(0, 8).forEach((line, i) => {
-    ctx.fillText(line, CANVAS_W / 2, startY + i * lineHeight);
+  ctx.font = "20px sans-serif";
+  const maxWidth = CANVAS_W - 180;
+  const lines = wrapText(ctx, message, maxWidth);
+  const lineHeight = 30;
+  const msgStartY = divY + 40;
+  const maxLines = Math.min(lines.length, Math.floor((CANVAS_H - msgStartY - 130) / lineHeight));
+  lines.slice(0, maxLines).forEach((line, i) => {
+    ctx.fillText(line, CANVAS_W / 2, msgStartY + i * lineHeight);
   });
+
+  // ─── Teaser ───
+  ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
+  ctx.font = "italic 16px sans-serif";
+  ctx.fillText("The cards revealed something meaningful about this situation.", CANVAS_W / 2, CANVAS_H - 130);
 
   // ─── Branding ───
   ctx.fillStyle = "rgba(212, 175, 55, 0.4)";
   ctx.font = "500 16px sans-serif";
   ctx.letterSpacing = "6px";
-  ctx.fillText("MYSTIC DIVINATION", CANVAS_W / 2, CANVAS_H - 100);
+  ctx.fillText("MYSTIC DIVINATION", CANVAS_W / 2, CANVAS_H - 90);
   ctx.letterSpacing = "0px";
 
   ctx.fillStyle = "rgba(255, 255, 255, 0.25)";
   ctx.font = "14px sans-serif";
-  ctx.fillText("tarotguidance.lovable.app", CANVAS_W / 2, CANVAS_H - 70);
+  ctx.fillText("tarotguidance.lovable.app", CANVAS_W / 2, CANVAS_H - 65);
 
   return new Promise((resolve) => {
     canvas.toBlob((blob) => resolve(blob!), "image/png");
