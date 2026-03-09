@@ -53,7 +53,6 @@ const ReadingPanel = ({ reading, drawnCards, question, type = "tarot", runes, an
   const shareImageData: ShareImageData | undefined = useMemo(() => {
     const revealed = drawnCards.filter((dc) => dc.isRevealed);
     if (revealed.length === 0) return undefined;
-    const primary = revealed[0];
     const firstSentence = displayedReading
       .replace(/\*\*/g, "")
       .split(/\.\s/)
@@ -61,10 +60,13 @@ const ReadingPanel = ({ reading, drawnCards, question, type = "tarot", runes, an
       .slice(0, 3)
       .join(". ") + ".";
     return {
-      cardName: primary.card.name,
-      orientation: primary.isReversed ? "Reversed" : "Upright",
+      cards: revealed.map((dc) => ({
+        cardName: dc.card.name,
+        orientation: dc.isReversed ? "Reversed" : "Upright",
+        position: dc.position,
+        symbol: dc.card.symbol,
+      })),
       message: firstSentence.slice(0, 280),
-      position: primary.position,
     };
   }, [drawnCards, displayedReading]);
 
