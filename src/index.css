@@ -343,6 +343,38 @@
     50% { background-position: -200% 0; }
   }
 
+  /* Rune stone aura — earthy gold glow */
+  .rune-aura {
+    box-shadow:
+      0 0 16px hsl(var(--gold) / 0.25),
+      0 0 40px hsl(var(--gold) / 0.1),
+      inset 0 0 10px hsl(var(--gold) / 0.06);
+    animation: aura-breathe 5s ease-in-out infinite;
+  }
+
+  /* Angel card aura — soft celestial glow */
+  .angel-aura {
+    box-shadow:
+      0 0 18px hsl(var(--angel-blue) / 0.3),
+      0 0 45px hsl(var(--angel-glow) / 0.12),
+      inset 0 0 12px hsl(var(--angel-blue) / 0.08);
+    animation: angel-breathe 4.5s ease-in-out infinite;
+  }
+  @keyframes angel-breathe {
+    0%, 100% {
+      box-shadow:
+        0 0 16px hsl(var(--angel-blue) / 0.25),
+        0 0 40px hsl(var(--angel-glow) / 0.08),
+        inset 0 0 10px hsl(var(--angel-blue) / 0.05);
+    }
+    50% {
+      box-shadow:
+        0 0 26px hsl(var(--angel-blue) / 0.4),
+        0 0 55px hsl(var(--angel-glow) / 0.16),
+        inset 0 0 18px hsl(var(--angel-blue) / 0.1);
+    }
+  }
+
   /* Icon glow effect */
   .icon-glow {
     filter: drop-shadow(0 0 4px hsl(var(--gold) / 0.5));
