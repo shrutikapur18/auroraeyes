@@ -110,7 +110,9 @@ const App = () => (
             <Route path="/editorial-policy" element={<EditorialPolicy />} />
             {/* HTML Sitemap */}
             <Route path="/sitemap-html" element={<HTMLSitemap />} />
-            {/* Shared reading preview */}
+            {/* Saved readings */}
+            <Route path="/reading/:id" element={<SavedReadingPage />} />
+            {/* Shared reading preview (legacy) */}
             <Route path="/shared-reading" element={<SharedReadingPreview />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
