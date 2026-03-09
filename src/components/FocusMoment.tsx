@@ -16,13 +16,13 @@ const FocusMoment = ({ onComplete, method = "tarot" }: FocusMomentProps) => {
   const methodConfig = {
     tarot: {
       icon: "🃏",
-      color: "gold",
+      color: "gold" as const,
       message: "Clear your mind. Focus deeply on your question. The cards are aligning to your energy...",
       glow: "hsl(45 80% 55%)",
     },
     angel: {
       icon: "👼",
-      color: "blue",
+      color: "blue" as const,
       message: "Open your heart. Divine messengers are gathering to guide you with love and light...",
       glow: "hsl(210 60% 70%)",
     },
