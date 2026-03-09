@@ -133,28 +133,32 @@ const Index = () => {
             {/* Horary Astrology Section */}
             <HoraryHomepageSection />
 
-            {/* SEO: Quick links */}
+            {/* SEO: Quick links with elegant icons */}
             <section className="max-w-4xl mx-auto mt-12 md:mt-16 mb-8 px-1">
               <h2 className="font-heading text-lg md:text-xl gold-text text-center mb-5 md:mb-6">Explore Our Readings</h2>
               <div className="grid grid-cols-3 md:grid-cols-3 gap-2 md:gap-3">
                 {[
-                  { to: "/free-tarot-reading", label: "Tarot Reading", icon: "🃏" },
-                  { to: "/yes-no-tarot-reading", label: "Yes/No Tarot", icon: "⚖️" },
-                  { to: "/pick-a-card-reading", label: "Pick a Card", icon: "✨" },
-                  { to: "/rune-reading", label: "Rune Reading", icon: "ᚱ" },
-                  { to: "/angel-card-reading", label: "Angel Cards", icon: "👼" },
-                  { to: "/horary-reading", label: "Horary Astrology", icon: "🌟" },
-                  { to: "/tarot-card-meanings", label: "Card Meanings", icon: "📖" },
-                  { to: "/rune-meanings", label: "Rune Meanings", icon: "ᚠ" },
-                  { to: "/daily-tarot-card", label: "Daily Tarot", icon: "🌅" },
+                  { to: "/free-tarot-reading", label: "Tarot Reading", Icon: Layers },
+                  { to: "/yes-no-tarot-reading", label: "Yes/No Tarot", Icon: Scale },
+                  { to: "/pick-a-card-reading", label: "Pick a Card", Icon: Sparkles },
+                  { to: "/rune-reading", label: "Rune Reading", Icon: Hexagon },
+                  { to: "/angel-card-reading", label: "Angel Cards", Icon: Feather },
+                  { to: "/horary-reading", label: "Horary Astrology", Icon: Compass },
+                  { to: "/tarot-card-meanings", label: "Card Meanings", Icon: BookOpen },
+                  { to: "/rune-meanings", label: "Rune Meanings", Icon: Hexagon },
+                  { to: "/daily-tarot-card", label: "Daily Tarot", Icon: Sun },
                 ].map((l) => (
-                  <Link key={l.to} to={l.to} className="reading-panel rounded-lg p-3 md:p-4 text-center hover:gold-glow transition-all group active:scale-[0.97]">
-                    <span className="text-xl md:text-2xl block mb-1">{l.icon}</span>
+                  <Link key={l.to} to={l.to} className="reading-panel rounded-lg p-3 md:p-4 text-center hover:gold-glow transition-all duration-300 group active:scale-[0.97]">
+                    <l.Icon className="w-5 h-5 md:w-6 md:h-6 mx-auto mb-1.5 text-primary/80 group-hover:text-primary transition-colors icon-glow" />
                     <span className="text-[10px] md:text-xs font-heading text-foreground group-hover:text-primary transition-colors leading-tight">{l.label}</span>
                   </Link>
                 ))}
               </div>
-             </section>
+            </section>
+
+            {/* Philosophy Section */}
+            <DivinationPhilosophy />
+
             <RecentReadings />
             <TopicalClusterNav />
           </motion.div>
