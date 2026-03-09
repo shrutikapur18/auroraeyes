@@ -54,17 +54,20 @@ const ReadingPanel = ({ reading, drawnCards, question, type = "tarot", runes, an
     const revealed = drawnCards.filter((dc) => dc.isRevealed);
     if (revealed.length === 0) return undefined;
     const primary = revealed[0];
-    const firstSentence = displayedReading
-      .replace(/\*\*/g, "")
-      .split(/\.\s/)
-      .filter((s) => s.length > 20)
-      .slice(0, 3)
-      .join(". ") + ".";
+
+    const allCards = revealed.map(dc => ({
+      cardName: dc.card.name,
+      orientation: dc.isReversed ? "Reversed" : "Upright",
+      position: dc.position,
+      symbol: dc.card.symbol,
+    }));
+
     return {
       cardName: primary.card.name,
       orientation: primary.isReversed ? "Reversed" : "Upright",
-      message: firstSentence.slice(0, 280),
+      message: displayedReading.replace(/\*\*/g, "").slice(0, 1200),
       position: primary.position,
+      allCards,
     };
   }, [drawnCards, displayedReading]);
 
