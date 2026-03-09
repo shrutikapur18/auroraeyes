@@ -1,22 +1,22 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Sparkles, Layers, Scale, Hexagon, Feather, Calendar, Compass, Sun, BookOpen, FileText, Home } from "lucide-react";
 import StarBackground from "./StarBackground";
 import FloatingParticles from "./FloatingParticles";
 
 const navLinks = [
-  { to: "/", label: "Home", icon: "✦" },
-  { to: "/free-tarot-reading", label: "Tarot", icon: "🃏" },
-  { to: "/yes-no-tarot-reading", label: "Yes/No", icon: "⚖️" },
-  { to: "/pick-a-card-reading", label: "Pick a Card", icon: "✨" },
-  { to: "/rune-reading", label: "Runes", icon: "ᚱ" },
-  { to: "/angel-card-reading", label: "Angel Cards", icon: "👼" },
-  { to: "/daily-tarot-reading", label: "Today", icon: "📅" },
-  { to: "/horary-reading", label: "Horary", icon: "🪐" },
-  { to: "/daily-tarot-card", label: "Daily Draw", icon: "🌅" },
-  { to: "/tarot-card-meanings", label: "Meanings", icon: "📖" },
-  { to: "/blog", label: "Blog", icon: "📝" },
+  { to: "/", label: "Home", Icon: Home },
+  { to: "/free-tarot-reading", label: "Tarot", Icon: Layers },
+  { to: "/yes-no-tarot-reading", label: "Yes/No", Icon: Scale },
+  { to: "/pick-a-card-reading", label: "Pick a Card", Icon: Sparkles },
+  { to: "/rune-reading", label: "Runes", Icon: Hexagon },
+  { to: "/angel-card-reading", label: "Angel Cards", Icon: Feather },
+  { to: "/daily-tarot-reading", label: "Today", Icon: Calendar },
+  { to: "/horary-reading", label: "Horary", Icon: Compass },
+  { to: "/daily-tarot-card", label: "Daily Draw", Icon: Sun },
+  { to: "/tarot-card-meanings", label: "Meanings", Icon: BookOpen },
+  { to: "/blog", label: "Blog", Icon: FileText },
 ];
 
 const SiteLayout = ({ children }: { children: React.ReactNode }) => {
@@ -41,8 +41,9 @@ const SiteLayout = ({ children }: { children: React.ReactNode }) => {
       <nav className="relative z-30 border-b border-border/30 bg-background/80 backdrop-blur-lg sticky top-0">
         <div className="max-w-7xl mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
-            <Link to="/" className="font-heading text-lg md:text-xl gold-text tracking-wider" onClick={() => setMenuOpen(false)}>
-              ✦ Mystic Divination
+            <Link to="/" className="font-heading text-lg md:text-xl gold-text tracking-wider flex items-center gap-2" onClick={() => setMenuOpen(false)}>
+              <Sparkles className="w-5 h-5 text-primary icon-glow" />
+              Mystic Divination
             </Link>
 
             {/* Desktop nav */}
@@ -51,12 +52,13 @@ const SiteLayout = ({ children }: { children: React.ReactNode }) => {
                 <Link
                   key={link.to}
                   to={link.to}
-                  className={`px-3 py-1.5 rounded-md text-xs font-heading tracking-wider whitespace-nowrap transition-all ${
+                  className={`px-3 py-1.5 rounded-md text-xs font-heading tracking-wider whitespace-nowrap transition-all flex items-center gap-1.5 ${
                     location.pathname === link.to || location.pathname.startsWith(link.to + "/")
                       ? "bg-primary/20 text-primary border border-primary/30"
                       : "text-muted-foreground hover:text-foreground hover:bg-muted/30"
                   }`}
                 >
+                  <link.Icon className="w-3.5 h-3.5" />
                   {link.label}
                 </Link>
               ))}
@@ -111,7 +113,7 @@ const SiteLayout = ({ children }: { children: React.ReactNode }) => {
                           : "text-foreground/80 hover:bg-muted/30 hover:text-primary"
                       }`}
                     >
-                      <span className="text-base">{link.icon}</span>
+                      <link.Icon className="w-4 h-4" />
                       {link.label}
                     </Link>
                   ))}
@@ -126,13 +128,16 @@ const SiteLayout = ({ children }: { children: React.ReactNode }) => {
         {children}
       </div>
 
-      {/* Footer */}
-      <footer className="relative z-10 border-t border-border/30 bg-background/60 backdrop-blur-md py-10 px-4">
+      {/* Footer - Clean and minimal */}
+      <footer className="relative z-10 border-t border-border/30 bg-background/60 backdrop-blur-md py-12 px-4">
         <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
             <div>
-              <h3 className="font-heading text-sm gold-text mb-3">Readings</h3>
-              <div className="space-y-2">
+              <h3 className="font-heading text-sm gold-text mb-4 flex items-center gap-2">
+                <Layers className="w-4 h-4" />
+                Readings
+              </h3>
+              <div className="space-y-2.5">
                 <Link to="/free-tarot-reading" className="block text-xs text-muted-foreground hover:text-primary transition-colors">Free Tarot Reading</Link>
                 <Link to="/yes-no-tarot-reading" className="block text-xs text-muted-foreground hover:text-primary transition-colors">Yes/No Tarot</Link>
                 <Link to="/pick-a-card-reading" className="block text-xs text-muted-foreground hover:text-primary transition-colors">Pick a Card</Link>
@@ -142,8 +147,11 @@ const SiteLayout = ({ children }: { children: React.ReactNode }) => {
               </div>
             </div>
             <div>
-              <h3 className="font-heading text-sm gold-text mb-3">Daily</h3>
-              <div className="space-y-2">
+              <h3 className="font-heading text-sm gold-text mb-4 flex items-center gap-2">
+                <Sun className="w-4 h-4" />
+                Daily
+              </h3>
+              <div className="space-y-2.5">
                 <Link to="/daily-tarot-reading" className="block text-xs text-muted-foreground hover:text-primary transition-colors">Today's Tarot Reading</Link>
                 <Link to="/tarot-reading-archive" className="block text-xs text-muted-foreground hover:text-primary transition-colors">Reading Archive</Link>
                 <Link to="/daily-tarot-card" className="block text-xs text-muted-foreground hover:text-primary transition-colors">Daily Tarot Card</Link>
@@ -152,8 +160,11 @@ const SiteLayout = ({ children }: { children: React.ReactNode }) => {
               </div>
             </div>
             <div>
-              <h3 className="font-heading text-sm gold-text mb-3">Learn</h3>
-              <div className="space-y-2">
+              <h3 className="font-heading text-sm gold-text mb-4 flex items-center gap-2">
+                <BookOpen className="w-4 h-4" />
+                Learn
+              </h3>
+              <div className="space-y-2.5">
                 <Link to="/tarot-card-meanings" className="block text-xs text-muted-foreground hover:text-primary transition-colors">Tarot Card Meanings</Link>
                 <Link to="/rune-meanings" className="block text-xs text-muted-foreground hover:text-primary transition-colors">Rune Meanings</Link>
                 <Link to="/horary-astrology" className="block text-xs text-muted-foreground hover:text-primary transition-colors">Horary Astrology Guide</Link>
@@ -164,32 +175,51 @@ const SiteLayout = ({ children }: { children: React.ReactNode }) => {
               </div>
             </div>
             <div>
-              <h3 className="font-heading text-sm gold-text mb-3">Zodiac</h3>
-              <div className="space-y-2">
+              <h3 className="font-heading text-sm gold-text mb-4 flex items-center gap-2">
+                <Compass className="w-4 h-4" />
+                Zodiac
+              </h3>
+              <div className="space-y-2.5">
                 {["Aries", "Taurus", "Gemini", "Cancer", "Leo", "Virgo"].map((z) => (
                   <Link key={z} to={`/zodiac/${z.toLowerCase()}-tarot-reading`} className="block text-xs text-muted-foreground hover:text-primary transition-colors">{z} Tarot</Link>
                 ))}
               </div>
             </div>
           </div>
-          <div className="border-t border-border/20 pt-6 text-center">
-            <p className="font-heading text-xs gold-text mb-1">✦ Mystic Divination ✦</p>
-            <p className="text-[10px] text-muted-foreground mb-2">For entertainment and spiritual guidance purposes. © {new Date().getFullYear()}</p>
-            <div className="flex items-center justify-center gap-2 flex-wrap mb-3">
-              <Link to="/about" className="text-[10px] text-muted-foreground/60 hover:text-primary transition-colors">About</Link>
-              <span className="text-muted-foreground/30 text-[10px]">·</span>
-              <Link to="/methodology" className="text-[10px] text-muted-foreground/60 hover:text-primary transition-colors">Methodology</Link>
-              <span className="text-muted-foreground/30 text-[10px]">·</span>
-              <Link to="/editorial-policy" className="text-[10px] text-muted-foreground/60 hover:text-primary transition-colors">Editorial Policy</Link>
+          
+          {/* Divider with glow */}
+          <div className="flex items-center justify-center gap-4 mb-8">
+            <div className="flex-1 h-px bg-gradient-to-r from-transparent via-border/50 to-transparent" />
+            <Sparkles className="w-4 h-4 text-primary/50" />
+            <div className="flex-1 h-px bg-gradient-to-r from-transparent via-border/50 to-transparent" />
+          </div>
+          
+          <div className="text-center">
+            <p className="font-heading text-sm gold-text mb-2 flex items-center justify-center gap-2">
+              <Sparkles className="w-4 h-4" />
+              Mystic Divination
+              <Sparkles className="w-4 h-4" />
+            </p>
+            <p className="text-xs text-muted-foreground mb-4">For entertainment and spiritual guidance purposes. © {new Date().getFullYear()}</p>
+            
+            {/* About links */}
+            <div className="flex items-center justify-center gap-3 flex-wrap mb-3">
+              <Link to="/about" className="text-xs text-muted-foreground/70 hover:text-primary transition-colors">About</Link>
+              <span className="text-muted-foreground/30">·</span>
+              <Link to="/methodology" className="text-xs text-muted-foreground/70 hover:text-primary transition-colors">Methodology</Link>
+              <span className="text-muted-foreground/30">·</span>
+              <Link to="/editorial-policy" className="text-xs text-muted-foreground/70 hover:text-primary transition-colors">Editorial Policy</Link>
             </div>
-            <div className="flex items-center justify-center gap-2 flex-wrap">
-              <Link to="/privacy-policy" className="text-[10px] text-muted-foreground/60 hover:text-primary transition-colors">Privacy Policy</Link>
-              <span className="text-muted-foreground/30 text-[10px]">·</span>
-              <Link to="/terms-of-service" className="text-[10px] text-muted-foreground/60 hover:text-primary transition-colors">Terms of Service</Link>
-              <span className="text-muted-foreground/30 text-[10px]">·</span>
-              <Link to="/disclaimer" className="text-[10px] text-muted-foreground/60 hover:text-primary transition-colors">Disclaimer</Link>
-              <span className="text-muted-foreground/30 text-[10px]">·</span>
-              <Link to="/sitemap-html" className="text-[10px] text-muted-foreground/60 hover:text-primary transition-colors">Sitemap</Link>
+            
+            {/* Legal links */}
+            <div className="flex items-center justify-center gap-3 flex-wrap">
+              <Link to="/privacy-policy" className="text-xs text-muted-foreground/70 hover:text-primary transition-colors">Privacy Policy</Link>
+              <span className="text-muted-foreground/30">·</span>
+              <Link to="/terms-of-service" className="text-xs text-muted-foreground/70 hover:text-primary transition-colors">Terms of Service</Link>
+              <span className="text-muted-foreground/30">·</span>
+              <Link to="/disclaimer" className="text-xs text-muted-foreground/70 hover:text-primary transition-colors">Disclaimer</Link>
+              <span className="text-muted-foreground/30">·</span>
+              <Link to="/sitemap-html" className="text-xs text-muted-foreground/70 hover:text-primary transition-colors">Sitemap</Link>
             </div>
           </div>
         </div>

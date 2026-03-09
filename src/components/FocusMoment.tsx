@@ -1,5 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { Layers, Feather, Hexagon, Compass } from "lucide-react";
 import FloatingParticles from "./FloatingParticles";
 
 interface FocusMomentProps {
@@ -8,39 +9,64 @@ interface FocusMomentProps {
 }
 
 const FocusMoment = ({ onComplete, method = "tarot" }: FocusMomentProps) => {
+  const [stage, setStage] = useState(0);
+
   useEffect(() => {
-    const timer = setTimeout(onComplete, 3500); // Extended duration
-    return () => clearTimeout(timer);
+    const timer1 = setTimeout(() => setStage(1), 1200);
+    const timer2 = setTimeout(() => setStage(2), 2400);
+    const timer3 = setTimeout(onComplete, 4000);
+    return () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+      clearTimeout(timer3);
+    };
   }, [onComplete]);
 
   const methodConfig = {
     tarot: {
-      icon: "🃏",
+      Icon: Layers,
       color: "gold" as const,
-      message: "Clear your mind. Focus deeply on your question. The cards are aligning to your energy...",
+      messages: [
+        "Take a moment to center yourself...",
+        "Focus deeply on your question...",
+        "The cards are aligning to your energy..."
+      ],
       glow: "hsl(45 80% 55%)",
     },
     angel: {
-      icon: "👼",
+      Icon: Feather,
       color: "blue" as const,
-      message: "Open your heart. Divine messengers are gathering to guide you with love and light...",
+      messages: [
+        "Open your heart to receive...",
+        "Divine messengers are gathering...",
+        "Love and light flow toward you..."
+      ],
       glow: "hsl(210 60% 70%)",
     },
     runes: {
-      icon: "ᚱ",
+      Icon: Hexagon,
       color: "gold" as const,
-      message: "Ground yourself. Ancient wisdom flows through the runes, ready to speak truth...",
+      messages: [
+        "Ground yourself in the present...",
+        "Ancient wisdom stirs...",
+        "The runes are ready to speak truth..."
+      ],
       glow: "hsl(30 70% 50%)",
     },
     horary: {
-      icon: "🌟",
+      Icon: Compass,
       color: "blue" as const,
-      message: "Center your intention. The celestial spheres are aligning to answer your question...",
+      messages: [
+        "Center your intention...",
+        "The celestial spheres turn...",
+        "The stars align to answer your question..."
+      ],
       glow: "hsl(240 60% 60%)",
     },
   };
 
   const config = methodConfig[method as keyof typeof methodConfig] || methodConfig.tarot;
+  const IconComponent = config.Icon;
 
   return (
     <motion.div
@@ -56,14 +82,36 @@ const FocusMoment = ({ onComplete, method = "tarot" }: FocusMomentProps) => {
         gathering
       />
 
+      {/* Ritual title */}
+      <motion.p
+        className="font-heading text-xs text-primary/60 tracking-[0.3em] uppercase mb-8"
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2 }}
+      >
+        Preparing Your Reading
+      </motion.p>
+
       {/* Outer ring */}
       <motion.div
-        className="absolute w-40 h-40 rounded-full border border-primary/20"
+        className="absolute w-44 h-44 rounded-full border border-primary/20"
         animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.3, 0.6, 0.3],
+          scale: [1, 1.15, 1],
+          opacity: [0.2, 0.5, 0.2],
+          rotate: [0, 180, 360],
         }}
-        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+        transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+      />
+
+      {/* Middle ring */}
+      <motion.div
+        className="absolute w-36 h-36 rounded-full border border-primary/30"
+        animate={{
+          scale: [1.1, 1, 1.1],
+          opacity: [0.3, 0.6, 0.3],
+          rotate: [360, 180, 0],
+        }}
+        transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
       />
 
       {/* Inner circle with icon */}
@@ -83,26 +131,33 @@ const FocusMoment = ({ onComplete, method = "tarot" }: FocusMomentProps) => {
         transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
       >
         <motion.div
-          className="text-4xl"
           animate={{
             scale: [1, 1.15, 1],
-            rotate: method === "runes" ? [0, 5, -5, 0] : 0,
+            rotate: method === "runes" ? [0, 5, -5, 0] : [0, 3, -3, 0],
           }}
           transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
         >
-          {config.icon}
+          <IconComponent className="w-10 h-10 text-primary icon-glow" />
         </motion.div>
       </motion.div>
 
-      {/* Personalized message */}
-      <motion.p
-        className="font-heading text-primary text-center text-sm md:text-base tracking-wide max-w-md leading-relaxed px-4"
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4, duration: 0.8 }}
-      >
-        {config.message}
-      </motion.p>
+      {/* Progressive messages */}
+      <div className="h-20 flex flex-col items-center justify-center">
+        {config.messages.map((message, index) => (
+          <motion.p
+            key={index}
+            className="font-heading text-primary text-center text-sm md:text-base tracking-wide max-w-md leading-relaxed px-4 absolute"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ 
+              opacity: stage === index ? 1 : 0, 
+              y: stage === index ? 0 : (stage > index ? -10 : 10)
+            }}
+            transition={{ duration: 0.6 }}
+          >
+            {message}
+          </motion.p>
+        ))}
+      </div>
 
       {/* Breathing indicator */}
       <motion.div
@@ -112,25 +167,25 @@ const FocusMoment = ({ onComplete, method = "tarot" }: FocusMomentProps) => {
         transition={{ delay: 0.8 }}
       >
         <motion.div
-          className="w-16 h-1 rounded-full bg-gradient-to-r from-transparent via-primary to-transparent"
+          className="w-20 h-0.5 rounded-full bg-gradient-to-r from-transparent via-primary to-transparent"
           animate={{
-            scaleX: [0.5, 1, 0.5],
-            opacity: [0.4, 1, 0.4],
+            scaleX: [0.3, 1, 0.3],
+            opacity: [0.3, 1, 0.3],
           }}
-          transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
         />
-        <div className="flex gap-1.5">
+        <div className="flex gap-2">
           {[0, 1, 2].map((i) => (
             <motion.div
               key={i}
-              className="w-2 h-2 rounded-full bg-primary/60"
+              className="w-2 h-2 rounded-full bg-primary"
               animate={{
-                opacity: [0.3, 1, 0.3],
-                scale: [0.8, 1.2, 0.8],
+                opacity: [0.2, 1, 0.2],
+                scale: [0.6, 1.3, 0.6],
               }}
               transition={{
-                duration: 1.5,
-                delay: i * 0.5,
+                duration: 1.8,
+                delay: i * 0.4,
                 repeat: Infinity,
                 ease: "easeInOut",
               }}

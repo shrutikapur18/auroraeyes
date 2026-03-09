@@ -7,6 +7,7 @@ import GradualReading from "@/components/GradualReading";
 import ReadingAudioPlayer from "@/components/ReadingAudioPlayer";
 import FollowUpChat from "@/components/FollowUpChat";
 import ShareButtons from "@/components/ShareButtons";
+import ReadingSummary from "@/components/ReadingSummary";
 
 interface ReadingPanelProps {
   reading: string;
@@ -105,8 +106,11 @@ const ReadingPanel = ({ reading, drawnCards, question, type = "tarot", runes, an
             ))}
         </div>
 
+        {/* Energy, Timing, and Combination Summary */}
+        <ReadingSummary drawnCards={drawnCards} type={type} />
+
         {/* Main reading — gradual reveal */}
-        <div className="border-t border-border/30 pt-5 md:pt-6">
+        <div className="border-t border-border/30 pt-5 md:pt-6 mt-6">
           <GradualReading text={displayedReading} interval={500} />
         </div>
 
