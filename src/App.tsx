@@ -35,6 +35,7 @@ import SharedReadingPreview from "./pages/SharedReadingPreview";
 import HoraryReading from "./pages/HoraryReading";
 import HoraryGuide from "./pages/HoraryGuide";
 import HoraryContentPage from "./pages/HoraryContentPage";
+import SavedReadingPage from "./pages/SavedReadingPage";
 import HTMLSitemap from "./pages/HTMLSitemap";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
@@ -109,7 +110,9 @@ const App = () => (
             <Route path="/editorial-policy" element={<EditorialPolicy />} />
             {/* HTML Sitemap */}
             <Route path="/sitemap-html" element={<HTMLSitemap />} />
-            {/* Shared reading preview */}
+            {/* Saved readings */}
+            <Route path="/reading/:id" element={<SavedReadingPage />} />
+            {/* Shared reading preview (legacy) */}
             <Route path="/shared-reading" element={<SharedReadingPreview />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
