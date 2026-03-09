@@ -33,7 +33,7 @@ const SavedReadingPage = () => {
         .eq("id", id)
         .single();
       if (error) throw error;
-      return data as SavedReading;
+      return data as unknown as SavedReading;
     },
     enabled: !!id,
   });
