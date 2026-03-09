@@ -22,10 +22,20 @@ const navLinks = [
 const SiteLayout = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
+  
+  // Determine background theme based on route
+  const getBackgroundTheme = () => {
+    const path = location.pathname;
+    if (path.includes("angel")) return "angel";
+    if (path.includes("rune")) return "runes";
+    if (path.includes("horary")) return "horary";
+    if (path.includes("tarot") || path.includes("pick-a-card") || path.includes("yes-no")) return "tarot";
+    return "default";
+  };
 
   return (
     <div className="min-h-screen relative overflow-x-hidden">
-      <StarBackground />
+      <StarBackground theme={getBackgroundTheme()} />
 
       {/* Navigation */}
       <nav className="relative z-30 border-b border-border/30 bg-background/80 backdrop-blur-lg sticky top-0">
