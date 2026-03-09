@@ -12,6 +12,7 @@ interface AngelCardComponentProps {
 
 const AngelCardComponent = ({ drawnCard, index, onReveal, label }: AngelCardComponentProps) => {
   const [isFlipping, setIsFlipping] = useState(false);
+  const [imgError, setImgError] = useState(false);
   const { card, isRevealed } = drawnCard;
 
   const handleClick = () => {
@@ -60,16 +61,61 @@ const AngelCardComponent = ({ drawnCard, index, onReveal, label }: AngelCardComp
             </div>
           </div>
 
-          {/* Front */}
+          {/* Front - with image */}
           <div
-            className={`absolute inset-0 backface-hidden rotate-y-180 rounded-lg overflow-hidden flex flex-col items-center justify-center p-3 text-center angel-card-front ${isRevealed ? "gold-glow-strong" : ""}`}
+            className={`absolute inset-0 backface-hidden rotate-y-180 rounded-lg overflow-hidden ${isRevealed ? "gold-glow-strong" : ""}`}
             style={{ transform: "rotateY(180deg)" }}
           >
-            <div className="text-3xl mb-2">{card.symbol}</div>
-            <div className="font-heading text-xs md:text-sm text-primary leading-tight">{card.name}</div>
-            <div className="text-[10px] text-muted-foreground mt-2 leading-snug italic px-1">
-              {card.message.slice(0, 60)}…
+            {/* Angel card artwork */}
+            {card.image && !imgError ? (
+              <img
+                src={card.image}
+                alt={card.name}
+                className="w-full h-full object-cover"
+                loading="lazy"
+                onError={() => setImgError(true)}
+              />
+            ) : (
+              <div className="w-full h-full bg-gradient-to-b from-accent/20 to-card flex items-center justify-center">
+                <span className="text-4xl">{card.symbol}</span>
+              </div>
+            )}
+
+            {/* Content overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/30 flex flex-col items-center justify-end p-3">
+              <motion.div
+                className="text-2xl mb-1 drop-shadow-lg"
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={isRevealed ? { scale: 1, opacity: 1 } : {}}
+                transition={{ delay: 0.2 }}
+              >
+                {card.symbol}
+              </motion.div>
+              <motion.p
+                className="font-heading text-[10px] md:text-xs text-white/90 text-center leading-tight drop-shadow-lg"
+                initial={{ opacity: 0 }}
+                animate={isRevealed ? { opacity: 1 } : {}}
+                transition={{ delay: 0.3 }}
+              >
+                {card.name}
+              </motion.p>
+              <motion.p
+                className="text-[8px] text-white/60 mt-1 text-center italic leading-snug"
+                initial={{ opacity: 0 }}
+                animate={isRevealed ? { opacity: 1 } : {}}
+                transition={{ delay: 0.4 }}
+              >
+                {card.message.slice(0, 50)}…
+              </motion.p>
             </div>
+
+            {/* Decorative border */}
+            <div className="absolute inset-0 border-2 border-primary/20 rounded-lg pointer-events-none" />
+
+            {/* Soft glow */}
+            {isRevealed && (
+              <div className="absolute inset-0 shadow-[inset_0_0_15px_hsl(var(--angel-blue)/0.2)] rounded-lg pointer-events-none" />
+            )}
           </div>
         </motion.div>
       </motion.div>
