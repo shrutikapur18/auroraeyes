@@ -36,6 +36,9 @@ import HoraryReading from "./pages/HoraryReading";
 import HoraryGuide from "./pages/HoraryGuide";
 import HoraryContentPage from "./pages/HoraryContentPage";
 import HTMLSitemap from "./pages/HTMLSitemap";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
+import Disclaimer from "./pages/Disclaimer";
 import NotFound from "./pages/NotFound";
 import { questionPages } from "./data/seoData";
 import { horaryContentPages } from "./data/horaryContentPages";
@@ -94,6 +97,10 @@ const App = () => (
             {horaryContentPages.map((page) => (
               <Route key={page.slug} path={`/${page.slug}`} element={<HoraryContentPage />} />
             ))}
+            {/* Legal */}
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-of-service" element={<TermsOfService />} />
+            <Route path="/disclaimer" element={<Disclaimer />} />
             {/* HTML Sitemap */}
             <Route path="/sitemap-html" element={<HTMLSitemap />} />
             {/* Shared reading preview */}
