@@ -35,6 +35,7 @@ import SharedReadingPreview from "./pages/SharedReadingPreview";
 import HoraryReading from "./pages/HoraryReading";
 import HoraryGuide from "./pages/HoraryGuide";
 import HoraryContentPage from "./pages/HoraryContentPage";
+import SavedReadingPage from "./pages/SavedReadingPage";
 import HTMLSitemap from "./pages/HTMLSitemap";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
