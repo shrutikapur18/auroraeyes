@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import SEOHead from "@/components/SEOHead";
 import Breadcrumbs, { generateBreadcrumbJsonLd } from "@/components/Breadcrumbs";
@@ -10,7 +10,9 @@ import HoraryHomepageSection from "@/components/HoraryHomepageSection";
 import { horaryContentPages } from "@/data/horaryContentPages";
 
 const HoraryContentPage = () => {
-  const { slug } = useParams<{ slug: string }>();
+  const { slug: paramSlug } = useParams<{ slug: string }>();
+  const location = useLocation();
+  const slug = paramSlug || location.pathname.replace(/^\//, "");
   const page = horaryContentPages.find((p) => p.slug === slug);
 
   if (!page) {
