@@ -124,8 +124,8 @@ const ShareButtons = ({ text, url, cardData, drawnCards, question, reading, type
     try {
       const blob = await generateShareImage(cardData);
       const filename = "cards" in cardData
-        ? `reading-spread.png`
-        : `reading-${cardData.cardName.toLowerCase().replace(/\s+/g, "-")}.png`;
+        ? "reading-spread.png"
+        : `reading-${(cardData as any).cardName?.toLowerCase().replace(/\s+/g, "-") || "card"}.png`;
       downloadImage(blob, filename);
     } finally {
       setGenerating(false);
