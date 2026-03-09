@@ -11,6 +11,7 @@ interface RuneComponentProps {
 
 const RuneComponent = ({ drawnRune, index, onReveal, label }: RuneComponentProps) => {
   const [isFlipping, setIsFlipping] = useState(false);
+  const [imgError, setImgError] = useState(false);
   const { rune, isReversed, isRevealed } = drawnRune;
 
   const handleClick = () => {
@@ -33,7 +34,7 @@ const RuneComponent = ({ drawnRune, index, onReveal, label }: RuneComponentProps
         <span className="text-xs font-heading text-primary/80 tracking-widest uppercase">{label}</span>
       )}
       <motion.div
-        className="w-20 md:w-24 h-24 md:h-28 cursor-pointer perspective-1000"
+        className="w-24 md:w-28 h-28 md:h-32 cursor-pointer perspective-1000"
         animate={!isRevealed ? { y: [0, -4, 0] } : {}}
         transition={!isRevealed ? { duration: 3 + index * 0.5, repeat: Infinity, ease: "easeInOut" } : {}}
         whileHover={!isRevealed ? { scale: 1.1, y: -8, transition: { duration: 0.2 } } : {}}
@@ -46,19 +47,53 @@ const RuneComponent = ({ drawnRune, index, onReveal, label }: RuneComponentProps
           transition={{ duration: 0.6, ease: "easeInOut" }}
         >
           {/* Back - rune stone */}
-          <div className="absolute inset-0 backface-hidden rounded-full rune-stone border-2 border-primary/20 flex items-center justify-center transition-shadow duration-300 hover:shadow-[0_0_20px_hsl(var(--gold)/0.2)]">
-            <span className="font-heading text-primary/40 text-2xl">?</span>
+          <div className="absolute inset-0 backface-hidden rounded-2xl rune-stone border-2 border-primary/20 flex items-center justify-center transition-shadow duration-300 hover:shadow-[0_0_20px_hsl(var(--gold)/0.2)] overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-muted/80 to-card/90" />
+            <span className="relative font-heading text-primary/40 text-3xl">ᚱ</span>
           </div>
 
-          {/* Front */}
+          {/* Front - rune with image */}
           <div
-            className={`absolute inset-0 backface-hidden rotate-y-180 rounded-full border-2 border-primary/40 flex flex-col items-center justify-center rune-stone ${isRevealed ? "gold-glow-strong" : ""}`}
+            className={`absolute inset-0 backface-hidden rotate-y-180 rounded-2xl border-2 border-primary/40 overflow-hidden rune-stone ${isRevealed ? "gold-glow-strong" : ""}`}
             style={{
               transform: `rotateY(180deg) ${isReversed ? "rotate(180deg)" : ""}`,
             }}
           >
-            <span className="text-2xl md:text-3xl text-primary">{rune.symbol}</span>
-            <span className="text-[9px] font-heading text-primary/70 mt-1">{rune.name}</span>
+            {/* SVG rune image as background decoration */}
+            {rune.image && !imgError ? (
+              <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-muted to-card">
+                <img
+                  src={rune.image}
+                  alt={rune.name}
+                  className="w-12 h-12 md:w-16 md:h-16 opacity-20 invert"
+                  loading="lazy"
+                  onError={() => setImgError(true)}
+                />
+              </div>
+            ) : null}
+
+            {/* Rune symbol overlay */}
+            <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-b from-transparent via-transparent to-black/30">
+              <motion.span
+                className="text-3xl md:text-4xl text-primary drop-shadow-[0_0_10px_hsl(var(--primary)/0.5)]"
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={isRevealed ? { scale: 1, opacity: 1 } : {}}
+                transition={{ delay: 0.2 }}
+              >
+                {rune.symbol}
+              </motion.span>
+              <motion.span
+                className="text-[9px] font-heading text-primary/80 mt-1 tracking-wider"
+                initial={{ opacity: 0 }}
+                animate={isRevealed ? { opacity: 1 } : {}}
+                transition={{ delay: 0.3 }}
+              >
+                {rune.name}
+              </motion.span>
+            </div>
+
+            {/* Stone texture border */}
+            <div className="absolute inset-0 rounded-2xl shadow-[inset_0_2px_4px_rgba(0,0,0,0.3),inset_0_-2px_4px_rgba(255,255,255,0.05)] pointer-events-none" />
           </div>
         </motion.div>
       </motion.div>
