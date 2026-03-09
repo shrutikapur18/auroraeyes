@@ -1,8 +1,7 @@
 import { useCallback, useState, useMemo } from "react";
 import { motion } from "framer-motion";
-import { Download, Loader2, Share2, Check, Link as LinkIcon } from "lucide-react";
+import { Download, Loader2, Share2, Check, Copy } from "lucide-react";
 import { generateShareImage, downloadImage, type ShareImageData } from "@/lib/generateShareImage";
-import { encodeReading, generateShareMessage, generateTeaser, type SharedReading } from "@/lib/shareReading";
 import { saveReading } from "@/lib/saveReading";
 import type { DrawnCard } from "@/data/tarotDeck";
 
@@ -16,17 +15,41 @@ interface ShareButtonsProps {
   type?: "tarot" | "rune" | "angel";
 }
 
+const SITE_DOMAIN = "tarotguidance.lovable.app";
+
+/** Build a concise share caption: cards + link */
+function buildCaption(
+  drawnCards: DrawnCard[] | undefined,
+  type: string,
+  readingUrl: string
+): string {
+  if (!drawnCards) return `✨ Check out my reading\n${readingUrl}`;
+  const revealed = drawnCards.filter(dc => dc.isRevealed);
+  if (revealed.length === 0) return `✨ Check out my reading\n${readingUrl}`;
+
+  const label = type === "rune" ? "rune" : type === "angel" ? "angel card" : "tarot";
+  const names = revealed.map(dc => {
+    const r = dc.isReversed ? " ↻" : "";
+    return `${dc.card.name}${r}`;
+  });
+
+  return `🔮 My ${label} reading: ${names.join(" · ")}\n${readingUrl}`;
+}
+
 const ShareButtons = ({ text, url, cardData, drawnCards, question, reading, type = "tarot" }: ShareButtonsProps) => {
   const [generating, setGenerating] = useState(false);
   const [copied, setCopied] = useState(false);
   const [saving, setSaving] = useState(false);
   const [permanentUrl, setPermanentUrl] = useState<string | null>(null);
 
-  // Build the shareable URL — prefer permanent link if saved
-  const shareUrl = useMemo(() => {
+  /** Ensure we have a permanent URL, saving to DB if needed */
+  const ensurePermanentUrl = useCallback(async (): Promise<string> => {
     if (permanentUrl) return permanentUrl;
     if (url) return url;
-    if (!drawnCards || !question) return window.location.href;
+
+    if (!drawnCards || !question || !reading) {
+      return `https://${SITE_DOMAIN}`;
+    }
 
     const cards = drawnCards
       .filter(dc => dc.isRevealed)
@@ -37,96 +60,66 @@ const ShareButtons = ({ text, url, cardData, drawnCards, question, reading, type
         symbol: dc.card.symbol,
       }));
 
-    if (cards.length === 0) return window.location.href;
+    const readingId = await saveReading({ type, question, cards, interpretation: reading });
+    const newUrl = `https://${SITE_DOMAIN}/reading/${readingId}`;
+    setPermanentUrl(newUrl);
+    return newUrl;
+  }, [permanentUrl, url, drawnCards, question, reading, type]);
 
-    const teaser = generateTeaser(reading || "", cards);
-    const data: SharedReading = { question, cards, teaser, type };
-    const encoded = encodeReading(data);
+  /** Share caption with permanent link */
+  const getCaption = useCallback(async () => {
+    const link = await ensurePermanentUrl();
+    return buildCaption(drawnCards, type, link);
+  }, [ensurePermanentUrl, drawnCards, type]);
 
-    if (!encoded) return window.location.href;
-    const base = window.location.origin;
-    return `${base}/shared-reading?r=${encoded}`;
-  }, [url, drawnCards, question, reading, type, permanentUrl]);
-
-  // Generate a viral share message
-  const viralMessage = useMemo(() => {
-    if (!drawnCards) return text;
-    const cards = drawnCards
-      .filter(dc => dc.isRevealed)
-      .map(dc => ({ name: dc.card.name, reversed: dc.isReversed }));
-    return generateShareMessage(cards, type);
-  }, [drawnCards, text, type]);
-
-  const encoded = encodeURIComponent(viralMessage);
-  const encodedUrl = encodeURIComponent(shareUrl);
-
-  const links = [
-    { label: "𝕏", href: `https://twitter.com/intent/tweet?text=${encoded}&url=${encodedUrl}`, color: "hover:bg-foreground/10" },
-    { label: "Facebook", href: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encoded}`, color: "hover:bg-blue-500/10" },
-    { label: "WhatsApp", href: `https://wa.me/?text=${encoded}%20${encodedUrl}`, color: "hover:bg-green-500/10" },
-    { label: "Pinterest", href: `https://pinterest.com/pin/create/button/?url=${encodedUrl}&description=${encoded}`, color: "hover:bg-red-500/10" },
-  ];
-
-  // Save reading to DB for a permanent link
-  const handleSaveAndCopy = useCallback(async () => {
-    if (permanentUrl) {
-      await navigator.clipboard.writeText(`${viralMessage}\n${permanentUrl}`);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-      return;
-    }
-
-    // If we have a pre-set url (e.g. on the saved reading page), just copy it
-    if (url || !drawnCards || !question || !reading) {
-      const linkToCopy = url || shareUrl;
-      await navigator.clipboard.writeText(`${viralMessage}\n${linkToCopy}`);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-      return;
-    }
-
+  // ─── Social share handlers ───
+  const handleSocialShare = useCallback(async (platform: string) => {
     setSaving(true);
     try {
-      const cards = drawnCards
-        .filter(dc => dc.isRevealed)
-        .map(dc => ({
-          name: dc.card.name,
-          reversed: dc.isReversed,
-          position: dc.position || "",
-          symbol: dc.card.symbol,
-        }));
+      const caption = await getCaption();
+      const link = permanentUrl || url || `https://${SITE_DOMAIN}`;
+      const enc = encodeURIComponent(caption);
+      const encUrl = encodeURIComponent(link);
 
-      const readingId = await saveReading({
-        type,
-        question,
-        cards,
-        interpretation: reading,
-      });
+      const urls: Record<string, string> = {
+        twitter: `https://twitter.com/intent/tweet?text=${enc}`,
+        facebook: `https://www.facebook.com/sharer/sharer.php?u=${encUrl}&quote=${enc}`,
+        whatsapp: `https://wa.me/?text=${enc}`,
+        pinterest: `https://pinterest.com/pin/create/button/?url=${encUrl}&description=${enc}`,
+      };
+      window.open(urls[platform], "_blank", "noopener,noreferrer");
+    } catch {
+      // Fallback: open with site URL
+      const fallback = `https://${SITE_DOMAIN}`;
+      window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(`🔮 Check out my reading\n${fallback}`)}`, "_blank");
+    } finally {
+      setSaving(false);
+    }
+  }, [getCaption, permanentUrl, url]);
 
-      const newUrl = `${window.location.origin}/reading/${readingId}`;
-      setPermanentUrl(newUrl);
-      await navigator.clipboard.writeText(`${viralMessage}\n${newUrl}`);
+  const handleCopyLink = useCallback(async () => {
+    setSaving(true);
+    try {
+      const caption = await getCaption();
+      await navigator.clipboard.writeText(caption);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      // Fallback to old method
-      await navigator.clipboard.writeText(`${viralMessage}\n${shareUrl}`);
+      // Fallback
+      await navigator.clipboard.writeText(`https://${SITE_DOMAIN}`);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } finally {
       setSaving(false);
     }
-  }, [permanentUrl, url, drawnCards, question, reading, type, viralMessage, shareUrl]);
+  }, [getCaption]);
 
   const handleDownloadImage = useCallback(async () => {
     if (!cardData) return;
     setGenerating(true);
     try {
       const blob = await generateShareImage(cardData);
-      const filename = "cards" in cardData
-        ? "reading-spread.png"
-        : `reading-${(cardData as any).cardName?.toLowerCase().replace(/\s+/g, "-") || "card"}.png`;
-      downloadImage(blob, filename);
+      downloadImage(blob, "reading-spread.png");
     } finally {
       setGenerating(false);
     }
@@ -134,98 +127,58 @@ const ShareButtons = ({ text, url, cardData, drawnCards, question, reading, type
 
   const handleNativeShare = useCallback(async () => {
     if (!navigator.share) return;
-
-    // Save first if we can
-    if (!permanentUrl && drawnCards && question && reading) {
-      setSaving(true);
-      try {
-        const cards = drawnCards
-          .filter(dc => dc.isRevealed)
-          .map(dc => ({
-            name: dc.card.name,
-            reversed: dc.isReversed,
-            position: dc.position || "",
-            symbol: dc.card.symbol,
-          }));
-        const readingId = await saveReading({ type, question, cards, interpretation: reading });
-        const newUrl = `${window.location.origin}/reading/${readingId}`;
-        setPermanentUrl(newUrl);
-
-        try {
-          if (cardData && navigator.canShare) {
-            const blob = await generateShareImage(cardData);
-            const file = new File([blob], "reading.png", { type: "image/png" });
-            if (navigator.canShare({ files: [file] })) {
-              await navigator.share({ title: "My Mystic Reading", text: viralMessage, url: newUrl, files: [file] });
-              return;
-            }
-          }
-          await navigator.share({ title: "My Mystic Reading", text: viralMessage, url: newUrl });
-        } catch {
-          // User cancelled
-        }
-      } catch {
-        // Fallback
-        await navigator.share({ title: "My Mystic Reading", text: viralMessage, url: shareUrl });
-      } finally {
-        setSaving(false);
-      }
-      return;
-    }
-
+    setSaving(true);
     try {
-      const urlToShare = permanentUrl || url || shareUrl;
+      const link = await ensurePermanentUrl();
+      const caption = buildCaption(drawnCards, type, link);
+
+      // Try sharing with image
       if (cardData && navigator.canShare) {
         const blob = await generateShareImage(cardData);
         const file = new File([blob], "reading.png", { type: "image/png" });
         if (navigator.canShare({ files: [file] })) {
-          await navigator.share({ title: "My Mystic Reading", text: viralMessage, url: urlToShare, files: [file] });
+          await navigator.share({ text: caption, files: [file] });
           return;
         }
       }
-      await navigator.share({ title: "My Mystic Reading", text: viralMessage, url: urlToShare });
+      await navigator.share({ text: caption, url: link });
     } catch {
-      // User cancelled
+      // User cancelled or error
+    } finally {
+      setSaving(false);
     }
-  }, [cardData, viralMessage, shareUrl, permanentUrl, url, drawnCards, question, reading, type]);
+  }, [cardData, drawnCards, type, ensurePermanentUrl]);
+
+  const socialButtons = [
+    { key: "twitter", label: "𝕏", color: "hover:bg-foreground/10" },
+    { key: "facebook", label: "Facebook", color: "hover:bg-blue-500/10" },
+    { key: "whatsapp", label: "WhatsApp", color: "hover:bg-green-500/10" },
+    { key: "pinterest", label: "Pinterest", color: "hover:bg-red-500/10" },
+  ];
 
   return (
     <div className="space-y-4 mt-6">
-      {/* Share heading */}
       <div className="text-center">
         <h3 className="font-heading text-sm gold-text tracking-wider mb-1">Share Your Reading</h3>
         <p className="text-[10px] text-muted-foreground">
-          {permanentUrl ? "Your reading has a permanent link!" : "Save & share your reading with a permanent link"}
+          Share a snapshot of your reading with a clean link
         </p>
       </div>
 
-      {/* Permanent link indicator */}
-      {permanentUrl && (
-        <motion.div
-          className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-primary/5 border border-primary/20 mx-auto max-w-md"
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          <LinkIcon className="w-3 h-3 text-primary" />
-          <span className="text-[10px] text-primary/80 truncate">{permanentUrl}</span>
-        </motion.div>
-      )}
-
-      {/* Social buttons */}
+      {/* Social + Copy */}
       <div className="flex flex-wrap justify-center gap-2">
-        {links.map((l) => (
-          <a
-            key={l.label}
-            href={l.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`px-4 py-2 rounded-lg bg-muted/50 border border-border/30 text-xs font-heading tracking-wider text-muted-foreground transition-all cursor-pointer ${l.color}`}
+        {socialButtons.map((s) => (
+          <button
+            key={s.key}
+            onClick={() => handleSocialShare(s.key)}
+            disabled={saving}
+            className={`px-4 py-2 rounded-lg bg-muted/50 border border-border/30 text-xs font-heading tracking-wider text-muted-foreground transition-all cursor-pointer disabled:opacity-50 ${s.color}`}
           >
-            {l.label}
-          </a>
+            {s.label}
+          </button>
         ))}
         <button
-          onClick={handleSaveAndCopy}
+          onClick={handleCopyLink}
           disabled={saving}
           className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-muted/50 border border-border/30 text-xs font-heading tracking-wider text-muted-foreground hover:bg-primary/10 transition-all disabled:opacity-50"
         >
@@ -233,12 +186,14 @@ const ShareButtons = ({ text, url, cardData, drawnCards, question, reading, type
             <Loader2 className="w-3 h-3 animate-spin" />
           ) : copied ? (
             <Check className="w-3 h-3 text-primary" />
-          ) : null}
-          {saving ? "Saving…" : copied ? "Copied!" : "Copy Link"}
+          ) : (
+            <Copy className="w-3 h-3" />
+          )}
+          {saving ? "Saving…" : copied ? "Copied!" : "Copy"}
         </button>
       </div>
 
-      {/* Download / Native share */}
+      {/* Download image + Native share */}
       <div className="flex justify-center gap-2">
         {cardData && (
           <motion.button
@@ -260,7 +215,7 @@ const ShareButtons = ({ text, url, cardData, drawnCards, question, reading, type
             whileTap={{ scale: 0.97 }}
           >
             {saving ? <Loader2 className="w-3 h-3 animate-spin" /> : <Share2 className="w-3 h-3" />}
-            Share
+            Share with Image
           </motion.button>
         )}
       </div>
