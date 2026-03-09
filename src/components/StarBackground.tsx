@@ -60,10 +60,10 @@ const StarBackground = ({ theme = "default" }: StarBackgroundProps) => {
       x: 15 + Math.random() * 70,
       y: 10 + Math.random() * 80,
       size: 200 + Math.random() * 300,
-      hue: [265, 230, 280, 210][i],
+      hue: i === 0 ? colors.primary : i === 1 ? colors.secondary : i === 2 ? colors.accent : colors.primary,
       delay: i * 2,
     }));
-  }, [isMobile]);
+  }, [isMobile, colors]);
 
   return (
     <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
