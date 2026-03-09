@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
+import { Layers, Scale, Sparkles, Hexagon, Feather, Compass, BookOpen, Sun } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
 import DivinationMethodSelector, { type DivinationMethod } from "@/components/DivinationMethodSelector";
 import QuestionInput from "@/components/QuestionInput";
@@ -21,6 +22,7 @@ import DailyDivination from "@/components/DailyDivination";
 import TopicalClusterNav from "@/components/TopicalClusterNav";
 import RecentReadings from "@/components/RecentReadings";
 import HoraryHomepageSection from "@/components/HoraryHomepageSection";
+import DivinationPhilosophy from "@/components/DivinationPhilosophy";
 import { threeCardPositions, celticCrossPositions } from "@/data/tarotDeck";
 import type { DrawnCard, ReadingMode } from "@/data/tarotDeck";
 import { generateLocalReading } from "@/lib/tarotReading";
