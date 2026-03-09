@@ -62,20 +62,23 @@ const TarotCardComponent = ({ drawnCard, index, onReveal, rotation = 0, label, c
           transition={{ duration: 0.6, ease: "easeInOut" }}
         >
           {/* Card Back */}
-          <div className="absolute inset-0 backface-hidden rounded-lg overflow-hidden border-2 border-primary/30 card-shadow hover:card-shadow-hover transition-shadow duration-300">
+          <div className="absolute inset-0 backface-hidden rounded-lg overflow-hidden border-2 border-primary/30 card-shadow hover:card-shadow-hover transition-all duration-500 group">
             <img
               src={cardBackImage}
               alt="Card back"
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               loading="lazy"
             />
-            <div className="absolute inset-0 bg-primary/0 hover:bg-primary/5 transition-colors duration-300" />
+            {/* Glow overlay on hover */}
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/0 via-primary/10 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            {/* Shimmer effect */}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gold/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
           </div>
 
           {/* Card Front */}
           <div
-            className={`absolute inset-0 backface-hidden rotate-y-180 rounded-lg overflow-hidden card-shine flex flex-col items-center justify-center p-2 text-center ${
-              isRevealed ? "gold-glow-strong" : ""
+            className={`absolute inset-0 backface-hidden rotate-y-180 rounded-lg overflow-hidden card-shine flex flex-col items-center justify-center p-2 text-center transition-all duration-700 ${
+              isRevealed ? "gold-glow-strong animate-glow-pulse" : ""
             }`}
             style={{ transform: `rotateY(180deg) ${isReversed ? "rotate(180deg)" : ""}` }}
           >

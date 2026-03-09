@@ -19,7 +19,20 @@ interface Nebula {
   delay: number;
 }
 
-const StarBackground = () => {
+interface StarBackgroundProps {
+  theme?: "tarot" | "angel" | "runes" | "horary" | "default";
+}
+
+const themeColors = {
+  tarot: { primary: 265, secondary: 280, accent: 45 }, // Purple/gold
+  angel: { primary: 210, secondary: 230, accent: 200 }, // Blue/celestial
+  runes: { primary: 30, secondary: 20, accent: 45 }, // Earthy brown/gold
+  horary: { primary: 240, secondary: 260, accent: 280 }, // Deep cosmic blue/purple
+  default: { primary: 265, secondary: 230, accent: 280 },
+};
+
+const StarBackground = ({ theme = "default" }: StarBackgroundProps) => {
+  const colors = themeColors[theme];
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -47,14 +60,26 @@ const StarBackground = () => {
       x: 15 + Math.random() * 70,
       y: 10 + Math.random() * 80,
       size: 200 + Math.random() * 300,
-      hue: [265, 230, 280, 210][i],
+      hue: i === 0 ? colors.primary : i === 1 ? colors.secondary : i === 2 ? colors.accent : colors.primary,
       delay: i * 2,
     }));
-  }, [isMobile]);
+  }, [isMobile, colors]);
 
   return (
-    <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-      <div className="absolute inset-0 mystic-gradient" />
+    <motion.div
+      className="fixed inset-0 overflow-hidden pointer-events-none z-0"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1.5 }}
+    >
+      <motion.div
+        className="absolute inset-0"
+        style={{
+          background: `linear-gradient(135deg, hsl(${colors.primary} 60% 15%) 0%, hsl(${colors.secondary} 50% 10%) 50%, hsl(250 30% 6%) 100%)`,
+        }}
+        animate={{ opacity: [0.85, 1, 0.85] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+      />
 
       {/* Nebula clouds */}
       {nebulae.map((n) => (
@@ -106,10 +131,15 @@ const StarBackground = () => {
         />
       ))}
 
-      {/* Shooting star */}
+      {/* Shooting star with theme color */}
       <motion.div
-        className="absolute w-1 h-1 rounded-full bg-primary"
-        style={{ top: "15%", left: "80%" }}
+        className="absolute w-1 h-1 rounded-full"
+        style={{
+          top: "15%",
+          left: "80%",
+          background: `hsl(${colors.accent} 70% 60%)`,
+          boxShadow: `0 0 10px hsl(${colors.accent} 70% 60% / 0.8)`,
+        }}
         animate={{
           x: [-200, -600],
           y: [0, 200],
@@ -123,7 +153,7 @@ const StarBackground = () => {
           ease: "easeOut",
         }}
       />
-    </div>
+    </motion.div>
   );
 };
 
