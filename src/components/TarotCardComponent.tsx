@@ -73,7 +73,7 @@ const TarotCardComponent = ({ drawnCard, index, onReveal, rotation = 0, label, c
         <motion.div
           className="relative w-full h-full"
           style={{ transformStyle: "preserve-3d" }}
-          animate={{ rotateY: isRevealed || isFlipping ? 180 : 0 }}
+          animate={{ rotateY: showFront ? 180 : 0 }}
           transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] }}
         >
           {/* Card Back */}
