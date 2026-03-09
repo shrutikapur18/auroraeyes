@@ -77,8 +77,8 @@ const TarotCardComponent = ({ drawnCard, index, onReveal, rotation = 0, label, c
 
           {/* Card Front */}
           <div
-            className={`absolute inset-0 backface-hidden rotate-y-180 rounded-lg overflow-hidden card-shine flex flex-col items-center justify-center p-2 text-center ${
-              isRevealed ? "gold-glow-strong" : ""
+            className={`absolute inset-0 backface-hidden rotate-y-180 rounded-lg overflow-hidden card-shine flex flex-col items-center justify-center p-2 text-center transition-all duration-700 ${
+              isRevealed ? "gold-glow-strong animate-glow-pulse" : ""
             }`}
             style={{ transform: `rotateY(180deg) ${isReversed ? "rotate(180deg)" : ""}` }}
           >

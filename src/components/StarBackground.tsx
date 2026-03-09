@@ -131,10 +131,15 @@ const StarBackground = ({ theme = "default" }: StarBackgroundProps) => {
         />
       ))}
 
-      {/* Shooting star */}
+      {/* Shooting star with theme color */}
       <motion.div
-        className="absolute w-1 h-1 rounded-full bg-primary"
-        style={{ top: "15%", left: "80%" }}
+        className="absolute w-1 h-1 rounded-full"
+        style={{
+          top: "15%",
+          left: "80%",
+          background: `hsl(${colors.accent} 70% 60%)`,
+          boxShadow: `0 0 10px hsl(${colors.accent} 70% 60% / 0.8)`,
+        }}
         animate={{
           x: [-200, -600],
           y: [0, 200],
@@ -148,7 +153,7 @@ const StarBackground = ({ theme = "default" }: StarBackgroundProps) => {
           ease: "easeOut",
         }}
       />
-    </div>
+    </motion.div>
   );
 };
 
