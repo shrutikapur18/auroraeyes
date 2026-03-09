@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import type { DrawnAngelCard } from "@/data/angelCards";
 import cardBackImage from "@/assets/card-back.jpg";
@@ -10,19 +10,54 @@ interface AngelCardComponentProps {
   label?: string;
 }
 
+const AngelParticle = ({ delay, size, x, duration }: { delay: number; size: number; x: number; duration: number }) => (
+  <motion.div
+    className="absolute rounded-full pointer-events-none"
+    style={{
+      width: size,
+      height: size,
+      left: `${x}%`,
+      bottom: "8%",
+      background: "hsl(var(--angel-glow) / 0.7)",
+    }}
+    initial={{ opacity: 0, y: 0, scale: 0 }}
+    animate={{
+      opacity: [0, 0.8, 0],
+      y: [0, -55 - Math.random() * 35],
+      scale: [0, 1, 0.2],
+      x: [0, (Math.random() - 0.5) * 18],
+    }}
+    transition={{ duration, delay, repeat: Infinity, ease: "easeOut" }}
+  />
+);
+
 const AngelCardComponent = ({ drawnCard, index, onReveal, label }: AngelCardComponentProps) => {
   const [isFlipping, setIsFlipping] = useState(false);
   const [imgError, setImgError] = useState(false);
+  const [justRevealed, setJustRevealed] = useState(false);
   const { card, isRevealed } = drawnCard;
 
   const handleClick = () => {
     if (isRevealed || isFlipping) return;
     setIsFlipping(true);
+    setJustRevealed(true);
     setTimeout(() => {
       onReveal(index);
       setIsFlipping(false);
     }, 600);
+    setTimeout(() => setJustRevealed(false), 1800);
   };
+
+  const particles = useMemo(
+    () =>
+      Array.from({ length: 5 }, (_, i) => ({
+        delay: i * 1.3 + Math.random() * 0.6,
+        size: 2 + Math.random() * 2,
+        x: 12 + Math.random() * 76,
+        duration: 3 + Math.random() * 2,
+      })),
+    []
+  );
 
   return (
     <motion.div
@@ -36,9 +71,25 @@ const AngelCardComponent = ({ drawnCard, index, onReveal, label }: AngelCardComp
       )}
       <motion.div
         className="w-28 md:w-36 h-44 md:h-56 cursor-pointer perspective-1000"
-        animate={!isRevealed ? { y: [0, -6, 0] } : {}}
-        transition={!isRevealed ? { duration: 3 + index * 0.5, repeat: Infinity, ease: "easeInOut" } : {}}
-        whileHover={!isRevealed ? { scale: 1.08, y: -10, transition: { duration: 0.2 } } : {}}
+        animate={
+          isRevealed
+            ? { y: [0, -4, 0] }
+            : !isFlipping
+              ? { y: [0, -6, 0] }
+              : {}
+        }
+        transition={
+          isRevealed
+            ? { duration: 5 + index * 0.5, repeat: Infinity, ease: "easeInOut" }
+            : !isFlipping
+              ? { duration: 3 + index * 0.5, repeat: Infinity, ease: "easeInOut" }
+              : {}
+        }
+        whileHover={
+          !isRevealed
+            ? { scale: 1.08, y: -10, transition: { duration: 0.2 } }
+            : { scale: 1.03, transition: { duration: 0.3 } }
+        }
         onClick={handleClick}
       >
         <motion.div
@@ -61,9 +112,9 @@ const AngelCardComponent = ({ drawnCard, index, onReveal, label }: AngelCardComp
             </div>
           </div>
 
-          {/* Front - with image */}
+          {/* Front - with living energy */}
           <div
-            className={`absolute inset-0 backface-hidden rotate-y-180 rounded-lg overflow-hidden ${isRevealed ? "gold-glow-strong" : ""}`}
+            className={`absolute inset-0 backface-hidden rotate-y-180 rounded-lg overflow-hidden ${isRevealed ? "angel-aura" : ""}`}
             style={{ transform: "rotateY(180deg)" }}
           >
             {/* Angel card artwork */}
@@ -112,10 +163,27 @@ const AngelCardComponent = ({ drawnCard, index, onReveal, label }: AngelCardComp
             {/* Decorative border */}
             <div className="absolute inset-0 border-2 border-primary/20 rounded-lg pointer-events-none" />
 
-            {/* Soft glow */}
+            {/* Shimmer sweep */}
             {isRevealed && (
-              <div className="absolute inset-0 shadow-[inset_0_0_15px_hsl(var(--angel-blue)/0.2)] rounded-lg pointer-events-none" />
+              <div className="absolute inset-0 rounded-lg pointer-events-none overflow-hidden">
+                <div className="card-shimmer absolute inset-0" />
+              </div>
             )}
+
+            {/* Reveal flash */}
+            {justRevealed && (
+              <motion.div
+                className="absolute inset-0 rounded-lg pointer-events-none bg-angel-glow/30"
+                initial={{ opacity: 0.8 }}
+                animate={{ opacity: 0 }}
+                transition={{ duration: 1.2, ease: "easeOut" }}
+              />
+            )}
+
+            {/* Floating particles */}
+            {isRevealed && particles.map((p, i) => (
+              <AngelParticle key={i} {...p} />
+            ))}
           </div>
         </motion.div>
       </motion.div>
