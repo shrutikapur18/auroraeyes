@@ -66,8 +66,20 @@ const StarBackground = ({ theme = "default" }: StarBackgroundProps) => {
   }, [isMobile, colors]);
 
   return (
-    <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-      <div className="absolute inset-0 mystic-gradient" />
+    <motion.div
+      className="fixed inset-0 overflow-hidden pointer-events-none z-0"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1.5 }}
+    >
+      <motion.div
+        className="absolute inset-0"
+        style={{
+          background: `linear-gradient(135deg, hsl(${colors.primary} 60% 15%) 0%, hsl(${colors.secondary} 50% 10%) 50%, hsl(250 30% 6%) 100%)`,
+        }}
+        animate={{ opacity: [0.85, 1, 0.85] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+      />
 
       {/* Nebula clouds */}
       {nebulae.map((n) => (
