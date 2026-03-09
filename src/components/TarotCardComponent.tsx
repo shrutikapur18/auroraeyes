@@ -17,11 +17,14 @@ const TarotCardComponent = ({ drawnCard, index, onReveal, rotation = 0, label, c
   const [imgError, setImgError] = useState(false);
   const { card, isReversed, isRevealed } = drawnCard;
 
+  const showFront = isFlipping || isRevealed;
+
   const handleClick = () => {
     if (isRevealed || isFlipping) return;
     setIsFlipping(true);
+    // Fire onReveal first, then clear flipping flag after animation
+    onReveal(index);
     setTimeout(() => {
-      onReveal(index);
       setIsFlipping(false);
     }, 700);
   };
