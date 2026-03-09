@@ -3,7 +3,6 @@ import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import StarBackground from "./StarBackground";
-import { useLocation } from "react-router-dom";
 import FloatingParticles from "./FloatingParticles";
 
 const navLinks = [
