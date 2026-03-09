@@ -97,6 +97,10 @@ const App = () => (
             {horaryContentPages.map((page) => (
               <Route key={page.slug} path={`/${page.slug}`} element={<HoraryContentPage />} />
             ))}
+            {/* Legal */}
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-of-service" element={<TermsOfService />} />
+            <Route path="/disclaimer" element={<Disclaimer />} />
             {/* HTML Sitemap */}
             <Route path="/sitemap-html" element={<HTMLSitemap />} />
             {/* Shared reading preview */}
