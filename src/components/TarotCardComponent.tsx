@@ -116,9 +116,17 @@ const TarotCardComponent = ({ drawnCard, index, onReveal, rotation = 0, label, c
                 src={card.image}
                 alt={card.name}
                 className="w-full h-full object-cover"
-                loading="lazy"
+                loading="eager"
                 onError={() => setImgError(true)}
               />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center bg-gradient-to-b from-card to-muted">
+                <img
+                  src={cardBackImage}
+                  alt={card.name}
+                  className="w-full h-full object-cover opacity-60"
+                />
+              </div>
             ) : (
               <div className="w-full h-full bg-gradient-to-b from-card to-muted flex items-center justify-center">
                 <span className="text-3xl md:text-4xl">{card.symbol}</span>
