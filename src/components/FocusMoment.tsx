@@ -28,13 +28,13 @@ const FocusMoment = ({ onComplete, method = "tarot" }: FocusMomentProps) => {
     },
     runes: {
       icon: "ᚱ",
-      color: "gold",
+      color: "gold" as const,
       message: "Ground yourself. Ancient wisdom flows through the runes, ready to speak truth...",
       glow: "hsl(30 70% 50%)",
     },
     horary: {
       icon: "🌟",
-      color: "blue",
+      color: "blue" as const,
       message: "Center your intention. The celestial spheres are aligning to answer your question...",
       glow: "hsl(240 60% 60%)",
     },
