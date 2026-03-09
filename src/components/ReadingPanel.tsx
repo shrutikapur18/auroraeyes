@@ -7,6 +7,7 @@ import GradualReading from "@/components/GradualReading";
 import ReadingAudioPlayer from "@/components/ReadingAudioPlayer";
 import FollowUpChat from "@/components/FollowUpChat";
 import ShareButtons from "@/components/ShareButtons";
+import ReadingSummary from "@/components/ReadingSummary";
 
 interface ReadingPanelProps {
   reading: string;
