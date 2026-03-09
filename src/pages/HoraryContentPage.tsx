@@ -10,7 +10,9 @@ import HoraryHomepageSection from "@/components/HoraryHomepageSection";
 import { horaryContentPages } from "@/data/horaryContentPages";
 
 const HoraryContentPage = () => {
-  const { slug } = useParams<{ slug: string }>();
+  const { slug: paramSlug } = useParams<{ slug: string }>();
+  const location = useLocation();
+  const slug = paramSlug || location.pathname.replace(/^\//, "");
   const page = horaryContentPages.find((p) => p.slug === slug);
 
   if (!page) {
