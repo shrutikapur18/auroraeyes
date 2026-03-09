@@ -302,17 +302,45 @@
     50% { box-shadow: 0 0 40px hsl(var(--gold) / 0.5), 0 0 60px hsl(var(--gold) / 0.2); }
   }
 
-  /* Glow pulse animation for revealed cards */
-  .animate-glow-pulse {
-    animation: glowPulse 2s ease-in-out infinite;
+  /* Living aura glow for revealed cards */
+  .card-aura {
+    box-shadow:
+      0 0 20px hsl(var(--gold) / 0.3),
+      0 0 50px hsl(var(--gold) / 0.12),
+      inset 0 0 15px hsl(var(--gold) / 0.08);
+    animation: aura-breathe 4s ease-in-out infinite;
   }
-  @keyframes glowPulse {
-    0%, 100% { 
-      box-shadow: 0 0 25px hsl(var(--gold) / 0.4), 0 0 50px hsl(var(--gold) / 0.15);
+  @keyframes aura-breathe {
+    0%, 100% {
+      box-shadow:
+        0 0 20px hsl(var(--gold) / 0.25),
+        0 0 45px hsl(var(--gold) / 0.1),
+        inset 0 0 12px hsl(var(--gold) / 0.06);
     }
-    50% { 
-      box-shadow: 0 0 40px hsl(var(--gold) / 0.6), 0 0 80px hsl(var(--gold) / 0.25);
+    50% {
+      box-shadow:
+        0 0 30px hsl(var(--gold) / 0.4),
+        0 0 65px hsl(var(--gold) / 0.18),
+        inset 0 0 20px hsl(var(--gold) / 0.1);
     }
+  }
+
+  /* Shimmer light sweep across revealed cards */
+  .card-shimmer {
+    background: linear-gradient(
+      105deg,
+      transparent 40%,
+      hsl(var(--gold) / 0.08) 45%,
+      hsl(var(--gold) / 0.15) 50%,
+      hsl(var(--gold) / 0.08) 55%,
+      transparent 60%
+    );
+    background-size: 200% 100%;
+    animation: shimmer-sweep 6s ease-in-out infinite;
+  }
+  @keyframes shimmer-sweep {
+    0%, 100% { background-position: 200% 0; }
+    50% { background-position: -200% 0; }
   }
 
   /* Icon glow effect */

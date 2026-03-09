@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { DrawnCard } from "@/data/tarotDeck";
 import cardBackImage from "@/assets/card-back.jpg";
@@ -12,22 +12,54 @@ interface TarotCardProps {
   compact?: boolean;
 }
 
+/** Tiny floating particle for revealed cards */
+const CardParticle = ({ delay, size, x, duration }: { delay: number; size: number; x: number; duration: number }) => (
+  <motion.div
+    className="absolute rounded-full bg-primary/60 pointer-events-none"
+    style={{ width: size, height: size, left: `${x}%`, bottom: "10%" }}
+    initial={{ opacity: 0, y: 0, scale: 0 }}
+    animate={{
+      opacity: [0, 0.8, 0],
+      y: [0, -60 - Math.random() * 40],
+      scale: [0, 1, 0.3],
+      x: [0, (Math.random() - 0.5) * 20],
+    }}
+    transition={{ duration, delay, repeat: Infinity, ease: "easeOut" }}
+  />
+);
+
 const TarotCardComponent = ({ drawnCard, index, onReveal, rotation = 0, label, compact }: TarotCardProps) => {
   const [isFlipping, setIsFlipping] = useState(false);
   const [imgError, setImgError] = useState(false);
+  const [justRevealed, setJustRevealed] = useState(false);
   const { card, isReversed, isRevealed } = drawnCard;
 
   const handleClick = () => {
     if (isRevealed || isFlipping) return;
     setIsFlipping(true);
+    setJustRevealed(true);
     setTimeout(() => {
       onReveal(index);
       setIsFlipping(false);
     }, 600);
+    // Clear the flash after the reveal animation
+    setTimeout(() => setJustRevealed(false), 1800);
   };
 
   const cardWidth = compact ? "w-[5.5rem] md:w-28" : "w-[6.5rem] md:w-36";
   const cardHeight = compact ? "h-[8.5rem] md:h-44" : "h-[10rem] md:h-56";
+
+  // Generate stable particle configs
+  const particles = useMemo(
+    () =>
+      Array.from({ length: 5 }, (_, i) => ({
+        delay: i * 1.4 + Math.random() * 0.6,
+        size: 2 + Math.random() * 2,
+        x: 15 + Math.random() * 70,
+        duration: 3 + Math.random() * 2,
+      })),
+    []
+  );
 
   return (
     <motion.div
@@ -49,21 +81,36 @@ const TarotCardComponent = ({ drawnCard, index, onReveal, rotation = 0, label, c
       <motion.div
         className={`${cardWidth} ${cardHeight} cursor-pointer`}
         style={{ rotate: isRevealed ? 0 : rotation }}
-        animate={!isRevealed && !isFlipping ? {
-          y: [0, -6, 0],
-          rotateZ: [rotation - 0.5, rotation + 0.5, rotation - 0.5]
-        } : {}}
-        transition={!isRevealed ? {
-          duration: 4 + index * 0.3,
-          repeat: Infinity,
-          ease: "easeInOut"
-        } : {}}
-        whileHover={!isRevealed ? {
-          scale: 1.08,
-          y: -12,
-          rotateZ: 0,
-          transition: { duration: 0.25, ease: "easeOut" }
-        } : {}}
+        animate={
+          isRevealed
+            ? {
+                // Gentle breathing float for revealed cards
+                y: [0, -4, 0],
+              }
+            : !isFlipping
+              ? {
+                  y: [0, -6, 0],
+                  rotateZ: [rotation - 0.5, rotation + 0.5, rotation - 0.5],
+                }
+              : {}
+        }
+        transition={
+          isRevealed
+            ? { duration: 5 + index * 0.5, repeat: Infinity, ease: "easeInOut" }
+            : !isFlipping
+              ? { duration: 4 + index * 0.3, repeat: Infinity, ease: "easeInOut" }
+              : {}
+        }
+        whileHover={
+          !isRevealed
+            ? {
+                scale: 1.08,
+                y: -12,
+                rotateZ: 0,
+                transition: { duration: 0.25, ease: "easeOut" },
+              }
+            : { scale: 1.03, transition: { duration: 0.3 } }
+        }
         whileTap={!isRevealed ? { scale: 0.96, transition: { duration: 0.1 } } : {}}
         onClick={handleClick}
       >
@@ -96,10 +143,10 @@ const TarotCardComponent = ({ drawnCard, index, onReveal, rotation = 0, label, c
               </div>
             </motion.div>
           ) : (
-            /* Card Front */
+            /* Card Front — alive with energy */
             <motion.div
               key="front"
-              className="relative w-full h-full rounded-lg overflow-hidden animate-glow-pulse"
+              className="relative w-full h-full rounded-lg overflow-hidden"
               initial={{ rotateY: -90, opacity: 0 }}
               animate={{ rotateY: 0, opacity: 1 }}
               transition={{ duration: 0.3, ease: "easeOut" }}
@@ -144,8 +191,28 @@ const TarotCardComponent = ({ drawnCard, index, onReveal, rotation = 0, label, c
               <div className="absolute inset-0 border-[2px] border-primary/30 rounded-lg pointer-events-none" />
               <div className="absolute inset-0.5 border border-primary/15 rounded-lg pointer-events-none" />
 
-              {/* Soft glow effect */}
-              <div className="absolute inset-0 shadow-[inset_0_0_20px_hsl(var(--primary)/0.15)] rounded-lg pointer-events-none" />
+              {/* Living aura glow — pulsing softly */}
+              <div className="absolute inset-0 rounded-lg pointer-events-none card-aura" />
+
+              {/* Shimmer light sweep */}
+              <div className="absolute inset-0 rounded-lg pointer-events-none overflow-hidden">
+                <div className="card-shimmer absolute inset-0" />
+              </div>
+
+              {/* Reveal flash */}
+              {justRevealed && (
+                <motion.div
+                  className="absolute inset-0 rounded-lg pointer-events-none bg-primary/40"
+                  initial={{ opacity: 0.8 }}
+                  animate={{ opacity: 0 }}
+                  transition={{ duration: 1.2, ease: "easeOut" }}
+                />
+              )}
+
+              {/* Floating particles */}
+              {particles.map((p, i) => (
+                <CardParticle key={i} {...p} />
+              ))}
             </motion.div>
           )}
         </AnimatePresence>
