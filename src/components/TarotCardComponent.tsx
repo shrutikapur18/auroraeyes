@@ -127,10 +127,6 @@ const TarotCardComponent = ({ drawnCard, index, onReveal, rotation = 0, label, c
                   className="w-full h-full object-cover opacity-60"
                 />
               </div>
-            ) : (
-              <div className="w-full h-full bg-gradient-to-b from-card to-muted flex items-center justify-center">
-                <span className="text-3xl md:text-4xl">{card.symbol}</span>
-              </div>
             )}
 
             {/* Overlay with card name */}
