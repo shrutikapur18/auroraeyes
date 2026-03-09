@@ -39,6 +39,9 @@ import HTMLSitemap from "./pages/HTMLSitemap";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import Disclaimer from "./pages/Disclaimer";
+import About from "./pages/About";
+import Methodology from "./pages/Methodology";
+import EditorialPolicy from "./pages/EditorialPolicy";
 import NotFound from "./pages/NotFound";
 import { questionPages } from "./data/seoData";
 import { horaryContentPages } from "./data/horaryContentPages";
@@ -97,10 +100,13 @@ const App = () => (
             {horaryContentPages.map((page) => (
               <Route key={page.slug} path={`/${page.slug}`} element={<HoraryContentPage />} />
             ))}
-            {/* Legal */}
+            {/* Legal & Credibility */}
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
             <Route path="/disclaimer" element={<Disclaimer />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/methodology" element={<Methodology />} />
+            <Route path="/editorial-policy" element={<EditorialPolicy />} />
             {/* HTML Sitemap */}
             <Route path="/sitemap-html" element={<HTMLSitemap />} />
             {/* Shared reading preview */}
