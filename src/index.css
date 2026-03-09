@@ -107,23 +107,61 @@
       inset 0 1px 0 hsl(var(--gold) / 0.1);
   }
 
-  /* Mystical reading table surface */
+  /* Mystical reading table surface with velvet cloth texture */
   .reading-table {
     position: relative;
-    background: radial-gradient(ellipse at center, hsl(var(--mystic-purple-deep) / 0.6) 0%, transparent 70%);
+    background: 
+      radial-gradient(ellipse at center, hsl(265 50% 25% / 0.8) 0%, hsl(265 40% 15% / 0.6) 60%, transparent 80%),
+      repeating-linear-gradient(
+        0deg,
+        hsl(265 45% 20% / 0.05) 0px,
+        hsl(265 45% 22% / 0.05) 1px,
+        transparent 1px,
+        transparent 2px
+      );
     border-radius: 50%;
+    box-shadow: 
+      inset 0 2px 40px hsl(265 50% 10% / 0.6),
+      inset 0 -2px 20px hsl(0 0% 0% / 0.5);
   }
   .reading-table::before {
     content: '';
     position: absolute;
     inset: -2px;
     border-radius: inherit;
-    background: radial-gradient(ellipse at center top, hsl(var(--gold) / 0.12) 0%, transparent 60%);
+    background: radial-gradient(ellipse at center top, hsl(var(--gold) / 0.15) 0%, transparent 60%);
+    pointer-events: none;
+    opacity: 0.8;
+  }
+  .reading-table::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      ellipse at 30% 30%,
+      hsl(var(--gold) / 0.03) 0%,
+      transparent 50%
+    );
     pointer-events: none;
   }
-  /* Soft overhead light effect */
+  
+  /* Enhanced overhead light with realistic cone */
   .table-light {
     position: relative;
+  }
+  .table-light::before {
+    content: '';
+    position: absolute;
+    top: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(ellipse, hsl(var(--gold) / 0.12) 0%, hsl(var(--gold) / 0.06) 40%, transparent 70%);
+    filter: blur(30px);
+    pointer-events: none;
+    z-index: 0;
   }
   .table-light::after {
     content: '';
@@ -131,8 +169,8 @@
     top: -60px;
     left: 50%;
     transform: translateX(-50%);
-    width: 300px;
-    height: 120px;
+    width: 350px;
+    height: 150px;
     background: radial-gradient(ellipse, hsl(var(--gold) / 0.08) 0%, transparent 70%);
     pointer-events: none;
     z-index: 0;
