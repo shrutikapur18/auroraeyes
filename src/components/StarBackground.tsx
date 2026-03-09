@@ -19,7 +19,20 @@ interface Nebula {
   delay: number;
 }
 
-const StarBackground = () => {
+interface StarBackgroundProps {
+  theme?: "tarot" | "angel" | "runes" | "horary" | "default";
+}
+
+const themeColors = {
+  tarot: { primary: 265, secondary: 280, accent: 45 }, // Purple/gold
+  angel: { primary: 210, secondary: 230, accent: 200 }, // Blue/celestial
+  runes: { primary: 30, secondary: 20, accent: 45 }, // Earthy brown/gold
+  horary: { primary: 240, secondary: 260, accent: 280 }, // Deep cosmic blue/purple
+  default: { primary: 265, secondary: 230, accent: 280 },
+};
+
+const StarBackground = ({ theme = "default" }: StarBackgroundProps) => {
+  const colors = themeColors[theme];
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
