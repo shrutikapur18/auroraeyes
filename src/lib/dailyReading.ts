@@ -27,7 +27,10 @@ const months = ["january","february","march","april","may","june","july","august
 const monthLabels = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
 export function dateToSlug(date: Date): string {
-  return `${months[date.getMonth()]}-${date.getDate()}`;
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, "0");
+  const d = String(date.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
 }
 
 export function dateToLabel(date: Date): string {
@@ -35,6 +38,14 @@ export function dateToLabel(date: Date): string {
 }
 
 export function slugToDate(slug: string, year?: number): Date | null {
+  // Support new format: YYYY-MM-DD
+  const isoMatch = slug.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (isoMatch) {
+    const d = new Date(parseInt(isoMatch[1]), parseInt(isoMatch[2]) - 1, parseInt(isoMatch[3]));
+    if (isNaN(d.getTime())) return null;
+    return d;
+  }
+  // Legacy format: month-day (e.g. july-10)
   const match = slug.match(/^([a-z]+)-(\d+)$/);
   if (!match) return null;
   const mi = months.indexOf(match[1]);

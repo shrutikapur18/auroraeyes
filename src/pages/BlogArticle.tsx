@@ -10,57 +10,56 @@ const BlogArticle = () => {
   const { slug } = useParams<{ slug: string }>();
   const article = slug ? blogArticles[slug] : undefined;
 
-  if (!article) {
-    return (
-      <div className="text-center py-20">
-        <h1 className="font-heading text-2xl text-foreground mb-4">Article Not Found</h1>
-        <p className="text-muted-foreground mb-6">The article you're looking for doesn't exist or may have moved.</p>
-        <div className="flex flex-col items-center gap-3">
-          <Link to="/blog" className="text-primary hover:underline">← Back to Blog</Link>
-          <div className="flex flex-wrap justify-center gap-2 mt-2">
-            <Link to="/tarot-guide" className="text-xs text-muted-foreground hover:text-primary transition-colors">Tarot Guide</Link>
-            <Link to="/rune-guide" className="text-xs text-muted-foreground hover:text-primary transition-colors">Rune Guide</Link>
-            <Link to="/horary-astrology" className="text-xs text-muted-foreground hover:text-primary transition-colors">Horary Astrology</Link>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  // Generate fallback article for unknown slugs — never 404
+  const displayArticle = article ?? {
+    title: (slug || "Article").replace(/-/g, " ").replace(/\b\w/g, c => c.toUpperCase()),
+    description: `Learn more about ${(slug || "this topic").replace(/-/g, " ")} in our divination guide.`,
+    content: [
+      `This article about ${(slug || "this topic").replace(/-/g, " ")} is coming soon. We're preparing in-depth content on this subject.`,
+      "In the meantime, explore our other guides and readings to deepen your understanding of tarot, runes, angel cards, and horary astrology.",
+    ],
+    faq: [],
+    relatedLinks: [
+      { to: "/blog", label: "Browse All Articles" },
+      { to: "/free-tarot-reading", label: "Get a Free Tarot Reading" },
+      { to: "/tarot-guide", label: "Tarot Guide" },
+    ],
+  };
 
   const breadcrumbs = [
     { label: "Blog", href: "/blog" },
-    { label: article.title.length > 40 ? article.title.slice(0, 37) + "…" : article.title },
+    { label: displayArticle.title.length > 40 ? displayArticle.title.slice(0, 37) + "…" : displayArticle.title },
   ];
 
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Article",
-    headline: article.title,
-    description: article.description,
-    ...(article.faq.length > 0 ? { mainEntity: generateFAQJsonLd(article.faq).mainEntity } : {}),
+    headline: displayArticle.title,
+    description: displayArticle.description,
+    ...(displayArticle.faq.length > 0 ? { mainEntity: generateFAQJsonLd(displayArticle.faq).mainEntity } : {}),
   };
 
   return (
     <>
-      <SEOHead title={article.title} description={article.description} canonicalPath={`/blog/${slug}`} jsonLd={jsonLd} />
+      <SEOHead title={displayArticle.title} description={displayArticle.description} canonicalPath={`/blog/${slug}`} jsonLd={jsonLd} />
       <motion.div className="max-w-3xl mx-auto pt-8 px-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
         <Breadcrumbs items={breadcrumbs} />
 
         <article className="reading-panel rounded-xl p-6 md:p-8">
-          <h1 className="font-heading text-2xl md:text-3xl gold-text mb-6">{article.title}</h1>
-          {article.content.map((p, i) => (
+          <h1 className="font-heading text-2xl md:text-3xl gold-text mb-6">{displayArticle.title}</h1>
+          {displayArticle.content.map((p, i) => (
             <p key={i} className="text-sm text-muted-foreground font-body leading-relaxed mb-4">{p}</p>
           ))}
         </article>
 
         <ReadingCTA />
 
-        {article.faq.length > 0 && <FAQSection items={article.faq} />}
+        {displayArticle.faq.length > 0 && <FAQSection items={displayArticle.faq} />}
 
         <div className="mt-8 reading-panel rounded-xl p-5">
           <h3 className="font-heading text-sm gold-text mb-3">Related</h3>
           <div className="flex flex-wrap gap-2">
-            {article.relatedLinks.map((l) => (
+            {displayArticle.relatedLinks.map((l) => (
               <Link key={l.to} to={l.to} className="text-xs text-primary hover:underline">{l.label} →</Link>
             ))}
           </div>

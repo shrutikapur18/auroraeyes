@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
-import { MapPin, Clock, HelpCircle, Loader2 } from "lucide-react";
+import { MapPin, Clock, HelpCircle, Loader2, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { getTimezoneOffset } from "@/lib/horaryAstrology";
+import { toast } from "@/hooks/use-toast";
 
 interface HoraryQuestionFormProps {
   onSubmit: (data: {
@@ -27,16 +28,23 @@ const HoraryQuestionForm = ({ onSubmit, isLoading }: HoraryQuestionFormProps) =>
   const [customDate, setCustomDate] = useState("");
   const [customTime, setCustomTime] = useState("");
   const [geoLoading, setGeoLoading] = useState(false);
+  const [cityLoading, setCityLoading] = useState(false);
 
   useEffect(() => {
-    // Set current date/time as defaults
     const now = new Date();
     setCustomDate(now.toISOString().split("T")[0]);
     setCustomTime(now.toTimeString().slice(0, 5));
   }, []);
 
   const detectLocation = () => {
-    if (!navigator.geolocation) return;
+    if (!navigator.geolocation) {
+      toast({
+        title: "Geolocation Unavailable",
+        description: "Your browser does not support geolocation. Please enter your city manually.",
+        variant: "destructive",
+      });
+      return;
+    }
     setGeoLoading(true);
     navigator.geolocation.getCurrentPosition(
       (pos) => {
@@ -45,11 +53,48 @@ const HoraryQuestionForm = ({ onSubmit, isLoading }: HoraryQuestionFormProps) =>
         setLocation("Current Location");
         setGeoLoading(false);
       },
-      () => {
+      (err) => {
         setGeoLoading(false);
-      }
+        toast({
+          title: "Location Detection Failed",
+          description: "Location detection failed. Please enter your city manually.",
+          variant: "destructive",
+        });
+      },
+      { timeout: 10000 }
     );
   };
+
+  const lookupCity = useCallback(async () => {
+    const city = location.trim();
+    if (!city || city === "Current Location") return;
+    setCityLoading(true);
+    try {
+      const res = await fetch(
+        `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(city)}&format=json&limit=1`,
+        { headers: { "User-Agent": "MysticDivination/1.0" } }
+      );
+      const data = await res.json();
+      if (data && data.length > 0) {
+        setLatitude(parseFloat(data[0].lat).toFixed(4));
+        setLongitude(parseFloat(data[0].lon).toFixed(4));
+      } else {
+        toast({
+          title: "City Not Found",
+          description: "Could not find coordinates for that city. Please check the spelling or enter coordinates manually.",
+          variant: "destructive",
+        });
+      }
+    } catch {
+      toast({
+        title: "Lookup Failed",
+        description: "Could not look up city coordinates. Please enter them manually.",
+        variant: "destructive",
+      });
+    } finally {
+      setCityLoading(false);
+    }
+  }, [location]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -106,9 +151,26 @@ const HoraryQuestionForm = ({ onSubmit, isLoading }: HoraryQuestionFormProps) =>
           <Input
             value={location}
             onChange={(e) => setLocation(e.target.value)}
-            placeholder="City name"
+            placeholder="Enter city name (e.g. London, New York)"
             className="bg-card/50 border-border/40 text-foreground placeholder:text-muted-foreground/50 font-body"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                lookupCity();
+              }
+            }}
           />
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={lookupCity}
+            disabled={cityLoading || !location.trim()}
+            className="shrink-0 border-primary/30 text-primary hover:bg-primary/10"
+            title="Look up city coordinates"
+          >
+            {cityLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Search className="w-4 h-4" />}
+          </Button>
           <Button
             type="button"
             variant="outline"
