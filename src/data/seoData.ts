@@ -546,12 +546,13 @@ export function getAllSEOUrls(): { loc: string; changefreq: string; priority: st
 
   // Daily reading pages (last 30 days for sitemap)
   const today = new Date();
-  const months = ["january","february","march","april","may","june","july","august","september","october","november","december"];
   for (let i = 0; i < 30; i++) {
     const d = new Date(today);
     d.setDate(d.getDate() - i);
-    const dateSlug = `${months[d.getMonth()]}-${d.getDate()}`;
-    urls.push({ loc: `${base}/tarot-reading-for-${dateSlug}`, changefreq: "daily", priority: "0.5" });
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    urls.push({ loc: `${base}/daily-tarot/${y}-${m}-${day}`, changefreq: "daily", priority: "0.5" });
   }
 
   // Blog articles
