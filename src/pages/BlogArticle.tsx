@@ -10,22 +10,21 @@ const BlogArticle = () => {
   const { slug } = useParams<{ slug: string }>();
   const article = slug ? blogArticles[slug] : undefined;
 
-  if (!article) {
-    return (
-      <div className="text-center py-20">
-        <h1 className="font-heading text-2xl text-foreground mb-4">Article Not Found</h1>
-        <p className="text-muted-foreground mb-6">The article you're looking for doesn't exist or may have moved.</p>
-        <div className="flex flex-col items-center gap-3">
-          <Link to="/blog" className="text-primary hover:underline">← Back to Blog</Link>
-          <div className="flex flex-wrap justify-center gap-2 mt-2">
-            <Link to="/tarot-guide" className="text-xs text-muted-foreground hover:text-primary transition-colors">Tarot Guide</Link>
-            <Link to="/rune-guide" className="text-xs text-muted-foreground hover:text-primary transition-colors">Rune Guide</Link>
-            <Link to="/horary-astrology" className="text-xs text-muted-foreground hover:text-primary transition-colors">Horary Astrology</Link>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  // Generate fallback article for unknown slugs
+  const displayArticle = article ?? {
+    title: (slug || "Article").replace(/-/g, " ").replace(/\b\w/g, c => c.toUpperCase()),
+    description: `Learn more about ${(slug || "this topic").replace(/-/g, " ")} in our divination guide.`,
+    content: [
+      `This article about ${(slug || "this topic").replace(/-/g, " ")} is coming soon. We're preparing in-depth content on this subject.`,
+      "In the meantime, explore our other guides and readings to deepen your understanding of tarot, runes, angel cards, and horary astrology.",
+    ],
+    faq: [],
+    relatedLinks: [
+      { to: "/blog", label: "Browse All Articles" },
+      { to: "/free-tarot-reading", label: "Get a Free Tarot Reading" },
+      { to: "/tarot-guide", label: "Tarot Guide" },
+    ],
+  };
 
   const breadcrumbs = [
     { label: "Blog", href: "/blog" },

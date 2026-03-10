@@ -38,6 +38,14 @@ export function dateToLabel(date: Date): string {
 }
 
 export function slugToDate(slug: string, year?: number): Date | null {
+  // Support new format: YYYY-MM-DD
+  const isoMatch = slug.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (isoMatch) {
+    const d = new Date(parseInt(isoMatch[1]), parseInt(isoMatch[2]) - 1, parseInt(isoMatch[3]));
+    if (isNaN(d.getTime())) return null;
+    return d;
+  }
+  // Legacy format: month-day (e.g. july-10)
   const match = slug.match(/^([a-z]+)-(\d+)$/);
   if (!match) return null;
   const mi = months.indexOf(match[1]);
