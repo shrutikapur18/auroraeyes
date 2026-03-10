@@ -72,7 +72,7 @@ const DailyTarotReading = () => {
       <SEOHead
         title={title}
         description={description}
-        canonicalPath={isToday ? "/daily-tarot-reading" : `/tarot-reading-for-${dateToSlug(date)}`}
+        canonicalPath={isToday ? "/daily-tarot-reading" : `/daily-tarot/${dateToSlug(date)}`}
         jsonLd={jsonLd}
       />
       <motion.div className="max-w-3xl mx-auto pt-6 px-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
@@ -138,14 +138,14 @@ const DailyTarotReading = () => {
         {/* Day navigation */}
         <div className="flex justify-between items-center my-8">
           <Link
-            to={`/tarot-reading-for-${dateToSlug(prevDate)}`}
+            to={`/daily-tarot/${dateToSlug(prevDate)}`}
             className="text-xs text-primary hover:underline"
           >
             ← {dateToLabel(prevDate)}
           </Link>
           {showNext ? (
             <Link
-              to={isToday ? "/daily-tarot-reading" : `/tarot-reading-for-${dateToSlug(nextDate)}`}
+              to={isToday ? "/daily-tarot-reading" : `/daily-tarot/${dateToSlug(nextDate)}`}
               className="text-xs text-primary hover:underline"
             >
               {dateToLabel(nextDate)} →

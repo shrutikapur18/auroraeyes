@@ -101,9 +101,11 @@ const today = new Date();
 for (let i = 0; i < 90; i++) {
   const d = new Date(today);
   d.setDate(d.getDate() - i);
-  const dateSlug = `${months[d.getMonth()]}-${d.getDate()}`;
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
   const lastmod = d.toISOString().split("T")[0];
-  dailyUrls.push({ loc: `${BASE}/tarot-reading-for-${dateSlug}`, changefreq: "daily", priority: "0.5", lastmod });
+  dailyUrls.push({ loc: `${BASE}/daily-tarot/${y}-${m}-${day}`, changefreq: "daily", priority: "0.5", lastmod });
 }
 
 writeFileSync(resolve(__dirname, "../public/sitemaps/sitemap-daily.xml"), buildXml(dailyUrls), "utf-8");

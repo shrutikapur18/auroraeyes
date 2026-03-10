@@ -74,7 +74,6 @@ const App = () => (
             <Route path="/daily-angel-message" element={<DailyPage />} />
             {/* Daily tarot reading pages */}
             <Route path="/daily-tarot-reading" element={<DailyTarotReading />} />
-            <Route path="/tarot-reading-for-:dateSlug" element={<DailyTarotReading />} />
             <Route path="/daily-tarot/:dateSlug" element={<DailyTarotReading />} />
             <Route path="/tarot-reading-archive" element={<TarotReadingArchive />} />
             <Route path="/blog" element={<Blog />} />

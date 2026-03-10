@@ -66,7 +66,7 @@ const TarotReadingArchive = () => {
                 return (
                   <Link
                     key={r.dateSlug}
-                    to={isToday ? "/daily-tarot-reading" : `/tarot-reading-for-${r.dateSlug}`}
+                    to={isToday ? "/daily-tarot-reading" : `/daily-tarot/${r.dateSlug}`}
                     className="reading-panel rounded-lg p-3 hover:gold-glow transition-all group flex items-center gap-3"
                   >
                     <span className={`text-2xl shrink-0 ${r.isReversed ? "rotate-180 inline-block" : ""}`}>{r.card.symbol}</span>
