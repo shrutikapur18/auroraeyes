@@ -72,7 +72,7 @@ const DailyTarotReading = () => {
       <SEOHead
         title={title}
         description={description}
-        canonicalPath={isToday ? "/daily-tarot-reading" : `/tarot-reading-for-${dateToSlug(date)}`}
+        canonicalPath={isToday ? "/daily-tarot-reading" : `/daily-tarot/${dateToSlug(date)}`}
         jsonLd={jsonLd}
       />
       <motion.div className="max-w-3xl mx-auto pt-6 px-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
