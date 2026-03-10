@@ -138,7 +138,7 @@ const DailyTarotReading = () => {
         {/* Day navigation */}
         <div className="flex justify-between items-center my-8">
           <Link
-            to={`/tarot-reading-for-${dateToSlug(prevDate)}`}
+            to={`/daily-tarot/${dateToSlug(prevDate)}`}
             className="text-xs text-primary hover:underline"
           >
             ← {dateToLabel(prevDate)}
