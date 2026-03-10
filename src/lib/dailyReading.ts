@@ -27,7 +27,10 @@ const months = ["january","february","march","april","may","june","july","august
 const monthLabels = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
 export function dateToSlug(date: Date): string {
-  return `${months[date.getMonth()]}-${date.getDate()}`;
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, "0");
+  const d = String(date.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
 }
 
 export function dateToLabel(date: Date): string {
