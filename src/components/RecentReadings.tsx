@@ -11,7 +11,7 @@ const RecentReadings = () => {
         {recent.map((r) => (
           <Link
             key={r.dateSlug}
-            to={`/tarot-reading-for-${r.dateSlug}`}
+            to={`/daily-tarot/${r.dateSlug}`}
             className="reading-panel rounded-lg p-3 text-center hover:gold-glow transition-all group"
           >
             <span className="text-2xl block mb-1">{r.card.symbol || "🃏"}</span>

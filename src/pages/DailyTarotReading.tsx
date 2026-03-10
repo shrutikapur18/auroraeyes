@@ -145,7 +145,7 @@ const DailyTarotReading = () => {
           </Link>
           {showNext ? (
             <Link
-              to={isToday ? "/daily-tarot-reading" : `/tarot-reading-for-${dateToSlug(nextDate)}`}
+              to={isToday ? "/daily-tarot-reading" : `/daily-tarot/${dateToSlug(nextDate)}`}
               className="text-xs text-primary hover:underline"
             >
               {dateToLabel(nextDate)} →
