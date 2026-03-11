@@ -147,39 +147,61 @@ serve(async (req) => {
         .map((a: any) => `${a.planet1} ${a.type} ${a.planet2} (orb ${a.orb.toFixed(1)}°)`)
         .join("; ");
 
-      const prompt = `You are a warm, insightful horary astrologer. A person has asked: "${question}"
+      // Compute Ascendant degree for radicality check
+      const ascHouse = houses.find((h: any) => h.house === 1);
+      const ascDeg = ascHouse ? (ascHouse.degree % 30) : -1;
+
+      // Check void-of-course Moon (no applying aspects from Moon)
+      const moonAspects = aspects.filter((a: any) => a.planet1 === "Moon" || a.planet2 === "Moon");
+      const vocMoon = moonAspects.length === 0;
+
+      let radicalityNote = "";
+      if (ascDeg >= 0 && ascDeg <= 3) {
+        radicalityNote = "Note: The Ascendant is at a very early degree, which traditionally suggests the situation may be too new or still forming for a clear answer.";
+      } else if (ascDeg >= 27 && ascDeg <= 30) {
+        radicalityNote = "Note: The Ascendant is at a very late degree, which traditionally suggests the matter may already be resolving or past the point of intervention.";
+      }
+      if (vocMoon) {
+        radicalityNote += " The Moon is void of course, which traditionally indicates the situation may not develop further or that nothing will come of the matter as asked.";
+      }
+
+      const prompt = `You are an experienced traditional horary astrologer interpreting a chart for someone who has asked a sincere question.
+
+The question is: "${question}"
 
 The horary chart was cast at ${year}-${month}-${date} ${hours}:${String(minutes).padStart(2, "0")} at ${location} (${latitude}, ${longitude}).
 
 Chart data:
-- Ascendant: ${chartData.ascendantSign}
-- Moon: ${chartData.moonSign}, Phase: ${chartData.moonPhase}
+- Ascendant: ${chartData.ascendantSign} (degree in sign: ${ascDeg >= 0 ? ascDeg.toFixed(1) + "°" : "unknown"})
+- Moon: ${chartData.moonSign}, Phase: ${chartData.moonPhase}${vocMoon ? " (void of course)" : ""}
 - Planets: ${planetSummary}
 - Key aspects: ${aspectSummary}
+${radicalityNote ? "\nRadicality: " + radicalityNote : ""}
 
-Write your interpretation using these EXACT section headers (use ## markdown headers):
+INSTRUCTIONS:
 
-## Chart Overview
-A warm opening that sets the scene. Describe what the chart looks like at a glance and what stands out.
+1. QUESTION VALIDATION: If the question is vague, unrealistic, or too broad, gently encourage a clearer question. Say something like: "Horary astrology works best with clear and specific questions about real situations."
 
-## Significators of the Question
-Identify which planets represent the person asking and the subject of their question. Explain this simply — e.g. "Since your Ascendant is in Leo, the Sun speaks for you in this chart."
+2. RADICALITY CHECK: If there are radicality warnings above, gently explain that the situation may still be developing or uncertain before proceeding. If the chart appears suitable, proceed normally without mentioning radicality.
 
-## Aspect Analysis
-Look at the key connections between planets. Describe what they suggest about the situation. Use phrases like "The chart suggests…" or "The relationship between these planets may indicate…"
+3. INTERPRETATION: Organize the reading in this order (do NOT use section headers or ## markdown):
+   - Acknowledge the question briefly.
+   - Describe what the chart suggests about the situation.
+   - Explain the main influences affecting the matter.
+   - If the question involves timing, include a short paragraph titled "Possible Timing" with approximate timeframes (soon, within weeks, within several months, gradual long-term). Never give exact dates.
+   - Offer a thoughtful conclusion or guidance that directly answers the question.
 
-## Moon Analysis
-Describe what the Moon is doing — its sign, phase, and recent/upcoming connections. Use language like "The Moon's movement may describe how events could unfold."
-
-## Final Judgment
-Give a clear, thoughtful answer to the question. Be honest but gentle. Avoid absolute predictions — use "may", "suggests", "points toward" language.
-
-IMPORTANT RULES:
-- Write in simple, everyday language like you're talking to a friend over coffee
-- When you mention a planet or astrological concept, briefly explain what it means in plain words
-- Avoid jargon and overly technical terms
-- Keep it warm, relatable, and easy to follow
-- Never make absolute or deterministic predictions`;
+STYLE RULES:
+- Use warm, natural, conversational language — calm, reflective, thoughtful.
+- Keep the interpretation between 120 and 180 words.
+- Use short paragraphs for easy mobile reading.
+- Do NOT use complex astrology jargon or technical terminology.
+- Do NOT include long calculations, lists of aspects, or academic analysis.
+- Do NOT use phrases like "My dear friend", "Cosmic snapshot", or "Cosmic characters".
+- Focus on meaning and guidance, not technical explanations.
+- Use balanced language: "The chart suggests...", "There is a strong indication that...", "This may unfold gradually..."
+- Never make absolute or deterministic predictions.
+- Ensure the response finishes clearly and does not cut off mid-sentence.`;
 
 
       try {
