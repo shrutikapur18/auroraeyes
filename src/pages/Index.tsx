@@ -78,15 +78,16 @@ const Index = () => {
         jsonLd={{ "@context": "https://schema.org", "@type": "WebSite", name: "Mystic Divination", url: "https://tarotguidance.lovable.app", description: "Free online divination readings — tarot, runes, and angel cards." }}
       />
 
-      <motion.header className="text-center pt-10 md:pt-8 pb-6 px-2" initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
+      {/* Hero section — larger on desktop */}
+      <motion.header className="text-center pt-10 md:pt-12 lg:pt-16 pb-6 lg:pb-10 px-2" initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
         <motion.h1
-          className="text-3xl md:text-6xl font-heading gold-text mb-3 tracking-wider"
+          className="text-3xl md:text-6xl lg:text-7xl font-heading gold-text mb-3 lg:mb-5 tracking-wider"
           animate={{ textShadow: ["0 0 20px hsl(45 80% 55% / 0.2)", "0 0 40px hsl(45 80% 55% / 0.4)", "0 0 20px hsl(45 80% 55% / 0.2)"] }}
           transition={{ duration: 4, repeat: Infinity }}
         >
           Mystic Divination
         </motion.h1>
-        <p className="text-sm md:text-lg text-muted-foreground font-body font-light tracking-wide max-w-xl mx-auto">
+        <p className="text-sm md:text-lg lg:text-xl text-muted-foreground font-body font-light tracking-wide max-w-xl lg:max-w-2xl mx-auto lg:leading-relaxed">
           Choose a divination method and focus on your question.
         </p>
       </motion.header>
@@ -101,10 +102,10 @@ const Index = () => {
             {isTarotMethod && (
               <>
                 <ReadingModeSelector mode={tarotMode} setMode={setTarotMode} />
-                <div className="flex justify-center mb-10">
+                <div className="flex justify-center mb-10 lg:mb-14">
                   <motion.button
                     onClick={handleStartShuffle}
-                    className="px-8 py-4 rounded-xl bg-primary/20 border-2 border-primary text-primary font-heading text-base md:text-lg tracking-widest hover:bg-primary/30 transition-all gold-glow active:scale-95"
+                    className="px-8 lg:px-12 py-4 lg:py-5 rounded-xl bg-primary/20 border-2 border-primary text-primary font-heading text-base md:text-lg lg:text-xl tracking-widest hover:bg-primary/30 transition-all gold-glow gold-glow-hover active:scale-95"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
@@ -115,10 +116,10 @@ const Index = () => {
             )}
             {divinationMethod === "yes-no" && <YesNoSpread question={question} onError={setError} />}
             {divinationMethod === "pick-a-card" && (
-              <div className="flex justify-center mb-10">
+              <div className="flex justify-center mb-10 lg:mb-14">
                 <motion.button
                   onClick={() => { setTarotMode("pick-a-card"); handleStartShuffle(); }}
-                  className="px-8 py-4 rounded-xl bg-primary/20 border-2 border-primary text-primary font-heading text-base md:text-lg tracking-widest hover:bg-primary/30 transition-all gold-glow active:scale-95"
+                  className="px-8 lg:px-12 py-4 lg:py-5 rounded-xl bg-primary/20 border-2 border-primary text-primary font-heading text-base md:text-lg lg:text-xl tracking-widest hover:bg-primary/30 transition-all gold-glow gold-glow-hover active:scale-95"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -134,9 +135,9 @@ const Index = () => {
             <HoraryHomepageSection />
 
             {/* SEO: Quick links with elegant icons */}
-            <section className="max-w-4xl mx-auto mt-12 md:mt-16 mb-8 px-1">
-              <h2 className="font-heading text-lg md:text-xl gold-text text-center mb-5 md:mb-6">Explore Our Readings</h2>
-              <div className="grid grid-cols-3 md:grid-cols-3 gap-2 md:gap-3">
+            <section className="max-w-5xl lg:max-w-6xl mx-auto mt-12 md:mt-16 lg:mt-20 mb-8 lg:mb-12 px-1">
+              <h2 className="font-heading text-lg md:text-xl lg:text-2xl gold-text text-center mb-5 md:mb-6 lg:mb-8">Explore Our Readings</h2>
+              <div className="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-2 md:gap-3 lg:gap-5">
                 {[
                   { to: "/free-tarot-reading", label: "Tarot Reading", Icon: Layers },
                   { to: "/yes-no-tarot-reading", label: "Yes/No Tarot", Icon: Scale },
@@ -148,9 +149,9 @@ const Index = () => {
                   { to: "/rune-meanings", label: "Rune Meanings", Icon: Hexagon },
                   { to: "/daily-tarot-card", label: "Daily Tarot", Icon: Sun },
                 ].map((l) => (
-                  <Link key={l.to} to={l.to} className="reading-panel rounded-lg p-3 md:p-4 text-center hover:gold-glow transition-all duration-300 group active:scale-[0.97]">
-                    <l.Icon className="w-5 h-5 md:w-6 md:h-6 mx-auto mb-1.5 text-primary/80 group-hover:text-primary transition-colors icon-glow" />
-                    <span className="text-[10px] md:text-xs font-heading text-foreground group-hover:text-primary transition-colors leading-tight">{l.label}</span>
+                  <Link key={l.to} to={l.to} className="reading-panel rounded-lg p-3 md:p-4 lg:p-6 text-center hover:gold-glow transition-all duration-300 group active:scale-[0.97]">
+                    <l.Icon className="w-5 h-5 md:w-6 md:h-6 lg:w-7 lg:h-7 mx-auto mb-1.5 lg:mb-2 text-primary/80 group-hover:text-primary transition-colors icon-glow" />
+                    <span className="text-[10px] md:text-xs lg:text-sm font-heading text-foreground group-hover:text-primary transition-colors leading-tight">{l.label}</span>
                   </Link>
                 ))}
               </div>
@@ -195,7 +196,7 @@ const Index = () => {
             )}
             {phase === "reading" && (
               <div className="flex justify-center mt-6 mb-4">
-                <button onClick={handleReset} className="px-6 py-3.5 md:py-3 rounded-lg bg-secondary border border-primary/30 text-primary font-heading text-sm tracking-wider hover:bg-primary/20 transition-all active:scale-95">Draw New Cards</button>
+                <button onClick={handleReset} className="px-6 lg:px-8 py-3.5 md:py-3 lg:py-4 rounded-lg bg-secondary border border-primary/30 text-primary font-heading text-sm lg:text-base tracking-wider hover:bg-primary/20 transition-all active:scale-95">Draw New Cards</button>
               </div>
             )}
           </motion.div>
