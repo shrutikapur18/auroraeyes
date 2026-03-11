@@ -55,15 +55,15 @@ const QuestionInput = ({ question, setQuestion, disabled }: QuestionInputProps) 
 
   return (
     <motion.div
-      className="max-w-lg mx-auto mb-6 md:mb-8 relative z-10 px-1"
+      className="max-w-lg lg:max-w-2xl mx-auto mb-6 md:mb-8 lg:mb-10 relative z-10 px-1"
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.3, duration: 0.6 }}
     >
-      <label className="block text-sm font-heading text-primary mb-2 tracking-widest uppercase">
+      <label className="block text-sm lg:text-base font-heading text-primary mb-2 tracking-widest uppercase">
         Ask your question
       </label>
-      <p className="text-xs text-muted-foreground mb-3 italic">
+      <p className="text-xs lg:text-sm text-muted-foreground mb-3 italic">
         Take a moment to focus on your question before beginning the reading.
       </p>
       <div className="relative">
@@ -73,13 +73,12 @@ const QuestionInput = ({ question, setQuestion, disabled }: QuestionInputProps) 
           onChange={(e) => setQuestion(e.target.value)}
           disabled={disabled}
           placeholder="What do you seek guidance on?"
-          className="w-full px-4 md:px-5 py-4 pr-14 rounded-xl bg-muted/60 border border-border/60 text-foreground text-base placeholder:text-muted-foreground font-body focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/40 transition-all disabled:opacity-50 backdrop-blur-sm"
+          className="w-full px-4 md:px-5 lg:px-6 py-4 lg:py-5 pr-14 rounded-xl bg-muted/60 border border-border/60 text-foreground text-base lg:text-lg placeholder:text-muted-foreground font-body focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/40 transition-all disabled:opacity-50 backdrop-blur-sm"
         />
         <div className="absolute inset-0 rounded-xl pointer-events-none" style={{
           background: "linear-gradient(135deg, hsl(var(--gold) / 0.03), transparent, hsl(var(--gold) / 0.03))",
         }} />
 
-        {/* Microphone button — larger tap target on mobile */}
         {speechSupported && (
           <button
             type="button"
@@ -97,7 +96,6 @@ const QuestionInput = ({ question, setQuestion, disabled }: QuestionInputProps) 
         )}
       </div>
 
-      {/* Listening indicator */}
       <AnimatePresence>
         {listening && (
           <motion.div

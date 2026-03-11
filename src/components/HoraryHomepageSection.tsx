@@ -51,7 +51,6 @@ const HoraryHomepageSection = () => {
         timestamp: data.dateTime.toISOString(),
       });
 
-      // Scroll to reading after a short delay
       setTimeout(() => {
         readingRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
       }, 400);
@@ -70,10 +69,10 @@ const HoraryHomepageSection = () => {
   const handleReset = () => setReading(null);
 
   return (
-    <section id="horary-section" className="max-w-4xl mx-auto mt-14 md:mt-20 mb-10 px-2">
+    <section id="horary-section" className="max-w-5xl lg:max-w-6xl mx-auto mt-14 md:mt-20 lg:mt-24 mb-10 lg:mb-14 px-2">
       {/* Section header */}
       <motion.div
-        className="text-center mb-8"
+        className="text-center mb-8 lg:mb-12"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
@@ -81,40 +80,23 @@ const HoraryHomepageSection = () => {
       >
         <div className="flex items-center justify-center gap-2 mb-3">
           <Star className="w-4 h-4 text-primary/60" />
-          <span className="text-[10px] font-heading text-primary/60 tracking-[0.3em] uppercase">
+          <span className="text-[10px] lg:text-xs font-heading text-primary/60 tracking-[0.3em] uppercase">
             Celestial Guidance
           </span>
           <Star className="w-4 h-4 text-primary/60" />
         </div>
 
-        <h2 className="font-heading text-2xl md:text-3xl gold-text tracking-wider mb-3">
+        <h2 className="font-heading text-2xl md:text-3xl lg:text-4xl gold-text tracking-wider mb-3 lg:mb-4">
           ✦ Ask a Horary Question ✦
         </h2>
 
-        <p className="text-sm text-muted-foreground font-body max-w-lg mx-auto leading-relaxed">
+        <p className="text-sm lg:text-base text-muted-foreground font-body max-w-lg lg:max-w-xl mx-auto leading-relaxed">
           Horary astrology answers a specific question based on the exact moment the question is asked.
           The positions of the planets at that instant hold the key to your answer.
         </p>
       </motion.div>
 
-      {/* Guidance message */}
-      <motion.div
-        className="max-w-xl mx-auto mb-6"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.2 }}
-      >
-        <div className="flex items-start gap-3 bg-primary/5 border border-primary/15 rounded-xl p-4">
-          <Sparkles className="w-4 h-4 text-primary mt-0.5 shrink-0" />
-          <p className="text-xs text-foreground/70 font-body leading-relaxed italic">
-            Focus carefully on your question. Horary astrology works best when the question is sincere
-            and clearly defined. Think of a specific yes/no or outcome-based question before you begin.
-          </p>
-        </div>
-      </motion.div>
-
-      {/* Question form */}
+      {/* Desktop: two-column layout / Mobile: stacked */}
       <AnimatePresence mode="wait">
         {!reading ? (
           <motion.div
@@ -123,7 +105,57 @@ const HoraryHomepageSection = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0, y: -20 }}
           >
-            <HoraryQuestionForm onSubmit={handleSubmit} isLoading={isLoading} />
+            {/* Two-column layout on desktop */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 items-start">
+              {/* Left: description & guidance */}
+              <motion.div
+                className="hidden lg:block space-y-6"
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+              >
+                <div className="flex items-start gap-3 bg-primary/5 border border-primary/15 rounded-xl p-5">
+                  <Sparkles className="w-5 h-5 text-primary mt-0.5 shrink-0" />
+                  <div className="space-y-3">
+                    <p className="text-sm text-foreground/80 font-body leading-relaxed">
+                      Focus carefully on your question. Horary astrology works best when the question is sincere
+                      and clearly defined. Think of a specific yes/no or outcome-based question before you begin.
+                    </p>
+                    <div className="border-t border-primary/10 pt-3 space-y-2">
+                      <p className="text-xs text-foreground/60 font-heading tracking-wider uppercase">Good questions:</p>
+                      <ul className="space-y-1.5 text-xs text-muted-foreground italic">
+                        <li>• "Will I get the job offer this month?"</li>
+                        <li>• "Should I move to a new city?"</li>
+                        <li>• "Will this relationship lead to commitment?"</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Mobile guidance (unchanged) */}
+              <motion.div
+                className="lg:hidden max-w-xl mx-auto mb-6"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+              >
+                <div className="flex items-start gap-3 bg-primary/5 border border-primary/15 rounded-xl p-4">
+                  <Sparkles className="w-4 h-4 text-primary mt-0.5 shrink-0" />
+                  <p className="text-xs text-foreground/70 font-body leading-relaxed italic">
+                    Focus carefully on your question. Horary astrology works best when the question is sincere
+                    and clearly defined. Think of a specific yes/no or outcome-based question before you begin.
+                  </p>
+                </div>
+              </motion.div>
+
+              {/* Right: question form */}
+              <div>
+                <HoraryQuestionForm onSubmit={handleSubmit} isLoading={isLoading} />
+              </div>
+            </div>
           </motion.div>
         ) : (
           <motion.div
@@ -134,7 +166,6 @@ const HoraryHomepageSection = () => {
             transition={{ duration: 0.6 }}
             className="space-y-10"
           >
-            {/* Chart wheel with reveal animation */}
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -143,7 +174,6 @@ const HoraryHomepageSection = () => {
               <HoraryChartWheel chartData={reading.chartData} />
             </motion.div>
 
-            {/* Interpretation */}
             <HoraryInterpretation
               question={reading.question}
               chartData={reading.chartData}
@@ -151,7 +181,6 @@ const HoraryHomepageSection = () => {
               timestamp={reading.timestamp}
             />
 
-            {/* Post-reading CTAs */}
             <HoraryPostReadingCTA
               reading={reading}
               onAskAnother={handleReset}
