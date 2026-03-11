@@ -74,7 +74,7 @@ const ReadingPanel = ({ reading, drawnCards, question, type = "tarot", runes, an
 
   return (
     <motion.div
-      className="max-w-2xl mx-auto mt-8 md:mt-10 mb-12 md:mb-16 relative z-10"
+      className="max-w-2xl lg:max-w-3xl mx-auto mt-8 md:mt-10 lg:mt-12 mb-12 md:mb-16 relative z-10"
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
