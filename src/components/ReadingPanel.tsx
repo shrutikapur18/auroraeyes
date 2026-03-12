@@ -14,6 +14,7 @@ interface ReadingPanelProps {
   drawnCards: DrawnCard[];
   question: string;
   type?: "tarot" | "rune" | "angel";
+  suggestedQuestions?: string[];
   runes?: Array<{
     name: string;
     symbol: string;
@@ -30,19 +31,22 @@ interface ReadingPanelProps {
   }>;
 }
 
-const ReadingPanel = ({ reading, drawnCards, question, type = "tarot", runes, angelCards }: ReadingPanelProps) => {
+const ReadingPanel = ({ reading, drawnCards, question, type = "tarot", suggestedQuestions: initialSuggestions = [], runes, angelCards }: ReadingPanelProps) => {
   const [aiReading, setAiReading] = useState<string | null>(null);
   const [aiLoading, setAiLoading] = useState(false);
   const [aiError, setAiError] = useState("");
+  const [aiSuggestedQuestions, setAiSuggestedQuestions] = useState<string[]>([]);
 
   const displayedReading = aiReading || reading;
+  const activeSuggestions = aiSuggestedQuestions.length > 0 ? aiSuggestedQuestions : initialSuggestions;
 
   const handleUnlockAI = useCallback(async () => {
     setAiLoading(true);
     setAiError("");
     try {
-      const text = await generateAIReading(question, drawnCards);
-      setAiReading(text);
+      const result = await generateAIReading(question, drawnCards);
+      setAiReading(result.reading);
+      setAiSuggestedQuestions(result.suggestedQuestions);
     } catch (e) {
       setAiError(e instanceof Error ? e.message : "AI interpretations are temporarily unavailable. Please try again later.");
     } finally {
@@ -217,6 +221,7 @@ const ReadingPanel = ({ reading, drawnCards, question, type = "tarot", runes, an
         drawnCards={drawnCards}
         initialReading={displayedReading}
         type={type}
+        suggestedQuestions={activeSuggestions}
         runes={runes}
         angelCards={angelCards}
       />

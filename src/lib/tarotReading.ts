@@ -15,11 +15,11 @@ export function generateLocalReading(question: string, cards: DrawnCard[]): stri
  * Generate a premium AI-powered reading via the edge function.
  * Returns the AI text on success, or throws on failure so the caller can show an error.
  */
-export async function generateAIReading(question: string, cards: DrawnCard[], spreadType?: string): Promise<string> {
+export async function generateAIReading(question: string, cards: DrawnCard[], spreadType?: string): Promise<{ reading: string; suggestedQuestions: string[] }> {
   const cached = getCachedReading(cards, spreadType);
   if (cached) {
     console.log("[ReadingCache] Cache hit — returning stored AI reading");
-    return cached;
+    return { reading: cached, suggestedQuestions: [] };
   }
 
   const cardData = cards
@@ -51,5 +51,5 @@ export async function generateAIReading(question: string, cards: DrawnCard[], sp
   }
 
   setCachedReading(cards, reading, "ai", spreadType);
-  return reading;
+  return { reading, suggestedQuestions: data?.suggestedQuestions || [] };
 }
