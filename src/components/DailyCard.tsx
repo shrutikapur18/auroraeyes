@@ -22,8 +22,8 @@ const DailyCard = () => {
     const revealed = { ...dailyCard, isRevealed: true };
     setDailyCard(revealed);
     setLoading(true);
-    const text = await generateAIReading("What does today hold for me?", [revealed]);
-    setReading(text);
+    const result = await generateAIReading("What does today hold for me?", [revealed]);
+    setReading(result.reading);
     setLoading(false);
   };
 

@@ -221,7 +221,7 @@ const ReadingPanel = ({ reading, drawnCards, question, type = "tarot", suggested
         drawnCards={drawnCards}
         initialReading={displayedReading}
         type={type}
-        suggestedQuestions={suggestedQuestions}
+        suggestedQuestions={activeSuggestions}
         runes={runes}
         angelCards={angelCards}
       />

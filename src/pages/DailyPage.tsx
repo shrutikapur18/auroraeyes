@@ -50,8 +50,8 @@ const DailyPage = () => {
     if (!tarotCard) return;
     const revealed = { ...tarotCard, isRevealed: true };
     setTarotCard(revealed); setLoading(true);
-    const text = await generateAIReading("What does today hold for me?", [revealed]);
-    setReading(text); setLoading(false);
+    const result = await generateAIReading("What does today hold for me?", [revealed]);
+    setReading(result.reading); setLoading(false);
   };
   const revealRune = async () => {
     if (!runeCard) return;
