@@ -33,7 +33,7 @@ serve(async (req) => {
 Interpret the angel cards in relation to the user's question — never describe cards in isolation.
 
 Structure:
-1. Acknowledge the user's question warmly.
+1. Begin with a brief, natural reflection on the emotional tone or intention behind the user's question. Acknowledge what they may be seeking — clarity, reassurance, direction, or understanding. Keep this to one or two sentences. Example: "Your question carries a sense of searching for reassurance about what lies ahead."
 2. Interpret the main symbols drawn, weaving them into a cohesive story about the user's situation. Focus on what they suggest together rather than explaining each separately.
 3. Describe how the situation may develop with supportive, encouraging insight.
 4. End with a brief reflective thought that encourages deeper consideration.
