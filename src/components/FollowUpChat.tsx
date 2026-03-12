@@ -155,9 +155,29 @@ const FollowUpChat = ({
           {/* Messages */}
           <div ref={scrollRef} className="max-h-80 overflow-y-auto px-6 py-4 space-y-4">
             {messages.length === 0 && (
-              <p className="text-xs text-muted-foreground italic text-center py-4">
-                Ask anything about the {type === "rune" ? "runes" : "cards"} drawn for you. Your reader remembers every detail of your spread.
-              </p>
+              <div className="py-4 space-y-4">
+                <p className="text-xs text-muted-foreground italic text-center">
+                  Ask anything about the {type === "rune" ? "runes" : "cards"} drawn for you. Your reader remembers every detail of your spread.
+                </p>
+                {suggestedQuestions.length > 0 && (
+                  <div className="space-y-2">
+                    <p className="text-xs text-primary/60 font-heading tracking-wider text-center">
+                      ✦ You may also want to explore:
+                    </p>
+                    {suggestedQuestions.map((q, i) => (
+                      <button
+                        key={i}
+                        onClick={() => {
+                          setInput(q);
+                        }}
+                        className="w-full text-left text-xs text-muted-foreground hover:text-foreground px-3 py-2.5 rounded-lg bg-muted/20 border border-border/20 hover:border-primary/30 hover:bg-primary/5 transition-all"
+                      >
+                        {q}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
             )}
 
             <AnimatePresence>
