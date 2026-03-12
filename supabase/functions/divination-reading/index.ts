@@ -177,7 +177,42 @@ Interpret these ${type === "rune" ? "runes" : "cards"} and connect their meaning
     const data = await response.json();
     const reading = data.choices?.[0]?.message?.content || "The spirits remain silent for now. Please try again.";
 
-    return new Response(JSON.stringify({ reading }), {
+    // Generate follow-up suggestions (only for initial readings, not follow-ups)
+    let suggestedQuestions: string[] = [];
+    if (!followUp) {
+      try {
+        const suggestionRes = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${LOVABLE_API_KEY}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            model: "google/gemini-2.5-flash-lite",
+            messages: [
+              {
+                role: "user",
+                content: `Based on this divination reading, suggest exactly 3 thoughtful follow-up questions the user might naturally want to explore next. The original question was: "${question}". The reading given was: "${reading}".
+
+The questions should help explore timing, obstacles, emotional dynamics, or personal guidance. Each question should be specific to the user's situation, not generic.
+
+Return ONLY the 3 questions, one per line, without numbering or bullet points.`,
+              },
+            ],
+            max_tokens: 200,
+          }),
+        });
+        if (suggestionRes.ok) {
+          const suggestionData = await suggestionRes.json();
+          const raw = suggestionData.choices?.[0]?.message?.content || "";
+          suggestedQuestions = raw.split("\n").map((q: string) => q.trim()).filter((q: string) => q.length > 10).slice(0, 3);
+        }
+      } catch (e) {
+        console.error("Follow-up suggestion error:", e);
+      }
+    }
+
+    return new Response(JSON.stringify({ reading, suggestedQuestions }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   } catch (e) {
