@@ -14,6 +14,7 @@ interface FollowUpChatProps {
   drawnCards: DrawnCard[];
   initialReading: string;
   type?: "tarot" | "rune" | "angel";
+  suggestedQuestions?: string[];
   runes?: Array<{
     name: string;
     symbol: string;
