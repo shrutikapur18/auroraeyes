@@ -29,7 +29,7 @@ serve(async (req) => {
 Interpret the tarot cards in relation to the user's question — never describe cards in isolation or give textbook definitions.
 
 Structure:
-1. Acknowledge the user's question.
+1. Begin with a brief, natural reflection on the emotional tone or intention behind the user's question. Acknowledge what they may be seeking — clarity, reassurance, direction, or understanding. Keep this to one or two sentences. Example: "Your question suggests a desire to understand how this situation may unfold."
 2. Interpret the cards drawn, focusing on the story they create together. If multiple cards are present, explain how they interact and influence one another rather than explaining each separately.
 3. Describe how the situation may develop based on the card symbolism.
 4. End with a brief reflective thought that encourages deeper consideration.
