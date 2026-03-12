@@ -33,7 +33,7 @@ serve(async (req) => {
 Interpret the angel cards in relation to the user's question — never describe cards in isolation.
 
 Structure:
-1. Acknowledge the user's question warmly.
+1. Begin with a brief, natural reflection on the emotional tone or intention behind the user's question. Acknowledge what they may be seeking — clarity, reassurance, direction, or understanding. Keep this to one or two sentences. Example: "Your question carries a sense of searching for reassurance about what lies ahead."
 2. Interpret the main symbols drawn, weaving them into a cohesive story about the user's situation. Focus on what they suggest together rather than explaining each separately.
 3. Describe how the situation may develop with supportive, encouraging insight.
 4. End with a brief reflective thought that encourages deeper consideration.
@@ -61,7 +61,7 @@ Style rules:
 Interpret the runes in relation to the user's question — explain what they suggest about the situation in practical terms such as growth, obstacles, transformation, or opportunity.
 
 Structure:
-1. Acknowledge the user's question.
+1. Begin with a brief, natural reflection on the emotional tone or intention behind the user's question. Acknowledge what they may be seeking — clarity, reassurance, direction, or understanding. Keep this to one or two sentences. Example: "Your question suggests you are looking for clarity about the path ahead."
 2. Interpret the main runes drawn, focusing on the story they create together rather than explaining each separately. Show how they interact and influence one another across positions.
 3. Describe how the situation may develop based on the symbolic energy.
 4. End with a brief reflective insight that encourages deeper consideration.
@@ -90,7 +90,7 @@ Style rules:
 Interpret the tarot cards in relation to the user's question — never describe cards in isolation or give textbook definitions.
 
 Structure:
-1. Acknowledge the user's question.
+1. Begin with a brief, natural reflection on the emotional tone or intention behind the user's question. Acknowledge what they may be seeking — clarity, reassurance, direction, or understanding. Keep this to one or two sentences.
 2. Interpret the cards drawn, focusing on the story they create together. If multiple cards are present (such as past, present, future), explain how they interact and influence one another rather than explaining each separately.
 3. Describe how the situation may develop based on the card symbolism.
 4. End with a brief reflective thought that encourages deeper consideration.

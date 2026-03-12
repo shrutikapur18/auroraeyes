@@ -185,7 +185,7 @@ INSTRUCTIONS:
 2. RADICALITY CHECK: If there are radicality warnings above, gently explain that the situation may still be developing or uncertain before proceeding. If the chart appears suitable, proceed normally without mentioning radicality.
 
 3. INTERPRETATION: Organize the reading in this order (do NOT use section headers or ## markdown):
-   - Acknowledge the question briefly.
+   - Begin with a brief, natural reflection on the emotional tone or intention behind the question. Acknowledge what the person may be seeking — clarity, reassurance, direction, or understanding. Keep this to one or two sentences. Example: "Your question suggests a desire to understand how this situation may unfold."
    - Describe what the chart suggests about the situation.
    - Explain the main influences affecting the matter.
    - If the question involves timing, include a short paragraph titled "Possible Timing" with approximate timeframes (soon, within weeks, within several months, gradual long-term). Never give exact dates.
