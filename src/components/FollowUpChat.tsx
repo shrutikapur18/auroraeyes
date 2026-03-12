@@ -36,6 +36,7 @@ const FollowUpChat = ({
   drawnCards,
   initialReading,
   type = "tarot",
+  suggestedQuestions = [],
   runes,
   angelCards,
 }: FollowUpChatProps) => {
