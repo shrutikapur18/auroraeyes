@@ -14,6 +14,7 @@ interface ReadingPanelProps {
   drawnCards: DrawnCard[];
   question: string;
   type?: "tarot" | "rune" | "angel";
+  suggestedQuestions?: string[];
   runes?: Array<{
     name: string;
     symbol: string;
