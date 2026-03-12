@@ -31,7 +31,7 @@ interface ReadingPanelProps {
   }>;
 }
 
-const ReadingPanel = ({ reading, drawnCards, question, type = "tarot", runes, angelCards }: ReadingPanelProps) => {
+const ReadingPanel = ({ reading, drawnCards, question, type = "tarot", suggestedQuestions = [], runes, angelCards }: ReadingPanelProps) => {
   const [aiReading, setAiReading] = useState<string | null>(null);
   const [aiLoading, setAiLoading] = useState(false);
   const [aiError, setAiError] = useState("");
