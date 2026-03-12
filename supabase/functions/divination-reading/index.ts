@@ -120,7 +120,7 @@ Style rules:
 ${type === "rune" ? "Runes" : "Cards"} drawn:
 ${symbolsDescription}
 
-The reading has already been given. The user is now asking follow-up questions about the same reading. Stay in character as their reader, referencing the same ${type === "rune" ? "runes" : "cards"} and their meanings. Keep responses between 80 and 150 words.`;
+The reading has already been given. The user is now asking follow-up questions about the same reading. Stay in character as their reader, referencing the same ${type === "rune" ? "runes" : "cards"} and their meanings. Keep responses between 80 and 120 words. Write naturally and conversationally. Use confident language. Do not use robotic or generic AI phrasing.`;
 
       messages.push({ role: "user", content: contextPrompt });
       messages.push({ role: "assistant", content: "I understand. I'll continue interpreting these symbols for you." });
