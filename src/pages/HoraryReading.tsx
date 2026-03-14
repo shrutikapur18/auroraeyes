@@ -4,6 +4,7 @@ import SEOHead from "@/components/SEOHead";
 import HoraryQuestionForm from "@/components/HoraryQuestionForm";
 import HoraryChartWheel from "@/components/HoraryChartWheel";
 import HoraryInterpretation from "@/components/HoraryInterpretation";
+import HoraryFollowUpChat from "@/components/HoraryFollowUpChat";
 import { supabase } from "@/integrations/supabase/client";
 import type { HoraryChartData, HoraryReading as HoraryReadingType } from "@/lib/horaryAstrology";
 import { toast } from "@/hooks/use-toast";
