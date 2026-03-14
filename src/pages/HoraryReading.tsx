@@ -4,6 +4,7 @@ import SEOHead from "@/components/SEOHead";
 import HoraryQuestionForm from "@/components/HoraryQuestionForm";
 import HoraryChartWheel from "@/components/HoraryChartWheel";
 import HoraryInterpretation from "@/components/HoraryInterpretation";
+import HoraryFollowUpChat from "@/components/HoraryFollowUpChat";
 import { supabase } from "@/integrations/supabase/client";
 import type { HoraryChartData, HoraryReading as HoraryReadingType } from "@/lib/horaryAstrology";
 import { toast } from "@/hooks/use-toast";
@@ -108,13 +109,20 @@ const HoraryReading = () => {
               timestamp={reading.timestamp}
             />
 
+            {/* Follow-up chat — reuses same chart */}
+            <HoraryFollowUpChat
+              originalQuestion={reading.question}
+              chartData={reading.chartData}
+              interpretation={reading.interpretation}
+            />
+
             {/* Ask another */}
             <div className="text-center">
               <button
                 onClick={() => setReading(null)}
                 className="font-heading text-xs text-primary/70 hover:text-primary tracking-wider transition-colors"
               >
-                ✦ Ask Another Question
+                ✦ Ask a New Question (generates new chart)
               </button>
             </div>
           </div>
