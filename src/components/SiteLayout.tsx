@@ -2,8 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Sparkles, Layers, Scale, Hexagon, Feather, Calendar, Compass, Sun, BookOpen, FileText, Home } from "lucide-react";
-import StarBackground from "./StarBackground";
-import FloatingParticles from "./FloatingParticles";
+import CosmicBackground from "./CosmicBackground";
 
 const navLinks = [
   { to: "/", label: "Home", Icon: Home },
@@ -23,18 +22,10 @@ const SiteLayout = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
   
-  const getBackgroundTheme = () => {
-    const path = location.pathname;
-    if (path.includes("angel")) return "angel";
-    if (path.includes("rune")) return "runes";
-    if (path.includes("horary")) return "horary";
-    if (path.includes("tarot") || path.includes("pick-a-card") || path.includes("yes-no")) return "tarot";
-    return "default";
-  };
 
   return (
     <div className="min-h-screen relative overflow-x-hidden">
-      <StarBackground theme={getBackgroundTheme()} />
+      <CosmicBackground />
 
       {/* Navigation */}
       <nav className="relative z-30 border-b border-border/30 bg-background/80 backdrop-blur-lg sticky top-0">
@@ -219,9 +210,6 @@ const SiteLayout = ({ children }: { children: React.ReactNode }) => {
         </div>
       </footer>
 
-      <div className="fixed inset-0 pointer-events-none z-[1]">
-        <FloatingParticles count={8} color="gold" />
-      </div>
     </div>
   );
 };
