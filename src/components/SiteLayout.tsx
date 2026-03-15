@@ -25,7 +25,7 @@ const SiteLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div className="min-h-screen relative overflow-x-hidden">
-      <StarBackground theme={getBackgroundTheme()} />
+      <CosmicBackground />
 
       {/* Navigation */}
       <nav className="relative z-30 border-b border-border/30 bg-background/80 backdrop-blur-lg sticky top-0">
