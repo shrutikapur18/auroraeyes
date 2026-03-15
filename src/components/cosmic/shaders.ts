@@ -14,7 +14,6 @@ export const nebulaFragmentShader = `
   uniform float uBreath;
   varying vec2 vUv;
 
-  // Simplex-like noise
   vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
   vec4 mod289(vec4 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
   vec4 permute(vec4 x) { return mod289(((x*34.0)+1.0)*x); }
@@ -65,172 +64,119 @@ export const nebulaFragmentShader = `
 
   void main() {
     vec2 uv = vUv;
-    float t = uTime * 0.03;
+    float t = uTime * 0.02;
     
-    // Mouse distortion — bend space near cursor
+    // Very subtle mouse distortion
     vec2 mouseOffset = uv - uMouse;
     float mouseDist = length(mouseOffset);
-    float mouseInfluence = smoothstep(0.4, 0.0, mouseDist) * 0.08;
+    float mouseInfluence = smoothstep(0.5, 0.0, mouseDist) * 0.03;
     uv += normalize(mouseOffset + 0.001) * mouseInfluence;
     
-    // Multi-octave nebula noise
-    float n1 = snoise(vec3(uv * 1.5, t)) * 0.5 + 0.5;
-    float n2 = snoise(vec3(uv * 3.0 + 5.0, t * 1.3)) * 0.5 + 0.5;
-    float n3 = snoise(vec3(uv * 6.0 + 10.0, t * 0.7)) * 0.5 + 0.5;
-    float nebula = n1 * 0.6 + n2 * 0.3 + n3 * 0.1;
+    // Soft nebula noise — very low contrast
+    float n1 = snoise(vec3(uv * 1.2, t)) * 0.5 + 0.5;
+    float n2 = snoise(vec3(uv * 2.5 + 5.0, t * 0.8)) * 0.5 + 0.5;
+    float n3 = snoise(vec3(uv * 4.0 + 10.0, t * 0.5)) * 0.5 + 0.5;
+    float nebula = n1 * 0.5 + n2 * 0.35 + n3 * 0.15;
     
-    // Aurora ribbons — horizontal flowing waves
-    float aurora1 = snoise(vec3(uv.x * 2.0 + t * 0.5, uv.y * 8.0, t * 0.4));
-    float aurora2 = snoise(vec3(uv.x * 3.0 - t * 0.3, uv.y * 6.0 + 3.0, t * 0.6));
-    float auroraRibbon = smoothstep(0.3, 0.7, aurora1) * smoothstep(0.2, 0.6, aurora2);
-    auroraRibbon *= smoothstep(0.0, 0.3, uv.y) * smoothstep(1.0, 0.5, uv.y);
+    // Deep space base colors — very dark
+    vec3 deepBlack = vec3(0.02, 0.02, 0.05);
+    vec3 midnightBlue = vec3(0.04, 0.04, 0.10);
+    vec3 darkIndigo = vec3(0.06, 0.03, 0.12);
+    vec3 subtlePurple = vec3(0.10, 0.04, 0.16);
     
-    // Color palette — midnight blue, indigo, cosmic purple, aurora teal, electric violet
-    vec3 midnightBlue = vec3(0.05, 0.05, 0.15);
-    vec3 deepIndigo = vec3(0.12, 0.06, 0.22);
-    vec3 cosmicPurple = vec3(0.25, 0.08, 0.35);
-    vec3 auroraTeal = vec3(0.05, 0.45, 0.55);
-    vec3 electricViolet = vec3(0.45, 0.1, 0.65);
-    vec3 magenta = vec3(0.55, 0.1, 0.45);
+    // Base: near-black gradient
+    vec3 base = mix(deepBlack, midnightBlue, uv.y * 0.6);
     
-    // Base gradient
-    vec3 base = mix(midnightBlue, deepIndigo, uv.y);
-    base = mix(base, cosmicPurple, nebula * 0.3);
+    // Subtle nebula clouds — very faint purple/indigo wisps
+    vec3 nebulaColor = mix(darkIndigo, subtlePurple, n1 * 0.5);
+    base = mix(base, nebulaColor, nebula * 0.12);
     
-    // Nebula clouds
-    vec3 nebulaColor = mix(deepIndigo, cosmicPurple, n1);
-    nebulaColor = mix(nebulaColor, electricViolet, n2 * 0.4);
-    base = mix(base, nebulaColor, nebula * 0.25);
+    // Radial nebula glow in center — soft, fading naturally
+    float centerDist = length(uv - vec2(0.5, 0.45));
+    float radialGlow = smoothstep(0.6, 0.0, centerDist) * 0.08;
+    vec3 glowColor = vec3(0.12, 0.05, 0.20); // deep purple glow
+    base += glowColor * radialGlow * (0.8 + n2 * 0.4);
     
-    // Aurora overlay
-    vec3 auroraColor = mix(auroraTeal, cosmicPurple, snoise(vec3(uv * 2.0, t * 0.5)) * 0.5 + 0.5);
-    auroraColor = mix(auroraColor, magenta, snoise(vec3(uv * 3.0 + 7.0, t * 0.3)) * 0.5 + 0.5);
-    base = mix(base, auroraColor, auroraRibbon * 0.35);
-    
-    // Cosmic breathing — subtle pulse
+    // Breathing pulse — very subtle
     float breath = uBreath;
-    base *= 0.95 + breath * 0.1;
+    base *= 0.97 + breath * 0.04;
     
-    // Vignette
-    float vignette = 1.0 - smoothstep(0.3, 1.0, length(uv - 0.5) * 1.2);
-    base *= mix(0.6, 1.0, vignette);
+    // Vignette — darken edges
+    float vignette = 1.0 - smoothstep(0.2, 0.9, length(uv - 0.5) * 1.1);
+    base *= mix(0.5, 1.0, vignette);
     
     gl_FragColor = vec4(base, 1.0);
   }
 `;
 
-export const particleVertexShader = `
+// Starfield shaders — sharp tiny points
+export const starfieldVertexShader = `
   attribute float aSize;
   attribute float aPhase;
   attribute float aBrightness;
+  attribute float aTwinkleSpeed;
   uniform float uTime;
   uniform float uBreath;
-  uniform vec2 uMouse;
   varying float vBrightness;
   varying float vPhase;
+  varying float vTwinkleSpeed;
 
   void main() {
     vBrightness = aBrightness;
     vPhase = aPhase;
+    vTwinkleSpeed = aTwinkleSpeed;
     
     vec3 pos = position;
     
-    // Slow drift
-    pos.x += sin(uTime * 0.05 + aPhase * 6.28) * 0.3;
-    pos.y += cos(uTime * 0.04 + aPhase * 3.14) * 0.2;
+    // Very slow drift — barely perceptible
+    pos.x += sin(uTime * 0.02 + aPhase * 6.28) * 0.05;
+    pos.y += cos(uTime * 0.015 + aPhase * 3.14) * 0.03;
     
-    // Gravity toward mouse in NDC
-    vec4 mvPos = modelViewMatrix * vec4(pos, 1.0);
-    vec4 projected = projectionMatrix * mvPos;
-    vec2 ndc = projected.xy / projected.w;
-    vec2 toMouse = uMouse - ndc;
-    float dist = length(toMouse);
-    float gravity = smoothstep(0.8, 0.0, dist) * 0.15;
-    pos.xy += toMouse * gravity;
-    
-    // Breathing
-    pos *= 1.0 + uBreath * 0.02;
-    
-    vec4 finalPos = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
-    gl_Position = finalPos;
-    
-    // Twinkle
-    float twinkle = sin(uTime * 2.0 + aPhase * 50.0) * 0.5 + 0.5;
-    gl_PointSize = aSize * (200.0 / -mvPos.z) * (0.7 + twinkle * 0.6 + uBreath * 0.15);
-  }
-`;
-
-export const particleFragmentShader = `
-  varying float vBrightness;
-  varying float vPhase;
-  uniform float uTime;
-
-  void main() {
-    float d = length(gl_PointCoord - 0.5);
-    if (d > 0.5) discard;
-    
-    float alpha = smoothstep(0.5, 0.0, d);
-    alpha *= alpha; // softer falloff
-    
-    // Color variation
-    vec3 warmWhite = vec3(0.9, 0.85, 0.95);
-    vec3 teal = vec3(0.4, 0.8, 0.9);
-    vec3 violet = vec3(0.7, 0.5, 1.0);
-    
-    vec3 color = mix(warmWhite, mix(teal, violet, vPhase), 0.3);
-    color *= vBrightness;
-    
-    // Subtle glow core
-    float glow = smoothstep(0.3, 0.0, d) * 0.5;
-    color += glow * vec3(0.6, 0.7, 1.0);
-    
-    gl_FragColor = vec4(color, alpha * 0.85);
-  }
-`;
-
-export const vortexVertexShader = `
-  attribute float aAngle;
-  attribute float aRadius;
-  attribute float aSpeed;
-  uniform float uTime;
-  uniform float uBreath;
-  varying float vAlpha;
-  varying float vRadius;
-
-  void main() {
-    float angle = aAngle + uTime * aSpeed * 0.1;
-    float r = aRadius * (1.0 + sin(uTime * 0.05 + aAngle) * 0.1);
-    r *= 1.0 + uBreath * 0.03;
-    
-    vec3 pos = vec3(
-      cos(angle) * r,
-      sin(angle) * r,
-      position.z + sin(uTime * 0.03 + aAngle * 2.0) * 0.2
-    );
+    // Subtle breathing
+    pos *= 1.0 + uBreath * 0.005;
     
     vec4 mvPos = modelViewMatrix * vec4(pos, 1.0);
     gl_Position = projectionMatrix * mvPos;
     
-    vRadius = aRadius;
-    vAlpha = smoothstep(3.0, 0.5, aRadius) * 0.6;
+    // Small, sharp stars — no large blobs
+    float baseSize = aSize;
     
-    gl_PointSize = max(1.0, (1.5 - aRadius * 0.3) * (150.0 / -mvPos.z));
+    // Bright stars twinkle slowly
+    float twinkle = 1.0;
+    if (aTwinkleSpeed > 0.0) {
+      twinkle = 0.6 + 0.4 * sin(uTime * aTwinkleSpeed + aPhase * 20.0);
+    }
+    
+    gl_PointSize = baseSize * (100.0 / -mvPos.z) * twinkle;
   }
 `;
 
-export const vortexFragmentShader = `
-  varying float vAlpha;
-  varying float vRadius;
+export const starfieldFragmentShader = `
+  varying float vBrightness;
+  varying float vPhase;
+  varying float vTwinkleSpeed;
+  uniform float uTime;
 
   void main() {
     float d = length(gl_PointCoord - 0.5);
     if (d > 0.5) discard;
-    float alpha = smoothstep(0.5, 0.0, d) * vAlpha;
     
-    vec3 inner = vec3(0.5, 0.3, 0.9);
-    vec3 outer = vec3(0.1, 0.4, 0.6);
-    vec3 color = mix(inner, outer, vRadius / 3.0);
+    // Sharp falloff — crisp points of light
+    float alpha = smoothstep(0.5, 0.1, d);
+    alpha *= alpha;
     
-    gl_FragColor = vec4(color, alpha);
+    // Color: mostly white/blue-white, slight warm/cool variation
+    vec3 coolWhite = vec3(0.85, 0.88, 1.0);
+    vec3 warmWhite = vec3(1.0, 0.95, 0.88);
+    vec3 blueWhite = vec3(0.75, 0.82, 1.0);
+    
+    vec3 color = mix(coolWhite, mix(warmWhite, blueWhite, step(0.6, vPhase)), vPhase);
+    color *= vBrightness;
+    
+    // Tiny bright core for brighter stars
+    float core = smoothstep(0.15, 0.0, d) * 0.3 * vBrightness;
+    color += core;
+    
+    gl_FragColor = vec4(color, alpha * vBrightness * 0.9);
   }
 `;
