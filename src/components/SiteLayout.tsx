@@ -210,9 +210,6 @@ const SiteLayout = ({ children }: { children: React.ReactNode }) => {
         </div>
       </footer>
 
-      <div className="fixed inset-0 pointer-events-none z-[1]">
-        <FloatingParticles count={8} color="gold" />
-      </div>
     </div>
   );
 };
