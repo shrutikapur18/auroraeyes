@@ -2,8 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Sparkles, Layers, Scale, Hexagon, Feather, Calendar, Compass, Sun, BookOpen, FileText, Home } from "lucide-react";
-import StarBackground from "./StarBackground";
-import FloatingParticles from "./FloatingParticles";
+import CosmicBackground from "./CosmicBackground";
 
 const navLinks = [
   { to: "/", label: "Home", Icon: Home },
