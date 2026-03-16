@@ -149,7 +149,7 @@ const Index = () => {
                   { to: "/rune-meanings", label: "Rune Meanings", Icon: Hexagon },
                   { to: "/daily-tarot-card", label: "Daily Tarot", Icon: Sun },
                 ].map((l) => (
-                  <Link key={l.to} to={l.to} className="reading-panel rounded-lg p-3 md:p-4 lg:p-6 text-center hover:gold-glow transition-all duration-300 group active:scale-[0.97]">
+                  <Link key={l.to} to={l.to} className="divination-card rounded-lg p-3 md:p-4 lg:p-6 text-center group active:scale-[0.97]">
                     <l.Icon className="w-5 h-5 md:w-6 md:h-6 lg:w-7 lg:h-7 mx-auto mb-1.5 lg:mb-2 text-primary/80 group-hover:text-primary transition-colors icon-glow" />
                     <span className="text-[10px] md:text-xs lg:text-sm font-heading text-foreground group-hover:text-primary transition-colors leading-tight">{l.label}</span>
                   </Link>
