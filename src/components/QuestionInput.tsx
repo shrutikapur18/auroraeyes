@@ -55,7 +55,7 @@ const QuestionInput = ({ question, setQuestion, disabled }: QuestionInputProps) 
 
   return (
     <motion.div
-      className="max-w-lg lg:max-w-2xl mx-auto mb-6 md:mb-8 lg:mb-10 relative z-10 px-1"
+      className="max-w-lg lg:max-w-2xl mx-auto mb-6 md:mb-8 lg:mb-10 relative z-10 px-1 cosmic-focus-glow"
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.3, duration: 0.6 }}
@@ -73,11 +73,8 @@ const QuestionInput = ({ question, setQuestion, disabled }: QuestionInputProps) 
           onChange={(e) => setQuestion(e.target.value)}
           disabled={disabled}
           placeholder="What do you seek guidance on?"
-          className="w-full px-4 md:px-5 lg:px-6 py-4 lg:py-5 pr-14 rounded-xl bg-muted/60 border border-border/60 text-foreground text-base lg:text-lg placeholder:text-muted-foreground font-body focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/40 transition-all disabled:opacity-50 backdrop-blur-sm"
+          className="w-full px-4 md:px-5 lg:px-6 py-4 lg:py-5 pr-14 rounded-xl bg-card/60 border border-border/40 text-foreground text-base lg:text-lg placeholder:text-muted-foreground font-body focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/30 transition-all disabled:opacity-50 backdrop-blur-md"
         />
-        <div className="absolute inset-0 rounded-xl pointer-events-none" style={{
-          background: "linear-gradient(135deg, hsl(var(--gold) / 0.03), transparent, hsl(var(--gold) / 0.03))",
-        }} />
 
         {speechSupported && (
           <button

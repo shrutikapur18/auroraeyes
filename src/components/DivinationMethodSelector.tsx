@@ -44,28 +44,33 @@ const DivinationMethodSelector = ({ method, setMethod }: DivinationMethodSelecto
         Choose your divination method
       </p>
       
-      {/* Responsive grid: 1 col mobile, 2 col tablet, 3 col desktop */}
       <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 lg:gap-6 px-1">
         {methods.map((m, i) => (
           <motion.button
             key={m.value}
             onClick={() => handleSelect(m.value)}
-            className={`relative rounded-2xl font-body transition-all border-2 flex flex-col items-center justify-center p-4 md:p-6 lg:p-8 ${
+            className={`divination-card relative rounded-2xl font-body flex flex-col items-center justify-center p-4 md:p-6 lg:p-8 ${
               method === m.value
-                ? "bg-primary/25 border-primary text-primary gold-glow-strong"
-                : "bg-card/80 border-border/50 text-muted-foreground hover:border-primary/60 hover:text-primary hover:bg-primary/10"
+                ? "!border-primary/40 gold-glow-strong"
+                : ""
             }`}
+            style={{
+              animation: `card-float ${5 + i * 0.4}s ease-in-out infinite`,
+              animationDelay: `${i * 0.6}s`,
+            }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 + i * 0.08, duration: 0.5 }}
-            whileHover={{ scale: 1.04, y: -4 }}
+            whileHover={{ scale: 1.04, y: -6 }}
             whileTap={{ scale: 0.97 }}
           >
             <span className="text-3xl md:text-4xl lg:text-5xl mb-2 lg:mb-3">{m.icon}</span>
-            <span className="block font-heading text-xs md:text-sm lg:text-base tracking-wider leading-tight text-center">
+            <span className={`block font-heading text-xs md:text-sm lg:text-base tracking-wider leading-tight text-center ${
+              method === m.value ? "text-primary" : "text-foreground"
+            }`}>
               {m.label}
             </span>
-            <span className="block text-[10px] md:text-xs lg:text-sm opacity-60 mt-1 lg:mt-2 text-center">
+            <span className="block text-[10px] md:text-xs lg:text-sm text-muted-foreground mt-1 lg:mt-2 text-center">
               {m.desc}
             </span>
           </motion.button>

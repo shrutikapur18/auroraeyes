@@ -6,55 +6,56 @@
 
 @layer base {
   :root {
-    --background: 250 30% 6%;
+    --background: 230 60% 7%;
     --foreground: 45 30% 90%;
 
-    --card: 250 25% 12%;
+    --card: 235 45% 11%;
     --card-foreground: 45 30% 90%;
 
-    --popover: 250 25% 12%;
+    --popover: 235 45% 11%;
     --popover-foreground: 45 30% 90%;
 
-    --primary: 45 80% 55%;
-    --primary-foreground: 250 30% 6%;
+    --primary: 43 70% 65%;
+    --primary-foreground: 230 60% 7%;
 
-    --secondary: 265 40% 25%;
+    --secondary: 260 40% 22%;
     --secondary-foreground: 45 30% 90%;
 
-    --muted: 250 20% 18%;
-    --muted-foreground: 250 15% 55%;
+    --muted: 235 30% 15%;
+    --muted-foreground: 230 20% 50%;
 
-    --accent: 265 60% 45%;
+    --accent: 265 50% 40%;
     --accent-foreground: 45 30% 90%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 265 30% 25%;
-    --input: 265 30% 20%;
-    --ring: 45 80% 55%;
+    --border: 250 30% 20%;
+    --input: 240 30% 16%;
+    --ring: 43 70% 65%;
 
     --radius: 0.75rem;
 
-    --gold: 45 80% 55%;
-    --gold-light: 45 70% 70%;
-    --gold-dark: 45 90% 40%;
-    --mystic-purple: 265 60% 45%;
-    --mystic-purple-deep: 265 50% 20%;
-    --cosmic-blue: 230 60% 15%;
-    --cosmic-blue-light: 230 50% 30%;
+    --gold: 43 70% 65%;
+    --gold-light: 43 60% 75%;
+    --gold-dark: 43 80% 45%;
+    --mystic-purple: 265 50% 35%;
+    --mystic-purple-deep: 260 50% 16%;
+    --cosmic-blue: 230 60% 12%;
+    --cosmic-blue-light: 230 50% 28%;
     --starlight: 220 30% 85%;
     --angel-blue: 210 60% 70%;
     --angel-glow: 45 60% 80%;
+    --nebula-glow: 260 45% 20%;
 
-    --sidebar-background: 250 30% 8%;
+    --sidebar-background: 230 60% 7%;
     --sidebar-foreground: 45 30% 90%;
-    --sidebar-primary: 45 80% 55%;
-    --sidebar-primary-foreground: 250 30% 6%;
-    --sidebar-accent: 265 40% 25%;
+    --sidebar-primary: 43 70% 65%;
+    --sidebar-primary-foreground: 230 60% 7%;
+    --sidebar-accent: 260 40% 22%;
     --sidebar-accent-foreground: 45 30% 90%;
-    --sidebar-border: 265 30% 25%;
-    --sidebar-ring: 45 80% 55%;
+    --sidebar-border: 250 30% 20%;
+    --sidebar-ring: 43 70% 65%;
   }
 }
 
@@ -72,101 +73,138 @@
 }
 
 @layer components {
+  /* Gold glow hierarchy */
   .gold-glow {
-    box-shadow: 0 0 20px hsl(var(--gold) / 0.3), 0 0 40px hsl(var(--gold) / 0.1);
+    box-shadow: 0 0 15px hsl(var(--gold) / 0.2), 0 0 30px hsl(var(--gold) / 0.06);
   }
   .gold-glow-hover:hover {
-    box-shadow: 0 0 30px hsl(var(--gold) / 0.5), 0 0 60px hsl(var(--gold) / 0.2);
+    box-shadow: 0 0 20px hsl(var(--gold) / 0.35), 0 0 50px hsl(var(--gold) / 0.12);
   }
   .gold-glow-strong {
-    box-shadow: 0 0 25px hsl(var(--gold) / 0.4), 0 0 50px hsl(var(--gold) / 0.15), 0 0 80px hsl(var(--gold) / 0.05);
+    box-shadow: 0 0 20px hsl(var(--gold) / 0.3), 0 0 40px hsl(var(--gold) / 0.1), 0 0 60px hsl(var(--gold) / 0.04);
   }
+
+  /* Cosmic gradients */
   .mystic-gradient {
     background: linear-gradient(135deg, hsl(var(--cosmic-blue)) 0%, hsl(var(--mystic-purple-deep)) 50%, hsl(var(--background)) 100%);
   }
+
+  /* Gold text with luminous glow */
   .gold-text {
     background: linear-gradient(135deg, hsl(var(--gold-light)), hsl(var(--gold)), hsl(var(--gold-dark)));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-  }
-  .card-shine {
-    background: linear-gradient(135deg, hsl(var(--mystic-purple-deep)) 0%, hsl(var(--cosmic-blue)) 50%, hsl(var(--mystic-purple-deep)) 100%);
-    border: 1px solid hsl(var(--gold) / 0.3);
+    filter: drop-shadow(0 0 8px hsl(var(--gold) / 0.3));
   }
 
-  /* Premium card styling */
+  /* Card glassmorphism base */
+  .card-shine {
+    background: linear-gradient(135deg, hsl(var(--mystic-purple-deep) / 0.8) 0%, hsl(var(--cosmic-blue) / 0.6) 50%, hsl(var(--mystic-purple-deep) / 0.8) 100%);
+    border: 1px solid hsl(var(--gold) / 0.15);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  /* Premium divination card */
   .premium-card {
     background: linear-gradient(
       145deg,
-      hsl(var(--mystic-purple-deep)) 0%,
-      hsl(var(--cosmic-blue)) 40%,
-      hsl(var(--mystic-purple-deep)) 100%
+      hsl(var(--card) / 0.9) 0%,
+      hsl(var(--mystic-purple-deep) / 0.7) 40%,
+      hsl(var(--cosmic-blue) / 0.8) 100%
     );
-    border: 2px solid hsl(var(--gold) / 0.4);
+    border: 1px solid hsl(var(--gold) / 0.15);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     box-shadow:
-      0 4px 20px hsl(0 0% 0% / 0.5),
-      0 8px 40px hsl(0 0% 0% / 0.3),
-      inset 0 1px 0 hsl(var(--gold) / 0.2),
-      inset 0 -1px 0 hsl(0 0% 0% / 0.3);
+      0 4px 20px hsl(0 0% 0% / 0.4),
+      0 8px 40px hsl(0 0% 0% / 0.2),
+      inset 0 1px 0 hsl(var(--gold) / 0.08),
+      inset 0 0 30px hsl(var(--mystic-purple) / 0.05);
   }
   
   .premium-card-hover:hover {
-    border-color: hsl(var(--gold) / 0.6);
+    border-color: hsl(var(--gold) / 0.35);
     box-shadow:
-      0 8px 30px hsl(0 0% 0% / 0.6),
-      0 16px 60px hsl(0 0% 0% / 0.4),
-      0 0 40px hsl(var(--gold) / 0.25),
-      0 0 80px hsl(var(--gold) / 0.1),
-      inset 0 1px 0 hsl(var(--gold) / 0.3);
-    transform: translateY(-4px) scale(1.02);
+      0 8px 30px hsl(0 0% 0% / 0.5),
+      0 0 30px hsl(var(--gold) / 0.12),
+      0 0 60px hsl(var(--mystic-purple) / 0.08),
+      inset 0 1px 0 hsl(var(--gold) / 0.15),
+      inset 0 0 40px hsl(var(--mystic-purple) / 0.08);
+    transform: translateY(-4px);
   }
 
   .premium-card-revealed {
-    border-color: hsl(var(--gold) / 0.7);
+    border-color: hsl(var(--gold) / 0.4);
     box-shadow:
-      0 0 30px hsl(var(--gold) / 0.35),
-      0 0 60px hsl(var(--gold) / 0.2),
-      0 0 100px hsl(var(--gold) / 0.1),
-      0 8px 40px hsl(0 0% 0% / 0.5),
-      inset 0 0 20px hsl(var(--gold) / 0.05);
+      0 0 20px hsl(var(--gold) / 0.2),
+      0 0 50px hsl(var(--gold) / 0.08),
+      0 8px 40px hsl(0 0% 0% / 0.4),
+      inset 0 0 20px hsl(var(--gold) / 0.03);
   }
 
   /* Glassmorphism reading panel */
   .reading-panel {
-    background: linear-gradient(180deg, hsl(var(--card) / 0.85) 0%, hsl(var(--mystic-purple-deep) / 0.7) 100%);
+    background: linear-gradient(
+      180deg,
+      hsl(var(--card) / 0.7) 0%,
+      hsl(var(--mystic-purple-deep) / 0.5) 100%
+    );
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid hsl(var(--gold) / 0.25);
+    border: 1px solid hsl(var(--gold) / 0.12);
     box-shadow: 
-      0 0 30px hsl(var(--gold) / 0.08),
-      0 8px 32px hsl(0 0% 0% / 0.4),
-      inset 0 1px 0 hsl(var(--gold) / 0.1);
+      0 0 20px hsl(var(--nebula-glow) / 0.15),
+      0 8px 32px hsl(0 0% 0% / 0.3),
+      inset 0 1px 0 hsl(var(--gold) / 0.06);
   }
 
-  /* Mystical reading table surface with velvet cloth texture */
+  /* Cosmic focus glow — centered radial behind content */
+  .cosmic-focus-glow {
+    position: relative;
+  }
+  .cosmic-focus-glow::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120%;
+    height: 120%;
+    background: radial-gradient(
+      ellipse at center,
+      hsl(var(--nebula-glow) / 0.15) 0%,
+      hsl(var(--mystic-purple-deep) / 0.08) 30%,
+      transparent 70%
+    );
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  /* Reading table with velvet depth */
   .reading-table {
     position: relative;
     background: 
-      radial-gradient(ellipse at center, hsl(265 50% 25% / 0.8) 0%, hsl(265 40% 15% / 0.6) 60%, transparent 80%),
+      radial-gradient(ellipse at center, hsl(var(--mystic-purple-deep) / 0.6) 0%, hsl(var(--cosmic-blue) / 0.4) 60%, transparent 80%),
       repeating-linear-gradient(
         0deg,
-        hsl(265 45% 20% / 0.05) 0px,
-        hsl(265 45% 22% / 0.05) 1px,
+        hsl(265 45% 20% / 0.03) 0px,
+        hsl(265 45% 22% / 0.03) 1px,
         transparent 1px,
         transparent 2px
       );
     border-radius: 50%;
     box-shadow: 
-      inset 0 2px 40px hsl(265 50% 10% / 0.6),
-      inset 0 -2px 20px hsl(0 0% 0% / 0.5);
+      inset 0 2px 40px hsl(260 50% 8% / 0.5),
+      inset 0 -2px 20px hsl(0 0% 0% / 0.4);
   }
   .reading-table::before {
     content: '';
     position: absolute;
     inset: -2px;
     border-radius: inherit;
-    background: radial-gradient(ellipse at center top, hsl(var(--gold) / 0.15) 0%, transparent 60%);
+    background: radial-gradient(ellipse at center top, hsl(var(--gold) / 0.08) 0%, transparent 60%);
     pointer-events: none;
     opacity: 0.8;
   }
@@ -177,13 +215,13 @@
     border-radius: inherit;
     background: radial-gradient(
       ellipse at 30% 30%,
-      hsl(var(--gold) / 0.03) 0%,
+      hsl(var(--gold) / 0.02) 0%,
       transparent 50%
     );
     pointer-events: none;
   }
   
-  /* Enhanced overhead light with realistic cone */
+  /* Overhead light cone */
   .table-light {
     position: relative;
   }
@@ -195,7 +233,7 @@
     transform: translateX(-50%);
     width: 200px;
     height: 200px;
-    background: radial-gradient(ellipse, hsl(var(--gold) / 0.12) 0%, hsl(var(--gold) / 0.06) 40%, transparent 70%);
+    background: radial-gradient(ellipse, hsl(var(--gold) / 0.08) 0%, hsl(var(--gold) / 0.03) 40%, transparent 70%);
     filter: blur(30px);
     pointer-events: none;
     z-index: 0;
@@ -208,7 +246,7 @@
     transform: translateX(-50%);
     width: 350px;
     height: 150px;
-    background: radial-gradient(ellipse, hsl(var(--gold) / 0.08) 0%, transparent 70%);
+    background: radial-gradient(ellipse, hsl(var(--gold) / 0.05) 0%, transparent 70%);
     pointer-events: none;
     z-index: 0;
   }
@@ -224,16 +262,16 @@
     box-shadow: 
       0 12px 24px hsl(0 0% 0% / 0.4),
       0 20px 60px hsl(0 0% 0% / 0.25),
-      0 0 30px hsl(var(--gold) / 0.35),
-      0 0 60px hsl(var(--gold) / 0.15);
+      0 0 20px hsl(var(--gold) / 0.2),
+      0 0 40px hsl(var(--gold) / 0.08);
     transform: translateY(-2px);
   }
 
-  /* Premium card back with ornate design */
+  /* Card back ornate */
   .card-back-premium {
     background: 
-      radial-gradient(circle at 50% 50%, hsl(265 50% 20%) 0%, hsl(265 60% 12%) 100%);
-    border: 2px solid hsl(var(--gold) / 0.5);
+      radial-gradient(circle at 50% 50%, hsl(260 45% 18%) 0%, hsl(260 55% 10%) 100%);
+    border: 2px solid hsl(var(--gold) / 0.3);
     position: relative;
     overflow: hidden;
   }
@@ -241,7 +279,7 @@
     content: '';
     position: absolute;
     inset: 4px;
-    border: 1px solid hsl(var(--gold) / 0.3);
+    border: 1px solid hsl(var(--gold) / 0.15);
     border-radius: inherit;
   }
   .card-back-premium::after {
@@ -249,138 +287,179 @@
     position: absolute;
     inset: 0;
     background: 
-      radial-gradient(circle at 50% 30%, hsl(var(--gold) / 0.1) 0%, transparent 50%),
-      linear-gradient(135deg, transparent 40%, hsl(var(--gold) / 0.05) 50%, transparent 60%);
-    animation: cardShimmer 3s ease-in-out infinite;
+      radial-gradient(circle at 50% 30%, hsl(var(--gold) / 0.06) 0%, transparent 50%),
+      linear-gradient(135deg, transparent 40%, hsl(var(--gold) / 0.03) 50%, transparent 60%);
+    animation: cardShimmer 4s ease-in-out infinite;
   }
   @keyframes cardShimmer {
-    0%, 100% { opacity: 0.5; transform: translateX(-100%); }
+    0%, 100% { opacity: 0.4; transform: translateX(-100%); }
     50% { opacity: 1; transform: translateX(100%); }
   }
 
-  /* Card front premium styling */
+  /* Card front */
   .card-front-premium {
     background: linear-gradient(
       160deg,
-      hsl(250 40% 15%) 0%,
-      hsl(265 45% 18%) 50%,
-      hsl(250 40% 12%) 100%
+      hsl(235 40% 13%) 0%,
+      hsl(260 40% 16%) 50%,
+      hsl(235 40% 11%) 100%
     );
-    border: 2px solid hsl(var(--gold) / 0.5);
+    border: 1px solid hsl(var(--gold) / 0.25);
     position: relative;
   }
   .card-front-premium::before {
     content: '';
     position: absolute;
     inset: 3px;
-    border: 1px solid hsl(var(--gold) / 0.2);
+    border: 1px solid hsl(var(--gold) / 0.1);
     border-radius: 6px;
     pointer-events: none;
   }
 
-  /* Rune stone depth */
-  .rune-stone {
-    background: radial-gradient(circle at 40% 35%, hsl(250 18% 26%), hsl(250 25% 12%) 70%);
-    box-shadow: 
-      0 4px 12px hsl(0 0% 0% / 0.5),
-      0 2px 4px hsl(0 0% 0% / 0.3),
-      inset 0 1px 2px hsl(var(--gold) / 0.1);
-  }
-
-  /* Angel card lighter tones */
-  .angel-card-front {
-    background: linear-gradient(135deg, hsl(210 50% 20%), hsl(230 40% 18%), hsl(265 40% 22%));
-    border: 1px solid hsl(var(--angel-blue) / 0.3);
-  }
-
-  /* Shuffle button pulse */
-  .shuffle-pulse {
-    animation: shufflePulse 1.5s ease-in-out infinite;
-  }
-  @keyframes shufflePulse {
-    0%, 100% { box-shadow: 0 0 20px hsl(var(--gold) / 0.2); }
-    50% { box-shadow: 0 0 40px hsl(var(--gold) / 0.5), 0 0 60px hsl(var(--gold) / 0.2); }
-  }
-
-  /* Living aura glow for revealed cards */
+  /* Living aura for revealed cards */
   .card-aura {
     box-shadow:
-      0 0 20px hsl(var(--gold) / 0.3),
-      0 0 50px hsl(var(--gold) / 0.12),
-      inset 0 0 15px hsl(var(--gold) / 0.08);
-    animation: aura-breathe 4s ease-in-out infinite;
+      0 0 15px hsl(var(--gold) / 0.2),
+      0 0 40px hsl(var(--gold) / 0.06),
+      inset 0 0 10px hsl(var(--gold) / 0.04);
+    animation: aura-breathe 5s ease-in-out infinite;
   }
   @keyframes aura-breathe {
     0%, 100% {
       box-shadow:
-        0 0 20px hsl(var(--gold) / 0.25),
-        0 0 45px hsl(var(--gold) / 0.1),
-        inset 0 0 12px hsl(var(--gold) / 0.06);
+        0 0 15px hsl(var(--gold) / 0.15),
+        0 0 35px hsl(var(--gold) / 0.05),
+        inset 0 0 8px hsl(var(--gold) / 0.03);
     }
     50% {
       box-shadow:
-        0 0 30px hsl(var(--gold) / 0.4),
-        0 0 65px hsl(var(--gold) / 0.18),
-        inset 0 0 20px hsl(var(--gold) / 0.1);
+        0 0 20px hsl(var(--gold) / 0.25),
+        0 0 50px hsl(var(--gold) / 0.1),
+        inset 0 0 15px hsl(var(--gold) / 0.06);
     }
   }
 
-  /* Shimmer light sweep across revealed cards */
+  /* Shimmer sweep */
   .card-shimmer {
     background: linear-gradient(
       105deg,
       transparent 40%,
-      hsl(var(--gold) / 0.08) 45%,
-      hsl(var(--gold) / 0.15) 50%,
-      hsl(var(--gold) / 0.08) 55%,
+      hsl(var(--gold) / 0.05) 45%,
+      hsl(var(--gold) / 0.1) 50%,
+      hsl(var(--gold) / 0.05) 55%,
       transparent 60%
     );
     background-size: 200% 100%;
-    animation: shimmer-sweep 6s ease-in-out infinite;
+    animation: shimmer-sweep 7s ease-in-out infinite;
   }
   @keyframes shimmer-sweep {
     0%, 100% { background-position: 200% 0; }
     50% { background-position: -200% 0; }
   }
 
-  /* Rune stone aura — earthy gold glow */
+  /* Rune stone */
+  .rune-stone {
+    background: radial-gradient(circle at 40% 35%, hsl(240 18% 22%), hsl(240 25% 10%) 70%);
+    box-shadow: 
+      0 4px 12px hsl(0 0% 0% / 0.5),
+      0 2px 4px hsl(0 0% 0% / 0.3),
+      inset 0 1px 2px hsl(var(--gold) / 0.06);
+  }
+
+  /* Angel card */
+  .angel-card-front {
+    background: linear-gradient(135deg, hsl(210 50% 18%), hsl(230 40% 15%), hsl(260 40% 18%));
+    border: 1px solid hsl(var(--angel-blue) / 0.2);
+  }
+
+  /* Rune aura */
   .rune-aura {
     box-shadow:
-      0 0 16px hsl(var(--gold) / 0.25),
-      0 0 40px hsl(var(--gold) / 0.1),
-      inset 0 0 10px hsl(var(--gold) / 0.06);
+      0 0 12px hsl(var(--gold) / 0.15),
+      0 0 30px hsl(var(--gold) / 0.06),
+      inset 0 0 8px hsl(var(--gold) / 0.03);
     animation: aura-breathe 5s ease-in-out infinite;
   }
 
-  /* Angel card aura — soft celestial glow */
+  /* Angel aura */
   .angel-aura {
     box-shadow:
-      0 0 18px hsl(var(--angel-blue) / 0.3),
-      0 0 45px hsl(var(--angel-glow) / 0.12),
-      inset 0 0 12px hsl(var(--angel-blue) / 0.08);
-    animation: angel-breathe 4.5s ease-in-out infinite;
+      0 0 14px hsl(var(--angel-blue) / 0.2),
+      0 0 35px hsl(var(--angel-glow) / 0.06),
+      inset 0 0 10px hsl(var(--angel-blue) / 0.04);
+    animation: angel-breathe 5s ease-in-out infinite;
   }
   @keyframes angel-breathe {
     0%, 100% {
       box-shadow:
-        0 0 16px hsl(var(--angel-blue) / 0.25),
-        0 0 40px hsl(var(--angel-glow) / 0.08),
-        inset 0 0 10px hsl(var(--angel-blue) / 0.05);
+        0 0 12px hsl(var(--angel-blue) / 0.15),
+        0 0 30px hsl(var(--angel-glow) / 0.04),
+        inset 0 0 8px hsl(var(--angel-blue) / 0.03);
     }
     50% {
       box-shadow:
-        0 0 26px hsl(var(--angel-blue) / 0.4),
-        0 0 55px hsl(var(--angel-glow) / 0.16),
-        inset 0 0 18px hsl(var(--angel-blue) / 0.1);
+        0 0 18px hsl(var(--angel-blue) / 0.25),
+        0 0 40px hsl(var(--angel-glow) / 0.1),
+        inset 0 0 14px hsl(var(--angel-blue) / 0.06);
     }
   }
 
-  /* Icon glow effect */
+  /* Shuffle button pulse */
+  .shuffle-pulse {
+    animation: shufflePulse 2s ease-in-out infinite;
+  }
+  @keyframes shufflePulse {
+    0%, 100% { box-shadow: 0 0 15px hsl(var(--gold) / 0.15); }
+    50% { box-shadow: 0 0 30px hsl(var(--gold) / 0.3), 0 0 50px hsl(var(--gold) / 0.1); }
+  }
+
+  /* Icon glow */
   .icon-glow {
-    filter: drop-shadow(0 0 4px hsl(var(--gold) / 0.5));
+    filter: drop-shadow(0 0 3px hsl(var(--gold) / 0.35));
   }
   .icon-glow-hover:hover {
-    filter: drop-shadow(0 0 8px hsl(var(--gold) / 0.7));
+    filter: drop-shadow(0 0 6px hsl(var(--gold) / 0.5));
+  }
+
+  /* Mystical button */
+  .mystical-button {
+    background: linear-gradient(135deg, hsl(var(--gold-dark)) 0%, hsl(var(--gold)) 50%, hsl(var(--gold-dark)) 100%);
+    color: hsl(var(--background));
+    box-shadow: 0 0 15px hsl(var(--gold) / 0.2), 0 4px 12px hsl(0 0% 0% / 0.3);
+    transition: all 0.4s ease;
+  }
+  .mystical-button:hover {
+    box-shadow: 0 0 25px hsl(var(--gold) / 0.35), 0 6px 20px hsl(0 0% 0% / 0.4);
+    filter: brightness(1.1);
+  }
+
+  /* Divination card — glassmorphism floating panel */
+  .divination-card {
+    background: linear-gradient(
+      160deg,
+      hsl(var(--card) / 0.85) 0%,
+      hsl(var(--mystic-purple-deep) / 0.6) 50%,
+      hsl(var(--cosmic-blue) / 0.7) 100%
+    );
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid hsl(var(--gold) / 0.1);
+    box-shadow:
+      0 4px 20px hsl(0 0% 0% / 0.3),
+      0 12px 40px hsl(0 0% 0% / 0.15),
+      inset 0 1px 0 hsl(var(--gold) / 0.05),
+      inset 0 0 30px hsl(var(--mystic-purple) / 0.04);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .divination-card:hover {
+    border-color: hsl(var(--gold) / 0.25);
+    box-shadow:
+      0 8px 30px hsl(0 0% 0% / 0.4),
+      0 16px 50px hsl(0 0% 0% / 0.2),
+      0 0 25px hsl(var(--gold) / 0.1),
+      inset 0 1px 0 hsl(var(--gold) / 0.1),
+      inset 0 0 40px hsl(var(--mystic-purple) / 0.06);
+    transform: translateY(-3px);
   }
 }
 
@@ -395,6 +474,6 @@
     transform: rotateY(180deg);
   }
   .glass-border {
-    border: 1px solid hsl(var(--gold) / 0.2);
+    border: 1px solid hsl(var(--gold) / 0.12);
   }
 }
