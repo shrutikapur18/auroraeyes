@@ -32,8 +32,11 @@ const NebulaBackground = ({ mouseRef, breathRef }: NebulaBackgroundProps) => {
     mat.uniforms.uBreath.value = breathRef.current;
   });
 
+  // Scale plane to cover the entire viewport with generous margin
+  const scale = Math.max(viewport.width, viewport.height) * 3;
+
   return (
-    <mesh ref={meshRef} position={[0, 0, -10]} scale={[viewport.width * 1.5, viewport.height * 1.5, 1]}>
+    <mesh ref={meshRef} position={[0, 0, -10]} scale={[scale, scale, 1]}>
       <planeGeometry args={[1, 1]} />
       <shaderMaterial
         vertexShader={nebulaVertexShader}
