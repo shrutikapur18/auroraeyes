@@ -105,7 +105,7 @@ const Index = () => {
                 <div className="flex justify-center mb-10 lg:mb-14">
                   <motion.button
                     onClick={handleStartShuffle}
-                    className="px-8 lg:px-12 py-4 lg:py-5 rounded-xl bg-primary/20 border-2 border-primary text-primary font-heading text-base md:text-lg lg:text-xl tracking-widest hover:bg-primary/30 transition-all gold-glow gold-glow-hover active:scale-95"
+                    className="mystical-button px-8 lg:px-12 py-4 lg:py-5 rounded-xl font-heading text-base md:text-lg lg:text-xl tracking-widest active:scale-95"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
