@@ -5,7 +5,7 @@ import NebulaBackground from "./cosmic/NebulaBackground";
 import CosmicParticles from "./cosmic/CosmicParticles";
 import { useIsMobile } from "@/hooks/use-mobile";
 
-// Manages the cosmic breathing rhythm and scroll depth
+// Manages cosmic breathing rhythm and scroll depth
 const CosmicController = ({
   breathRef,
   scrollRef,
@@ -14,11 +14,13 @@ const CosmicController = ({
   scrollRef: React.MutableRefObject<number>;
 }) => {
   useFrame(({ camera }, delta) => {
+    // 18-second breathing cycle
     const t = performance.now() * 0.001;
-    breathRef.current = Math.sin(t * (Math.PI * 2) / 20) * 0.5 + 0.5;
+    breathRef.current = Math.sin(t * (Math.PI * 2) / 18) * 0.5 + 0.5;
 
-    const targetZ = 5 - scrollRef.current * 2;
-    camera.position.z += (targetZ - camera.position.z) * delta * 0.3;
+    // Scroll depth — subtle camera push
+    const targetZ = 5 - scrollRef.current * 1.5;
+    camera.position.z += (targetZ - camera.position.z) * delta * 0.2;
   });
 
   return null;
@@ -49,13 +51,12 @@ const CosmicBackground = () => {
     };
   }, [handleMouseMove, handleScroll]);
 
-  // Fewer particles for a calm starfield
-  const starCount = isMobile ? 300 : 800;
+  const starCount = isMobile ? 350 : 900;
 
   return (
     <div
       className="fixed inset-0 z-0 pointer-events-none"
-      style={{ background: "#050510" }}
+      style={{ background: "#070A18" }}
     >
       <Canvas
         camera={{ position: [0, 0, 5], fov: 60, near: 0.1, far: 50 }}
