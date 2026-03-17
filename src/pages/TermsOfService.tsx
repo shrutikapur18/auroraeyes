@@ -5,7 +5,7 @@ const TermsOfService = () => (
   <div className="max-w-3xl mx-auto py-10">
     <SEOHead
       title="Terms of Service"
-      description="Read the Terms of Service for Mystic Divination, including acceptable use, intellectual property, and platform rules."
+      description="Read the Terms of Service for Aurora Eyes, including acceptable use, intellectual property, and platform rules."
       canonicalPath="/terms-of-service"
     />
     <Breadcrumbs items={[{ label: "Terms of Service" }]} />
