@@ -21,7 +21,7 @@ const TermsOfService = () => (
 
       <section>
         <h2 className="font-heading text-lg text-foreground mb-2">Use of the Platform</h2>
-        <p>Mystic Divination provides AI-powered divination tools including tarot readings, rune castings, angel card readings, and horary astrology. These tools are offered for personal reflection, spiritual exploration, and entertainment.</p>
+        <p>Aurora Eyes provides AI-powered divination tools including tarot readings, rune castings, angel card readings, and horary astrology. These tools are offered for personal reflection, spiritual exploration, and entertainment.</p>
       </section>
 
       <section>
