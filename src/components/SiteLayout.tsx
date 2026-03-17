@@ -33,7 +33,7 @@ const SiteLayout = ({ children }: { children: React.ReactNode }) => {
           <div className="flex items-center justify-between">
             <Link to="/" className="font-heading text-lg md:text-xl gold-text tracking-wider flex items-center gap-2" onClick={() => setMenuOpen(false)}>
               <Sparkles className="w-5 h-5 text-primary icon-glow" />
-              Mystic Divination
+              Aurora Eyes
             </Link>
 
             {/* Desktop nav — improved spacing and sizing */}
