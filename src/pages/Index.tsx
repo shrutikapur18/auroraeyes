@@ -75,7 +75,7 @@ const Index = () => {
         title="Free Tarot, Rune & Angel Card Readings"
         description="Experience immersive divination readings online. Free tarot, rune casting, and angel card guidance with beautiful animations and personalized interpretations."
         canonicalPath="/"
-        jsonLd={{ "@context": "https://schema.org", "@type": "WebSite", name: "Mystic Divination", url: "https://tarotguidance.lovable.app", description: "Free online divination readings — tarot, runes, and angel cards." }}
+        jsonLd={{ "@context": "https://schema.org", "@type": "WebSite", name: "Aurora Eyes", url: "https://tarotguidance.lovable.app", description: "Free online divination readings — tarot, runes, and angel cards." }}
       />
 
       {/* Hero section — larger on desktop */}
