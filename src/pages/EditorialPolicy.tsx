@@ -5,7 +5,7 @@ const EditorialPolicy = () => (
   <div className="max-w-3xl mx-auto py-10">
     <SEOHead
       title="Editorial Policy"
-      description="Learn how educational content, guides, and interpretations are created and maintained on Mystic Divination."
+      description="Learn how educational content, guides, and interpretations are created and maintained on Aurora Eyes."
       canonicalPath="/editorial-policy"
     />
     <Breadcrumbs items={[{ label: "Editorial Policy" }]} />

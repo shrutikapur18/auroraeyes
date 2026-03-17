@@ -246,7 +246,7 @@ export async function generateShareImage(data: ShareImageData | LegacyShareImage
   ctx.fillStyle = GOLD;
   ctx.font = "600 17px sans-serif";
   ctx.letterSpacing = "6px";
-  ctx.fillText("MYSTIC DIVINATION", W / 2, H - 88);
+  ctx.fillText("AURORA EYES", W / 2, H - 88);
   ctx.letterSpacing = "0px";
 
   // URL

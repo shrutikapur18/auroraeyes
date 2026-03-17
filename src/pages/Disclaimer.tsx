@@ -42,7 +42,7 @@ const Disclaimer = () => (
 
       <section>
         <h2 className="font-heading text-lg text-foreground mb-2">Your Responsibility</h2>
-        <p>By using this platform, you acknowledge that you are solely responsible for any actions or decisions you make based on the readings you receive. Mystic Divination and its creators accept no liability for outcomes resulting from the use of this service.</p>
+        <p>By using this platform, you acknowledge that you are solely responsible for any actions or decisions you make based on the readings you receive. Aurora Eyes and its creators accept no liability for outcomes resulting from the use of this service.</p>
       </section>
     </div>
   </div>

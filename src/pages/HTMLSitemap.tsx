@@ -28,7 +28,7 @@ const HTMLSitemap = () => {
     <>
       <SEOHead
         title="Sitemap — All Pages"
-        description="Browse all pages on Mystic Divination. Find tarot readings, card meanings, rune guides, angel card readings, and more."
+        description="Browse all pages on Aurora Eyes. Find tarot readings, card meanings, rune guides, angel card readings, and more."
         canonicalPath="/sitemap-html"
       />
 

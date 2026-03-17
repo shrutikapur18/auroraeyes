@@ -47,7 +47,7 @@ const TermsOfService = () => (
 
       <section>
         <h2 className="font-heading text-lg text-foreground mb-2">Limitation of Liability</h2>
-        <p>Mystic Divination is provided "as is" without warranties of any kind. We are not liable for any decisions you make based on readings or content provided through this platform. See our <a href="/disclaimer" className="text-primary hover:underline">Disclaimer</a> for more details.</p>
+        <p>Aurora Eyes is provided "as is" without warranties of any kind. We are not liable for any decisions you make based on readings or content provided through this platform. See our <a href="/disclaimer" className="text-primary hover:underline">Disclaimer</a> for more details.</p>
       </section>
 
       <section>
