@@ -5,7 +5,7 @@ const Methodology = () => (
   <div className="max-w-3xl mx-auto py-10">
     <SEOHead
       title="Our Methodology"
-      description="Understand how Mystic Divination generates tarot readings, rune castings, horary astrology charts, and angel card interpretations."
+      description="Understand how Aurora Eyes generates tarot readings, rune castings, horary astrology charts, and angel card interpretations."
       canonicalPath="/methodology"
     />
     <Breadcrumbs items={[{ label: "Our Methodology" }]} />
