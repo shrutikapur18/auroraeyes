@@ -16,7 +16,7 @@ const TermsOfService = () => (
     <div className="space-y-6 text-foreground/85 text-sm leading-relaxed">
       <section>
         <h2 className="font-heading text-lg text-foreground mb-2">Acceptance of Terms</h2>
-        <p>By accessing or using Mystic Divination, you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use the platform.</p>
+        <p>By accessing or using Aurora Eyes, you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use the platform.</p>
       </section>
 
       <section>
