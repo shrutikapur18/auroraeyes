@@ -15,7 +15,7 @@ const EditorialPolicy = () => (
     <div className="space-y-6 text-foreground/85 text-sm leading-relaxed">
       <section>
         <h2 className="font-heading text-lg text-foreground mb-2">Our Commitment to Quality</h2>
-        <p>Mystic Divination is committed to providing accurate, thoughtful, and well-researched content about divination systems. Our educational articles, card meaning references, and guides are created with care and a deep respect for the traditions they represent.</p>
+        <p>Aurora Eyes is committed to providing accurate, thoughtful, and well-researched content about divination systems. Our educational articles, card meaning references, and guides are created with care and a deep respect for the traditions they represent.</p>
       </section>
 
       <section>
