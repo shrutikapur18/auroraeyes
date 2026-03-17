@@ -16,7 +16,7 @@ const Disclaimer = () => (
     <div className="space-y-6 text-foreground/85 text-sm leading-relaxed">
       <section>
         <h2 className="font-heading text-lg text-foreground mb-2">Entertainment & Personal Reflection</h2>
-        <p>All divination services offered on Mystic Divination—including tarot readings, horary astrology interpretations, rune castings, and angel card readings—are intended for <strong>personal reflection, spiritual exploration, and entertainment purposes only</strong>.</p>
+        <p>All divination services offered on Aurora Eyes—including tarot readings, horary astrology interpretations, rune castings, and angel card readings—are intended for <strong>personal reflection, spiritual exploration, and entertainment purposes only</strong>.</p>
       </section>
 
       <section>
