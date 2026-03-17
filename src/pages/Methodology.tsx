@@ -5,7 +5,7 @@ const Methodology = () => (
   <div className="max-w-3xl mx-auto py-10">
     <SEOHead
       title="Our Methodology"
-      description="Understand how Mystic Divination generates tarot readings, rune castings, horary astrology charts, and angel card interpretations."
+      description="Understand how Aurora Eyes generates tarot readings, rune castings, horary astrology charts, and angel card interpretations."
       canonicalPath="/methodology"
     />
     <Breadcrumbs items={[{ label: "Our Methodology" }]} />
@@ -15,7 +15,7 @@ const Methodology = () => (
     <div className="space-y-6 text-foreground/85 text-sm leading-relaxed">
       <section>
         <h2 className="font-heading text-lg text-foreground mb-2">How Our Readings Work</h2>
-        <p>Each divination system on Mystic Divination follows its own traditional framework. Our tools combine authentic symbolic knowledge with AI-powered interpretation to deliver meaningful, personalized readings.</p>
+        <p>Each divination system on Aurora Eyes follows its own traditional framework. Our tools combine authentic symbolic knowledge with AI-powered interpretation to deliver meaningful, personalized readings.</p>
       </section>
 
       <section>

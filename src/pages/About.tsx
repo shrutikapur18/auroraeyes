@@ -4,18 +4,18 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 const About = () => (
   <div className="max-w-3xl mx-auto py-10">
     <SEOHead
-      title="About Mystic Divination"
-      description="Learn about Mystic Divination — a platform offering spiritual guidance through tarot, rune casting, angel cards, and horary astrology."
+      title="About Aurora Eyes"
+      description="Learn about Aurora Eyes — a platform offering spiritual guidance through tarot, rune casting, angel cards, and horary astrology."
       canonicalPath="/about"
     />
     <Breadcrumbs items={[{ label: "About" }]} />
 
-    <h1 className="font-heading text-3xl gold-text mb-6">About Mystic Divination</h1>
+    <h1 className="font-heading text-3xl gold-text mb-6">About Aurora Eyes</h1>
 
     <div className="space-y-6 text-foreground/85 text-sm leading-relaxed">
       <section>
         <h2 className="font-heading text-lg text-foreground mb-2">Our Purpose</h2>
-        <p>Mystic Divination is a platform dedicated to making the wisdom of traditional divination systems accessible to everyone. We offer spiritual guidance through tarot, rune casting, angel card readings, and horary astrology — ancient practices that have helped people reflect on life's questions for centuries.</p>
+        <p>Aurora Eyes is a platform dedicated to making the wisdom of traditional divination systems accessible to everyone. We offer spiritual guidance through tarot, rune casting, angel card readings, and horary astrology — ancient practices that have helped people reflect on life's questions for centuries.</p>
       </section>
 
       <section>
@@ -31,7 +31,7 @@ const About = () => (
 
       <section>
         <h2 className="font-heading text-lg text-foreground mb-2">For Everyone</h2>
-        <p>Whether you're a seasoned practitioner or simply curious about what the cards might reveal, Mystic Divination welcomes you. Our educational guides, card meaning references, and interactive tools are designed to support your journey — wherever it leads.</p>
+        <p>Whether you're a seasoned practitioner or simply curious about what the cards might reveal, Aurora Eyes welcomes you. Our educational guides, card meaning references, and interactive tools are designed to support your journey — wherever it leads.</p>
       </section>
     </div>
   </div>

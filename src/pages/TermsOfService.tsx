@@ -5,7 +5,7 @@ const TermsOfService = () => (
   <div className="max-w-3xl mx-auto py-10">
     <SEOHead
       title="Terms of Service"
-      description="Read the Terms of Service for Mystic Divination, including acceptable use, intellectual property, and platform rules."
+      description="Read the Terms of Service for Aurora Eyes, including acceptable use, intellectual property, and platform rules."
       canonicalPath="/terms-of-service"
     />
     <Breadcrumbs items={[{ label: "Terms of Service" }]} />
@@ -16,12 +16,12 @@ const TermsOfService = () => (
     <div className="space-y-6 text-foreground/85 text-sm leading-relaxed">
       <section>
         <h2 className="font-heading text-lg text-foreground mb-2">Acceptance of Terms</h2>
-        <p>By accessing or using Mystic Divination, you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use the platform.</p>
+        <p>By accessing or using Aurora Eyes, you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use the platform.</p>
       </section>
 
       <section>
         <h2 className="font-heading text-lg text-foreground mb-2">Use of the Platform</h2>
-        <p>Mystic Divination provides AI-powered divination tools including tarot readings, rune castings, angel card readings, and horary astrology. These tools are offered for personal reflection, spiritual exploration, and entertainment.</p>
+        <p>Aurora Eyes provides AI-powered divination tools including tarot readings, rune castings, angel card readings, and horary astrology. These tools are offered for personal reflection, spiritual exploration, and entertainment.</p>
       </section>
 
       <section>
@@ -37,7 +37,7 @@ const TermsOfService = () => (
 
       <section>
         <h2 className="font-heading text-lg text-foreground mb-2">Intellectual Property</h2>
-        <p>All content on this website—including text, interpretations, card descriptions, imagery, design elements, and code—is the intellectual property of Mystic Divination and is protected by applicable copyright laws. You may not reproduce, distribute, or create derivative works from this content without express written permission.</p>
+        <p>All content on this website—including text, interpretations, card descriptions, imagery, design elements, and code—is the intellectual property of Aurora Eyes and is protected by applicable copyright laws. You may not reproduce, distribute, or create derivative works from this content without express written permission.</p>
       </section>
 
       <section>
@@ -47,7 +47,7 @@ const TermsOfService = () => (
 
       <section>
         <h2 className="font-heading text-lg text-foreground mb-2">Limitation of Liability</h2>
-        <p>Mystic Divination is provided "as is" without warranties of any kind. We are not liable for any decisions you make based on readings or content provided through this platform. See our <a href="/disclaimer" className="text-primary hover:underline">Disclaimer</a> for more details.</p>
+        <p>Aurora Eyes is provided "as is" without warranties of any kind. We are not liable for any decisions you make based on readings or content provided through this platform. See our <a href="/disclaimer" className="text-primary hover:underline">Disclaimer</a> for more details.</p>
       </section>
 
       <section>

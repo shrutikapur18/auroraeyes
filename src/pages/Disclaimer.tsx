@@ -5,7 +5,7 @@ const Disclaimer = () => (
   <div className="max-w-3xl mx-auto py-10">
     <SEOHead
       title="Disclaimer"
-      description="Important disclaimer about the use of tarot readings, horary astrology, rune castings, and angel card readings on Mystic Divination."
+      description="Important disclaimer about the use of tarot readings, horary astrology, rune castings, and angel card readings on Aurora Eyes."
       canonicalPath="/disclaimer"
     />
     <Breadcrumbs items={[{ label: "Disclaimer" }]} />
@@ -16,7 +16,7 @@ const Disclaimer = () => (
     <div className="space-y-6 text-foreground/85 text-sm leading-relaxed">
       <section>
         <h2 className="font-heading text-lg text-foreground mb-2">Entertainment & Personal Reflection</h2>
-        <p>All divination services offered on Mystic Divination—including tarot readings, horary astrology interpretations, rune castings, and angel card readings—are intended for <strong>personal reflection, spiritual exploration, and entertainment purposes only</strong>.</p>
+        <p>All divination services offered on Aurora Eyes—including tarot readings, horary astrology interpretations, rune castings, and angel card readings—are intended for <strong>personal reflection, spiritual exploration, and entertainment purposes only</strong>.</p>
       </section>
 
       <section>
@@ -42,7 +42,7 @@ const Disclaimer = () => (
 
       <section>
         <h2 className="font-heading text-lg text-foreground mb-2">Your Responsibility</h2>
-        <p>By using this platform, you acknowledge that you are solely responsible for any actions or decisions you make based on the readings you receive. Mystic Divination and its creators accept no liability for outcomes resulting from the use of this service.</p>
+        <p>By using this platform, you acknowledge that you are solely responsible for any actions or decisions you make based on the readings you receive. Aurora Eyes and its creators accept no liability for outcomes resulting from the use of this service.</p>
       </section>
     </div>
   </div>
