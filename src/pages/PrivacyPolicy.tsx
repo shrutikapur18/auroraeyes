@@ -5,7 +5,7 @@ const PrivacyPolicy = () => (
   <div className="max-w-3xl mx-auto py-10">
     <SEOHead
       title="Privacy Policy"
-      description="Learn how Mystic Divination collects, uses, and protects your information when you use our tarot, rune, angel card, and horary astrology services."
+      description="Learn how Aurora Eyes collects, uses, and protects your information when you use our tarot, rune, angel card, and horary astrology services."
       canonicalPath="/privacy-policy"
     />
     <Breadcrumbs items={[{ label: "Privacy Policy" }]} />
