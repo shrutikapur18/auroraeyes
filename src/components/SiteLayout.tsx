@@ -211,6 +211,7 @@ const SiteLayout = ({ children }: { children: React.ReactNode }) => {
         </div>
       </footer>
 
+      <InstallPrompt />
     </div>
   );
 };
