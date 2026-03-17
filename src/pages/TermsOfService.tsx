@@ -37,7 +37,7 @@ const TermsOfService = () => (
 
       <section>
         <h2 className="font-heading text-lg text-foreground mb-2">Intellectual Property</h2>
-        <p>All content on this website—including text, interpretations, card descriptions, imagery, design elements, and code—is the intellectual property of Mystic Divination and is protected by applicable copyright laws. You may not reproduce, distribute, or create derivative works from this content without express written permission.</p>
+        <p>All content on this website—including text, interpretations, card descriptions, imagery, design elements, and code—is the intellectual property of Aurora Eyes and is protected by applicable copyright laws. You may not reproduce, distribute, or create derivative works from this content without express written permission.</p>
       </section>
 
       <section>
