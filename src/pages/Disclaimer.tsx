@@ -5,7 +5,7 @@ const Disclaimer = () => (
   <div className="max-w-3xl mx-auto py-10">
     <SEOHead
       title="Disclaimer"
-      description="Important disclaimer about the use of tarot readings, horary astrology, rune castings, and angel card readings on Mystic Divination."
+      description="Important disclaimer about the use of tarot readings, horary astrology, rune castings, and angel card readings on Aurora Eyes."
       canonicalPath="/disclaimer"
     />
     <Breadcrumbs items={[{ label: "Disclaimer" }]} />
