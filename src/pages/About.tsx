@@ -31,7 +31,7 @@ const About = () => (
 
       <section>
         <h2 className="font-heading text-lg text-foreground mb-2">For Everyone</h2>
-        <p>Whether you're a seasoned practitioner or simply curious about what the cards might reveal, Mystic Divination welcomes you. Our educational guides, card meaning references, and interactive tools are designed to support your journey — wherever it leads.</p>
+        <p>Whether you're a seasoned practitioner or simply curious about what the cards might reveal, Aurora Eyes welcomes you. Our educational guides, card meaning references, and interactive tools are designed to support your journey — wherever it leads.</p>
       </section>
     </div>
   </div>

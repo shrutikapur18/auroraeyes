@@ -85,7 +85,7 @@ const Index = () => {
           animate={{ textShadow: ["0 0 20px hsl(45 80% 55% / 0.2)", "0 0 40px hsl(45 80% 55% / 0.4)", "0 0 20px hsl(45 80% 55% / 0.2)"] }}
           transition={{ duration: 4, repeat: Infinity }}
         >
-          Mystic Divination
+          Aurora Eyes
         </motion.h1>
         <p className="text-sm md:text-lg lg:text-xl text-muted-foreground font-body font-light tracking-wide max-w-xl lg:max-w-2xl mx-auto lg:leading-relaxed">
           Choose a divination method and focus on your question.
