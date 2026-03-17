@@ -4,8 +4,8 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 const About = () => (
   <div className="max-w-3xl mx-auto py-10">
     <SEOHead
-      title="About Mystic Divination"
-      description="Learn about Mystic Divination — a platform offering spiritual guidance through tarot, rune casting, angel cards, and horary astrology."
+      title="About Aurora Eyes"
+      description="Learn about Aurora Eyes — a platform offering spiritual guidance through tarot, rune casting, angel cards, and horary astrology."
       canonicalPath="/about"
     />
     <Breadcrumbs items={[{ label: "About" }]} />
