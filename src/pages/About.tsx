@@ -15,7 +15,7 @@ const About = () => (
     <div className="space-y-6 text-foreground/85 text-sm leading-relaxed">
       <section>
         <h2 className="font-heading text-lg text-foreground mb-2">Our Purpose</h2>
-        <p>Mystic Divination is a platform dedicated to making the wisdom of traditional divination systems accessible to everyone. We offer spiritual guidance through tarot, rune casting, angel card readings, and horary astrology — ancient practices that have helped people reflect on life's questions for centuries.</p>
+        <p>Aurora Eyes is a platform dedicated to making the wisdom of traditional divination systems accessible to everyone. We offer spiritual guidance through tarot, rune casting, angel card readings, and horary astrology — ancient practices that have helped people reflect on life's questions for centuries.</p>
       </section>
 
       <section>

@@ -184,7 +184,7 @@ const SiteLayout = ({ children }: { children: React.ReactNode }) => {
           <div className="text-center">
             <p className="font-heading text-sm lg:text-base gold-text mb-2 flex items-center justify-center gap-2">
               <Sparkles className="w-4 h-4" />
-              Mystic Divination
+              Aurora Eyes
               <Sparkles className="w-4 h-4" />
             </p>
             <p className="text-xs lg:text-sm text-muted-foreground mb-4">For entertainment and spiritual guidance purposes. © {new Date().getFullYear()}</p>

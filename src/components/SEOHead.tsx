@@ -8,7 +8,7 @@ interface SEOHeadProps {
   jsonLd?: Record<string, unknown>;
 }
 
-const SITE_NAME = "Mystic Divination";
+const SITE_NAME = "Aurora Eyes";
 const SITE_URL = "https://tarotguidance.lovable.app";
 const DEFAULT_OG = "/og-image.png";
 
