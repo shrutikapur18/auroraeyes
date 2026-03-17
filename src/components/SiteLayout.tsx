@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Sparkles, Layers, Scale, Hexagon, Feather, Calendar, Compass, Sun, BookOpen, FileText, Home } from "lucide-react";
 import CosmicBackground from "./CosmicBackground";
+import InstallPrompt from "./InstallPrompt";
 
 const navLinks = [
   { to: "/", label: "Home", Icon: Home },
@@ -210,6 +211,7 @@ const SiteLayout = ({ children }: { children: React.ReactNode }) => {
         </div>
       </footer>
 
+      <InstallPrompt />
     </div>
   );
 };
