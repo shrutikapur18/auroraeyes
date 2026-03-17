@@ -10,7 +10,7 @@ const About = () => (
     />
     <Breadcrumbs items={[{ label: "About" }]} />
 
-    <h1 className="font-heading text-3xl gold-text mb-6">About Mystic Divination</h1>
+    <h1 className="font-heading text-3xl gold-text mb-6">About Aurora Eyes</h1>
 
     <div className="space-y-6 text-foreground/85 text-sm leading-relaxed">
       <section>
