@@ -33,7 +33,7 @@ const PickACardReading = () => {
       const updated = prev.map((dc, i) => (i === index ? { ...dc, isRevealed: true } : dc));
       setTimeout(() => {
         setPhase("loading");
-        const text = generateLocalReading(question, updated);
+        const text = generateLocalReading(question, updated.filter(c => c.isRevealed));
         setReading(text); setPhase("reading");
       }, 800);
       return updated;
@@ -74,7 +74,7 @@ const PickACardReading = () => {
         {phase === "fan" && (
           <motion.div key="fan" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             <p className="text-center text-xs text-muted-foreground italic mb-4">"{question}"</p>
-            <CardFanSpread requiredCount={3} positions={["Card 1", "Card 2", "Card 3"]} onComplete={(cards) => { setDrawnCards(cards); setPhase("spread"); }} />
+            <CardFanSpread requiredCount={1} positions={["Your Card"]} onComplete={(cards) => { setDrawnCards(cards); setPhase("spread"); }} />
           </motion.div>
         )}
         {(phase === "spread" || phase === "reading" || phase === "loading") && (
