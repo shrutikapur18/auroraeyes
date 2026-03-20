@@ -114,10 +114,10 @@ Keep paragraphs short for mobile. Ensure the response finishes clearly.`;
 ${type === "rune" ? "Runes" : "Cards"} drawn:
 ${symbolsDescription}
 
-The reading has already been given. The user is now asking follow-up questions about the same reading. Stay in character as their reader, referencing the same ${type === "rune" ? "runes" : "cards"} and their meanings. Keep responses between 80 and 120 words. Write naturally and conversationally. Use confident language. Do not use robotic or generic AI phrasing.`;
+The reading has already been given. The user is now asking follow-up questions about the same reading. Stay in character — talk like a friend, keep it under 100 words, use simple English, be direct and practical. No jargon. No dramatic language. Use "you" language.`;
 
       messages.push({ role: "user", content: contextPrompt });
-      messages.push({ role: "assistant", content: "I understand. I'll continue interpreting these symbols for you." });
+      messages.push({ role: "assistant", content: "Got it — let me look at that for you." });
 
       // Add conversation history
       for (const msg of conversationHistory) {
