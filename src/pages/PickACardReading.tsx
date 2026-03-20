@@ -33,7 +33,7 @@ const PickACardReading = () => {
       const updated = prev.map((dc, i) => (i === index ? { ...dc, isRevealed: true } : dc));
       setTimeout(() => {
         setPhase("loading");
-        const text = generateLocalReading(question, updated);
+        const text = generateLocalReading(question, updated.filter(c => c.isRevealed));
         setReading(text); setPhase("reading");
       }, 800);
       return updated;
