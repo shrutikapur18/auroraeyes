@@ -38,8 +38,8 @@ const Index = () => {
   const [reading, setReading] = useState("");
   const [error, setError] = useState("");
 
-  const cardCount = tarotMode === "three-card" ? 3 : tarotMode === "celtic-cross" ? 10 : 3;
-  const positions = tarotMode === "three-card" ? threeCardPositions : tarotMode === "celtic-cross" ? celticCrossPositions : ["Your Card", "Card 2", "Card 3"];
+  const cardCount = tarotMode === "three-card" ? 3 : tarotMode === "celtic-cross" ? 10 : 1;
+  const positions = tarotMode === "three-card" ? threeCardPositions : tarotMode === "celtic-cross" ? celticCrossPositions : ["Your Card"];
 
   const handleStartShuffle = () => {
     if (!question.trim()) { setError("Please enter your question first."); return; }
