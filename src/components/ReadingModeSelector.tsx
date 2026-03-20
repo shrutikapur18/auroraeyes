@@ -10,7 +10,7 @@ interface ReadingModeSelectorProps {
 const modes: { value: ReadingMode; label: string; desc: string }[] = [
   { value: "three-card", label: "Three Card", desc: "Past · Present · Future" },
   { value: "celtic-cross", label: "Celtic Cross", desc: "10-card deep reading" },
-  { value: "pick-a-card", label: "Pick a Card", desc: "Quick intuitive draw" },
+  { value: "pick-a-card", label: "Pick a Card", desc: "Single intuitive draw" },
 ];
 
 const ReadingModeSelector = ({ mode, setMode, disabled }: ReadingModeSelectorProps) => {
