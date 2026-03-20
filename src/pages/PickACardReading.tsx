@@ -4,16 +4,16 @@ import SEOHead from "@/components/SEOHead";
 import QuestionInput from "@/components/QuestionInput";
 import FocusMoment from "@/components/FocusMoment";
 import InteractiveShuffle from "@/components/InteractiveShuffle";
-import CardFanSpread from "@/components/CardFanSpread";
 import ReadingTable from "@/components/ReadingTable";
 import PickACardSpread from "@/components/PickACardSpread";
 import ReadingPanel from "@/components/ReadingPanel";
 import ShareButtons from "@/components/ShareButtons";
 import type { DrawnCard } from "@/data/tarotDeck";
+import { drawCards } from "@/data/tarotDeck";
 import { generateLocalReading } from "@/lib/tarotReading";
 import { Link } from "react-router-dom";
 
-type Phase = "input" | "focus" | "shuffling" | "fan" | "spread" | "reading" | "loading";
+type Phase = "input" | "focus" | "shuffling" | "spread" | "reading" | "loading";
 
 const PickACardReading = () => {
   const [question, setQuestion] = useState("");
