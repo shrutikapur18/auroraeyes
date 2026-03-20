@@ -68,13 +68,11 @@ const PickACardReading = () => {
         {phase === "focus" && <FocusMoment key="focus" onComplete={() => setPhase("shuffling")} method="tarot" />}
         {phase === "shuffling" && (
           <motion.div key="shuffling" className="py-10" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <InteractiveShuffle onComplete={() => setPhase("fan")} minPresses={3} />
-          </motion.div>
-        )}
-        {phase === "fan" && (
-          <motion.div key="fan" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <p className="text-center text-xs text-muted-foreground italic mb-4">"{question}"</p>
-            <CardFanSpread requiredCount={3} positions={["Card 1", "Card 2", "Card 3"]} onComplete={(cards) => { setDrawnCards(cards); setPhase("spread"); }} />
+            <InteractiveShuffle onComplete={() => {
+              const cards = drawCards(3).map((c, i) => ({ ...c, position: `Card ${i + 1}`, isRevealed: false }));
+              setDrawnCards(cards);
+              setPhase("spread");
+            }} minPresses={3} />
           </motion.div>
         )}
         {(phase === "spread" || phase === "reading" || phase === "loading") && (
