@@ -42,7 +42,7 @@ const DivinationMethodSelector = ({ method, setMethod }: DivinationMethodSelecto
         Choose your divination method
       </p>
       
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 lg:gap-6 px-1">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 lg:gap-6 px-1">
         {methods.map((m, i) => (
           <motion.button
             key={m.value}
