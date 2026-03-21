@@ -16,18 +16,7 @@ const methods: { value: DivinationMethod; label: string; icon: string; desc: str
 ];
 
 const DivinationMethodSelector = ({ method, setMethod }: DivinationMethodSelectorProps) => {
-  const navigate = useNavigate();
-
   const handleSelect = (m: DivinationMethod) => {
-    if (m === "horary") {
-      const el = document.getElementById("horary-section");
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth" });
-      } else {
-        navigate("/horary-reading");
-      }
-      return;
-    }
     setMethod(m);
   };
 
