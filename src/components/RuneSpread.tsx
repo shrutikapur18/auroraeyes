@@ -19,10 +19,6 @@ const RuneSpread = ({ question, onError }: RuneSpreadProps) => {
   const [reading, setReading] = useState("");
 
   const handleCast = () => {
-    if (!question.trim()) {
-      onError("Please enter your question first.");
-      return;
-    }
     onError("");
     setPhase("focus");
   };
