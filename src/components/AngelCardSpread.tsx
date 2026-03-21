@@ -27,10 +27,6 @@ const AngelCardSpread = ({ question, onError }: AngelCardSpreadProps) => {
     : ["Past Guidance", "Present Wisdom", "Future Light"];
 
   const handleStart = () => {
-    if (!question.trim()) {
-      onError("Please enter your question first.");
-      return;
-    }
     onError("");
     setPhase("choose-count");
   };
