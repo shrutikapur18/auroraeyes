@@ -31,7 +31,7 @@ type Phase = "input" | "focus" | "shuffling" | "fan" | "spread" | "reading" | "l
 
 const Index = () => {
   const [question, setQuestion] = useState("");
-  const [divinationMethod, setDivinationMethod] = useState<DivinationMethod>("tarot");
+  const [divinationMethod, setDivinationMethod] = useState<DivinationMethod | null>(null);
   const [tarotMode, setTarotMode] = useState<ReadingMode>("three-card");
   const [phase, setPhase] = useState<Phase>("input");
   const [drawnCards, setDrawnCards] = useState<DrawnCard[]>([]);
@@ -42,8 +42,22 @@ const Index = () => {
   const positions = tarotMode === "three-card" ? threeCardPositions : tarotMode === "celtic-cross" ? celticCrossPositions : ["Your Card"];
 
   const handleStartShuffle = () => {
-    if (!question.trim()) { setError("Please enter your question first."); return; }
     setError(""); setPhase("focus");
+  };
+
+  const handleContinue = () => {
+    if (!divinationMethod) return;
+    setError("");
+    if (divinationMethod === "tarot") {
+      setPhase("focus");
+    } else if (divinationMethod === "runes") {
+      // RuneSpread handles its own flow
+    } else if (divinationMethod === "angel") {
+      // AngelCardSpread handles its own flow
+    } else if (divinationMethod === "horary") {
+      const el = document.getElementById("horary-section");
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   const handleReveal = useCallback((index: number) => {
@@ -63,9 +77,9 @@ const Index = () => {
     });
   }, [tarotMode, cardCount, question, drawnCards]);
 
-  const handleReset = () => { setPhase("input"); setDrawnCards([]); setReading(""); setError(""); setQuestion(""); };
+  const handleReset = () => { setPhase("input"); setDrawnCards([]); setReading(""); setError(""); setQuestion(""); setDivinationMethod(null); };
 
-  const handleMethodChange = (m: DivinationMethod) => { setDivinationMethod(m); handleReset(); };
+  const handleMethodChange = (m: DivinationMethod) => { setDivinationMethod(m); setError(""); };
 
   const isTarotMethod = divinationMethod === "tarot";
 
