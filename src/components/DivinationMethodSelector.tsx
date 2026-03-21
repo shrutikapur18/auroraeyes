@@ -4,14 +4,12 @@ import { useNavigate } from "react-router-dom";
 export type DivinationMethod = "tarot" | "yes-no" | "pick-a-card" | "angel" | "runes" | "horary";
 
 interface DivinationMethodSelectorProps {
-  method: DivinationMethod;
+  method: DivinationMethod | null;
   setMethod: (m: DivinationMethod) => void;
 }
 
 const methods: { value: DivinationMethod; label: string; icon: string; desc: string }[] = [
   { value: "tarot", label: "Tarot Reading", icon: "🃏", desc: "Three Card or Celtic Cross" },
-  { value: "yes-no", label: "Yes / No Tarot", icon: "⚖️", desc: "Quick single-card answer" },
-  { value: "pick-a-card", label: "Pick a Card", icon: "✨", desc: "Intuitive single draw" },
   { value: "angel", label: "Angel Cards", icon: "👼", desc: "Divine oracle messages" },
   { value: "runes", label: "Rune Reading", icon: "ᚱ", desc: "Elder Futhark wisdom" },
   { value: "horary", label: "Horary Astrology", icon: "🪐", desc: "Ask the stars a question" },
