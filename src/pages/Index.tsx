@@ -129,13 +129,12 @@ const Index = () => {
                   )}
 
                   {divinationMethod !== "horary" && (
-                    <div className="flex justify-center mb-10 lg:mb-14">
+                    <div className="flex flex-col items-center gap-2 mb-10 lg:mb-14">
                       <motion.button
                         onClick={() => {
                           if (divinationMethod === "tarot") {
                             handleStartShuffle();
                           } else if (divinationMethod === "runes" || divinationMethod === "angel") {
-                            // These components handle their own start flow via onError
                             handleContinue();
                           }
                         }}
@@ -145,6 +144,20 @@ const Index = () => {
                       >
                         Continue
                       </motion.button>
+                      {!question.trim() && (
+                        <button
+                          onClick={() => {
+                            if (divinationMethod === "tarot") {
+                              handleStartShuffle();
+                            } else if (divinationMethod === "runes" || divinationMethod === "angel") {
+                              handleContinue();
+                            }
+                          }}
+                          className="text-xs text-muted-foreground hover:text-primary/70 transition-colors tracking-wide"
+                        >
+                          Skip — get a general reading
+                        </button>
+                      )}
                     </div>
                   )}
 

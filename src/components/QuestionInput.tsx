@@ -61,10 +61,10 @@ const QuestionInput = ({ question, setQuestion, disabled }: QuestionInputProps) 
       transition={{ delay: 0.3, duration: 0.6 }}
     >
       <label className="block text-sm lg:text-base font-heading text-primary mb-2 tracking-widest uppercase">
-        Ask your question
+        Ask a question <span className="text-muted-foreground text-xs normal-case tracking-normal">(optional)</span>
       </label>
       <p className="text-xs lg:text-sm text-muted-foreground mb-3 italic">
-        Take a moment to focus on your question before beginning the reading.
+        Your question helps make this more accurate.
       </p>
       <div className="relative">
         <input
