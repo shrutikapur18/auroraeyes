@@ -31,7 +31,7 @@ type Phase = "input" | "focus" | "shuffling" | "fan" | "spread" | "reading" | "l
 
 const Index = () => {
   const [question, setQuestion] = useState("");
-  const [divinationMethod, setDivinationMethod] = useState<DivinationMethod>("tarot");
+  const [divinationMethod, setDivinationMethod] = useState<DivinationMethod | null>(null);
   const [tarotMode, setTarotMode] = useState<ReadingMode>("three-card");
   const [phase, setPhase] = useState<Phase>("input");
   const [drawnCards, setDrawnCards] = useState<DrawnCard[]>([]);
@@ -42,8 +42,22 @@ const Index = () => {
   const positions = tarotMode === "three-card" ? threeCardPositions : tarotMode === "celtic-cross" ? celticCrossPositions : ["Your Card"];
 
   const handleStartShuffle = () => {
-    if (!question.trim()) { setError("Please enter your question first."); return; }
     setError(""); setPhase("focus");
+  };
+
+  const handleContinue = () => {
+    if (!divinationMethod) return;
+    setError("");
+    if (divinationMethod === "tarot") {
+      setPhase("focus");
+    } else if (divinationMethod === "runes") {
+      // RuneSpread handles its own flow
+    } else if (divinationMethod === "angel") {
+      // AngelCardSpread handles its own flow
+    } else if (divinationMethod === "horary") {
+      const el = document.getElementById("horary-section");
+      if (el) el.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   const handleReveal = useCallback((index: number) => {
@@ -63,9 +77,9 @@ const Index = () => {
     });
   }, [tarotMode, cardCount, question, drawnCards]);
 
-  const handleReset = () => { setPhase("input"); setDrawnCards([]); setReading(""); setError(""); setQuestion(""); };
+  const handleReset = () => { setPhase("input"); setDrawnCards([]); setReading(""); setError(""); setQuestion(""); setDivinationMethod(null); };
 
-  const handleMethodChange = (m: DivinationMethod) => { setDivinationMethod(m); handleReset(); };
+  const handleMethodChange = (m: DivinationMethod) => { setDivinationMethod(m); setError(""); };
 
   const isTarotMethod = divinationMethod === "tarot";
 
@@ -96,39 +110,49 @@ const Index = () => {
         {phase === "input" && (
           <motion.div key="input" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             <DivinationMethodSelector method={divinationMethod} setMethod={handleMethodChange} />
-            <QuestionInput question={question} setQuestion={setQuestion} />
-            {error && <p className="text-center text-sm text-destructive mb-4">{error}</p>}
 
-            {isTarotMethod && (
-              <>
-                <ReadingModeSelector mode={tarotMode} setMode={setTarotMode} />
-                <div className="flex justify-center mb-10 lg:mb-14">
-                  <motion.button
-                    onClick={handleStartShuffle}
-                    className="mystical-button px-8 lg:px-12 py-4 lg:py-5 rounded-xl font-heading text-base md:text-lg lg:text-xl tracking-widest active:scale-95"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    Begin Reading
-                  </motion.button>
-                </div>
-              </>
-            )}
-            {divinationMethod === "yes-no" && <YesNoSpread question={question} onError={setError} />}
-            {divinationMethod === "pick-a-card" && (
-              <div className="flex justify-center mb-10 lg:mb-14">
-                <motion.button
-                  onClick={() => { setTarotMode("pick-a-card"); handleStartShuffle(); }}
-                  className="mystical-button px-8 lg:px-12 py-4 lg:py-5 rounded-xl font-heading text-base md:text-lg lg:text-xl tracking-widest active:scale-95"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+            <AnimatePresence>
+              {divinationMethod && (
+                <motion.div
+                  key="question-section"
+                  initial={{ opacity: 0, y: 20, height: 0 }}
+                  animate={{ opacity: 1, y: 0, height: "auto" }}
+                  exit={{ opacity: 0, y: 20, height: 0 }}
+                  transition={{ duration: 0.4, ease: "easeOut" }}
+                  className="overflow-hidden"
                 >
-                  Shuffle & Pick
-                </motion.button>
-              </div>
-            )}
-            {divinationMethod === "angel" && <AngelCardSpread question={question} onError={setError} />}
-            {divinationMethod === "runes" && <RuneSpread question={question} onError={setError} />}
+                  <QuestionInput question={question} setQuestion={setQuestion} />
+                  {error && <p className="text-center text-sm text-destructive mb-4">{error}</p>}
+
+                  {isTarotMethod && (
+                    <ReadingModeSelector mode={tarotMode} setMode={setTarotMode} />
+                  )}
+
+                  {divinationMethod !== "horary" && (
+                    <div className="flex justify-center mb-10 lg:mb-14">
+                      <motion.button
+                        onClick={() => {
+                          if (divinationMethod === "tarot") {
+                            handleStartShuffle();
+                          } else if (divinationMethod === "runes" || divinationMethod === "angel") {
+                            // These components handle their own start flow via onError
+                            handleContinue();
+                          }
+                        }}
+                        className="mystical-button px-8 lg:px-12 py-4 lg:py-5 rounded-xl font-heading text-base md:text-lg lg:text-xl tracking-widest active:scale-95"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        Continue
+                      </motion.button>
+                    </div>
+                  )}
+
+                  {divinationMethod === "angel" && <AngelCardSpread question={question} onError={setError} />}
+                  {divinationMethod === "runes" && <RuneSpread question={question} onError={setError} />}
+                </motion.div>
+              )}
+            </AnimatePresence>
             <DailyDivination />
 
             {/* Horary Astrology Section */}

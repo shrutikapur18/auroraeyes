@@ -1,35 +1,21 @@
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
 
 export type DivinationMethod = "tarot" | "yes-no" | "pick-a-card" | "angel" | "runes" | "horary";
 
 interface DivinationMethodSelectorProps {
-  method: DivinationMethod;
+  method: DivinationMethod | null;
   setMethod: (m: DivinationMethod) => void;
 }
 
 const methods: { value: DivinationMethod; label: string; icon: string; desc: string }[] = [
   { value: "tarot", label: "Tarot Reading", icon: "🃏", desc: "Three Card or Celtic Cross" },
-  { value: "yes-no", label: "Yes / No Tarot", icon: "⚖️", desc: "Quick single-card answer" },
-  { value: "pick-a-card", label: "Pick a Card", icon: "✨", desc: "Intuitive single draw" },
   { value: "angel", label: "Angel Cards", icon: "👼", desc: "Divine oracle messages" },
   { value: "runes", label: "Rune Reading", icon: "ᚱ", desc: "Elder Futhark wisdom" },
   { value: "horary", label: "Horary Astrology", icon: "🪐", desc: "Ask the stars a question" },
 ];
 
 const DivinationMethodSelector = ({ method, setMethod }: DivinationMethodSelectorProps) => {
-  const navigate = useNavigate();
-
   const handleSelect = (m: DivinationMethod) => {
-    if (m === "horary") {
-      const el = document.getElementById("horary-section");
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth" });
-      } else {
-        navigate("/horary-reading");
-      }
-      return;
-    }
     setMethod(m);
   };
 
@@ -44,7 +30,7 @@ const DivinationMethodSelector = ({ method, setMethod }: DivinationMethodSelecto
         Choose your divination method
       </p>
       
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 lg:gap-6 px-1">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 lg:gap-6 px-1">
         {methods.map((m, i) => (
           <motion.button
             key={m.value}
