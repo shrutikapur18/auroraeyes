@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import cardBackImage from "@/assets/card-back.jpg";
 
 interface InteractiveShuffleProps {
@@ -8,11 +8,10 @@ interface InteractiveShuffleProps {
   label?: string;
 }
 
-const InteractiveShuffle = ({ onComplete, minPresses = 3, label = "Shuffle the Cards" }: InteractiveShuffleProps) => {
+const InteractiveShuffle = ({ onComplete, minPresses = 3 }: InteractiveShuffleProps) => {
   const [presses, setPresses] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const timings = useRef<number[]>([]);
-  const shuffleKey = useRef(0);
 
   const generateSeed = useCallback(() => {
     const now = Date.now();
@@ -29,13 +28,11 @@ const InteractiveShuffle = ({ onComplete, minPresses = 3, label = "Shuffle the C
     timings.current.push(Date.now());
     const newPresses = presses + 1;
     setPresses(newPresses);
-    shuffleKey.current++;
     setIsAnimating(true);
 
     setTimeout(() => {
       setIsAnimating(false);
       if (newPresses >= minPresses + 2) {
-        // Auto-complete after enough presses
         const seed = generateSeed();
         onComplete(seed);
       }
@@ -48,16 +45,14 @@ const InteractiveShuffle = ({ onComplete, minPresses = 3, label = "Shuffle the C
     onComplete(seed);
   };
 
-  const progress = Math.min(presses / minPresses, 1);
-
   return (
     <motion.div
-      className="flex flex-col items-center gap-6"
+      className="flex flex-col items-center gap-8"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
     >
-      <p className="text-xs text-muted-foreground italic text-center max-w-sm">
-        Your actions influence the order of the cards. Press shuffle to infuse your energy.
+      <p className="text-xs text-muted-foreground/50 italic text-center max-w-sm tracking-wide">
+        Each shuffle weaves your energy into the cards
       </p>
 
       {/* Card deck visualization */}
@@ -65,7 +60,7 @@ const InteractiveShuffle = ({ onComplete, minPresses = 3, label = "Shuffle the C
         {[0, 1, 2, 3, 4].map((i) => (
           <motion.div
             key={i}
-            className="absolute inset-0 rounded-lg overflow-hidden border border-primary/20 card-shadow"
+            className="absolute inset-0 rounded-lg overflow-hidden border border-primary/15"
             style={{ top: -i * 2, left: i * 1.5, zIndex: 5 - i }}
             animate={
               isAnimating
@@ -90,49 +85,49 @@ const InteractiveShuffle = ({ onComplete, minPresses = 3, label = "Shuffle the C
       {/* Shuffle button */}
       <motion.button
         onClick={handlePress}
-        className={`px-8 py-4 rounded-xl border-2 border-primary text-primary font-heading text-lg tracking-widest transition-all ${
-          isAnimating ? "opacity-50" : "hover:bg-primary/30"
-        } ${presses > 0 ? "shuffle-pulse" : "bg-primary/20 gold-glow"}`}
-        whileHover={!isAnimating ? { scale: 1.05 } : {}}
-        whileTap={!isAnimating ? { scale: 0.95 } : {}}
+        className={`px-10 py-4 rounded-xl border border-primary/30 text-primary font-heading text-base tracking-[0.2em] transition-all duration-500 ${
+          isAnimating ? "opacity-50" : "hover:bg-primary/10 hover:border-primary/40"
+        } ${presses > 0 ? "shuffle-pulse" : "bg-primary/5"}`}
+        whileHover={!isAnimating ? { scale: 1.04 } : {}}
+        whileTap={!isAnimating ? { scale: 0.96 } : {}}
         disabled={isAnimating}
       >
-        {label}
+        Shuffle the Deck
       </motion.button>
 
-      {/* Progress indicator */}
+      {/* Progress */}
       {presses > 0 && (
         <motion.div
-          className="flex flex-col items-center gap-2"
+          className="flex flex-col items-center gap-3"
           initial={{ opacity: 0, y: 5 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          <div className="flex gap-1">
+          <div className="flex gap-1.5">
             {Array.from({ length: minPresses }).map((_, i) => (
               <motion.div
                 key={i}
-                className={`w-2 h-2 rounded-full ${i < presses ? "bg-primary" : "bg-muted"}`}
+                className={`w-1.5 h-1.5 rounded-full transition-colors duration-500 ${i < presses ? "bg-primary/70" : "bg-muted/40"}`}
                 animate={i < presses ? { scale: [1, 1.3, 1] } : {}}
                 transition={{ duration: 0.3 }}
               />
             ))}
           </div>
-          <p className="text-[10px] text-muted-foreground">
+          <p className="text-[10px] text-muted-foreground/40 italic tracking-wide">
             {presses < minPresses
-              ? `Shuffle ${minPresses - presses} more time${minPresses - presses > 1 ? "s" : ""}`
-              : "Your energy has been infused"}
+              ? `${minPresses - presses} more shuffle${minPresses - presses > 1 ? "s" : ""} to infuse your energy`
+              : "Your energy has been woven into the deck"}
           </p>
 
           {presses >= minPresses && (
             <motion.button
               onClick={handleDone}
-              className="mt-2 px-6 py-3 rounded-lg bg-primary/20 border border-primary text-primary font-heading text-sm tracking-widest hover:bg-primary/30 transition-all gold-glow"
+              className="mt-2 mystical-button px-8 py-3.5 rounded-xl font-heading text-sm tracking-[0.2em]"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.04, boxShadow: "0 0 30px hsl(43 70% 65% / 0.3)" }}
+              whileTap={{ scale: 0.96 }}
             >
-              Begin Reading
+              Begin the Reading
             </motion.button>
           )}
         </motion.div>

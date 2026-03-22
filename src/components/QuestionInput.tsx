@@ -55,16 +55,23 @@ const QuestionInput = ({ question, setQuestion, disabled }: QuestionInputProps) 
 
   return (
     <motion.div
-      className="max-w-lg lg:max-w-2xl mx-auto mb-6 md:mb-8 lg:mb-10 relative z-10 px-1 cosmic-focus-glow"
-      initial={{ opacity: 0, y: 10 }}
+      className="max-w-lg lg:max-w-2xl mx-auto mb-8 md:mb-10 lg:mb-12 relative z-10 px-2"
+      initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.3, duration: 0.6 }}
+      transition={{ delay: 0.2, duration: 0.7 }}
     >
-      <label className="block text-sm lg:text-base font-heading text-primary mb-2 tracking-widest uppercase">
-        Ask a question <span className="text-muted-foreground text-xs normal-case tracking-normal">(optional)</span>
+      {/* Decorative line */}
+      <div className="flex justify-center items-center gap-3 mb-6">
+        <div className="h-px w-8 bg-gradient-to-r from-transparent to-primary/20" />
+        <span className="text-primary/30 text-xs">✦</span>
+        <div className="h-px w-8 bg-gradient-to-l from-transparent to-primary/20" />
+      </div>
+
+      <label className="block text-sm lg:text-base font-heading text-primary/80 mb-2 tracking-[0.15em] text-center">
+        Focus on your question
       </label>
-      <p className="text-xs lg:text-sm text-muted-foreground mb-3 italic">
-        Your question helps make this more accurate.
+      <p className="text-[11px] lg:text-xs text-muted-foreground/60 mb-4 italic text-center">
+        Your intention deepens the reading — but it is not required
       </p>
       <div className="relative">
         <input
@@ -72,8 +79,8 @@ const QuestionInput = ({ question, setQuestion, disabled }: QuestionInputProps) 
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
           disabled={disabled}
-          placeholder="What do you seek guidance on?"
-          className="w-full px-4 md:px-5 lg:px-6 py-4 lg:py-5 pr-14 rounded-xl bg-card/60 border border-border/40 text-foreground text-base lg:text-lg placeholder:text-muted-foreground font-body focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/30 transition-all disabled:opacity-50 backdrop-blur-md"
+          placeholder="What truth do you seek..."
+          className="w-full px-5 md:px-6 lg:px-8 py-4 lg:py-5 pr-14 rounded-xl bg-card/40 border border-border/30 text-foreground text-base lg:text-lg placeholder:text-muted-foreground/40 font-body focus:outline-none focus:ring-1 focus:ring-primary/20 focus:border-primary/20 transition-all duration-500 disabled:opacity-50 backdrop-blur-xl"
         />
 
         {speechSupported && (
@@ -81,14 +88,14 @@ const QuestionInput = ({ question, setQuestion, disabled }: QuestionInputProps) 
             type="button"
             onClick={toggleListening}
             disabled={disabled}
-            className={`absolute right-2 top-1/2 -translate-y-1/2 p-3 rounded-full transition-all z-10 ${
+            className={`absolute right-2 top-1/2 -translate-y-1/2 p-3 rounded-full transition-all duration-300 z-10 ${
               listening
-                ? "bg-primary/20 text-primary"
-                : "text-muted-foreground hover:text-primary hover:bg-muted/40 active:bg-primary/15"
+                ? "bg-primary/15 text-primary"
+                : "text-muted-foreground/40 hover:text-primary/60 hover:bg-muted/20"
             } disabled:opacity-50`}
             title={listening ? "Stop listening" : "Speak your question"}
           >
-            {listening ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
+            {listening ? <MicOff className="w-4 h-4" /> : <Mic className="w-4 h-4" />}
           </button>
         )}
       </div>
@@ -105,8 +112,8 @@ const QuestionInput = ({ question, setQuestion, disabled }: QuestionInputProps) 
               {[0, 1, 2, 3, 4].map((i) => (
                 <motion.div
                   key={i}
-                  className="w-1 rounded-full bg-primary"
-                  animate={{ height: [4, 16, 4] }}
+                  className="w-0.5 rounded-full bg-primary/60"
+                  animate={{ height: [3, 14, 3] }}
                   transition={{
                     duration: 0.6,
                     repeat: Infinity,
@@ -116,8 +123,8 @@ const QuestionInput = ({ question, setQuestion, disabled }: QuestionInputProps) 
                 />
               ))}
             </div>
-            <span className="text-xs font-heading text-primary tracking-widest animate-pulse">
-              Listening…
+            <span className="text-[10px] font-heading text-primary/50 tracking-[0.2em]">
+              Listening...
             </span>
           </motion.div>
         )}

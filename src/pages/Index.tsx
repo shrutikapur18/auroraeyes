@@ -92,23 +92,68 @@ const Index = () => {
         jsonLd={{ "@context": "https://schema.org", "@type": "WebSite", name: "Aurora Eyes", url: "https://tarotguidance.lovable.app", description: "Free online divination readings — tarot, runes, and angel cards." }}
       />
 
-      {/* Hero section — larger on desktop */}
-      <motion.header className="text-center pt-10 md:pt-12 lg:pt-16 pb-6 lg:pb-10 px-2" initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
+      {/* Hero section */}
+      <motion.header className="text-center pt-12 md:pt-16 lg:pt-20 pb-8 lg:pb-12 px-2" initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, ease: "easeOut" }}>
+        <motion.div
+          className="mb-4 lg:mb-6"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.2, duration: 0.8 }}
+        >
+          <motion.div
+            className="w-16 h-16 md:w-20 md:h-20 mx-auto mb-5 rounded-full border border-primary/20 flex items-center justify-center"
+            style={{ background: "radial-gradient(circle, hsl(43 70% 65% / 0.08), transparent)" }}
+            animate={{
+              boxShadow: [
+                "0 0 20px hsl(43 70% 65% / 0.1)",
+                "0 0 40px hsl(43 70% 65% / 0.2)",
+                "0 0 20px hsl(43 70% 65% / 0.1)",
+              ],
+            }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <motion.span
+              className="text-primary text-2xl md:text-3xl"
+              animate={{ rotate: [0, 360] }}
+              transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+            >
+              ✦
+            </motion.span>
+          </motion.div>
+        </motion.div>
+        
         <motion.h1
-          className="text-3xl md:text-6xl lg:text-7xl font-heading gold-text mb-3 lg:mb-5 tracking-wider"
-          animate={{ textShadow: ["0 0 20px hsl(45 80% 55% / 0.2)", "0 0 40px hsl(45 80% 55% / 0.4)", "0 0 20px hsl(45 80% 55% / 0.2)"] }}
-          transition={{ duration: 4, repeat: Infinity }}
+          className="text-3xl md:text-6xl lg:text-7xl font-heading gold-text mb-4 lg:mb-6 tracking-wider"
+          animate={{ textShadow: ["0 0 20px hsl(45 80% 55% / 0.15)", "0 0 40px hsl(45 80% 55% / 0.3)", "0 0 20px hsl(45 80% 55% / 0.15)"] }}
+          transition={{ duration: 5, repeat: Infinity }}
         >
           Aurora Eyes
         </motion.h1>
-        <p className="text-sm md:text-lg lg:text-xl text-muted-foreground font-body font-light tracking-wide max-w-xl lg:max-w-2xl mx-auto lg:leading-relaxed">
-          Choose a divination method and focus on your question.
-        </p>
+        <motion.p
+          className="text-sm md:text-lg lg:text-xl text-muted-foreground font-body font-light tracking-wide max-w-xl lg:max-w-2xl mx-auto lg:leading-relaxed italic"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6, duration: 0.8 }}
+        >
+          A sacred space where ancient wisdom meets your deepest questions
+        </motion.p>
+
+        {/* Decorative line */}
+        <motion.div
+          className="mt-6 lg:mt-8 flex justify-center items-center gap-3"
+          initial={{ opacity: 0, scaleX: 0 }}
+          animate={{ opacity: 1, scaleX: 1 }}
+          transition={{ delay: 0.8, duration: 0.6 }}
+        >
+          <div className="h-px w-12 md:w-20 bg-gradient-to-r from-transparent to-primary/30" />
+          <div className="w-1.5 h-1.5 rounded-full bg-primary/40" />
+          <div className="h-px w-12 md:w-20 bg-gradient-to-l from-transparent to-primary/30" />
+        </motion.div>
       </motion.header>
 
       <AnimatePresence mode="wait">
         {phase === "input" && (
-          <motion.div key="input" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+          <motion.div key="input" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, transition: { duration: 0.4 } }}>
             <DivinationMethodSelector method={divinationMethod} setMethod={handleMethodChange} />
 
             <AnimatePresence>
@@ -118,7 +163,7 @@ const Index = () => {
                   initial={{ opacity: 0, y: 20, height: 0 }}
                   animate={{ opacity: 1, y: 0, height: "auto" }}
                   exit={{ opacity: 0, y: 20, height: 0 }}
-                  transition={{ duration: 0.4, ease: "easeOut" }}
+                  transition={{ duration: 0.5, ease: "easeOut" }}
                   className="overflow-hidden"
                 >
                   <QuestionInput question={question} setQuestion={setQuestion} />
@@ -129,7 +174,7 @@ const Index = () => {
                   )}
 
                   {divinationMethod !== "horary" && (
-                    <div className="flex flex-col items-center gap-2 mb-10 lg:mb-14">
+                    <div className="flex flex-col items-center gap-3 mb-12 lg:mb-16">
                       <motion.button
                         onClick={() => {
                           if (divinationMethod === "tarot") {
@@ -138,14 +183,14 @@ const Index = () => {
                             handleContinue();
                           }
                         }}
-                        className="mystical-button px-8 lg:px-12 py-4 lg:py-5 rounded-xl font-heading text-base md:text-lg lg:text-xl tracking-widest active:scale-95"
-                        whileHover={{ scale: 1.05 }}
+                        className="mystical-button px-10 lg:px-14 py-4 lg:py-5 rounded-xl font-heading text-base md:text-lg lg:text-xl tracking-[0.2em]"
+                        whileHover={{ scale: 1.05, boxShadow: "0 0 35px hsl(43 70% 65% / 0.4)" }}
                         whileTap={{ scale: 0.95 }}
                       >
-                        Continue
+                        Reveal Your Reading
                       </motion.button>
                       {!question.trim() && (
-                        <button
+                        <motion.button
                           onClick={() => {
                             if (divinationMethod === "tarot") {
                               handleStartShuffle();
@@ -153,10 +198,13 @@ const Index = () => {
                               handleContinue();
                             }
                           }}
-                          className="text-xs text-muted-foreground hover:text-primary/70 transition-colors tracking-wide"
+                          className="text-xs text-muted-foreground/60 hover:text-primary/50 transition-colors tracking-widest font-heading uppercase"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ delay: 0.3 }}
                         >
-                          Skip — get a general reading
-                        </button>
+                          Skip — receive a general reading
+                        </motion.button>
                       )}
                     </div>
                   )}
@@ -171,24 +219,32 @@ const Index = () => {
             {/* Horary Astrology Section */}
             <HoraryHomepageSection />
 
-            {/* SEO: Quick links with elegant icons */}
-            <section className="max-w-5xl lg:max-w-6xl mx-auto mt-12 md:mt-16 lg:mt-20 mb-8 lg:mb-12 px-1">
-              <h2 className="font-heading text-lg md:text-xl lg:text-2xl gold-text text-center mb-5 md:mb-6 lg:mb-8">Explore Our Readings</h2>
+            {/* SEO: Quick links */}
+            <section className="max-w-5xl lg:max-w-6xl mx-auto mt-14 md:mt-18 lg:mt-24 mb-8 lg:mb-12 px-2">
+              <motion.div
+                className="text-center mb-8 lg:mb-10"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+              >
+                <h2 className="font-heading text-lg md:text-xl lg:text-2xl gold-text mb-2">Explore the Mysteries</h2>
+                <p className="text-xs text-muted-foreground/60 italic">Each path holds a different kind of truth</p>
+              </motion.div>
               <div className="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-2 md:gap-3 lg:gap-5">
                 {[
                   { to: "/free-tarot-reading", label: "Tarot Reading", Icon: Layers },
-                  { to: "/yes-no-tarot-reading", label: "Yes/No Tarot", Icon: Scale },
-                  { to: "/pick-a-card-reading", label: "Pick a Card", Icon: Sparkles },
-                  { to: "/rune-reading", label: "Rune Reading", Icon: Hexagon },
-                  { to: "/angel-card-reading", label: "Angel Cards", Icon: Feather },
-                  { to: "/horary-reading", label: "Horary Astrology", Icon: Compass },
+                  { to: "/yes-no-tarot-reading", label: "The Oracle's Whisper", Icon: Scale },
+                  { to: "/pick-a-card-reading", label: "Let Intuition Choose", Icon: Sparkles },
+                  { to: "/rune-reading", label: "Ancient Runes", Icon: Hexagon },
+                  { to: "/angel-card-reading", label: "Divine Messages", Icon: Feather },
+                  { to: "/horary-reading", label: "Ask the Stars", Icon: Compass },
                   { to: "/tarot-card-meanings", label: "Card Meanings", Icon: BookOpen },
-                  { to: "/rune-meanings", label: "Rune Meanings", Icon: Hexagon },
-                  { to: "/daily-tarot-card", label: "Daily Tarot", Icon: Sun },
+                  { to: "/rune-meanings", label: "Rune Wisdom", Icon: Hexagon },
+                  { to: "/daily-tarot-card", label: "Daily Guidance", Icon: Sun },
                 ].map((l) => (
                   <Link key={l.to} to={l.to} className="divination-card rounded-lg p-3 md:p-4 lg:p-6 text-center group active:scale-[0.97]">
-                    <l.Icon className="w-5 h-5 md:w-6 md:h-6 lg:w-7 lg:h-7 mx-auto mb-1.5 lg:mb-2 text-primary/80 group-hover:text-primary transition-colors icon-glow" />
-                    <span className="text-[10px] md:text-xs lg:text-sm font-heading text-foreground group-hover:text-primary transition-colors leading-tight">{l.label}</span>
+                    <l.Icon className="w-5 h-5 md:w-6 md:h-6 lg:w-7 lg:h-7 mx-auto mb-1.5 lg:mb-2 text-primary/60 group-hover:text-primary transition-colors duration-500 icon-glow" />
+                    <span className="text-[10px] md:text-xs lg:text-sm font-heading text-foreground/80 group-hover:text-primary transition-colors duration-300 leading-tight">{l.label}</span>
                   </Link>
                 ))}
               </div>
@@ -209,13 +265,13 @@ const Index = () => {
         )}
         {phase === "fan" && (
           <motion.div key="fan" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <p className="text-center text-xs text-muted-foreground italic mb-4 px-4">"{question}"</p>
+            {question && <p className="text-center text-xs text-muted-foreground/60 italic mb-4 px-4">"{question}"</p>}
             <TarotDeckPicker requiredCount={cardCount} positions={positions} onComplete={(cards) => { setDrawnCards(cards); setPhase("spread"); }} />
           </motion.div>
         )}
         {(phase === "spread" || phase === "reading" || phase === "loading") && (
           <motion.div key="spread" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            <p className="text-center text-xs md:text-sm text-muted-foreground italic mb-4 px-4">"{question}"</p>
+            {question && <p className="text-center text-xs md:text-sm text-muted-foreground/60 italic mb-4 px-4">"{question}"</p>}
             {error && <p className="text-center text-sm text-destructive mb-4">{error}</p>}
             <ReadingTable>
               <div className="py-2 md:py-4">
@@ -226,14 +282,27 @@ const Index = () => {
             </ReadingTable>
             {reading && <ReadingPanel reading={reading} drawnCards={drawnCards} question={question} />}
             {phase === "loading" && (
-              <motion.div className="flex flex-col items-center mt-8 md:mt-10" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                <div className="w-8 h-8 border-2 border-primary/30 border-t-primary rounded-full animate-spin mb-4" />
-                <p className="font-heading text-primary text-sm tracking-widest animate-pulse">Channeling the cosmos...</p>
+              <motion.div className="flex flex-col items-center mt-10 md:mt-12" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                <motion.div
+                  className="w-10 h-10 border border-primary/30 border-t-primary rounded-full mb-5"
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+                />
+                <p className="font-heading text-primary/70 text-sm tracking-[0.2em]">
+                  Interpreting the energies...
+                </p>
               </motion.div>
             )}
             {phase === "reading" && (
-              <div className="flex justify-center mt-6 mb-4">
-                <button onClick={handleReset} className="px-6 lg:px-8 py-3.5 md:py-3 lg:py-4 rounded-lg bg-secondary border border-primary/30 text-primary font-heading text-sm lg:text-base tracking-wider hover:bg-primary/20 transition-all active:scale-95">Draw New Cards</button>
+              <div className="flex justify-center mt-8 mb-6">
+                <motion.button
+                  onClick={handleReset}
+                  className="px-8 lg:px-10 py-3.5 md:py-4 rounded-xl bg-secondary/50 border border-primary/20 text-primary/80 font-heading text-sm lg:text-base tracking-widest hover:bg-primary/10 hover:border-primary/30 transition-all duration-500"
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                >
+                  Begin a New Reading
+                </motion.button>
               </div>
             )}
           </motion.div>
