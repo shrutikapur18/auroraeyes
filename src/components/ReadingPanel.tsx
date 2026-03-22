@@ -83,12 +83,12 @@ const ReadingPanel = ({ reading, drawnCards, question, type = "tarot", suggested
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
     >
-      <div className="reading-panel rounded-xl p-5 md:p-8">
-        <h2 className="font-heading text-lg md:text-2xl gold-text mb-2 text-center">
-          Your Reading
+      <div className="reading-panel rounded-2xl p-6 md:p-10">
+        <h2 className="font-heading text-lg md:text-2xl gold-text mb-2 text-center tracking-wider">
+          What the Cards Reveal
         </h2>
-        <p className="text-xs text-muted-foreground text-center mb-5 md:mb-6 italic">
-          "{question}"
+        <p className="text-[11px] text-muted-foreground/50 text-center mb-6 md:mb-8 italic">
+          {question ? `"${question}"` : "A general reading for this moment"}
         </p>
 
         {/* Cards summary */}
