@@ -177,21 +177,21 @@ const ReadingPanel = ({ reading, drawnCards, question, type = "tarot", suggested
 
         {/* Reflection prompts */}
         <motion.div
-          className="mt-8 pt-5 md:pt-6 border-t border-primary/10"
+          className="mt-10 pt-6 md:pt-8 border-t border-primary/8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1 }}
         >
-          <h3 className="font-heading text-sm gold-text mb-3 tracking-wider">
-            Take a moment to reflect
+          <h3 className="font-heading text-xs gold-text mb-4 tracking-[0.2em] uppercase">
+            Pause and Reflect
           </h3>
-          <div className="space-y-2">
+          <div className="space-y-2.5">
             {[
-              "Does this message connect with something currently unfolding in your life?",
-              "What feelings arose as you read the interpretation?",
-              "What is one small step you might take based on this guidance?",
+              "Does this resonate with something unfolding in your life right now?",
+              "What feelings arose as you absorbed this reading?",
+              "What is one quiet step you might take from this moment forward?",
             ].map((prompt, i) => (
-              <p key={i} className="text-xs text-muted-foreground italic pl-3 border-l border-primary/20">
+              <p key={i} className="text-xs text-muted-foreground/50 italic pl-4 border-l border-primary/10">
                 {prompt}
               </p>
             ))}
