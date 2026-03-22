@@ -123,7 +123,7 @@ const ReadingPanel = ({ reading, drawnCards, question, type = "tarot", suggested
         {/* Unlock deeper AI interpretation */}
         {!aiReading && (
           <motion.div
-            className="mt-8 pt-6 border-t border-primary/20"
+            className="mt-10 pt-8 border-t border-primary/10"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8 }}
@@ -135,24 +135,28 @@ const ReadingPanel = ({ reading, drawnCards, question, type = "tarot", suggested
               <motion.button
                 onClick={handleUnlockAI}
                 disabled={aiLoading}
-                className="px-6 py-3.5 md:py-3 rounded-xl bg-gradient-to-r from-primary/20 to-accent/20 border border-primary/40 text-primary font-heading text-sm tracking-wider hover:from-primary/30 hover:to-accent/30 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 active:scale-95"
-                whileHover={{ scale: aiLoading ? 1 : 1.03 }}
+                className="mystical-button px-8 py-4 rounded-xl font-heading text-sm tracking-[0.15em] disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+                whileHover={{ scale: aiLoading ? 1 : 1.04, boxShadow: "0 0 30px hsl(43 70% 65% / 0.3)" }}
                 whileTap={{ scale: aiLoading ? 1 : 0.97 }}
               >
                 {aiLoading ? (
                   <>
-                    <div className="w-4 h-4 border-2 border-primary/30 border-t-primary rounded-full animate-spin" />
+                    <motion.div
+                      className="w-4 h-4 border border-background/30 border-t-background rounded-full"
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                    />
                     Channeling deeper wisdom...
                   </>
                 ) : (
                   <>
-                    <span className="text-base">✦</span>
-                    Unlock deeper AI interpretation
+                    <span className="text-sm">✦</span>
+                    Unlock Deeper Interpretation
                   </>
                 )}
               </motion.button>
-              <p className="text-[10px] text-muted-foreground/60">
-                Get a personalized AI-powered reading with richer insights
+              <p className="text-[10px] text-muted-foreground/40 italic">
+                A personalized reading with richer, more nuanced insights
               </p>
             </div>
           </motion.div>
