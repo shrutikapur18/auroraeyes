@@ -234,21 +234,26 @@ const Index = () => {
                 <h2 className="font-heading text-lg md:text-xl lg:text-2xl gold-text mb-2">Explore the Mysteries</h2>
                 <p className="text-xs text-muted-foreground/60 italic">Each path holds a different kind of truth</p>
               </motion.div>
-              <div className="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-2 md:gap-3 lg:gap-5">
+              <div className="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-3 md:gap-4 lg:gap-5">
                 {[
-                  { to: "/free-tarot-reading", label: "Tarot Reading", Icon: Layers },
-                  { to: "/yes-no-tarot-reading", label: "The Oracle's Whisper", Icon: Scale },
-                  { to: "/pick-a-card-reading", label: "Let Intuition Choose", Icon: Sparkles },
-                  { to: "/rune-reading", label: "Ancient Runes", Icon: Hexagon },
-                  { to: "/angel-card-reading", label: "Divine Messages", Icon: Feather },
-                  { to: "/horary-reading", label: "Ask the Stars", Icon: Compass },
-                  { to: "/tarot-card-meanings", label: "Card Meanings", Icon: BookOpen },
-                  { to: "/rune-meanings", label: "Rune Wisdom", Icon: Hexagon },
-                  { to: "/daily-tarot-card", label: "Daily Guidance", Icon: Sun },
+                  { to: "/free-tarot-reading", label: "Tarot Reading", img: tarotCardImage },
+                  { to: "/yes-no-tarot-reading", label: "The Oracle's Whisper", img: tarotCardImage },
+                  { to: "/pick-a-card-reading", label: "Let Intuition Choose", img: tarotCardImage },
+                  { to: "/rune-reading", label: "Ancient Runes", img: runeCardImage },
+                  { to: "/angel-card-reading", label: "Divine Messages", img: angelCardImage },
+                  { to: "/horary-reading", label: "Ask the Stars", img: horaryCardImage },
+                  { to: "/tarot-card-meanings", label: "Card Meanings", img: tarotCardImage },
+                  { to: "/rune-meanings", label: "Rune Wisdom", img: runeCardImage },
+                  { to: "/daily-tarot-card", label: "Daily Guidance", img: tarotCardImage },
                 ].map((l) => (
-                  <Link key={l.to} to={l.to} className="divination-card rounded-lg p-3 md:p-4 lg:p-6 text-center group active:scale-[0.97]">
-                    <l.Icon className="w-5 h-5 md:w-6 md:h-6 lg:w-7 lg:h-7 mx-auto mb-1.5 lg:mb-2 text-primary/60 group-hover:text-primary transition-colors duration-500 icon-glow" />
-                    <span className="text-[10px] md:text-xs lg:text-sm font-heading text-foreground/80 group-hover:text-primary transition-colors duration-300 leading-tight">{l.label}</span>
+                  <Link key={l.to} to={l.to} className="group active:scale-[0.97]">
+                    <div className="relative aspect-[2/3] overflow-hidden rounded-lg ring-1 ring-primary/10 group-hover:ring-primary/30 transition-all duration-500 shadow-lg shadow-black/30 group-hover:shadow-[0_8px_25px_hsl(43_70%_65%/0.12)]" style={{ transform: "rotate(-1deg)" }}>
+                      <img src={l.img} alt={l.label} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-70 group-hover:opacity-90" loading="lazy" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+                      <div className="absolute bottom-0 left-0 right-0 p-2 lg:p-3">
+                        <span className="text-[9px] md:text-xs lg:text-sm font-heading text-white/80 group-hover:text-primary transition-colors duration-300 leading-tight block text-center drop-shadow-lg">{l.label}</span>
+                      </div>
+                    </div>
                   </Link>
                 ))}
               </div>
