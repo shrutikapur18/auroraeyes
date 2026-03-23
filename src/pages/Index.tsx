@@ -1,7 +1,6 @@
 import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
-import { BookOpen, Sun } from "lucide-react";
 import tarotCardImage from "@/assets/tarot-card-back.jpg";
 import runeCardImage from "@/assets/rune-card-back.jpg";
 import angelCardImage from "@/assets/angel-card-back.jpg";
