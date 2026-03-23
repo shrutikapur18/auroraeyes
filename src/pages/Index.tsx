@@ -1,7 +1,11 @@
 import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Layers, Scale, Sparkles, Hexagon, Feather, Compass, BookOpen, Sun } from "lucide-react";
+import { BookOpen, Sun } from "lucide-react";
+import tarotCardImage from "@/assets/tarot-card-back.jpg";
+import runeCardImage from "@/assets/rune-card-back.jpg";
+import angelCardImage from "@/assets/angel-card-back.jpg";
+import horaryCardImage from "@/assets/horary-card-back.jpg";
 import SEOHead from "@/components/SEOHead";
 import DivinationMethodSelector, { type DivinationMethod } from "@/components/DivinationMethodSelector";
 import QuestionInput from "@/components/QuestionInput";
