@@ -37,6 +37,8 @@ const Index = () => {
   const [drawnCards, setDrawnCards] = useState<DrawnCard[]>([]);
   const [reading, setReading] = useState("");
   const [error, setError] = useState("");
+  const [angelAutoStart, setAngelAutoStart] = useState(false);
+  const [runeAutoStart, setRuneAutoStart] = useState(false);
 
   const cardCount = tarotMode === "three-card" ? 3 : tarotMode === "celtic-cross" ? 10 : 1;
   const positions = tarotMode === "three-card" ? threeCardPositions : tarotMode === "celtic-cross" ? celticCrossPositions : ["Your Card"];
