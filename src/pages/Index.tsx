@@ -207,8 +207,8 @@ const Index = () => {
                     </div>
                   )}
 
-                  {divinationMethod === "angel" && <AngelCardSpread question={question} onError={setError} />}
-                  {divinationMethod === "runes" && <RuneSpread question={question} onError={setError} />}
+                  {divinationMethod === "angel" && <AngelCardSpread question={question} onError={setError} autoStart={angelAutoStart} />}
+                  {divinationMethod === "runes" && <RuneSpread question={question} onError={setError} autoStart={runeAutoStart} />}
                 </motion.div>
               )}
             </AnimatePresence>

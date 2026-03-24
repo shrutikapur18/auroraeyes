@@ -73,8 +73,10 @@ const TarotCardMeanings = () => {
                 <h2 className="font-heading text-xl gold-text mb-4">{suit}</h2>
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
                   {cards.map((card) => (
-                    <Link key={card.id} to={`/tarot-card-meanings/${slugify(card.name)}`} className="reading-panel rounded-lg p-4 hover:gold-glow transition-all text-center group">
-                      <span className="text-2xl block mb-1 group-hover:scale-110 transition-transform" role="img" aria-label={`${card.name} tarot card`}>{card.symbol}</span>
+                    <Link key={card.id} to={`/tarot-card-meanings/${slugify(card.name)}`} className="reading-panel rounded-lg p-3 hover:gold-glow transition-all text-center group flex flex-col items-center">
+                      <div className="w-14 h-[84px] md:w-16 md:h-24 rounded overflow-hidden mb-2 border border-primary/15 group-hover:border-primary/40 transition-colors">
+                        <img src={card.image} alt={card.name} className="w-full h-full object-cover" loading="lazy" />
+                      </div>
                       <span className="text-xs font-heading text-primary">{card.name}</span>
                       <span className="text-[10px] text-muted-foreground block mt-1">{card.keywords.slice(0, 2).join(", ")}</span>
                     </Link>
