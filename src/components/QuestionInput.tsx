@@ -79,7 +79,7 @@ const QuestionInput = ({ question, setQuestion, disabled }: QuestionInputProps) 
           value={question}
           onChange={(e) => setQuestion(e.target.value)}
           disabled={disabled}
-          placeholder="What truth do you seek..."
+          placeholder="Type your question (optional)..."
           className="w-full px-5 md:px-6 lg:px-8 py-4 lg:py-5 pr-14 rounded-xl bg-card/40 border border-border/30 text-foreground text-base lg:text-lg placeholder:text-muted-foreground/40 font-body focus:outline-none focus:ring-1 focus:ring-primary/20 focus:border-primary/20 transition-all duration-500 disabled:opacity-50 backdrop-blur-xl"
         />
 
