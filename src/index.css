@@ -476,11 +476,4 @@
   .glass-border {
     border: 1px solid hsl(var(--gold) / 0.12);
   }
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
 }

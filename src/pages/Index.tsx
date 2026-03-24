@@ -1,21 +1,20 @@
 import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
-import tarotCardImage from "@/assets/tarot-card-back.jpg";
-import runeCardImage from "@/assets/rune-card-back.jpg";
-import angelCardImage from "@/assets/angel-card-back.jpg";
-import horaryCardImage from "@/assets/horary-card-back.jpg";
+import { Layers, Scale, Sparkles, Hexagon, Feather, Compass, BookOpen, Sun } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
 import DivinationMethodSelector, { type DivinationMethod } from "@/components/DivinationMethodSelector";
 import QuestionInput from "@/components/QuestionInput";
 import ReadingModeSelector from "@/components/ReadingModeSelector";
 import FocusMoment from "@/components/FocusMoment";
 import InteractiveShuffle from "@/components/InteractiveShuffle";
+import CardFanSpread from "@/components/CardFanSpread";
 import TarotDeckPicker from "@/components/TarotDeckPicker";
 import ReadingTable from "@/components/ReadingTable";
 import ThreeCardSpread from "@/components/ThreeCardSpread";
 import CelticCrossSpread from "@/components/CelticCrossSpread";
 import PickACardSpread from "@/components/PickACardSpread";
+import YesNoSpread from "@/components/YesNoSpread";
 import AngelCardSpread from "@/components/AngelCardSpread";
 import RuneSpread from "@/components/RuneSpread";
 import ReadingPanel from "@/components/ReadingPanel";
@@ -29,33 +28,6 @@ import type { DrawnCard, ReadingMode } from "@/data/tarotDeck";
 import { generateLocalReading } from "@/lib/tarotReading";
 
 type Phase = "input" | "focus" | "shuffling" | "fan" | "spread" | "reading" | "loading";
-
-const exploreGroups = [
-  {
-    title: "Explore Paths",
-    items: [
-      { to: "/free-tarot-reading", label: "Tarot Reading", img: tarotCardImage },
-      { to: "/yes-no-tarot-reading", label: "The Oracle's Whisper", img: tarotCardImage },
-      { to: "/pick-a-card-reading", label: "Let Intuition Choose", img: tarotCardImage },
-    ],
-  },
-  {
-    title: "Divine Guidance",
-    items: [
-      { to: "/angel-card-reading", label: "Divine Messages", img: angelCardImage },
-      { to: "/horary-reading", label: "Ask the Stars", img: horaryCardImage },
-      { to: "/daily-tarot-card", label: "Daily Guidance", img: tarotCardImage },
-    ],
-  },
-  {
-    title: "Ancient Wisdom",
-    items: [
-      { to: "/rune-reading", label: "Ancient Runes", img: runeCardImage },
-      { to: "/tarot-card-meanings", label: "Card Meanings", img: tarotCardImage },
-      { to: "/rune-meanings", label: "Rune Wisdom", img: runeCardImage },
-    ],
-  },
-];
 
 const Index = () => {
   const [question, setQuestion] = useState("");
@@ -129,11 +101,8 @@ const Index = () => {
           transition={{ delay: 0.2, duration: 0.8 }}
         >
           <motion.div
-            className="w-16 h-16 md:w-20 md:h-20 mx-auto mb-5 rounded-full flex items-center justify-center"
-            style={{
-              background: "radial-gradient(circle, hsl(43 70% 65% / 0.08), transparent)",
-              border: "1px solid hsl(43 70% 55% / 0.15)",
-            }}
+            className="w-16 h-16 md:w-20 md:h-20 mx-auto mb-5 rounded-full border border-primary/20 flex items-center justify-center"
+            style={{ background: "radial-gradient(circle, hsl(43 70% 65% / 0.08), transparent)" }}
             animate={{
               boxShadow: [
                 "0 0 20px hsl(43 70% 65% / 0.1)",
@@ -250,60 +219,33 @@ const Index = () => {
             {/* Horary Astrology Section */}
             <HoraryHomepageSection />
 
-            {/* Grouped Explore Sections */}
-            <section className="max-w-5xl lg:max-w-6xl mx-auto mt-16 md:mt-20 lg:mt-24 mb-8 lg:mb-12 px-4">
+            {/* SEO: Quick links */}
+            <section className="max-w-5xl lg:max-w-6xl mx-auto mt-14 md:mt-18 lg:mt-24 mb-8 lg:mb-12 px-2">
               <motion.div
-                className="text-center mb-10 lg:mb-14"
+                className="text-center mb-8 lg:mb-10"
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
               >
                 <h2 className="font-heading text-lg md:text-xl lg:text-2xl gold-text mb-2">Explore the Mysteries</h2>
-                <p className="text-xs text-muted-foreground/50 italic">Each path holds a different kind of truth</p>
+                <p className="text-xs text-muted-foreground/60 italic">Each path holds a different kind of truth</p>
               </motion.div>
-
-              <div className="space-y-12 md:space-y-14">
-                {exploreGroups.map((group) => (
-                  <div key={group.title}>
-                    <h3 className="font-heading text-xs md:text-sm text-primary/50 tracking-[0.3em] uppercase mb-5 md:mb-6 pl-1">
-                      {group.title}
-                    </h3>
-                    <div className="flex gap-4 md:gap-5 overflow-x-auto scrollbar-hide pb-2 snap-x snap-mandatory">
-                      {group.items.map((l, i) => (
-                        <Link
-                          key={l.to}
-                          to={l.to}
-                          className="flex-shrink-0 snap-center group"
-                          style={{ width: "clamp(100px, 22vw, 140px)" }}
-                        >
-                          <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: i * 0.08 }}
-                            whileHover={{ scale: 1.06, y: -8 }}
-                          >
-                            <div
-                              className="relative aspect-[2/3] overflow-hidden rounded-lg transition-all duration-500 shadow-[0_6px_24px_rgba(0,0,0,0.5)] group-hover:shadow-[0_8px_30px_hsl(43_70%_55%/0.15)]"
-                              style={{
-                                border: "1px solid hsl(43 70% 55% / 0.1)",
-                                transform: `rotate(${(i % 2 === 0 ? -2 : 2)}deg)`,
-                              }}
-                            >
-                              <img src={l.img} alt={l.label} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-70 group-hover:opacity-90" loading="lazy" />
-                              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
-                              <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                                style={{ boxShadow: "inset 0 0 20px hsl(43 70% 55% / 0.08)" }}
-                              />
-                              <div className="absolute bottom-0 left-0 right-0 p-2 lg:p-3">
-                                <span className="text-[9px] md:text-xs lg:text-sm font-heading text-white/80 group-hover:text-primary transition-colors duration-300 leading-tight block text-center drop-shadow-lg">{l.label}</span>
-                              </div>
-                            </div>
-                          </motion.div>
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
+              <div className="grid grid-cols-3 md:grid-cols-3 lg:grid-cols-3 gap-2 md:gap-3 lg:gap-5">
+                {[
+                  { to: "/free-tarot-reading", label: "Tarot Reading", Icon: Layers },
+                  { to: "/yes-no-tarot-reading", label: "The Oracle's Whisper", Icon: Scale },
+                  { to: "/pick-a-card-reading", label: "Let Intuition Choose", Icon: Sparkles },
+                  { to: "/rune-reading", label: "Ancient Runes", Icon: Hexagon },
+                  { to: "/angel-card-reading", label: "Divine Messages", Icon: Feather },
+                  { to: "/horary-reading", label: "Ask the Stars", Icon: Compass },
+                  { to: "/tarot-card-meanings", label: "Card Meanings", Icon: BookOpen },
+                  { to: "/rune-meanings", label: "Rune Wisdom", Icon: Hexagon },
+                  { to: "/daily-tarot-card", label: "Daily Guidance", Icon: Sun },
+                ].map((l) => (
+                  <Link key={l.to} to={l.to} className="divination-card rounded-lg p-3 md:p-4 lg:p-6 text-center group active:scale-[0.97]">
+                    <l.Icon className="w-5 h-5 md:w-6 md:h-6 lg:w-7 lg:h-7 mx-auto mb-1.5 lg:mb-2 text-primary/60 group-hover:text-primary transition-colors duration-500 icon-glow" />
+                    <span className="text-[10px] md:text-xs lg:text-sm font-heading text-foreground/80 group-hover:text-primary transition-colors duration-300 leading-tight">{l.label}</span>
+                  </Link>
                 ))}
               </div>
             </section>
