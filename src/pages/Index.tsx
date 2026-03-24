@@ -53,12 +53,9 @@ const Index = () => {
     if (divinationMethod === "tarot") {
       setPhase("focus");
     } else if (divinationMethod === "runes") {
-      // RuneSpread handles its own flow
+      setRuneAutoStart(true);
     } else if (divinationMethod === "angel") {
-      // AngelCardSpread handles its own flow
-    } else if (divinationMethod === "horary") {
-      const el = document.getElementById("horary-section");
-      if (el) el.scrollIntoView({ behavior: "smooth" });
+      setAngelAutoStart(true);
     }
   };
 
