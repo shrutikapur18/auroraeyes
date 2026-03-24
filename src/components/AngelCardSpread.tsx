@@ -12,10 +12,11 @@ import cardBackImage from "@/assets/card-back.jpg";
 interface AngelCardSpreadProps {
   question: string;
   onError: (msg: string) => void;
+  autoStart?: boolean;
 }
 
-const AngelCardSpread = ({ question, onError }: AngelCardSpreadProps) => {
-  const [phase, setPhase] = useState<"idle" | "choose-count" | "focus" | "picking" | "spread" | "loading" | "result">("idle");
+const AngelCardSpread = ({ question, onError, autoStart }: AngelCardSpreadProps) => {
+  const [phase, setPhase] = useState<"idle" | "choose-count" | "focus" | "picking" | "spread" | "loading" | "result">(autoStart ? "choose-count" : "idle");
   const [cards, setCards] = useState<DrawnAngelCard[]>([]);
   const [cardCount, setCardCount] = useState(1);
   const [reading, setReading] = useState("");
