@@ -11,11 +11,10 @@ import { generateRuneReading } from "@/lib/runeReading";
 interface RuneSpreadProps {
   question: string;
   onError: (msg: string) => void;
-  autoStart?: boolean;
 }
 
-const RuneSpread = ({ question, onError, autoStart }: RuneSpreadProps) => {
-  const [phase, setPhase] = useState<"idle" | "focus" | "picking" | "spread" | "loading" | "result">(autoStart ? "focus" : "idle");
+const RuneSpread = ({ question, onError }: RuneSpreadProps) => {
+  const [phase, setPhase] = useState<"idle" | "focus" | "picking" | "spread" | "loading" | "result">("idle");
   const [runes, setRunes] = useState<DrawnRune[]>([]);
   const [reading, setReading] = useState("");
 
