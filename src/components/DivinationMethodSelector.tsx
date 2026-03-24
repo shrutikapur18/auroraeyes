@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import { TarotCardIcon, AngelWingsIcon, RuneStoneIcon, ZodiacWheelIcon } from "./MysticalIcons";
 
 export type DivinationMethod = "tarot" | "yes-no" | "pick-a-card" | "angel" | "runes" | "horary";
