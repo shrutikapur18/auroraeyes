@@ -45,7 +45,9 @@ const TarotReadingArchive = () => {
             to="/daily-tarot-reading"
             className="reading-panel rounded-xl p-5 mb-8 flex items-center gap-4 hover:gold-glow transition-all group block"
           >
-            <span className={`text-4xl ${readings[0].isReversed ? "rotate-180 inline-block" : ""}`}>{readings[0].card.symbol}</span>
+            <div className={`w-14 h-[84px] rounded overflow-hidden border border-primary/15 shrink-0 ${readings[0].isReversed ? "rotate-180" : ""}`}>
+              <img src={readings[0].card.image} alt={readings[0].card.name} className="w-full h-full object-cover" loading="lazy" />
+            </div>
             <div>
               <p className="text-[10px] text-primary font-heading uppercase tracking-wider">Today's Card</p>
               <p className="font-heading text-foreground group-hover:text-primary transition-colors">
