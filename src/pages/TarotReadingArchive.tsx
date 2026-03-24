@@ -45,7 +45,9 @@ const TarotReadingArchive = () => {
             to="/daily-tarot-reading"
             className="reading-panel rounded-xl p-5 mb-8 flex items-center gap-4 hover:gold-glow transition-all group block"
           >
-            <span className={`text-4xl ${readings[0].isReversed ? "rotate-180 inline-block" : ""}`}>{readings[0].card.symbol}</span>
+            <div className={`w-14 h-[84px] rounded overflow-hidden border border-primary/15 shrink-0 ${readings[0].isReversed ? "rotate-180" : ""}`}>
+              <img src={readings[0].card.image} alt={readings[0].card.name} className="w-full h-full object-cover" loading="lazy" />
+            </div>
             <div>
               <p className="text-[10px] text-primary font-heading uppercase tracking-wider">Today's Card</p>
               <p className="font-heading text-foreground group-hover:text-primary transition-colors">
@@ -69,7 +71,9 @@ const TarotReadingArchive = () => {
                     to={isToday ? "/daily-tarot-reading" : `/daily-tarot/${r.dateSlug}`}
                     className="reading-panel rounded-lg p-3 hover:gold-glow transition-all group flex items-center gap-3"
                   >
-                    <span className={`text-2xl shrink-0 ${r.isReversed ? "rotate-180 inline-block" : ""}`}>{r.card.symbol}</span>
+                    <div className={`w-10 h-[60px] rounded overflow-hidden border border-primary/15 shrink-0 ${r.isReversed ? "rotate-180" : ""}`}>
+                      <img src={r.card.image} alt={r.card.name} className="w-full h-full object-cover" loading="lazy" />
+                    </div>
                     <div className="min-w-0">
                       <p className="text-xs text-muted-foreground">{r.date.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" })}</p>
                       <p className="text-sm font-heading text-foreground group-hover:text-primary transition-colors truncate">
