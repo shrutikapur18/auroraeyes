@@ -76,7 +76,7 @@ const Index = () => {
     });
   }, [tarotMode, cardCount, question, drawnCards]);
 
-  const handleReset = () => { setPhase("input"); setDrawnCards([]); setReading(""); setError(""); setQuestion(""); setDivinationMethod(null); };
+  const handleReset = () => { setPhase("input"); setDrawnCards([]); setReading(""); setError(""); setQuestion(""); setDivinationMethod(null); setAngelAutoStart(false); setRuneAutoStart(false); };
 
   const handleMethodChange = (m: DivinationMethod) => { setDivinationMethod(m); setError(""); };
 
