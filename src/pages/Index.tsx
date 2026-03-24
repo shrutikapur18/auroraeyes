@@ -37,6 +37,8 @@ const Index = () => {
   const [drawnCards, setDrawnCards] = useState<DrawnCard[]>([]);
   const [reading, setReading] = useState("");
   const [error, setError] = useState("");
+  const [angelAutoStart, setAngelAutoStart] = useState(false);
+  const [runeAutoStart, setRuneAutoStart] = useState(false);
 
   const cardCount = tarotMode === "three-card" ? 3 : tarotMode === "celtic-cross" ? 10 : 1;
   const positions = tarotMode === "three-card" ? threeCardPositions : tarotMode === "celtic-cross" ? celticCrossPositions : ["Your Card"];
@@ -51,12 +53,9 @@ const Index = () => {
     if (divinationMethod === "tarot") {
       setPhase("focus");
     } else if (divinationMethod === "runes") {
-      // RuneSpread handles its own flow
+      setRuneAutoStart(true);
     } else if (divinationMethod === "angel") {
-      // AngelCardSpread handles its own flow
-    } else if (divinationMethod === "horary") {
-      const el = document.getElementById("horary-section");
-      if (el) el.scrollIntoView({ behavior: "smooth" });
+      setAngelAutoStart(true);
     }
   };
 
@@ -77,7 +76,7 @@ const Index = () => {
     });
   }, [tarotMode, cardCount, question, drawnCards]);
 
-  const handleReset = () => { setPhase("input"); setDrawnCards([]); setReading(""); setError(""); setQuestion(""); setDivinationMethod(null); };
+  const handleReset = () => { setPhase("input"); setDrawnCards([]); setReading(""); setError(""); setQuestion(""); setDivinationMethod(null); setAngelAutoStart(false); setRuneAutoStart(false); };
 
   const handleMethodChange = (m: DivinationMethod) => { setDivinationMethod(m); setError(""); };
 
@@ -208,8 +207,8 @@ const Index = () => {
                     </div>
                   )}
 
-                  {divinationMethod === "angel" && <AngelCardSpread question={question} onError={setError} />}
-                  {divinationMethod === "runes" && <RuneSpread question={question} onError={setError} />}
+                  {divinationMethod === "angel" && <AngelCardSpread question={question} onError={setError} autoStart={angelAutoStart} />}
+                  {divinationMethod === "runes" && <RuneSpread question={question} onError={setError} autoStart={runeAutoStart} />}
                 </motion.div>
               )}
             </AnimatePresence>
