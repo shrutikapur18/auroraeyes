@@ -189,23 +189,22 @@ const Index = () => {
                       >
                         Reveal Your Reading
                       </motion.button>
-                      {!question.trim() && (
-                        <motion.button
-                          onClick={() => {
-                            if (divinationMethod === "tarot") {
-                              handleStartShuffle();
-                            } else if (divinationMethod === "runes" || divinationMethod === "angel") {
-                              handleContinue();
-                            }
-                          }}
-                          className="text-xs text-muted-foreground/60 hover:text-primary/50 transition-colors tracking-widest font-heading uppercase"
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 0.3 }}
-                        >
-                          Skip — receive a general reading
-                        </motion.button>
-                      )}
+                      <motion.button
+                        onClick={() => {
+                          setQuestion("");
+                          if (divinationMethod === "tarot") {
+                            handleStartShuffle();
+                          } else if (divinationMethod === "runes" || divinationMethod === "angel") {
+                            handleContinue();
+                          }
+                        }}
+                        className="text-xs text-muted-foreground/60 hover:text-primary/50 transition-colors tracking-widest font-heading uppercase"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.3 }}
+                      >
+                        Draw without a question
+                      </motion.button>
                     </div>
                   )}
 

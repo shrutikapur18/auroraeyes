@@ -12,9 +12,16 @@ const RecentReadings = () => {
           <Link
             key={r.dateSlug}
             to={`/daily-tarot/${r.dateSlug}`}
-            className="reading-panel rounded-lg p-3 text-center hover:gold-glow transition-all group"
+            className="reading-panel rounded-lg p-2 text-center hover:gold-glow transition-all group flex flex-col items-center"
           >
-            <span className="text-2xl block mb-1">{r.card.symbol || "🃏"}</span>
+            <div className="w-12 h-[72px] md:w-14 md:h-[84px] rounded overflow-hidden mb-1.5 border border-primary/15 group-hover:border-primary/40 transition-colors">
+              <img
+                src={r.card.image}
+                alt={r.card.name}
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
+            </div>
             <span className="text-[10px] font-heading text-foreground group-hover:text-primary transition-colors leading-tight block">
               {r.card.name}
             </span>

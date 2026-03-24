@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import { TarotCardIcon, AngelWingsIcon, RuneStoneIcon, ZodiacWheelIcon } from "./MysticalIcons";
 
 export type DivinationMethod = "tarot" | "yes-no" | "pick-a-card" | "angel" | "runes" | "horary";
@@ -16,6 +17,16 @@ const methods: { value: DivinationMethod; label: string; subtitle: string; Icon:
 ];
 
 const DivinationMethodSelector = ({ method, setMethod }: DivinationMethodSelectorProps) => {
+  const navigate = useNavigate();
+
+  const handleMethodClick = (m: DivinationMethod) => {
+    if (m === "horary") {
+      navigate("/horary-reading");
+    } else {
+      setMethod(m);
+    }
+  };
+
   return (
     <motion.div
       className="max-w-5xl lg:max-w-6xl mx-auto mb-12 lg:mb-16 relative z-10"
@@ -31,7 +42,7 @@ const DivinationMethodSelector = ({ method, setMethod }: DivinationMethodSelecto
         {methods.map((m, i) => (
           <motion.button
             key={m.value}
-            onClick={() => setMethod(m.value)}
+            onClick={() => handleMethodClick(m.value)}
             className={`divination-card relative rounded-2xl font-body flex flex-col items-center justify-center p-5 md:p-7 lg:p-10 group ${
               method === m.value
                 ? "!border-primary/50 gold-glow-strong"

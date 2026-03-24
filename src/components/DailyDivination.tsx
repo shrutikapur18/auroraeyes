@@ -10,6 +10,7 @@ import RuneComponent from "./RuneComponent";
 import { generateAIReading } from "@/lib/tarotReading";
 import { generateAngelReading } from "@/lib/angelReading";
 import { generateRuneReading } from "@/lib/runeReading";
+import { TarotCardIcon, AngelWingsIcon, RuneStoneIcon } from "./MysticalIcons";
 
 type DailyType = "tarot" | "angel" | "rune";
 
@@ -66,6 +67,24 @@ const DailyDivination = () => {
     setLoading(false);
   };
 
+  const dailyOptions: { type: DailyType; icon: React.ReactNode; label: string }[] = [
+    {
+      type: "tarot",
+      icon: <TarotCardIcon className="w-8 h-8 text-primary" animated={false} />,
+      label: "Daily Tarot",
+    },
+    {
+      type: "angel",
+      icon: <AngelWingsIcon className="w-8 h-8 text-primary" animated={false} />,
+      label: "Daily Angel",
+    },
+    {
+      type: "rune",
+      icon: <RuneStoneIcon className="w-8 h-8 text-primary" animated={false} />,
+      label: "Daily Rune",
+    },
+  ];
+
   return (
     <motion.div
       className="relative z-10 mt-12 mb-8"
@@ -80,14 +99,14 @@ const DailyDivination = () => {
 
       {!type ? (
         <div className="flex justify-center gap-3 flex-wrap">
-          {([["tarot", "🃏", "Daily Tarot"], ["angel", "👼", "Daily Angel"], ["rune", "ᚱ", "Daily Rune"]] as const).map(([t, icon, label]) => (
+          {dailyOptions.map((opt) => (
             <button
-              key={t}
-              onClick={() => drawDaily(t)}
-              className="px-5 py-3 rounded-lg bg-secondary border border-primary/30 text-primary font-heading text-sm tracking-wider hover:bg-primary/20 transition-all gold-glow-hover"
+              key={opt.type}
+              onClick={() => drawDaily(opt.type)}
+              className="px-5 py-3 rounded-lg bg-secondary border border-primary/30 text-primary font-heading text-sm tracking-wider hover:bg-primary/20 transition-all gold-glow-hover flex flex-col items-center gap-1.5"
             >
-              <span className="block text-lg mb-0.5">{icon}</span>
-              {label}
+              {opt.icon}
+              {opt.label}
             </button>
           ))}
         </div>
