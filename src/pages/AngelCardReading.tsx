@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 const AngelCardReading = () => {
   const [question, setQuestion] = useState("");
   const [error, setError] = useState("");
+  const [started, setStarted] = useState(false);
 
   return (
     <>
@@ -19,7 +20,30 @@ const AngelCardReading = () => {
 
       <QuestionInput question={question} setQuestion={setQuestion} />
       {error && <p className="text-center text-sm text-destructive mb-4">{error}</p>}
-      <AngelCardSpread question={question} onError={setError} />
+
+      {!started && (
+        <div className="flex flex-col items-center gap-3 mb-8">
+          <motion.button
+            onClick={() => setStarted(true)}
+            className="mystical-button px-10 py-4 rounded-xl font-heading text-base md:text-lg tracking-[0.2em]"
+            whileHover={{ scale: 1.05, boxShadow: "0 0 35px hsl(43 70% 65% / 0.4)" }}
+            whileTap={{ scale: 0.95 }}
+          >
+            ✨ Reveal Your Guidance
+          </motion.button>
+          <motion.button
+            onClick={() => { setQuestion(""); setStarted(true); }}
+            className="text-xs text-muted-foreground/60 hover:text-primary/50 transition-colors tracking-widest font-heading uppercase"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+          >
+            Draw without a question
+          </motion.button>
+        </div>
+      )}
+
+      <AngelCardSpread question={question} onError={setError} autoStart={started} />
 
       <section className="max-w-3xl mx-auto mt-16 reading-panel rounded-xl p-6 md:p-8">
         <h2 className="font-heading text-xl gold-text mb-4">What Is an Angel Card Reading?</h2>

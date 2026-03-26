@@ -27,10 +27,16 @@ const AngelCardSpread = ({ question, onError, autoStart }: AngelCardSpreadProps)
     ? ["Message 1", "Message 2"]
     : ["Past Guidance", "Present Wisdom", "Future Light"];
 
-  const handleStart = () => {
+  // Allow parent to trigger start
+  const startReading = () => {
     onError("");
     setPhase("choose-count");
   };
+
+  // Auto-start when prop changes
+  if (autoStart && phase === "idle") {
+    setPhase("choose-count");
+  }
 
   const handleChooseCount = (count: number) => {
     setCardCount(count);
@@ -76,30 +82,6 @@ const AngelCardSpread = ({ question, onError, autoStart }: AngelCardSpreadProps)
           <p className="text-sm text-muted-foreground italic text-center max-w-md">
             Receive loving guidance from the angels. Focus on your question.
           </p>
-          <div className="relative w-28 h-44">
-            {[0, 1, 2].map((i) => (
-              <motion.div
-                key={i}
-                className="absolute inset-0 rounded-lg overflow-hidden border border-angel-blue/30 card-shadow"
-                style={{ top: -i * 2, left: i * 1.5, zIndex: 3 - i }}
-                animate={{ y: [0, -3, 0] }}
-                transition={{ duration: 3, delay: i * 0.3, repeat: Infinity, ease: "easeInOut" }}
-              >
-                <img src={cardBackImage} alt="Deck" className="w-full h-full object-cover opacity-80" loading="lazy" />
-                <div className="absolute inset-0 bg-gradient-to-b from-angel-blue/10 to-accent/10 flex items-center justify-center">
-                  <span className="text-2xl opacity-70">👼</span>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-          <motion.button
-            onClick={handleStart}
-            className="px-8 py-4 rounded-xl bg-accent/20 border-2 border-accent text-accent-foreground font-heading text-base md:text-lg tracking-widest hover:bg-accent/30 transition-all gold-glow active:scale-95"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Receive Angel Guidance
-          </motion.button>
         </motion.div>
       )}
 

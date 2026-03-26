@@ -19,7 +19,12 @@ const RuneSpread = ({ question, onError, autoStart }: RuneSpreadProps) => {
   const [runes, setRunes] = useState<DrawnRune[]>([]);
   const [reading, setReading] = useState("");
 
-  const handleCast = () => {
+  // Auto-start when prop changes
+  if (autoStart && phase === "idle") {
+    setPhase("focus");
+  }
+
+  const startReading = () => {
     onError("");
     setPhase("focus");
   };
@@ -63,26 +68,6 @@ const RuneSpread = ({ question, onError, autoStart }: RuneSpreadProps) => {
           <p className="text-sm text-muted-foreground italic text-center max-w-md">
             The Elder Futhark runes hold ancient wisdom. Focus on your question and choose your runes.
           </p>
-          <div className="flex gap-3">
-            {["ᚠ", "ᚢ", "ᚦ", "ᚨ", "ᚱ"].map((s, i) => (
-              <motion.div
-                key={i}
-                className="w-12 h-12 rounded-full rune-stone border border-primary/20 flex items-center justify-center text-primary/50 text-lg"
-                animate={{ y: [0, -3, 0], rotate: [0, 5, 0] }}
-                transition={{ duration: 3, delay: i * 0.4, repeat: Infinity, ease: "easeInOut" }}
-              >
-                {s}
-              </motion.div>
-            ))}
-          </div>
-          <motion.button
-            onClick={handleCast}
-            className="px-8 py-4 rounded-xl bg-primary/20 border-2 border-primary text-primary font-heading text-base md:text-lg tracking-widest hover:bg-primary/30 transition-all gold-glow active:scale-95"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Cast the Runes
-          </motion.button>
         </motion.div>
       )}
 
