@@ -21,6 +21,12 @@ const AngelCardSpread = ({ question, onError, autoStart }: AngelCardSpreadProps)
   const [cardCount, setCardCount] = useState(1);
   const [reading, setReading] = useState("");
 
+  const positionLabels = cardCount === 1
+    ? ["Your Message"]
+    : cardCount === 2
+    ? ["Message 1", "Message 2"]
+    : ["Past Guidance", "Present Wisdom", "Future Light"];
+
   // Allow parent to trigger start
   const startReading = () => {
     onError("");
