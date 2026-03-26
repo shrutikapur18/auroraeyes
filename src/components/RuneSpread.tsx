@@ -19,7 +19,12 @@ const RuneSpread = ({ question, onError, autoStart }: RuneSpreadProps) => {
   const [runes, setRunes] = useState<DrawnRune[]>([]);
   const [reading, setReading] = useState("");
 
-  const handleCast = () => {
+  // Auto-start when prop changes
+  if (autoStart && phase === "idle") {
+    setPhase("focus");
+  }
+
+  const startReading = () => {
     onError("");
     setPhase("focus");
   };
