@@ -21,16 +21,16 @@ const AngelCardSpread = ({ question, onError, autoStart }: AngelCardSpreadProps)
   const [cardCount, setCardCount] = useState(1);
   const [reading, setReading] = useState("");
 
-  const positionLabels = cardCount === 1
-    ? ["Your Message"]
-    : cardCount === 2
-    ? ["Message 1", "Message 2"]
-    : ["Past Guidance", "Present Wisdom", "Future Light"];
-
-  const handleStart = () => {
+  // Allow parent to trigger start
+  const startReading = () => {
     onError("");
     setPhase("choose-count");
   };
+
+  // Auto-start when prop changes
+  if (autoStart && phase === "idle") {
+    setPhase("choose-count");
+  }
 
   const handleChooseCount = (count: number) => {
     setCardCount(count);
