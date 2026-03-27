@@ -147,46 +147,45 @@ Keep the full response between 250 and 350 words.`;
 }
 
 function buildFollowUpPrompt(followUpQuestion: string, originalQuestion: string, originalInterpretation: string, chartData: any, conversationHistory: any[]) {
-  const { planetSummary, aspectSummary, ascDeg, vocMoon, radicalityNote } = buildChartSummary(chartData);
+  const { planetSummary, aspectSummary, ascDeg, vocMoon, keySignals } = buildChartSummary(chartData);
 
   const historyText = conversationHistory
-    .map((m: any) => `${m.role === "user" ? "Querent" : "Astrologer"}: ${m.content}`)
+    .map((m: any) => `${m.role === "user" ? "User" : "Advisor"}: ${m.content}`)
     .join("\n\n");
 
-  return `You are an experienced traditional horary astrologer. You previously interpreted a horary chart and the querent is now asking a follow-up question about the SAME chart. You must NOT generate a new chart. You must use the EXACT SAME chart data provided below.
+  return `You are a practical advisor answering a follow-up question about the SAME chart. Do NOT generate a new chart. Do NOT explain astrology.
 
-ORIGINAL QUESTION: "${originalQuestion}"
+Original question: "${originalQuestion}"
+Follow-up question: "${followUpQuestion}"
 
-FOLLOW-UP QUESTION: "${followUpQuestion}"
-
-ACTIVE HORARY CHART (do NOT change this data):
-- Ascendant: ${chartData.ascendantSign} (degree in sign: ${ascDeg >= 0 ? ascDeg.toFixed(1) + "°" : "unknown"})
-- Moon: ${chartData.moonSign}, Phase: ${chartData.moonPhase}${vocMoon ? " (void of course)" : ""}
+Chart data (for your analysis only — do NOT repeat to user):
+- Ascendant: ${chartData.ascendantSign} (${ascDeg >= 0 ? ascDeg.toFixed(1) + "°" : "unknown"})
+- Moon: ${chartData.moonSign}, Phase: ${chartData.moonPhase}
 - Planets: ${planetSummary}
 - Key aspects: ${aspectSummary}
-${radicalityNote ? "\nRadicality: " + radicalityNote : ""}
 
-YOUR ORIGINAL INTERPRETATION:
+Key signals:
+- Strength of querent: ${keySignals.querentStrength}
+- Strength of outcome: ${keySignals.outcomeStrength}
+- Connection: ${keySignals.connection}
+- Moon flow: ${keySignals.moonFlow}
+- Timing speed: ${keySignals.timingSpeed}
+
+Your previous answer:
 ${originalInterpretation}
 
-${historyText ? "CONVERSATION SO FAR:\n" + historyText : ""}
+${historyText ? "Conversation so far:\n" + historyText : ""}
 
-INSTRUCTIONS:
-1. Begin with a brief emotional reflection (1-2 sentences) acknowledging the follow-up question.
-2. Answer the follow-up question by re-analyzing the SAME chart, focusing specifically on what was asked.
-3. Reference specific planets, houses, and aspects from the chart to support your answer.
-4. Stay fully consistent with your original interpretation — do NOT contradict it.
-5. If the follow-up asks about timing, use the Moon's aspects and planetary movements from this chart.
-6. If the follow-up asks about another person's feelings, analyze the relevant house ruler and its receptions.
-7. If the follow-up asks about obstacles, identify afflicted planets or malefics in relevant houses.
+RULES:
+- Answer the follow-up directly — no preamble
+- Stay consistent with your previous answer
+- No astrology jargon whatsoever
+- No vague phrases like "the energy suggests", "possibly"
+- No phrases like "My dear friend", "Cosmic snapshot"
+- Keep response between 80 and 120 words
+- End with one sentence suggesting what else they might want to ask
 
-STYLE RULES:
-- Keep the response between 120 and 200 words.
-- Use warm, direct, conversational language.
-- Translate astrological terms into plain language.
-- Do NOT use vague phrases like "the energy suggests", "it could mean", "possibly".
-- Do NOT use phrases like "My dear friend", "Cosmic snapshot", or "Cosmic characters".
-- End with one brief sentence suggesting what else the querent might explore from this chart.`;
+TONE: Clear, confident, practical, human.`;
 }
 
 serve(async (req) => {
