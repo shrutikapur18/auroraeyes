@@ -36,6 +36,7 @@ import HoraryReading from "./pages/HoraryReading";
 import HoraryGuide from "./pages/HoraryGuide";
 import HoraryContentPage from "./pages/HoraryContentPage";
 import SavedReadingPage from "./pages/SavedReadingPage";
+import SpinTheWheel from "./pages/SpinTheWheel";
 import HTMLSitemap from "./pages/HTMLSitemap";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
@@ -110,6 +111,8 @@ const App = () => (
             <Route path="/editorial-policy" element={<EditorialPolicy />} />
             {/* HTML Sitemap */}
             <Route path="/sitemap-html" element={<HTMLSitemap />} />
+            {/* Spin the Wheel */}
+            <Route path="/spin-the-wheel" element={<SpinTheWheel />} />
             {/* Saved readings */}
             <Route path="/reading/:id" element={<SavedReadingPage />} />
             {/* Shared reading preview (legacy) */}
