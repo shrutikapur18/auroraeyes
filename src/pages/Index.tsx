@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Layers, Scale, Sparkles, Hexagon, Feather, Compass, BookOpen, Sun } from "lucide-react";
+import { Layers, Scale, Sparkles, Hexagon, Feather, Compass, BookOpen, Sun, RotateCw } from "lucide-react";
 import SEOHead from "@/components/SEOHead";
 import DivinationMethodSelector, { type DivinationMethod } from "@/components/DivinationMethodSelector";
 import QuestionInput from "@/components/QuestionInput";
