@@ -50,17 +50,43 @@ function buildChartSummary(chartData: any) {
   const moonAspects = chartData.aspects.filter((a: any) => a.planet1 === "Moon" || a.planet2 === "Moon");
   const vocMoon = moonAspects.length === 0;
 
-  let radicalityNote = "";
-  if (ascDeg >= 0 && ascDeg <= 3) {
-    radicalityNote = "Note: The Ascendant is at a very early degree, which traditionally suggests the situation may be too new or still forming for a clear answer.";
-  } else if (ascDeg >= 27 && ascDeg <= 30) {
-    radicalityNote = "Note: The Ascendant is at a very late degree, which traditionally suggests the matter may already be resolving or past the point of intervention.";
-  }
-  if (vocMoon) {
-    radicalityNote += " The Moon is void of course, which traditionally indicates the situation may not develop further or that nothing will come of the matter as asked.";
+  // Derive key signals for the AI
+  const querentPlanet = chartData.planets.find((p: any) => p.house === 1);
+  const outcomePlanet = chartData.planets.find((p: any) => p.house === 7 || p.house === 10);
+
+  const DIGNITIES: Record<string, string[]> = {
+    Sun: ["Leo","Aries"], Moon: ["Cancer","Taurus"], Mercury: ["Gemini","Virgo"],
+    Venus: ["Taurus","Libra","Pisces"], Mars: ["Aries","Scorpio","Capricorn"],
+    Jupiter: ["Sagittarius","Pisces","Cancer"], Saturn: ["Capricorn","Aquarius","Libra"],
+  };
+
+  function isStrong(p: any): boolean {
+    if (!p) return false;
+    const digs = DIGNITIES[p.name] || [];
+    return digs.includes(p.sign) && !p.isRetro;
   }
 
-  return { planetSummary, aspectSummary, ascDeg, vocMoon, radicalityNote };
+  const querentStrength = querentPlanet ? (isStrong(querentPlanet) ? "strong" : "weak") : "unknown";
+  const outcomeStrength = outcomePlanet ? (isStrong(outcomePlanet) ? "strong" : "weak") : "unknown";
+
+  const hasConnection = chartData.aspects.some((a: any) =>
+    (a.type === "Conjunction" || a.type === "Trine" || a.type === "Sextile") && a.orb < 6
+  );
+
+  const moonFlow = vocMoon ? "delay" : "progress";
+
+  const retroCount = chartData.planets.filter((p: any) => p.isRetro).length;
+  const timingSpeed = retroCount >= 3 ? "slow" : retroCount >= 1 ? "medium" : "fast";
+
+  const keySignals = {
+    querentStrength,
+    outcomeStrength,
+    connection: hasConnection ? "yes" : "no",
+    moonFlow,
+    timingSpeed,
+  };
+
+  return { planetSummary, aspectSummary, ascDeg, vocMoon, keySignals };
 }
 
 function buildMainPrompt(question: string, chartData: any, meta: any) {
