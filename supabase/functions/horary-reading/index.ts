@@ -50,136 +50,142 @@ function buildChartSummary(chartData: any) {
   const moonAspects = chartData.aspects.filter((a: any) => a.planet1 === "Moon" || a.planet2 === "Moon");
   const vocMoon = moonAspects.length === 0;
 
-  let radicalityNote = "";
-  if (ascDeg >= 0 && ascDeg <= 3) {
-    radicalityNote = "Note: The Ascendant is at a very early degree, which traditionally suggests the situation may be too new or still forming for a clear answer.";
-  } else if (ascDeg >= 27 && ascDeg <= 30) {
-    radicalityNote = "Note: The Ascendant is at a very late degree, which traditionally suggests the matter may already be resolving or past the point of intervention.";
-  }
-  if (vocMoon) {
-    radicalityNote += " The Moon is void of course, which traditionally indicates the situation may not develop further or that nothing will come of the matter as asked.";
+  // Derive key signals for the AI
+  const querentPlanet = chartData.planets.find((p: any) => p.house === 1);
+  const outcomePlanet = chartData.planets.find((p: any) => p.house === 7 || p.house === 10);
+
+  const DIGNITIES: Record<string, string[]> = {
+    Sun: ["Leo","Aries"], Moon: ["Cancer","Taurus"], Mercury: ["Gemini","Virgo"],
+    Venus: ["Taurus","Libra","Pisces"], Mars: ["Aries","Scorpio","Capricorn"],
+    Jupiter: ["Sagittarius","Pisces","Cancer"], Saturn: ["Capricorn","Aquarius","Libra"],
+  };
+
+  function isStrong(p: any): boolean {
+    if (!p) return false;
+    const digs = DIGNITIES[p.name] || [];
+    return digs.includes(p.sign) && !p.isRetro;
   }
 
-  return { planetSummary, aspectSummary, ascDeg, vocMoon, radicalityNote };
+  const querentStrength = querentPlanet ? (isStrong(querentPlanet) ? "strong" : "weak") : "unknown";
+  const outcomeStrength = outcomePlanet ? (isStrong(outcomePlanet) ? "strong" : "weak") : "unknown";
+
+  const hasConnection = chartData.aspects.some((a: any) =>
+    (a.type === "Conjunction" || a.type === "Trine" || a.type === "Sextile") && a.orb < 6
+  );
+
+  const moonFlow = vocMoon ? "delay" : "progress";
+
+  const retroCount = chartData.planets.filter((p: any) => p.isRetro).length;
+  const timingSpeed = retroCount >= 3 ? "slow" : retroCount >= 1 ? "medium" : "fast";
+
+  const keySignals = {
+    querentStrength,
+    outcomeStrength,
+    connection: hasConnection ? "yes" : "no",
+    moonFlow,
+    timingSpeed,
+  };
+
+  return { planetSummary, aspectSummary, ascDeg, vocMoon, keySignals };
 }
 
 function buildMainPrompt(question: string, chartData: any, meta: any) {
-  const { planetSummary, aspectSummary, ascDeg, vocMoon, radicalityNote } = buildChartSummary(chartData);
+  const { planetSummary, aspectSummary, ascDeg, vocMoon, keySignals } = buildChartSummary(chartData);
 
-  return `You are an experienced traditional horary astrologer interpreting a chart for someone who has asked a sincere question.
+  return `You are a practical advisor who reads horary charts. Your job is to translate chart data into a clear, real-world answer. Do NOT explain astrology — just give the answer.
 
-The question is: "${question}"
+User question: "${question}"
 
-The horary chart was cast at ${meta.year}-${meta.month}-${meta.date} ${meta.hours}:${String(meta.minutes).padStart(2, "0")} at ${meta.location} (${meta.latitude}, ${meta.longitude}).
+Chart cast at ${meta.year}-${meta.month}-${meta.date} ${meta.hours}:${String(meta.minutes).padStart(2, "0")} at ${meta.location}.
 
-Chart data:
-- Ascendant: ${chartData.ascendantSign} (degree in sign: ${ascDeg >= 0 ? ascDeg.toFixed(1) + "°" : "unknown"})
-- Moon: ${chartData.moonSign}, Phase: ${chartData.moonPhase}${vocMoon ? " (void of course)" : ""}
+Chart data (for your analysis only — do NOT repeat this to the user):
+- Ascendant: ${chartData.ascendantSign} (${ascDeg >= 0 ? ascDeg.toFixed(1) + "°" : "unknown"})
+- Moon: ${chartData.moonSign}, Phase: ${chartData.moonPhase}
 - Planets: ${planetSummary}
 - Key aspects: ${aspectSummary}
-${radicalityNote ? "\nRadicality: " + radicalityNote : ""}
 
-INSTRUCTIONS:
+Key signals:
+- Strength of querent: ${keySignals.querentStrength}
+- Strength of outcome: ${keySignals.outcomeStrength}
+- Connection: ${keySignals.connection}
+- Moon flow: ${keySignals.moonFlow}
+- Timing speed: ${keySignals.timingSpeed}
 
-1. QUESTION VALIDATION: If the question is vague, unrealistic, or too broad, gently encourage a clearer question. Say something like: "Horary astrology works best with clear and specific questions about real situations."
+STRICT RULES:
+- Do NOT use astrology jargon (no "void of course", "significator", "trine", "sextile", "retrograde", "applying aspect", etc.)
+- Do NOT explain how horary astrology works
+- Do NOT repeat the same point multiple times
+- Do NOT write long paragraphs — keep every section tight
+- Avoid vague phrases like "it may", "possibly", "the energy suggests"
+- Do NOT use phrases like "My dear friend", "Cosmic snapshot", "Cosmic characters"
 
-2. Begin with a brief, natural reflection (1-2 sentences) on the emotional tone or intention behind the question. Acknowledge what the person may be seeking — clarity, reassurance, direction, or understanding. Example: "Your question suggests a desire to understand how this situation may unfold."
+STRUCTURE (use **bold** headers):
 
-3. INTERPRETATION: Organize the reading using these section headers (use **bold** for headers):
+**Direct Answer**
+1–2 sentences. Give a clear, decisive answer to the question.
 
-**Chart Radicality**
-If there are radicality warnings above, explain gently that the situation may still be developing. If the chart is radical, state briefly that the chart is fit to judge and proceed.
+**Why This Is Happening**
+2–3 sentences. Explain the main factors in simple human terms (e.g., financial pressure, timing issues, emotional hesitation, lack of readiness). No astrology terms.
 
-**Main Significators**
-Identify the key planets representing the querent and the quesited (the person or matter asked about). Explain their roles in plain language.
+**Timing**
+1 sentence. Give a realistic timeframe: days, weeks, months, or longer. Never give exact dates.
 
-**Condition of the Planets**
-Describe the condition of the main significators — are they strong or weak? In what signs and houses? Translate this into real-life meaning.
+**What Would Improve This**
+1–2 sentences. Explain what shift or change would help move things forward.
 
-**Reception Between People**
-If the question involves another person, explain whether the planets show mutual reception, one-sided interest, or indifference. Translate into feelings.
+**Hidden Factors**
+2–3 bullet points of things the user didn't ask about but the chart reveals (e.g., a third party involved, hidden emotions, an obstacle they haven't noticed). Keep each bullet to 1 sentence.
 
-**Aspect Analysis**
-Describe the key aspects between significators. Are they applying (moving toward contact) or separating (moving apart)? Explain what this means for the situation. Use grounded, direct language.
+**Final Insight**
+1 sentence. A short, sharp, memorable closing line.
 
-**Moon and the Flow of Events**
-Describe the Moon's current sign, phase, and next aspects. Explain what this reveals about how events will unfold. If the Moon is void of course, explain its meaning clearly.
+**You May Also Want to Ask:**
+3 follow-up questions as bullet points.
 
-**Hidden Insights from This Chart**
-Analyze the chart for additional information the querent did not explicitly ask about. Only include insights strongly supported by the chart. Possible hidden insights:
-- Hidden feelings of another person
-- Obstacles blocking the situation
-- Presence of a third party influencing the matter
-- Timing of a future development
-- Whether the situation will change
-- Advice for the querent
-Format each insight as: "Hidden Insight #1 — [Topic]" followed by a brief explanation.
-
-**What Is Most Likely to Happen**
-Summarize clearly:
-- The most probable outcome
-- The main obstacle
-- The expected timing (soon, within weeks, within months, gradual long-term — never exact dates)
-Base this on aspects between significators, reception, and the Moon's next aspects.
-
-**Follow-Up Questions**
-Suggest 3 thoughtful follow-up questions the user might naturally ask next, related to timing, obstacles, emotional dynamics, or personal guidance. Format as: "You may also want to explore:" followed by bullet points.
-
-STYLE RULES:
-- Use warm, natural, conversational language — calm, reflective, thoughtful.
-- Keep the full interpretation between 350 and 500 words.
-- Use short paragraphs for easy mobile reading.
-- When using astrology terms, briefly explain them in plain language.
-- Translate astrological symbolism into real-life situations.
-- Do NOT use vague phrases like "the energy suggests", "it could mean", "possibly".
-- Give grounded interpretations based on the chart data.
-- Do NOT use phrases like "My dear friend", "Cosmic snapshot", or "Cosmic characters".
-- Use direct language: "The chart suggests...", "There is strong indication that...", "Because [aspect], the situation is likely to..."
-- Ensure the response finishes clearly and does not cut off mid-sentence.
-- All follow-up answers must refer back to this same chart. Never create a new interpretation unless new chart data is provided.`;
+TONE: Clear, confident, simple, human, practical. Like a trusted real-world advisor.
+Keep the full response between 250 and 350 words.`;
 }
 
 function buildFollowUpPrompt(followUpQuestion: string, originalQuestion: string, originalInterpretation: string, chartData: any, conversationHistory: any[]) {
-  const { planetSummary, aspectSummary, ascDeg, vocMoon, radicalityNote } = buildChartSummary(chartData);
+  const { planetSummary, aspectSummary, ascDeg, vocMoon, keySignals } = buildChartSummary(chartData);
 
   const historyText = conversationHistory
-    .map((m: any) => `${m.role === "user" ? "Querent" : "Astrologer"}: ${m.content}`)
+    .map((m: any) => `${m.role === "user" ? "User" : "Advisor"}: ${m.content}`)
     .join("\n\n");
 
-  return `You are an experienced traditional horary astrologer. You previously interpreted a horary chart and the querent is now asking a follow-up question about the SAME chart. You must NOT generate a new chart. You must use the EXACT SAME chart data provided below.
+  return `You are a practical advisor answering a follow-up question about the SAME chart. Do NOT generate a new chart. Do NOT explain astrology.
 
-ORIGINAL QUESTION: "${originalQuestion}"
+Original question: "${originalQuestion}"
+Follow-up question: "${followUpQuestion}"
 
-FOLLOW-UP QUESTION: "${followUpQuestion}"
-
-ACTIVE HORARY CHART (do NOT change this data):
-- Ascendant: ${chartData.ascendantSign} (degree in sign: ${ascDeg >= 0 ? ascDeg.toFixed(1) + "°" : "unknown"})
-- Moon: ${chartData.moonSign}, Phase: ${chartData.moonPhase}${vocMoon ? " (void of course)" : ""}
+Chart data (for your analysis only — do NOT repeat to user):
+- Ascendant: ${chartData.ascendantSign} (${ascDeg >= 0 ? ascDeg.toFixed(1) + "°" : "unknown"})
+- Moon: ${chartData.moonSign}, Phase: ${chartData.moonPhase}
 - Planets: ${planetSummary}
 - Key aspects: ${aspectSummary}
-${radicalityNote ? "\nRadicality: " + radicalityNote : ""}
 
-YOUR ORIGINAL INTERPRETATION:
+Key signals:
+- Strength of querent: ${keySignals.querentStrength}
+- Strength of outcome: ${keySignals.outcomeStrength}
+- Connection: ${keySignals.connection}
+- Moon flow: ${keySignals.moonFlow}
+- Timing speed: ${keySignals.timingSpeed}
+
+Your previous answer:
 ${originalInterpretation}
 
-${historyText ? "CONVERSATION SO FAR:\n" + historyText : ""}
+${historyText ? "Conversation so far:\n" + historyText : ""}
 
-INSTRUCTIONS:
-1. Begin with a brief emotional reflection (1-2 sentences) acknowledging the follow-up question.
-2. Answer the follow-up question by re-analyzing the SAME chart, focusing specifically on what was asked.
-3. Reference specific planets, houses, and aspects from the chart to support your answer.
-4. Stay fully consistent with your original interpretation — do NOT contradict it.
-5. If the follow-up asks about timing, use the Moon's aspects and planetary movements from this chart.
-6. If the follow-up asks about another person's feelings, analyze the relevant house ruler and its receptions.
-7. If the follow-up asks about obstacles, identify afflicted planets or malefics in relevant houses.
+RULES:
+- Answer the follow-up directly — no preamble
+- Stay consistent with your previous answer
+- No astrology jargon whatsoever
+- No vague phrases like "the energy suggests", "possibly"
+- No phrases like "My dear friend", "Cosmic snapshot"
+- Keep response between 80 and 120 words
+- End with one sentence suggesting what else they might want to ask
 
-STYLE RULES:
-- Keep the response between 120 and 200 words.
-- Use warm, direct, conversational language.
-- Translate astrological terms into plain language.
-- Do NOT use vague phrases like "the energy suggests", "it could mean", "possibly".
-- Do NOT use phrases like "My dear friend", "Cosmic snapshot", or "Cosmic characters".
-- End with one brief sentence suggesting what else the querent might explore from this chart.`;
+TONE: Clear, confident, practical, human.`;
 }
 
 serve(async (req) => {
