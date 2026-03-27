@@ -111,6 +111,8 @@ const App = () => (
             <Route path="/editorial-policy" element={<EditorialPolicy />} />
             {/* HTML Sitemap */}
             <Route path="/sitemap-html" element={<HTMLSitemap />} />
+            {/* Spin the Wheel */}
+            <Route path="/spin-the-wheel" element={<SpinTheWheel />} />
             {/* Saved readings */}
             <Route path="/reading/:id" element={<SavedReadingPage />} />
             {/* Shared reading preview (legacy) */}

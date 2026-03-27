@@ -239,6 +239,7 @@ const Index = () => {
                   { to: "/tarot-card-meanings", label: "Card Meanings", Icon: BookOpen },
                   { to: "/rune-meanings", label: "Rune Wisdom", Icon: Hexagon },
                   { to: "/daily-tarot-card", label: "Daily Guidance", Icon: Sun },
+                  { to: "/spin-the-wheel", label: "Wheel of Fate", Icon: RotateCw },
                 ].map((l) => (
                   <Link key={l.to} to={l.to} className="divination-card rounded-lg p-3 md:p-4 lg:p-6 text-center group active:scale-[0.97]">
                     <l.Icon className="w-5 h-5 md:w-6 md:h-6 lg:w-7 lg:h-7 mx-auto mb-1.5 lg:mb-2 text-primary/60 group-hover:text-primary transition-colors duration-500 icon-glow" />
