@@ -23,6 +23,7 @@ import TopicalClusterNav from "@/components/TopicalClusterNav";
 import RecentReadings from "@/components/RecentReadings";
 import HoraryHomepageSection from "@/components/HoraryHomepageSection";
 import DivinationPhilosophy from "@/components/DivinationPhilosophy";
+import NoorReaderSection from "@/components/NoorReaderSection";
 import { threeCardPositions, celticCrossPositions } from "@/data/tarotDeck";
 import type { DrawnCard, ReadingMode } from "@/data/tarotDeck";
 import { generateLocalReading } from "@/lib/tarotReading";
@@ -251,6 +252,7 @@ const Index = () => {
             {/* Philosophy Section */}
             <DivinationPhilosophy />
 
+            <NoorReaderSection />
             <RecentReadings />
             <TopicalClusterNav />
           </motion.div>
