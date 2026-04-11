@@ -204,11 +204,39 @@ export const questionPages: QuestionPage[] = [
       "Pentacles cards carry special significance in career readings, representing material achievement, financial stability, and practical progress. The Emperor, The Magician, and the Three of Pentacles often indicate professional mastery and recognition.",
       "Whether you're considering a career change, seeking a promotion, or navigating workplace challenges, a career tarot reading provides perspective on the energies shaping your professional journey."
     ],
+    sections: [
+      {
+        heading: "What Career Tarot Actually Reveals",
+        body: [
+          "Career readings aren't fortune-telling about promotions. They reveal the internal dynamics driving your professional life — ambition versus fear, skill versus self-doubt, comfort versus growth. The cards show you the emotional architecture behind your career decisions.",
+          "Most people come to career tarot when they feel stuck. They know something needs to change but can't identify what. The cards cut through mental fog by naming the specific energy at play: are you afraid of failure, comfortable with mediocrity, or unconsciously sabotaging your success?",
+          "The Pentacles suit dominates career readings because work is ultimately about what you build in the material world. But don't ignore Wands (passion), Cups (fulfillment), and Swords (clarity) — a career without those elements will always feel incomplete."
+        ]
+      },
+      {
+        heading: "Reading the Cards for Professional Decisions",
+        body: [
+          "The Three of Pentacles is the master craftsman card — when it appears, your skills are being recognized and collaboration will serve you well. The Eight of Pentacles shows dedicated effort paying off through consistent, focused work.",
+          "The Magician in a career reading is powerful: it says you have every tool you need to succeed. The only question is whether you'll use them. Paired with The Emperor, it suggests leadership potential waiting to be claimed.",
+          "Be honest when The Tower or Ten of Swords appears. These cards don't mean career disaster — they mean the current situation has run its course. Fighting to preserve a dead-end position wastes energy that could build something better."
+        ]
+      },
+      {
+        heading: "Using Your Career Reading Effectively",
+        body: [
+          "The best career readings produce one clear action step. Not a vague affirmation, but something specific: update your resume, have the difficult conversation with your boss, start the side project you've been postponing, or accept that this job was only meant to be temporary.",
+          "Avoid reading about the same career question repeatedly. If you asked about a promotion last week and the cards said 'not yet,' pulling again three days later won't change the answer. It will just increase your anxiety.",
+          "Consider pairing career tarot with practical planning. The cards show you the energy — your job is to translate that insight into concrete professional moves."
+        ]
+      }
+    ],
     faq: [
       { q: "Can tarot help with career decisions?", a: "Tarot provides insight into the energies and patterns affecting your career. It can reveal hidden opportunities, potential obstacles, and the inner motivations driving your professional choices." },
-      { q: "What tarot cards indicate career success?", a: "The Sun, Six of Wands (victory), Ace of Pentacles (new opportunity), Three of Pentacles (mastery), and The Emperor (leadership) are strong career success indicators." }
+      { q: "What tarot cards indicate career success?", a: "The Sun, Six of Wands (victory), Ace of Pentacles (new opportunity), Three of Pentacles (mastery), and The Emperor (leadership) are strong career success indicators." },
+      { q: "Should I quit my job based on a tarot reading?", a: "Tarot is one input among many. It can reveal what you're feeling beneath the surface, but major life decisions should also consider finances, timing, and practical alternatives." },
+      { q: "What does it mean if I keep getting Pentacles in career readings?", a: "Pentacles dominating a career reading emphasize the material and practical aspects — finances, skill development, patience, and long-term building. The cards are saying: focus on craft and stability." }
     ],
-    relatedSlugs: ["should-i-change-careers-tarot", "will-i-get-the-job-tarot"]
+    relatedSlugs: ["should-i-change-careers-tarot", "will-i-get-the-job-tarot", "money-tarot-reading"]
   },
   {
     slug: "should-i-change-careers-tarot",
