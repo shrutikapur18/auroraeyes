@@ -159,11 +159,39 @@ export const questionPages: QuestionPage[] = [
       "The Lovers, The World, and the Two of Cups are among the strongest soulmate indicators in tarot. When these cards appear alongside Major Arcana cards, they often signal a connection that transcends the ordinary.",
       "Remember that soulmates aren't always romantic partners — they can be friends, family, or mentors who appear at pivotal moments to catalyze your spiritual growth."
     ],
+    sections: [
+      {
+        heading: "What a Soulmate Really Means in Tarot",
+        body: [
+          "Pop culture sells soulmates as effortless perfection — the person who completes you. Tarot tells a different story. In the cards, soulmate connections are often intense, challenging, and deeply transformative. They don't always feel comfortable.",
+          "A soulmate is someone whose energy accelerates your growth. The Two of Cups shows two people meeting at an equal depth. The World suggests a relationship that feels fated or karmically complete. But The Tower can also appear in soulmate readings — because some soul connections blow your old life apart to make room for something real.",
+          "The distinction between a soulmate and someone you're simply attached to matters. Tarot can show you which one you're dealing with by revealing the quality of the connection's energy, not just its intensity."
+        ]
+      },
+      {
+        heading: "Signs Your Reading Points to a Soul Connection",
+        body: [
+          "Multiple Major Arcana cards in a relationship reading suggest something bigger than ordinary romance. When The Lovers, Judgement, and The World appear together, you're looking at a connection with spiritual significance.",
+          "The Six of Cups paired with the Ace of Cups suggests a past-life connection re-emerging in present time. It's that feeling of already knowing someone — tarot confirms it's not just your imagination.",
+          "Pay attention to the Temperance card. Unlike the dramatic passion of The Tower or The Devil, Temperance shows a connection built on genuine harmony and mutual understanding. This is the soulmate energy that actually lasts."
+        ]
+      },
+      {
+        heading: "Preparing Yourself to Attract a Soulmate",
+        body: [
+          "The most consistent pattern in soulmate readings is this: the person who keeps asking 'where is my soulmate?' often gets cards about self-work. The Hermit. Strength. The High Priestess. The cards are saying: your soulmate will arrive when you've done the inner work to recognize them.",
+          "Tarot frequently shows that we miss soulmate connections because we're looking for the wrong things — physical attraction, financial security, someone who fits our checklist. Soulmates rarely match the picture in your head. They match the need in your soul.",
+          "If your reading keeps pointing inward, trust that. The cards aren't stalling. They're building the foundation that will allow you to sustain a soul-level connection when it arrives."
+        ]
+      }
+    ],
     faq: [
       { q: "What tarot card represents a soulmate?", a: "The Lovers (VI) most directly represents soulmate energy, along with the Two of Cups for mutual soul connection and The World for destined completeness." },
-      { q: "Can tarot tell me when I'll meet my soulmate?", a: "Tarot can suggest timing through suit associations — Wands indicate weeks, Cups suggest months — but the most valuable insight comes from understanding what you need to cultivate within yourself to attract this connection." }
+      { q: "Can tarot tell me when I'll meet my soulmate?", a: "Tarot can suggest timing through suit associations — Wands indicate weeks, Cups suggest months — but the most valuable insight comes from understanding what you need to cultivate within yourself to attract this connection." },
+      { q: "What's the difference between a soulmate and a twin flame?", a: "Soulmates bring harmony and growth. Twin flames mirror you intensely — including your shadow. Both are soul connections, but twin flames tend to be more turbulent and transformative." },
+      { q: "Can you have more than one soulmate?", a: "Yes. Tarot recognizes multiple soul connections across a lifetime. Different soulmates serve different purposes — some teach, some heal, some stay." }
     ],
-    relatedSlugs: ["love-tarot-reading", "will-my-relationship-improve-tarot"]
+    relatedSlugs: ["love-tarot-reading", "will-my-relationship-improve-tarot", "twin-flame-tarot-reading"]
   },
   {
     slug: "career-tarot-reading",
