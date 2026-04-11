@@ -6,6 +6,11 @@ const slugify = (name: string) =>
   name.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
 
 /* ── Question-based reading pages ── */
+export interface ContentSection {
+  heading: string;
+  body: string[];
+}
+
 export interface QuestionPage {
   slug: string;
   title: string;
@@ -13,6 +18,7 @@ export interface QuestionPage {
   description: string;
   topic: "love" | "career" | "decision" | "money" | "growth";
   intro: string[];
+  sections?: ContentSection[];
   faq: { q: string; a: string }[];
   relatedSlugs: string[];
 }
