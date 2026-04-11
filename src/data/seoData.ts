@@ -6,6 +6,11 @@ const slugify = (name: string) =>
   name.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
 
 /* ── Question-based reading pages ── */
+export interface ContentSection {
+  heading: string;
+  body: string[];
+}
+
 export interface QuestionPage {
   slug: string;
   title: string;
@@ -13,6 +18,7 @@ export interface QuestionPage {
   description: string;
   topic: "love" | "career" | "decision" | "money" | "growth";
   intro: string[];
+  sections?: ContentSection[];
   faq: { q: string; a: string }[];
   relatedSlugs: string[];
 }
@@ -29,10 +35,46 @@ export const questionPages: QuestionPage[] = [
       "When you ask the tarot about love, the cards speak through the language of emotion, attachment, and vulnerability. Cups cards carry particular weight in love readings, while Major Arcana cards like The Lovers, The Empress, and The Moon reveal deeper soul-level patterns.",
       "Whether you're in a relationship, seeking one, or navigating a breakup, a love tarot reading provides insight into the emotional currents shaping your romantic life."
     ],
+    sections: [
+      {
+        heading: "Why People Turn to Love Tarot Readings",
+        body: [
+          "Love is the area where we feel most vulnerable, and that vulnerability makes it the hardest to see clearly. We project, we hope, we fear — and tarot cuts through all of it. A love reading doesn't tell you what you want to hear. It shows you what's actually happening beneath the surface.",
+          "Most people come to love tarot at a crossroads: a new attraction that feels significant, a relationship that's lost its spark, or a breakup they can't stop replaying. The cards don't judge any of these situations. They simply reflect the emotional reality you're living in.",
+          "What makes tarot particularly effective for love questions is its ability to show dynamics between two people — not just your feelings, but the energy between you and the person you're asking about."
+        ]
+      },
+      {
+        heading: "Key Cards in a Love Tarot Reading",
+        body: [
+          "The Cups suit is the emotional heart of the tarot deck. The Ace of Cups signals a fresh wave of feeling — new love, renewed affection, or emotional openness you haven't felt in a while. The Two of Cups is the classic mutual attraction card, showing two people meeting as equals.",
+          "Among the Major Arcana, The Lovers is the most obvious love indicator, but it's more about choice than romance. It asks: are you choosing this person consciously, or are you on autopilot? The Empress brings warmth, sensuality, and nurturing energy — she often appears when a relationship is ready to deepen.",
+          "Watch for The Moon in love readings. It reveals confusion, illusions, or something hidden. If this card shows up, there's a truth you're not seeing yet — and it's worth paying attention."
+        ]
+      },
+      {
+        heading: "How to Ask Effective Love Questions",
+        body: [
+          "The quality of your question determines the quality of your reading. Avoid vague questions like 'What about my love life?' Instead, try: 'What energy surrounds my connection with [name]?' or 'What do I need to understand about my pattern in relationships?'",
+          "Questions that focus on your own agency get the clearest answers. 'What can I do to attract a healthy relationship?' is more powerful than 'When will I find love?' because it puts you in the active role.",
+          "If you're asking about a specific person, be honest about what you actually want to know. The cards respond to the real question, not the one you're comfortable asking out loud."
+        ]
+      },
+      {
+        heading: "What Your Love Reading Can (and Can't) Tell You",
+        body: [
+          "A love tarot reading reveals emotional patterns, relational dynamics, and the energy surrounding your romantic life. It can show you blind spots — the fear of commitment you're not acknowledging, the red flags you've been ignoring, or the self-worth issue that keeps attracting the wrong partners.",
+          "What tarot cannot do is tell you exactly who you'll marry or give you a date when love will arrive. Anyone who promises that is misrepresenting how tarot works. The cards illuminate potential, not certainty.",
+          "The most valuable love readings leave you with clarity about yourself. When you understand your own emotional patterns, you naturally make better choices in love — and that's where real change happens."
+        ]
+      }
+    ],
     faq: [
       { q: "Can tarot predict who I will marry?", a: "Tarot doesn't predict specific people but reveals emotional patterns, timing, and the energy surrounding your love life. It helps you understand what you attract and why." },
       { q: "What cards indicate love in a tarot reading?", a: "The Lovers, Two of Cups, Ace of Cups, Ten of Cups, and The Empress are among the strongest love indicators in tarot." },
-      { q: "How accurate are love tarot readings?", a: "Love readings are most accurate when they reflect your emotional truth. They work best as a mirror for self-awareness rather than as predictive tools." }
+      { q: "How accurate are love tarot readings?", a: "Love readings are most accurate when they reflect your emotional truth. They work best as a mirror for self-awareness rather than as predictive tools." },
+      { q: "How often should I do a love tarot reading?", a: "Once a month is ideal for tracking emotional shifts. Reading too frequently about the same question can create anxiety rather than clarity." },
+      { q: "Can I do a love reading about someone who doesn't know?", a: "Yes, but the reading will reflect the energy between you rather than the other person's private thoughts. Respect their autonomy in how you interpret the cards." }
     ],
     relatedSlugs: ["will-my-ex-come-back-tarot", "will-my-relationship-improve-tarot", "soulmate-tarot-reading"]
   },
@@ -47,11 +89,47 @@ export const questionPages: QuestionPage[] = [
       "Cards like The Wheel of Fortune suggest cycles and returns, while Death and The Tower may indicate that the chapter has truly closed. The Six of Cups often points to nostalgia and past connections resurfacing.",
       "Rather than fixating on a specific outcome, allow the reading to show you what you need to understand about this connection and your own emotional growth."
     ],
+    sections: [
+      {
+        heading: "Why You're Still Thinking About Your Ex",
+        body: [
+          "The question isn't really 'will they come back?' — it's 'why can't I let go?' And that's what tarot answers honestly. Breakups leave emotional residue, and the cards show you exactly where it's stuck.",
+          "Sometimes the attachment is about the person. More often, it's about what they represented — security, validation, a version of yourself you liked. Understanding the difference changes everything about how you move forward.",
+          "Tarot reads energy, not destiny. If you're constantly pulling cards about an ex, the deck is mirroring your fixation more than their intentions. The most useful readings shift the focus from 'will they?' to 'should I?'"
+        ]
+      },
+      {
+        heading: "Cards That Suggest Reconnection — and Cards That Don't",
+        body: [
+          "The Six of Cups is the strongest 'past returning' card. It signals nostalgia, old feelings resurfacing, and childhood or early connections coming back around. When paired with The Wheel of Fortune, it suggests the cycle isn't complete yet.",
+          "Judgement is a card of second chances and reckoning — it often appears when both people need to confront truths before reconnecting. The Star suggests hope, but only if genuine healing has happened first.",
+          "On the other side, Death is unambiguous: this chapter is over, and transformation requires releasing it. The Tower means whatever reunion you're imagining would collapse anyway. The Three of Swords followed by the Ace of Swords suggests painful clarity — it hurt, but now you see clearly."
+        ]
+      },
+      {
+        heading: "How to Get an Honest Reading About Your Ex",
+        body: [
+          "The biggest obstacle to an accurate ex reading is emotional bias. When you desperately want a specific answer, you'll unconsciously interpret every card to match your hope. That's not the cards being wrong — it's you not being ready to hear them.",
+          "Ask specific, neutral questions: 'What energy remains between me and [name]?' is better than 'Will they text me this week?' One invites insight; the other invites disappointment.",
+          "Consider doing the reading when you're in a calm state, not during a 2 AM spiral. The cards respond to the energy you bring to the session. Desperation gets confused readings. Genuine curiosity gets honest ones."
+        ]
+      },
+      {
+        heading: "Moving Forward — Whether They Return or Not",
+        body: [
+          "The most empowering ex readings are the ones that set you free. When tarot shows you the pattern — the codependency, the fear of being alone, the idealization of someone who wasn't right — it breaks the spell.",
+          "If the cards suggest the connection has life left, they're also showing you what needs to change before it can work. Going back to the same dynamic produces the same result. Growth has to happen first.",
+          "If the cards say it's over, they're making space for something that actually fits. Every card reader has watched clients desperately seek reunion readings, only to return months later grateful the ex didn't come back because something better arrived."
+        ]
+      }
+    ],
     faq: [
       { q: "What tarot cards mean my ex will come back?", a: "The Six of Cups (nostalgia), Wheel of Fortune (cycles), Judgement (second chances), and The Star (renewed hope) may suggest reconnection — but always in context with surrounding cards." },
-      { q: "Should I do a tarot reading about my ex?", a: "A reading can provide clarity and closure, but approach it seeking understanding rather than a specific answer. The most helpful readings focus on your own growth." }
+      { q: "Should I do a tarot reading about my ex?", a: "A reading can provide clarity and closure, but approach it seeking understanding rather than a specific answer. The most helpful readings focus on your own growth." },
+      { q: "How long should I wait after a breakup to do a reading?", a: "Give yourself at least a week for the initial emotional wave to settle. Readings done from genuine curiosity are far more accurate than those driven by raw pain." },
+      { q: "What if the cards keep showing my ex coming back?", a: "Repeated cards may reflect your energy and desire rather than their actions. Try asking what you need to focus on for yourself, and see if the cards shift." }
     ],
-    relatedSlugs: ["love-tarot-reading", "will-my-relationship-improve-tarot"]
+    relatedSlugs: ["love-tarot-reading", "will-my-relationship-improve-tarot", "breakup-tarot-reading"]
   },
   {
     slug: "will-my-relationship-improve-tarot",
@@ -81,11 +159,39 @@ export const questionPages: QuestionPage[] = [
       "The Lovers, The World, and the Two of Cups are among the strongest soulmate indicators in tarot. When these cards appear alongside Major Arcana cards, they often signal a connection that transcends the ordinary.",
       "Remember that soulmates aren't always romantic partners — they can be friends, family, or mentors who appear at pivotal moments to catalyze your spiritual growth."
     ],
+    sections: [
+      {
+        heading: "What a Soulmate Really Means in Tarot",
+        body: [
+          "Pop culture sells soulmates as effortless perfection — the person who completes you. Tarot tells a different story. In the cards, soulmate connections are often intense, challenging, and deeply transformative. They don't always feel comfortable.",
+          "A soulmate is someone whose energy accelerates your growth. The Two of Cups shows two people meeting at an equal depth. The World suggests a relationship that feels fated or karmically complete. But The Tower can also appear in soulmate readings — because some soul connections blow your old life apart to make room for something real.",
+          "The distinction between a soulmate and someone you're simply attached to matters. Tarot can show you which one you're dealing with by revealing the quality of the connection's energy, not just its intensity."
+        ]
+      },
+      {
+        heading: "Signs Your Reading Points to a Soul Connection",
+        body: [
+          "Multiple Major Arcana cards in a relationship reading suggest something bigger than ordinary romance. When The Lovers, Judgement, and The World appear together, you're looking at a connection with spiritual significance.",
+          "The Six of Cups paired with the Ace of Cups suggests a past-life connection re-emerging in present time. It's that feeling of already knowing someone — tarot confirms it's not just your imagination.",
+          "Pay attention to the Temperance card. Unlike the dramatic passion of The Tower or The Devil, Temperance shows a connection built on genuine harmony and mutual understanding. This is the soulmate energy that actually lasts."
+        ]
+      },
+      {
+        heading: "Preparing Yourself to Attract a Soulmate",
+        body: [
+          "The most consistent pattern in soulmate readings is this: the person who keeps asking 'where is my soulmate?' often gets cards about self-work. The Hermit. Strength. The High Priestess. The cards are saying: your soulmate will arrive when you've done the inner work to recognize them.",
+          "Tarot frequently shows that we miss soulmate connections because we're looking for the wrong things — physical attraction, financial security, someone who fits our checklist. Soulmates rarely match the picture in your head. They match the need in your soul.",
+          "If your reading keeps pointing inward, trust that. The cards aren't stalling. They're building the foundation that will allow you to sustain a soul-level connection when it arrives."
+        ]
+      }
+    ],
     faq: [
       { q: "What tarot card represents a soulmate?", a: "The Lovers (VI) most directly represents soulmate energy, along with the Two of Cups for mutual soul connection and The World for destined completeness." },
-      { q: "Can tarot tell me when I'll meet my soulmate?", a: "Tarot can suggest timing through suit associations — Wands indicate weeks, Cups suggest months — but the most valuable insight comes from understanding what you need to cultivate within yourself to attract this connection." }
+      { q: "Can tarot tell me when I'll meet my soulmate?", a: "Tarot can suggest timing through suit associations — Wands indicate weeks, Cups suggest months — but the most valuable insight comes from understanding what you need to cultivate within yourself to attract this connection." },
+      { q: "What's the difference between a soulmate and a twin flame?", a: "Soulmates bring harmony and growth. Twin flames mirror you intensely — including your shadow. Both are soul connections, but twin flames tend to be more turbulent and transformative." },
+      { q: "Can you have more than one soulmate?", a: "Yes. Tarot recognizes multiple soul connections across a lifetime. Different soulmates serve different purposes — some teach, some heal, some stay." }
     ],
-    relatedSlugs: ["love-tarot-reading", "will-my-relationship-improve-tarot"]
+    relatedSlugs: ["love-tarot-reading", "will-my-relationship-improve-tarot", "twin-flame-tarot-reading"]
   },
   {
     slug: "career-tarot-reading",
@@ -98,11 +204,39 @@ export const questionPages: QuestionPage[] = [
       "Pentacles cards carry special significance in career readings, representing material achievement, financial stability, and practical progress. The Emperor, The Magician, and the Three of Pentacles often indicate professional mastery and recognition.",
       "Whether you're considering a career change, seeking a promotion, or navigating workplace challenges, a career tarot reading provides perspective on the energies shaping your professional journey."
     ],
+    sections: [
+      {
+        heading: "What Career Tarot Actually Reveals",
+        body: [
+          "Career readings aren't fortune-telling about promotions. They reveal the internal dynamics driving your professional life — ambition versus fear, skill versus self-doubt, comfort versus growth. The cards show you the emotional architecture behind your career decisions.",
+          "Most people come to career tarot when they feel stuck. They know something needs to change but can't identify what. The cards cut through mental fog by naming the specific energy at play: are you afraid of failure, comfortable with mediocrity, or unconsciously sabotaging your success?",
+          "The Pentacles suit dominates career readings because work is ultimately about what you build in the material world. But don't ignore Wands (passion), Cups (fulfillment), and Swords (clarity) — a career without those elements will always feel incomplete."
+        ]
+      },
+      {
+        heading: "Reading the Cards for Professional Decisions",
+        body: [
+          "The Three of Pentacles is the master craftsman card — when it appears, your skills are being recognized and collaboration will serve you well. The Eight of Pentacles shows dedicated effort paying off through consistent, focused work.",
+          "The Magician in a career reading is powerful: it says you have every tool you need to succeed. The only question is whether you'll use them. Paired with The Emperor, it suggests leadership potential waiting to be claimed.",
+          "Be honest when The Tower or Ten of Swords appears. These cards don't mean career disaster — they mean the current situation has run its course. Fighting to preserve a dead-end position wastes energy that could build something better."
+        ]
+      },
+      {
+        heading: "Using Your Career Reading Effectively",
+        body: [
+          "The best career readings produce one clear action step. Not a vague affirmation, but something specific: update your resume, have the difficult conversation with your boss, start the side project you've been postponing, or accept that this job was only meant to be temporary.",
+          "Avoid reading about the same career question repeatedly. If you asked about a promotion last week and the cards said 'not yet,' pulling again three days later won't change the answer. It will just increase your anxiety.",
+          "Consider pairing career tarot with practical planning. The cards show you the energy — your job is to translate that insight into concrete professional moves."
+        ]
+      }
+    ],
     faq: [
       { q: "Can tarot help with career decisions?", a: "Tarot provides insight into the energies and patterns affecting your career. It can reveal hidden opportunities, potential obstacles, and the inner motivations driving your professional choices." },
-      { q: "What tarot cards indicate career success?", a: "The Sun, Six of Wands (victory), Ace of Pentacles (new opportunity), Three of Pentacles (mastery), and The Emperor (leadership) are strong career success indicators." }
+      { q: "What tarot cards indicate career success?", a: "The Sun, Six of Wands (victory), Ace of Pentacles (new opportunity), Three of Pentacles (mastery), and The Emperor (leadership) are strong career success indicators." },
+      { q: "Should I quit my job based on a tarot reading?", a: "Tarot is one input among many. It can reveal what you're feeling beneath the surface, but major life decisions should also consider finances, timing, and practical alternatives." },
+      { q: "What does it mean if I keep getting Pentacles in career readings?", a: "Pentacles dominating a career reading emphasize the material and practical aspects — finances, skill development, patience, and long-term building. The cards are saying: focus on craft and stability." }
     ],
-    relatedSlugs: ["should-i-change-careers-tarot", "will-i-get-the-job-tarot"]
+    relatedSlugs: ["should-i-change-careers-tarot", "will-i-get-the-job-tarot", "money-tarot-reading"]
   },
   {
     slug: "should-i-change-careers-tarot",
@@ -183,9 +317,37 @@ export const questionPages: QuestionPage[] = [
       "In yes/no readings, each card carries a positive, negative, or neutral energy. Major Arcana cards like The Sun and The World lean strongly positive, while The Tower and the Five of Swords suggest challenges ahead.",
       "For best results, phrase your question clearly and specifically. Instead of 'What about my love life?' try 'Will this relationship deepen in the next three months?'"
     ],
+    sections: [
+      {
+        heading: "How Yes/No Tarot Readings Work",
+        body: [
+          "Yes/no readings strip tarot down to its most direct form. Instead of layered spreads and positional meanings, you draw a single card and let its energy answer your question. Upright cards generally point toward 'yes.' Reversed cards lean toward 'no.' Some cards — like The Wheel of Fortune or The Moon — sit in 'maybe' territory because the outcome genuinely depends on factors still in motion.",
+          "This simplicity is the format's strength. You're not asking for a life narrative. You're asking: should I or shouldn't I? Will it or won't it? The cards respond to that clarity with equally clear energy.",
+          "The key to a reliable yes/no reading is a well-formed question. Vague questions get vague answers. 'Will I be happy?' is unanswerable. 'Will accepting this job offer improve my daily satisfaction?' gives the cards something specific to work with."
+        ]
+      },
+      {
+        heading: "Which Cards Mean Yes, No, or Maybe",
+        body: [
+          "Strong yes cards: The Sun radiates pure positivity — almost always yes. The World signals completion and achievement. The Star suggests the answer is yes, with hope and patience. The Ace of any suit says yes, a new beginning is favored.",
+          "Strong no cards: The Tower means the situation will collapse if you proceed. The Five of Swords suggests conflict and Pyrrhic victories — technically possible, but not worth it. Death reversed doesn't mean literal danger; it means you're resisting a necessary ending.",
+          "Maybe cards: The Wheel of Fortune says the answer is in motion — check back later. The Moon means something is hidden; you don't have enough information yet. The Hanged Man suggests waiting is the answer right now."
+        ]
+      },
+      {
+        heading: "When to Use Yes/No Tarot vs. Full Spreads",
+        body: [
+          "Use yes/no for decisions that need momentum, not analysis. 'Should I apply for this position?' 'Should I text them back?' 'Is this a good day for an important conversation?' These are action-oriented questions that benefit from a direct push.",
+          "Avoid yes/no for complex emotional situations. 'Will my marriage survive?' requires a Three Card or Celtic Cross spread because the answer depends on multiple factors that a single card can't capture.",
+          "A good rule: if your question can be answered with a single sentence, use yes/no. If it needs a paragraph, use a full spread."
+        ]
+      }
+    ],
     faq: [
       { q: "How accurate are yes or no tarot readings?", a: "Yes/no readings work best for simple, specific questions. Complex life decisions benefit from more detailed spreads like the Three Card or Celtic Cross." },
-      { q: "What if I get a 'maybe' answer?", a: "A 'maybe' answer often indicates that the outcome depends on choices you haven't yet made. It's the universe's way of saying the situation is still in flux." }
+      { q: "What if I get a 'maybe' answer?", a: "A 'maybe' answer often indicates that the outcome depends on choices you haven't yet made. It's the universe's way of saying the situation is still in flux." },
+      { q: "Can I ask yes/no questions about other people?", a: "You can, but the reading reflects the energy between you and the situation — not the other person's private intentions. Keep that distinction in mind." },
+      { q: "How many times can I ask the same yes/no question?", a: "Once. Pulling repeatedly for the same question dilutes the reading's accuracy and usually reflects anxiety rather than genuine inquiry. Trust the first card." }
     ],
     relatedSlugs: ["love-tarot-reading", "career-tarot-reading"]
   },
@@ -200,11 +362,39 @@ export const questionPages: QuestionPage[] = [
       "Cards like The Lovers, The Tower, and Judgement frequently appear in twin flame readings, signaling the transformative intensity of these connections. The Devil may indicate the magnetic but sometimes painful attachment phase.",
       "A twin flame reading can help you understand where you are in the twin flame journey — whether you're in separation, reunion, or the challenging runner-chaser dynamic."
     ],
+    sections: [
+      {
+        heading: "What Makes Twin Flame Readings Different",
+        body: [
+          "Twin flame readings aren't regular love readings with a spiritual label. The energy is fundamentally different — more volatile, more transformative, more confronting. Where a soulmate reading feels like warmth, a twin flame reading often feels like fire.",
+          "The Tower appears in twin flame readings more than any other context. This isn't bad news — it's the defining feature. Twin flames demolish the false self you've been living as. The relationship forces you to confront everything you've been avoiding about yourself.",
+          "If your reading is full of Major Arcana cards — especially Judgement, The Tower, Death, and The Lovers — you're likely dealing with a twin flame connection rather than a conventional romantic attachment."
+        ]
+      },
+      {
+        heading: "The Twin Flame Stages in Tarot",
+        body: [
+          "Recognition phase: The Lovers and The Magician appear together, showing instant recognition and an electric sense of possibility. You feel like you've known this person forever.",
+          "Union and crisis: The Devil and The Tower dominate this phase. The Devil shows the intense magnetic pull — it feels addictive and all-consuming. The Tower arrives when the relationship exposes your deepest wounds and forces growth you didn't sign up for.",
+          "Separation and reunion: The Hermit appears during separation, showing necessary solo work. The Star signals hope during the dark night. Judgement marks the moment of potential reunion — but only if both people have done their inner work."
+        ]
+      },
+      {
+        heading: "Honest Guidance for Twin Flame Seekers",
+        body: [
+          "Not every intense relationship is a twin flame connection. Trauma bonding, anxious attachment, and codependency can mimic twin flame intensity. If your reading shows the Five of Cups, Nine of Swords, and The Devil together, the cards may be saying: this is painful attachment, not spiritual union.",
+          "The healthiest twin flame readings show growth alongside intensity. Look for Strength, Temperance, and The World — cards that indicate you're integrating the lessons rather than just surviving the chaos.",
+          "If you're in twin flame separation and the cards keep showing The Hermit and Strength, stop trying to force reunion. The cards are telling you the work is internal right now. Reunion happens naturally once both mirrors are clear."
+        ]
+      }
+    ],
     faq: [
       { q: "What tarot cards indicate a twin flame connection?", a: "The Lovers (soul union), The Tower (intense transformation), Judgement (spiritual awakening), and the Two of Cups (deep connection) are common twin flame indicators." },
-      { q: "Can tarot tell me if someone is my twin flame?", a: "Tarot can reveal the energy and depth of a connection, but twin flame recognition ultimately comes from within. Look for cards suggesting intense transformation and spiritual growth." }
+      { q: "Can tarot tell me if someone is my twin flame?", a: "Tarot can reveal the energy and depth of a connection, but twin flame recognition ultimately comes from within. Look for cards suggesting intense transformation and spiritual growth." },
+      { q: "What's the difference between twin flame and toxic relationship cards?", a: "Twin flame readings show transformation alongside pain (Tower + Star). Toxic relationships show repeated suffering without growth (Five of Cups + Nine of Swords). The presence of growth-oriented Major Arcana is the key difference." },
+      { q: "How long does twin flame separation last?", a: "Tarot can't give exact timelines, but The Hermit suggests a period of necessary solitude, while The Wheel of Fortune indicates the cycle will turn when internal work is complete." }
     ],
-    relatedSlugs: ["soulmate-tarot-reading", "love-tarot-reading"]
+    relatedSlugs: ["soulmate-tarot-reading", "love-tarot-reading", "breakup-tarot-reading"]
   },
   {
     slug: "breakup-tarot-reading",
@@ -217,9 +407,37 @@ export const questionPages: QuestionPage[] = [
       "The Three of Swords often appears, acknowledging heartbreak directly. The Star follows, promising renewal. Death signals the transformation already underway, and The Empress reminds you to nurture yourself.",
       "The most healing breakup readings focus not on the other person, but on your own journey toward wholeness and self-love."
     ],
+    sections: [
+      {
+        heading: "What Tarot Understands About Heartbreak",
+        body: [
+          "Tarot doesn't sugarcoat breakups. The Three of Swords shows up and names the pain directly — heartbreak, betrayal, grief. But the cards also show what comes next, and that's where the real value lives. Behind every Three of Swords is a Star waiting to emerge.",
+          "Breakup readings often reveal truths you weren't ready to see during the relationship. The Moon may show you the illusions you were maintaining. The Eight of Cups appears when you already know you need to walk away but haven't found the courage yet.",
+          "The cards treat breakups as transformative events, not failures. Death doesn't mean something bad happened — it means a necessary ending is creating space for growth that couldn't happen inside the old relationship."
+        ]
+      },
+      {
+        heading: "The Emotional Timeline in the Cards",
+        body: [
+          "Immediately after a breakup, expect heavy cards. The Three of Swords, Five of Cups, and The Tower are honest about where you are. Don't fight them or try to pull 'better' cards. Sitting with the grief is part of the healing.",
+          "As weeks pass, the cards shift. Temperance arrives, showing emotional rebalancing. Strength appears, reminding you that resilience isn't about not feeling pain — it's about feeling it and staying whole. The Hermit may suggest a period of intentional solitude.",
+          "The turning point comes when cards like the Ace of Cups, The Star, or The Sun start appearing. These signal genuine emotional renewal — not moving on because you should, but because you genuinely feel ready for something new."
+        ]
+      },
+      {
+        heading: "What to Ask (and What to Avoid Asking)",
+        body: [
+          "Helpful questions: 'What lesson does this breakup carry for me?' 'What do I need to heal before I'm ready for a new connection?' 'What strength am I developing through this experience?' These questions empower you.",
+          "Unhelpful questions: 'Does my ex miss me?' 'Are they seeing someone else?' 'Will they realize what they lost?' These questions keep you focused on someone who isn't in your life anymore, which is the opposite of healing.",
+          "The hardest but most valuable question you can ask post-breakup: 'What was my role in this ending?' Not to blame yourself — but to understand your patterns so the next relationship is genuinely different."
+        ]
+      }
+    ],
     faq: [
       { q: "What tarot cards help with breakup healing?", a: "The Star (renewal and hope), The Empress (self-nurturing), Temperance (emotional balance), and the Ace of Cups (new emotional beginnings) support healing after heartbreak." },
-      { q: "Should I do a tarot reading right after a breakup?", a: "Give yourself a few days for the initial shock to settle. Readings done from a place of slight calm yield clearer, more helpful guidance than those driven by acute emotional pain." }
+      { q: "Should I do a tarot reading right after a breakup?", a: "Give yourself a few days for the initial shock to settle. Readings done from a place of slight calm yield clearer, more helpful guidance than those driven by acute emotional pain." },
+      { q: "Can tarot help me get over a breakup faster?", a: "Tarot doesn't speed up grief, but it provides structure for processing it. Naming your emotions through the cards makes them feel more manageable and less overwhelming." },
+      { q: "What if breakup cards keep appearing in unrelated readings?", a: "This means the emotional residue is still affecting other areas of your life. The cards are saying: address the grief before expecting progress elsewhere." }
     ],
     relatedSlugs: ["will-my-ex-come-back-tarot", "love-tarot-reading", "personal-growth-tarot-reading"]
   },

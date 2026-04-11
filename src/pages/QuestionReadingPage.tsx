@@ -71,6 +71,22 @@ const QuestionReadingPage = () => {
           ))}
         </div>
 
+        {/* Structured content sections for primary pages */}
+        {page.sections && page.sections.length > 0 && (
+          <div className="space-y-8 mb-10">
+            {page.sections.map((section, i) => (
+              <section key={i} className="reading-panel rounded-xl p-6 md:p-8">
+                <h2 className="font-heading text-lg text-foreground mb-3">{section.heading}</h2>
+                <div className="space-y-3">
+                  {section.body.map((paragraph, j) => (
+                    <p key={j} className="text-sm text-muted-foreground leading-relaxed">{paragraph}</p>
+                  ))}
+                </div>
+              </section>
+            ))}
+          </div>
+        )}
+
         {/* Interactive tool */}
         <MiniCardDraw prompt={`Draw a card for quick insight about ${page.h1.split("—")[0].trim().toLowerCase()}.`} />
 
