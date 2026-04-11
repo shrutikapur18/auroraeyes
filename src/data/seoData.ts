@@ -317,9 +317,37 @@ export const questionPages: QuestionPage[] = [
       "In yes/no readings, each card carries a positive, negative, or neutral energy. Major Arcana cards like The Sun and The World lean strongly positive, while The Tower and the Five of Swords suggest challenges ahead.",
       "For best results, phrase your question clearly and specifically. Instead of 'What about my love life?' try 'Will this relationship deepen in the next three months?'"
     ],
+    sections: [
+      {
+        heading: "How Yes/No Tarot Readings Work",
+        body: [
+          "Yes/no readings strip tarot down to its most direct form. Instead of layered spreads and positional meanings, you draw a single card and let its energy answer your question. Upright cards generally point toward 'yes.' Reversed cards lean toward 'no.' Some cards — like The Wheel of Fortune or The Moon — sit in 'maybe' territory because the outcome genuinely depends on factors still in motion.",
+          "This simplicity is the format's strength. You're not asking for a life narrative. You're asking: should I or shouldn't I? Will it or won't it? The cards respond to that clarity with equally clear energy.",
+          "The key to a reliable yes/no reading is a well-formed question. Vague questions get vague answers. 'Will I be happy?' is unanswerable. 'Will accepting this job offer improve my daily satisfaction?' gives the cards something specific to work with."
+        ]
+      },
+      {
+        heading: "Which Cards Mean Yes, No, or Maybe",
+        body: [
+          "Strong yes cards: The Sun radiates pure positivity — almost always yes. The World signals completion and achievement. The Star suggests the answer is yes, with hope and patience. The Ace of any suit says yes, a new beginning is favored.",
+          "Strong no cards: The Tower means the situation will collapse if you proceed. The Five of Swords suggests conflict and Pyrrhic victories — technically possible, but not worth it. Death reversed doesn't mean literal danger; it means you're resisting a necessary ending.",
+          "Maybe cards: The Wheel of Fortune says the answer is in motion — check back later. The Moon means something is hidden; you don't have enough information yet. The Hanged Man suggests waiting is the answer right now."
+        ]
+      },
+      {
+        heading: "When to Use Yes/No Tarot vs. Full Spreads",
+        body: [
+          "Use yes/no for decisions that need momentum, not analysis. 'Should I apply for this position?' 'Should I text them back?' 'Is this a good day for an important conversation?' These are action-oriented questions that benefit from a direct push.",
+          "Avoid yes/no for complex emotional situations. 'Will my marriage survive?' requires a Three Card or Celtic Cross spread because the answer depends on multiple factors that a single card can't capture.",
+          "A good rule: if your question can be answered with a single sentence, use yes/no. If it needs a paragraph, use a full spread."
+        ]
+      }
+    ],
     faq: [
       { q: "How accurate are yes or no tarot readings?", a: "Yes/no readings work best for simple, specific questions. Complex life decisions benefit from more detailed spreads like the Three Card or Celtic Cross." },
-      { q: "What if I get a 'maybe' answer?", a: "A 'maybe' answer often indicates that the outcome depends on choices you haven't yet made. It's the universe's way of saying the situation is still in flux." }
+      { q: "What if I get a 'maybe' answer?", a: "A 'maybe' answer often indicates that the outcome depends on choices you haven't yet made. It's the universe's way of saying the situation is still in flux." },
+      { q: "Can I ask yes/no questions about other people?", a: "You can, but the reading reflects the energy between you and the situation — not the other person's private intentions. Keep that distinction in mind." },
+      { q: "How many times can I ask the same yes/no question?", a: "Once. Pulling repeatedly for the same question dilutes the reading's accuracy and usually reflects anxiety rather than genuine inquiry. Trust the first card." }
     ],
     relatedSlugs: ["love-tarot-reading", "career-tarot-reading"]
   },
@@ -334,11 +362,39 @@ export const questionPages: QuestionPage[] = [
       "Cards like The Lovers, The Tower, and Judgement frequently appear in twin flame readings, signaling the transformative intensity of these connections. The Devil may indicate the magnetic but sometimes painful attachment phase.",
       "A twin flame reading can help you understand where you are in the twin flame journey — whether you're in separation, reunion, or the challenging runner-chaser dynamic."
     ],
+    sections: [
+      {
+        heading: "What Makes Twin Flame Readings Different",
+        body: [
+          "Twin flame readings aren't regular love readings with a spiritual label. The energy is fundamentally different — more volatile, more transformative, more confronting. Where a soulmate reading feels like warmth, a twin flame reading often feels like fire.",
+          "The Tower appears in twin flame readings more than any other context. This isn't bad news — it's the defining feature. Twin flames demolish the false self you've been living as. The relationship forces you to confront everything you've been avoiding about yourself.",
+          "If your reading is full of Major Arcana cards — especially Judgement, The Tower, Death, and The Lovers — you're likely dealing with a twin flame connection rather than a conventional romantic attachment."
+        ]
+      },
+      {
+        heading: "The Twin Flame Stages in Tarot",
+        body: [
+          "Recognition phase: The Lovers and The Magician appear together, showing instant recognition and an electric sense of possibility. You feel like you've known this person forever.",
+          "Union and crisis: The Devil and The Tower dominate this phase. The Devil shows the intense magnetic pull — it feels addictive and all-consuming. The Tower arrives when the relationship exposes your deepest wounds and forces growth you didn't sign up for.",
+          "Separation and reunion: The Hermit appears during separation, showing necessary solo work. The Star signals hope during the dark night. Judgement marks the moment of potential reunion — but only if both people have done their inner work."
+        ]
+      },
+      {
+        heading: "Honest Guidance for Twin Flame Seekers",
+        body: [
+          "Not every intense relationship is a twin flame connection. Trauma bonding, anxious attachment, and codependency can mimic twin flame intensity. If your reading shows the Five of Cups, Nine of Swords, and The Devil together, the cards may be saying: this is painful attachment, not spiritual union.",
+          "The healthiest twin flame readings show growth alongside intensity. Look for Strength, Temperance, and The World — cards that indicate you're integrating the lessons rather than just surviving the chaos.",
+          "If you're in twin flame separation and the cards keep showing The Hermit and Strength, stop trying to force reunion. The cards are telling you the work is internal right now. Reunion happens naturally once both mirrors are clear."
+        ]
+      }
+    ],
     faq: [
       { q: "What tarot cards indicate a twin flame connection?", a: "The Lovers (soul union), The Tower (intense transformation), Judgement (spiritual awakening), and the Two of Cups (deep connection) are common twin flame indicators." },
-      { q: "Can tarot tell me if someone is my twin flame?", a: "Tarot can reveal the energy and depth of a connection, but twin flame recognition ultimately comes from within. Look for cards suggesting intense transformation and spiritual growth." }
+      { q: "Can tarot tell me if someone is my twin flame?", a: "Tarot can reveal the energy and depth of a connection, but twin flame recognition ultimately comes from within. Look for cards suggesting intense transformation and spiritual growth." },
+      { q: "What's the difference between twin flame and toxic relationship cards?", a: "Twin flame readings show transformation alongside pain (Tower + Star). Toxic relationships show repeated suffering without growth (Five of Cups + Nine of Swords). The presence of growth-oriented Major Arcana is the key difference." },
+      { q: "How long does twin flame separation last?", a: "Tarot can't give exact timelines, but The Hermit suggests a period of necessary solitude, while The Wheel of Fortune indicates the cycle will turn when internal work is complete." }
     ],
-    relatedSlugs: ["soulmate-tarot-reading", "love-tarot-reading"]
+    relatedSlugs: ["soulmate-tarot-reading", "love-tarot-reading", "breakup-tarot-reading"]
   },
   {
     slug: "breakup-tarot-reading",
