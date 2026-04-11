@@ -89,11 +89,47 @@ export const questionPages: QuestionPage[] = [
       "Cards like The Wheel of Fortune suggest cycles and returns, while Death and The Tower may indicate that the chapter has truly closed. The Six of Cups often points to nostalgia and past connections resurfacing.",
       "Rather than fixating on a specific outcome, allow the reading to show you what you need to understand about this connection and your own emotional growth."
     ],
+    sections: [
+      {
+        heading: "Why You're Still Thinking About Your Ex",
+        body: [
+          "The question isn't really 'will they come back?' — it's 'why can't I let go?' And that's what tarot answers honestly. Breakups leave emotional residue, and the cards show you exactly where it's stuck.",
+          "Sometimes the attachment is about the person. More often, it's about what they represented — security, validation, a version of yourself you liked. Understanding the difference changes everything about how you move forward.",
+          "Tarot reads energy, not destiny. If you're constantly pulling cards about an ex, the deck is mirroring your fixation more than their intentions. The most useful readings shift the focus from 'will they?' to 'should I?'"
+        ]
+      },
+      {
+        heading: "Cards That Suggest Reconnection — and Cards That Don't",
+        body: [
+          "The Six of Cups is the strongest 'past returning' card. It signals nostalgia, old feelings resurfacing, and childhood or early connections coming back around. When paired with The Wheel of Fortune, it suggests the cycle isn't complete yet.",
+          "Judgement is a card of second chances and reckoning — it often appears when both people need to confront truths before reconnecting. The Star suggests hope, but only if genuine healing has happened first.",
+          "On the other side, Death is unambiguous: this chapter is over, and transformation requires releasing it. The Tower means whatever reunion you're imagining would collapse anyway. The Three of Swords followed by the Ace of Swords suggests painful clarity — it hurt, but now you see clearly."
+        ]
+      },
+      {
+        heading: "How to Get an Honest Reading About Your Ex",
+        body: [
+          "The biggest obstacle to an accurate ex reading is emotional bias. When you desperately want a specific answer, you'll unconsciously interpret every card to match your hope. That's not the cards being wrong — it's you not being ready to hear them.",
+          "Ask specific, neutral questions: 'What energy remains between me and [name]?' is better than 'Will they text me this week?' One invites insight; the other invites disappointment.",
+          "Consider doing the reading when you're in a calm state, not during a 2 AM spiral. The cards respond to the energy you bring to the session. Desperation gets confused readings. Genuine curiosity gets honest ones."
+        ]
+      },
+      {
+        heading: "Moving Forward — Whether They Return or Not",
+        body: [
+          "The most empowering ex readings are the ones that set you free. When tarot shows you the pattern — the codependency, the fear of being alone, the idealization of someone who wasn't right — it breaks the spell.",
+          "If the cards suggest the connection has life left, they're also showing you what needs to change before it can work. Going back to the same dynamic produces the same result. Growth has to happen first.",
+          "If the cards say it's over, they're making space for something that actually fits. Every card reader has watched clients desperately seek reunion readings, only to return months later grateful the ex didn't come back because something better arrived."
+        ]
+      }
+    ],
     faq: [
       { q: "What tarot cards mean my ex will come back?", a: "The Six of Cups (nostalgia), Wheel of Fortune (cycles), Judgement (second chances), and The Star (renewed hope) may suggest reconnection — but always in context with surrounding cards." },
-      { q: "Should I do a tarot reading about my ex?", a: "A reading can provide clarity and closure, but approach it seeking understanding rather than a specific answer. The most helpful readings focus on your own growth." }
+      { q: "Should I do a tarot reading about my ex?", a: "A reading can provide clarity and closure, but approach it seeking understanding rather than a specific answer. The most helpful readings focus on your own growth." },
+      { q: "How long should I wait after a breakup to do a reading?", a: "Give yourself at least a week for the initial emotional wave to settle. Readings done from genuine curiosity are far more accurate than those driven by raw pain." },
+      { q: "What if the cards keep showing my ex coming back?", a: "Repeated cards may reflect your energy and desire rather than their actions. Try asking what you need to focus on for yourself, and see if the cards shift." }
     ],
-    relatedSlugs: ["love-tarot-reading", "will-my-relationship-improve-tarot"]
+    relatedSlugs: ["love-tarot-reading", "will-my-relationship-improve-tarot", "breakup-tarot-reading"]
   },
   {
     slug: "will-my-relationship-improve-tarot",
