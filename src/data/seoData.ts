@@ -35,10 +35,46 @@ export const questionPages: QuestionPage[] = [
       "When you ask the tarot about love, the cards speak through the language of emotion, attachment, and vulnerability. Cups cards carry particular weight in love readings, while Major Arcana cards like The Lovers, The Empress, and The Moon reveal deeper soul-level patterns.",
       "Whether you're in a relationship, seeking one, or navigating a breakup, a love tarot reading provides insight into the emotional currents shaping your romantic life."
     ],
+    sections: [
+      {
+        heading: "Why People Turn to Love Tarot Readings",
+        body: [
+          "Love is the area where we feel most vulnerable, and that vulnerability makes it the hardest to see clearly. We project, we hope, we fear — and tarot cuts through all of it. A love reading doesn't tell you what you want to hear. It shows you what's actually happening beneath the surface.",
+          "Most people come to love tarot at a crossroads: a new attraction that feels significant, a relationship that's lost its spark, or a breakup they can't stop replaying. The cards don't judge any of these situations. They simply reflect the emotional reality you're living in.",
+          "What makes tarot particularly effective for love questions is its ability to show dynamics between two people — not just your feelings, but the energy between you and the person you're asking about."
+        ]
+      },
+      {
+        heading: "Key Cards in a Love Tarot Reading",
+        body: [
+          "The Cups suit is the emotional heart of the tarot deck. The Ace of Cups signals a fresh wave of feeling — new love, renewed affection, or emotional openness you haven't felt in a while. The Two of Cups is the classic mutual attraction card, showing two people meeting as equals.",
+          "Among the Major Arcana, The Lovers is the most obvious love indicator, but it's more about choice than romance. It asks: are you choosing this person consciously, or are you on autopilot? The Empress brings warmth, sensuality, and nurturing energy — she often appears when a relationship is ready to deepen.",
+          "Watch for The Moon in love readings. It reveals confusion, illusions, or something hidden. If this card shows up, there's a truth you're not seeing yet — and it's worth paying attention."
+        ]
+      },
+      {
+        heading: "How to Ask Effective Love Questions",
+        body: [
+          "The quality of your question determines the quality of your reading. Avoid vague questions like 'What about my love life?' Instead, try: 'What energy surrounds my connection with [name]?' or 'What do I need to understand about my pattern in relationships?'",
+          "Questions that focus on your own agency get the clearest answers. 'What can I do to attract a healthy relationship?' is more powerful than 'When will I find love?' because it puts you in the active role.",
+          "If you're asking about a specific person, be honest about what you actually want to know. The cards respond to the real question, not the one you're comfortable asking out loud."
+        ]
+      },
+      {
+        heading: "What Your Love Reading Can (and Can't) Tell You",
+        body: [
+          "A love tarot reading reveals emotional patterns, relational dynamics, and the energy surrounding your romantic life. It can show you blind spots — the fear of commitment you're not acknowledging, the red flags you've been ignoring, or the self-worth issue that keeps attracting the wrong partners.",
+          "What tarot cannot do is tell you exactly who you'll marry or give you a date when love will arrive. Anyone who promises that is misrepresenting how tarot works. The cards illuminate potential, not certainty.",
+          "The most valuable love readings leave you with clarity about yourself. When you understand your own emotional patterns, you naturally make better choices in love — and that's where real change happens."
+        ]
+      }
+    ],
     faq: [
       { q: "Can tarot predict who I will marry?", a: "Tarot doesn't predict specific people but reveals emotional patterns, timing, and the energy surrounding your love life. It helps you understand what you attract and why." },
       { q: "What cards indicate love in a tarot reading?", a: "The Lovers, Two of Cups, Ace of Cups, Ten of Cups, and The Empress are among the strongest love indicators in tarot." },
-      { q: "How accurate are love tarot readings?", a: "Love readings are most accurate when they reflect your emotional truth. They work best as a mirror for self-awareness rather than as predictive tools." }
+      { q: "How accurate are love tarot readings?", a: "Love readings are most accurate when they reflect your emotional truth. They work best as a mirror for self-awareness rather than as predictive tools." },
+      { q: "How often should I do a love tarot reading?", a: "Once a month is ideal for tracking emotional shifts. Reading too frequently about the same question can create anxiety rather than clarity." },
+      { q: "Can I do a love reading about someone who doesn't know?", a: "Yes, but the reading will reflect the energy between you rather than the other person's private thoughts. Respect their autonomy in how you interpret the cards." }
     ],
     relatedSlugs: ["will-my-ex-come-back-tarot", "will-my-relationship-improve-tarot", "soulmate-tarot-reading"]
   },
