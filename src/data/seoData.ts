@@ -407,9 +407,37 @@ export const questionPages: QuestionPage[] = [
       "The Three of Swords often appears, acknowledging heartbreak directly. The Star follows, promising renewal. Death signals the transformation already underway, and The Empress reminds you to nurture yourself.",
       "The most healing breakup readings focus not on the other person, but on your own journey toward wholeness and self-love."
     ],
+    sections: [
+      {
+        heading: "What Tarot Understands About Heartbreak",
+        body: [
+          "Tarot doesn't sugarcoat breakups. The Three of Swords shows up and names the pain directly — heartbreak, betrayal, grief. But the cards also show what comes next, and that's where the real value lives. Behind every Three of Swords is a Star waiting to emerge.",
+          "Breakup readings often reveal truths you weren't ready to see during the relationship. The Moon may show you the illusions you were maintaining. The Eight of Cups appears when you already know you need to walk away but haven't found the courage yet.",
+          "The cards treat breakups as transformative events, not failures. Death doesn't mean something bad happened — it means a necessary ending is creating space for growth that couldn't happen inside the old relationship."
+        ]
+      },
+      {
+        heading: "The Emotional Timeline in the Cards",
+        body: [
+          "Immediately after a breakup, expect heavy cards. The Three of Swords, Five of Cups, and The Tower are honest about where you are. Don't fight them or try to pull 'better' cards. Sitting with the grief is part of the healing.",
+          "As weeks pass, the cards shift. Temperance arrives, showing emotional rebalancing. Strength appears, reminding you that resilience isn't about not feeling pain — it's about feeling it and staying whole. The Hermit may suggest a period of intentional solitude.",
+          "The turning point comes when cards like the Ace of Cups, The Star, or The Sun start appearing. These signal genuine emotional renewal — not moving on because you should, but because you genuinely feel ready for something new."
+        ]
+      },
+      {
+        heading: "What to Ask (and What to Avoid Asking)",
+        body: [
+          "Helpful questions: 'What lesson does this breakup carry for me?' 'What do I need to heal before I'm ready for a new connection?' 'What strength am I developing through this experience?' These questions empower you.",
+          "Unhelpful questions: 'Does my ex miss me?' 'Are they seeing someone else?' 'Will they realize what they lost?' These questions keep you focused on someone who isn't in your life anymore, which is the opposite of healing.",
+          "The hardest but most valuable question you can ask post-breakup: 'What was my role in this ending?' Not to blame yourself — but to understand your patterns so the next relationship is genuinely different."
+        ]
+      }
+    ],
     faq: [
       { q: "What tarot cards help with breakup healing?", a: "The Star (renewal and hope), The Empress (self-nurturing), Temperance (emotional balance), and the Ace of Cups (new emotional beginnings) support healing after heartbreak." },
-      { q: "Should I do a tarot reading right after a breakup?", a: "Give yourself a few days for the initial shock to settle. Readings done from a place of slight calm yield clearer, more helpful guidance than those driven by acute emotional pain." }
+      { q: "Should I do a tarot reading right after a breakup?", a: "Give yourself a few days for the initial shock to settle. Readings done from a place of slight calm yield clearer, more helpful guidance than those driven by acute emotional pain." },
+      { q: "Can tarot help me get over a breakup faster?", a: "Tarot doesn't speed up grief, but it provides structure for processing it. Naming your emotions through the cards makes them feel more manageable and less overwhelming." },
+      { q: "What if breakup cards keep appearing in unrelated readings?", a: "This means the emotional residue is still affecting other areas of your life. The cards are saying: address the grief before expecting progress elsewhere." }
     ],
     relatedSlugs: ["will-my-ex-come-back-tarot", "love-tarot-reading", "personal-growth-tarot-reading"]
   },
