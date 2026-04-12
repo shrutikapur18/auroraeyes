@@ -266,11 +266,48 @@ export const questionPages: QuestionPage[] = [
       "The Ace of Pentacles suggests new material opportunity is close. The Three of Pentacles indicates that your skills are being recognized. The Six of Wands promises victory and public recognition.",
       "Even if the cards suggest challenges ahead, remember that each interview and application is a stepping stone. The reading's greatest value lies in helping you understand what energy to bring to the process."
     ],
+    sections: [
+      {
+        heading: "Why Job Seekers Turn to Tarot",
+        body: [
+          "Job searching is emotionally exhausting in ways people rarely talk about. The repeated vulnerability of interviews, the silence after applications, the overthinking about what you said wrong — it erodes confidence. Tarot offers something the hiring process doesn't: honest feedback without judgment.",
+          "When you ask the cards about a specific job, you're not really asking for a prediction. You're asking: am I on the right track? Is this role aligned with who I'm becoming, or am I chasing it out of desperation? The cards answer both the practical question and the deeper one you're afraid to ask out loud.",
+          "The most useful job readings reveal your internal state — are you approaching this opportunity from confidence or scarcity? The energy you carry into an interview matters as much as your resume, and the cards can show you exactly where your energy stands."
+        ]
+      },
+      {
+        heading: "Cards That Signal Professional Success",
+        body: [
+          "The Ace of Pentacles is the strongest 'new job' card in the deck. It represents a tangible opportunity arriving — a real offer, a real chance. When it appears upright, the energy favors material beginnings.",
+          "The Six of Wands is the victory card. Public recognition, being chosen, standing out from competitors. In a job reading, this card says: you're the one they'll remember. The Three of Pentacles reinforces this — your craft, your skill, your collaborative ability are being noticed.",
+          "The Emperor brings authority and structure. In a job context, it often means a stable company, a strong manager, or a role that gives you real responsibility. Paired with The Magician, it suggests you have every qualification needed — the only question is whether you believe it yourself."
+        ]
+      },
+      {
+        heading: "When the Cards Show Challenges",
+        body: [
+          "The Five of Pentacles in a job reading can feel devastating, but it's more nuanced than 'you won't get it.' This card often points to financial anxiety clouding your judgment — you might be applying for the wrong role because you need money, not because it fits.",
+          "The Tower doesn't mean career collapse. In a job reading, it suggests the role you're fixated on might not be the one that serves you. Sometimes not getting the job is the cards protecting you from a situation that would have been miserable.",
+          "Reversed cards in job readings often indicate internal blocks: the reversed Magician suggests imposter syndrome, the reversed Emperor points to authority issues, and the reversed Sun means you're not showing your authentic self in interviews. These are actionable insights, not sentences."
+        ]
+      },
+      {
+        heading: "How to Use Your Reading Strategically",
+        body: [
+          "After your reading, sit with the cards for a moment before rushing to interpret. Your first emotional reaction often carries the most honest signal — relief, anxiety, surprise, disappointment. That reaction tells you something your conscious mind might be filtering.",
+          "If the cards are positive, channel that confidence into your preparation. Not arrogance — grounded self-assurance. Walk into the interview knowing the energy supports you. That shift in demeanor is visible to interviewers.",
+          "If the cards suggest this specific job isn't aligned, don't spiral. Ask a follow-up question: 'What kind of role IS aligned with my energy right now?' The cards may redirect you toward something you hadn't considered — and that redirection often leads somewhere better."
+        ]
+      }
+    ],
     faq: [
       { q: "What tarot cards mean I'll get the job?", a: "Ace of Pentacles (new opportunity), Six of Wands (success), The Sun (positive outcome), and The World (achievement) are among the most positive indicators for job prospects." },
-      { q: "What if the tarot says I won't get the job?", a: "Challenging cards don't mean failure — they may suggest timing isn't right, or that a better opportunity awaits. Use the reading's guidance to strengthen your approach." }
+      { q: "What if the tarot says I won't get the job?", a: "Challenging cards don't mean failure — they may suggest timing isn't right, or that a better opportunity awaits. Use the reading's guidance to strengthen your approach." },
+      { q: "When should I do a job tarot reading?", a: "The best time is after you've submitted your application or completed an interview. Reading before you've taken action tends to amplify anxiety rather than provide clarity." },
+      { q: "Can I do multiple readings about the same job?", a: "One focused reading per opportunity is ideal. Repeated readings about the same position reflect your anxiety, not the cards' accuracy. Trust the first pull." },
+      { q: "What if I keep getting the same card for every job reading?", a: "A recurring card is a clear message. Look at what that card represents — it's pointing to a persistent energy or lesson that applies across all your professional pursuits, not just one job." }
     ],
-    relatedSlugs: ["career-tarot-reading", "should-i-change-careers-tarot"]
+    relatedSlugs: ["career-tarot-reading", "should-i-change-careers-tarot", "money-tarot-reading"]
   },
   {
     slug: "money-tarot-reading",
@@ -283,11 +320,48 @@ export const questionPages: QuestionPage[] = [
       "The Ace of Pentacles signals new financial opportunity, while the Ten of Pentacles represents lasting wealth and family prosperity. The Nine of Pentacles embodies self-made abundance and financial independence.",
       "Remember that tarot reads energy, not bank balances. These readings are most valuable when they reveal your relationship with money — your fears, hopes, and the patterns that shape your financial life."
     ],
+    sections: [
+      {
+        heading: "Your Relationship with Money — What Tarot Reveals",
+        body: [
+          "Money readings aren't about predicting lottery numbers. They expose the beliefs, fears, and habits that shape your financial reality. Most people carry inherited money stories — scarcity mindsets from childhood, guilt about wanting more, or the belief that wealth requires suffering.",
+          "The cards act as a financial mirror. The Four of Pentacles appears when you're gripping too tightly — hoarding out of fear rather than managing with intention. The reversed Nine of Pentacles suggests you're living beyond your means or measuring self-worth through possessions.",
+          "Understanding your money energy changes how you make financial decisions. When you see your patterns clearly, you stop repeating them unconsciously. That awareness alone is worth more than any specific financial prediction."
+        ]
+      },
+      {
+        heading: "Key Cards for Financial Readings",
+        body: [
+          "The Pentacles suit is your financial roadmap. The Ace signals incoming opportunity — a raise, a new income stream, a smart investment materializing. The Three of Pentacles shows earning through skilled work and collaboration. The Ten of Pentacles represents generational wealth and long-term financial stability.",
+          "The Nine of Pentacles is the self-made success card. Financial independence achieved through your own effort and discipline. When this card appears, the message is clear: you can build the abundance you want, and you may be closer than you think.",
+          "Outside the Pentacles, The Empress embodies natural abundance — money flowing easily when you're aligned with your creative gifts. The Wheel of Fortune in financial readings signals a turning point: your financial luck is about to shift, for better or worse depending on surrounding cards."
+        ]
+      },
+      {
+        heading: "Common Money Questions — and What the Cards Actually Answer",
+        body: [
+          "'Will I become rich?' is the wrong question. The cards will redirect you toward: 'What's blocking my abundance?' or 'What financial decision deserves my focus right now?' Tarot works with energy and patterns, not specific dollar amounts.",
+          "'Should I take this financial risk?' is a question tarot handles beautifully. The Seven of Pentacles says: the investment needs more time — don't harvest too early. The Two of Pentacles warns about juggling too many financial commitments at once. The Knight of Pentacles advises a slow, methodical approach.",
+          "'Why do I always end up broke?' is the most important money question you can ask the cards. The answer usually involves the Five of Pentacles (poverty consciousness) or The Devil reversed (breaking free from materialistic patterns that drain rather than build)."
+        ]
+      },
+      {
+        heading: "Turning Your Money Reading into Action",
+        body: [
+          "The best financial readings produce one concrete shift. Maybe it's finally starting the budget you've been avoiding. Maybe it's asking for the raise you deserve. Maybe it's releasing the guilt around spending on yourself. One shift, applied consistently, changes your financial trajectory.",
+          "If the cards show abundance energy, don't just feel good about it — act. Send the proposal, open the savings account, have the money conversation with your partner. Positive cards without action are just nice pictures.",
+          "If the cards show financial challenges, don't panic. Five of Pentacles doesn't mean bankruptcy — it means you're focused on what you lack instead of what you have. Shifting that perspective is the first step toward financial recovery."
+        ]
+      }
+    ],
     faq: [
       { q: "Can tarot predict financial outcomes?", a: "Tarot reveals the energies and patterns surrounding your finances rather than specific monetary outcomes. It can highlight opportunities, warn of potential pitfalls, and suggest shifts in mindset." },
-      { q: "What tarot cards indicate money coming in?", a: "Ace of Pentacles, Nine of Pentacles, Ten of Pentacles, The Empress, and The Sun are strong indicators of financial abundance and incoming resources." }
+      { q: "What tarot cards indicate money coming in?", a: "Ace of Pentacles, Nine of Pentacles, Ten of Pentacles, The Empress, and The Sun are strong indicators of financial abundance and incoming resources." },
+      { q: "How often should I do money tarot readings?", a: "Monthly readings work well for tracking financial energy shifts. Avoid reading obsessively during financial stress — it amplifies anxiety rather than providing clarity." },
+      { q: "What tarot cards warn about financial loss?", a: "The Five of Pentacles (hardship), Ten of Swords (an ending), reversed Wheel of Fortune (downturn), and The Tower (sudden disruption) suggest caution with finances." },
+      { q: "Can tarot help me with debt?", a: "Tarot can reveal the emotional and behavioral patterns behind debt — overspending, avoidance, or scarcity mindset. Understanding these patterns is the first step toward changing your financial habits." }
     ],
-    relatedSlugs: ["career-tarot-reading", "should-i-change-careers-tarot"]
+    relatedSlugs: ["career-tarot-reading", "will-i-get-the-job-tarot", "personal-growth-tarot-reading"]
   },
   {
     slug: "personal-growth-tarot-reading",
@@ -300,11 +374,48 @@ export const questionPages: QuestionPage[] = [
       "The Major Arcana cards carry special weight in growth readings, as each one represents a stage of The Fool's Journey — the archetypal path of spiritual awakening. The Hermit invites introspection, Death signals transformation, and The Star promises renewal.",
       "These readings are most powerful when approached with openness and honest self-reflection. The cards mirror your inner landscape, helping you see patterns that may be invisible from within."
     ],
+    sections: [
+      {
+        heading: "Why Personal Growth Readings Hit Different",
+        body: [
+          "Most people come to tarot asking about love or money. Personal growth readings require a different kind of courage — the willingness to look at yourself honestly, without the distraction of another person or external goal.",
+          "These readings strip away the 'what will happen to me?' and replace it with 'who am I becoming?' That shift in question changes everything about how the cards speak. Instead of predictions, you get mirrors. Instead of answers, you get awareness.",
+          "Growth readings often bring up uncomfortable truths. The cards might show you the self-sabotage you've normalized, the comfort zone you've mistaken for safety, or the version of yourself you've outgrown but refuse to release. That discomfort is the beginning of change."
+        ]
+      },
+      {
+        heading: "The Major Arcana as a Growth Map",
+        body: [
+          "The Fool's Journey through the Major Arcana is the original personal development framework. Each card represents a stage: The Magician (discovering your power), The High Priestess (trusting your intuition), The Emperor (building structure), The Hierophant (questioning inherited beliefs).",
+          "Mid-journey cards mark the real transformation. The Wheel of Fortune shows you that change is constant and resistance is futile. The Hanged Man asks you to surrender control and see the world from a completely different angle. Death — the most misunderstood card — simply means: let go of what no longer serves you.",
+          "The final cards — Judgement and The World — represent integration. You've gathered the lessons, survived the transformations, and arrived at a version of yourself that's more whole than where you started. Growth readings frequently pull from this late-journey energy when you're on the verge of a breakthrough."
+        ]
+      },
+      {
+        heading: "Questions That Unlock Deep Readings",
+        body: [
+          "'What pattern am I repeating?' is the single most powerful personal growth question for tarot. The cards will show you the loop — the same relationship dynamic, the same career fear, the same emotional avoidance pattern — with startling clarity.",
+          "'What am I ready to release?' invites Death, The Tower, or the Eight of Cups to speak honestly about what's expired in your life. These cards aren't punishing you — they're freeing you. The reading shows what you already know but haven't acted on.",
+          "'What strength am I underestimating?' often brings Strength, The Star, or the Queen of Swords — cards that reflect capabilities you've minimized or forgotten. Personal growth isn't always about fixing weaknesses. Sometimes it's about finally claiming what's already strong."
+        ]
+      },
+      {
+        heading: "Making Growth Readings a Practice",
+        body: [
+          "Single readings create insight. Regular readings create transformation. Consider a monthly pull focused exclusively on your inner development — not events, not other people, just you and your evolving self.",
+          "Keep a growth journal alongside your readings. Write down the cards, your initial reaction, and what you think they're pointing to. Review it quarterly. You'll see patterns the individual readings couldn't show you — recurring cards, shifting themes, progress you couldn't feel in the moment.",
+          "The most important rule for growth readings: don't use them as another form of self-criticism. If every reading becomes 'what's wrong with me?', you're using tarot as a weapon against yourself. Growth includes celebrating progress, not just cataloging flaws."
+        ]
+      }
+    ],
     faq: [
       { q: "How can tarot help with personal growth?", a: "Tarot acts as a mirror for self-reflection, revealing unconscious patterns, emotional blind spots, and untapped potential. Regular readings create a practice of intentional self-awareness." },
-      { q: "What tarot cards indicate spiritual growth?", a: "The Hermit, The Star, The High Priestess, Judgement, and The World are among the strongest indicators of spiritual awakening and personal evolution." }
+      { q: "What tarot cards indicate spiritual growth?", a: "The Hermit, The Star, The High Priestess, Judgement, and The World are among the strongest indicators of spiritual awakening and personal evolution." },
+      { q: "How often should I do personal growth readings?", a: "Monthly readings provide enough space for genuine change to occur between sessions. Weekly pulls can work if focused on different aspects of your development each time." },
+      { q: "Can tarot replace therapy?", a: "No. Tarot is a reflective tool, not a therapeutic intervention. It can complement professional support by providing symbolic language for inner experiences, but it's not a substitute for trained mental health care." },
+      { q: "What if my growth reading feels negative?", a: "Challenging cards in growth readings aren't negative — they're honest. The Tower in a growth context means breakthrough, not breakdown. Death means necessary release. Reframe 'negative' as 'what needs attention.'" }
     ],
-    relatedSlugs: ["love-tarot-reading", "career-tarot-reading"]
+    relatedSlugs: ["spiritual-awakening-tarot", "anxiety-tarot-reading", "love-tarot-reading"]
   },
   {
     slug: "yes-or-no-tarot",
