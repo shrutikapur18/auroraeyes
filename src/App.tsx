@@ -115,6 +115,13 @@ const App = () => (
             <Route path="/reading/:id" element={<SavedReadingPage />} />
             {/* Shared reading preview (legacy) */}
             <Route path="/shared-reading" element={<SharedReadingPreview />} />
+            {/* SEO alternate URL redirects */}
+            <Route path="/yes-or-no-tarot-reading" element={<Navigate to="/yes-or-no-tarot" replace />} />
+            <Route path="/free-love-tarot-reading" element={<Navigate to="/love-tarot-reading" replace />} />
+            <Route path="/tarot-for-anxiety" element={<Navigate to="/anxiety-tarot-reading" replace />} />
+            <Route path="/moving-house-tarot" element={<Navigate to="/moving-house-tarot-reading" replace />} />
+            <Route path="/pregnancy-tarot" element={<Navigate to="/pregnancy-tarot-reading" replace />} />
+            <Route path="/new-relationship-tarot" element={<Navigate to="/new-relationship-tarot-reading" replace />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </SiteLayout>
