@@ -44,6 +44,7 @@ import About from "./pages/About";
 import Methodology from "./pages/Methodology";
 import EditorialPolicy from "./pages/EditorialPolicy";
 import NotFound from "./pages/NotFound";
+import { Navigate } from "react-router-dom";
 import { questionPages } from "./data/seoData";
 import { horaryContentPages } from "./data/horaryContentPages";
 
