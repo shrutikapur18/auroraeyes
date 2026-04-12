@@ -266,11 +266,48 @@ export const questionPages: QuestionPage[] = [
       "The Ace of Pentacles suggests new material opportunity is close. The Three of Pentacles indicates that your skills are being recognized. The Six of Wands promises victory and public recognition.",
       "Even if the cards suggest challenges ahead, remember that each interview and application is a stepping stone. The reading's greatest value lies in helping you understand what energy to bring to the process."
     ],
+    sections: [
+      {
+        heading: "Why Job Seekers Turn to Tarot",
+        body: [
+          "Job searching is emotionally exhausting in ways people rarely talk about. The repeated vulnerability of interviews, the silence after applications, the overthinking about what you said wrong — it erodes confidence. Tarot offers something the hiring process doesn't: honest feedback without judgment.",
+          "When you ask the cards about a specific job, you're not really asking for a prediction. You're asking: am I on the right track? Is this role aligned with who I'm becoming, or am I chasing it out of desperation? The cards answer both the practical question and the deeper one you're afraid to ask out loud.",
+          "The most useful job readings reveal your internal state — are you approaching this opportunity from confidence or scarcity? The energy you carry into an interview matters as much as your resume, and the cards can show you exactly where your energy stands."
+        ]
+      },
+      {
+        heading: "Cards That Signal Professional Success",
+        body: [
+          "The Ace of Pentacles is the strongest 'new job' card in the deck. It represents a tangible opportunity arriving — a real offer, a real chance. When it appears upright, the energy favors material beginnings.",
+          "The Six of Wands is the victory card. Public recognition, being chosen, standing out from competitors. In a job reading, this card says: you're the one they'll remember. The Three of Pentacles reinforces this — your craft, your skill, your collaborative ability are being noticed.",
+          "The Emperor brings authority and structure. In a job context, it often means a stable company, a strong manager, or a role that gives you real responsibility. Paired with The Magician, it suggests you have every qualification needed — the only question is whether you believe it yourself."
+        ]
+      },
+      {
+        heading: "When the Cards Show Challenges",
+        body: [
+          "The Five of Pentacles in a job reading can feel devastating, but it's more nuanced than 'you won't get it.' This card often points to financial anxiety clouding your judgment — you might be applying for the wrong role because you need money, not because it fits.",
+          "The Tower doesn't mean career collapse. In a job reading, it suggests the role you're fixated on might not be the one that serves you. Sometimes not getting the job is the cards protecting you from a situation that would have been miserable.",
+          "Reversed cards in job readings often indicate internal blocks: the reversed Magician suggests imposter syndrome, the reversed Emperor points to authority issues, and the reversed Sun means you're not showing your authentic self in interviews. These are actionable insights, not sentences."
+        ]
+      },
+      {
+        heading: "How to Use Your Reading Strategically",
+        body: [
+          "After your reading, sit with the cards for a moment before rushing to interpret. Your first emotional reaction often carries the most honest signal — relief, anxiety, surprise, disappointment. That reaction tells you something your conscious mind might be filtering.",
+          "If the cards are positive, channel that confidence into your preparation. Not arrogance — grounded self-assurance. Walk into the interview knowing the energy supports you. That shift in demeanor is visible to interviewers.",
+          "If the cards suggest this specific job isn't aligned, don't spiral. Ask a follow-up question: 'What kind of role IS aligned with my energy right now?' The cards may redirect you toward something you hadn't considered — and that redirection often leads somewhere better."
+        ]
+      }
+    ],
     faq: [
       { q: "What tarot cards mean I'll get the job?", a: "Ace of Pentacles (new opportunity), Six of Wands (success), The Sun (positive outcome), and The World (achievement) are among the most positive indicators for job prospects." },
-      { q: "What if the tarot says I won't get the job?", a: "Challenging cards don't mean failure — they may suggest timing isn't right, or that a better opportunity awaits. Use the reading's guidance to strengthen your approach." }
+      { q: "What if the tarot says I won't get the job?", a: "Challenging cards don't mean failure — they may suggest timing isn't right, or that a better opportunity awaits. Use the reading's guidance to strengthen your approach." },
+      { q: "When should I do a job tarot reading?", a: "The best time is after you've submitted your application or completed an interview. Reading before you've taken action tends to amplify anxiety rather than provide clarity." },
+      { q: "Can I do multiple readings about the same job?", a: "One focused reading per opportunity is ideal. Repeated readings about the same position reflect your anxiety, not the cards' accuracy. Trust the first pull." },
+      { q: "What if I keep getting the same card for every job reading?", a: "A recurring card is a clear message. Look at what that card represents — it's pointing to a persistent energy or lesson that applies across all your professional pursuits, not just one job." }
     ],
-    relatedSlugs: ["career-tarot-reading", "should-i-change-careers-tarot"]
+    relatedSlugs: ["career-tarot-reading", "should-i-change-careers-tarot", "money-tarot-reading"]
   },
   {
     slug: "money-tarot-reading",
@@ -283,11 +320,48 @@ export const questionPages: QuestionPage[] = [
       "The Ace of Pentacles signals new financial opportunity, while the Ten of Pentacles represents lasting wealth and family prosperity. The Nine of Pentacles embodies self-made abundance and financial independence.",
       "Remember that tarot reads energy, not bank balances. These readings are most valuable when they reveal your relationship with money — your fears, hopes, and the patterns that shape your financial life."
     ],
+    sections: [
+      {
+        heading: "Your Relationship with Money — What Tarot Reveals",
+        body: [
+          "Money readings aren't about predicting lottery numbers. They expose the beliefs, fears, and habits that shape your financial reality. Most people carry inherited money stories — scarcity mindsets from childhood, guilt about wanting more, or the belief that wealth requires suffering.",
+          "The cards act as a financial mirror. The Four of Pentacles appears when you're gripping too tightly — hoarding out of fear rather than managing with intention. The reversed Nine of Pentacles suggests you're living beyond your means or measuring self-worth through possessions.",
+          "Understanding your money energy changes how you make financial decisions. When you see your patterns clearly, you stop repeating them unconsciously. That awareness alone is worth more than any specific financial prediction."
+        ]
+      },
+      {
+        heading: "Key Cards for Financial Readings",
+        body: [
+          "The Pentacles suit is your financial roadmap. The Ace signals incoming opportunity — a raise, a new income stream, a smart investment materializing. The Three of Pentacles shows earning through skilled work and collaboration. The Ten of Pentacles represents generational wealth and long-term financial stability.",
+          "The Nine of Pentacles is the self-made success card. Financial independence achieved through your own effort and discipline. When this card appears, the message is clear: you can build the abundance you want, and you may be closer than you think.",
+          "Outside the Pentacles, The Empress embodies natural abundance — money flowing easily when you're aligned with your creative gifts. The Wheel of Fortune in financial readings signals a turning point: your financial luck is about to shift, for better or worse depending on surrounding cards."
+        ]
+      },
+      {
+        heading: "Common Money Questions — and What the Cards Actually Answer",
+        body: [
+          "'Will I become rich?' is the wrong question. The cards will redirect you toward: 'What's blocking my abundance?' or 'What financial decision deserves my focus right now?' Tarot works with energy and patterns, not specific dollar amounts.",
+          "'Should I take this financial risk?' is a question tarot handles beautifully. The Seven of Pentacles says: the investment needs more time — don't harvest too early. The Two of Pentacles warns about juggling too many financial commitments at once. The Knight of Pentacles advises a slow, methodical approach.",
+          "'Why do I always end up broke?' is the most important money question you can ask the cards. The answer usually involves the Five of Pentacles (poverty consciousness) or The Devil reversed (breaking free from materialistic patterns that drain rather than build)."
+        ]
+      },
+      {
+        heading: "Turning Your Money Reading into Action",
+        body: [
+          "The best financial readings produce one concrete shift. Maybe it's finally starting the budget you've been avoiding. Maybe it's asking for the raise you deserve. Maybe it's releasing the guilt around spending on yourself. One shift, applied consistently, changes your financial trajectory.",
+          "If the cards show abundance energy, don't just feel good about it — act. Send the proposal, open the savings account, have the money conversation with your partner. Positive cards without action are just nice pictures.",
+          "If the cards show financial challenges, don't panic. Five of Pentacles doesn't mean bankruptcy — it means you're focused on what you lack instead of what you have. Shifting that perspective is the first step toward financial recovery."
+        ]
+      }
+    ],
     faq: [
       { q: "Can tarot predict financial outcomes?", a: "Tarot reveals the energies and patterns surrounding your finances rather than specific monetary outcomes. It can highlight opportunities, warn of potential pitfalls, and suggest shifts in mindset." },
-      { q: "What tarot cards indicate money coming in?", a: "Ace of Pentacles, Nine of Pentacles, Ten of Pentacles, The Empress, and The Sun are strong indicators of financial abundance and incoming resources." }
+      { q: "What tarot cards indicate money coming in?", a: "Ace of Pentacles, Nine of Pentacles, Ten of Pentacles, The Empress, and The Sun are strong indicators of financial abundance and incoming resources." },
+      { q: "How often should I do money tarot readings?", a: "Monthly readings work well for tracking financial energy shifts. Avoid reading obsessively during financial stress — it amplifies anxiety rather than providing clarity." },
+      { q: "What tarot cards warn about financial loss?", a: "The Five of Pentacles (hardship), Ten of Swords (an ending), reversed Wheel of Fortune (downturn), and The Tower (sudden disruption) suggest caution with finances." },
+      { q: "Can tarot help me with debt?", a: "Tarot can reveal the emotional and behavioral patterns behind debt — overspending, avoidance, or scarcity mindset. Understanding these patterns is the first step toward changing your financial habits." }
     ],
-    relatedSlugs: ["career-tarot-reading", "should-i-change-careers-tarot"]
+    relatedSlugs: ["career-tarot-reading", "will-i-get-the-job-tarot", "personal-growth-tarot-reading"]
   },
   {
     slug: "personal-growth-tarot-reading",
@@ -300,11 +374,48 @@ export const questionPages: QuestionPage[] = [
       "The Major Arcana cards carry special weight in growth readings, as each one represents a stage of The Fool's Journey — the archetypal path of spiritual awakening. The Hermit invites introspection, Death signals transformation, and The Star promises renewal.",
       "These readings are most powerful when approached with openness and honest self-reflection. The cards mirror your inner landscape, helping you see patterns that may be invisible from within."
     ],
+    sections: [
+      {
+        heading: "Why Personal Growth Readings Hit Different",
+        body: [
+          "Most people come to tarot asking about love or money. Personal growth readings require a different kind of courage — the willingness to look at yourself honestly, without the distraction of another person or external goal.",
+          "These readings strip away the 'what will happen to me?' and replace it with 'who am I becoming?' That shift in question changes everything about how the cards speak. Instead of predictions, you get mirrors. Instead of answers, you get awareness.",
+          "Growth readings often bring up uncomfortable truths. The cards might show you the self-sabotage you've normalized, the comfort zone you've mistaken for safety, or the version of yourself you've outgrown but refuse to release. That discomfort is the beginning of change."
+        ]
+      },
+      {
+        heading: "The Major Arcana as a Growth Map",
+        body: [
+          "The Fool's Journey through the Major Arcana is the original personal development framework. Each card represents a stage: The Magician (discovering your power), The High Priestess (trusting your intuition), The Emperor (building structure), The Hierophant (questioning inherited beliefs).",
+          "Mid-journey cards mark the real transformation. The Wheel of Fortune shows you that change is constant and resistance is futile. The Hanged Man asks you to surrender control and see the world from a completely different angle. Death — the most misunderstood card — simply means: let go of what no longer serves you.",
+          "The final cards — Judgement and The World — represent integration. You've gathered the lessons, survived the transformations, and arrived at a version of yourself that's more whole than where you started. Growth readings frequently pull from this late-journey energy when you're on the verge of a breakthrough."
+        ]
+      },
+      {
+        heading: "Questions That Unlock Deep Readings",
+        body: [
+          "'What pattern am I repeating?' is the single most powerful personal growth question for tarot. The cards will show you the loop — the same relationship dynamic, the same career fear, the same emotional avoidance pattern — with startling clarity.",
+          "'What am I ready to release?' invites Death, The Tower, or the Eight of Cups to speak honestly about what's expired in your life. These cards aren't punishing you — they're freeing you. The reading shows what you already know but haven't acted on.",
+          "'What strength am I underestimating?' often brings Strength, The Star, or the Queen of Swords — cards that reflect capabilities you've minimized or forgotten. Personal growth isn't always about fixing weaknesses. Sometimes it's about finally claiming what's already strong."
+        ]
+      },
+      {
+        heading: "Making Growth Readings a Practice",
+        body: [
+          "Single readings create insight. Regular readings create transformation. Consider a monthly pull focused exclusively on your inner development — not events, not other people, just you and your evolving self.",
+          "Keep a growth journal alongside your readings. Write down the cards, your initial reaction, and what you think they're pointing to. Review it quarterly. You'll see patterns the individual readings couldn't show you — recurring cards, shifting themes, progress you couldn't feel in the moment.",
+          "The most important rule for growth readings: don't use them as another form of self-criticism. If every reading becomes 'what's wrong with me?', you're using tarot as a weapon against yourself. Growth includes celebrating progress, not just cataloging flaws."
+        ]
+      }
+    ],
     faq: [
       { q: "How can tarot help with personal growth?", a: "Tarot acts as a mirror for self-reflection, revealing unconscious patterns, emotional blind spots, and untapped potential. Regular readings create a practice of intentional self-awareness." },
-      { q: "What tarot cards indicate spiritual growth?", a: "The Hermit, The Star, The High Priestess, Judgement, and The World are among the strongest indicators of spiritual awakening and personal evolution." }
+      { q: "What tarot cards indicate spiritual growth?", a: "The Hermit, The Star, The High Priestess, Judgement, and The World are among the strongest indicators of spiritual awakening and personal evolution." },
+      { q: "How often should I do personal growth readings?", a: "Monthly readings provide enough space for genuine change to occur between sessions. Weekly pulls can work if focused on different aspects of your development each time." },
+      { q: "Can tarot replace therapy?", a: "No. Tarot is a reflective tool, not a therapeutic intervention. It can complement professional support by providing symbolic language for inner experiences, but it's not a substitute for trained mental health care." },
+      { q: "What if my growth reading feels negative?", a: "Challenging cards in growth readings aren't negative — they're honest. The Tower in a growth context means breakthrough, not breakdown. Death means necessary release. Reframe 'negative' as 'what needs attention.'" }
     ],
-    relatedSlugs: ["love-tarot-reading", "career-tarot-reading"]
+    relatedSlugs: ["spiritual-awakening-tarot", "anxiety-tarot-reading", "love-tarot-reading"]
   },
   {
     slug: "yes-or-no-tarot",
@@ -452,11 +563,48 @@ export const questionPages: QuestionPage[] = [
       "The Ace of Cups signals fresh emotional beginnings, while the Two of Cups confirms mutual attraction. The Page of Cups brings playful romantic energy, and The Fool invites you to embrace the adventure.",
       "Use this reading to understand what you bring to the connection, what the other person may be experiencing, and what potential lies ahead."
     ],
+    sections: [
+      {
+        heading: "The Beautiful Uncertainty of New Love",
+        body: [
+          "New relationships exist in a liminal space — full of possibility but fragile. You're attracted, excited, maybe already falling, but you don't know if the other person feels the same intensity. Tarot reads this in-between energy with remarkable precision.",
+          "The cards won't tell you if this person is 'the one.' But they'll show you the quality of the connection's energy right now — whether it's built on genuine compatibility or projection, mutual interest or one-sided hope, sustainable warmth or just chemistry.",
+          "What makes new relationship readings valuable is their ability to name what you can't see through infatuation's lens. When you're caught up in someone new, objectivity disappears. The cards provide the outside perspective your friends are trying to give you, but without the bias."
+        ]
+      },
+      {
+        heading: "Cards That Reveal Relationship Potential",
+        body: [
+          "The Two of Cups is the strongest mutual attraction card. When it appears in a new relationship reading, the energy between you is balanced and reciprocated. This isn't one-sided — they feel it too. Paired with The Lovers, the connection has potential to become deeply significant.",
+          "The Ace of Cups signals emotional availability — you're genuinely open to this, not just filling a void. The Page of Cups brings playful, curious energy — the early texts, the discovering each other phase, the 'I can't stop smiling' feeling.",
+          "The Knight of Cups riding in suggests someone actively pursuing the connection with romantic intention. If this card appears representing the other person, they're not just casually interested — they're emotionally invested and moving toward you."
+        ]
+      },
+      {
+        heading: "Warning Signs to Watch For",
+        body: [
+          "The Seven of Swords in a new relationship reading raises a question: is someone being fully honest? This doesn't necessarily mean deception — it might mean someone is holding back their true feelings or hasn't disclosed something important yet.",
+          "The Moon suggests something you can't see yet. In new relationships, this often means you're falling for a version of the person they're presenting, not who they fully are. Give it time. Real compatibility reveals itself gradually, not in the honeymoon phase.",
+          "The reversed Ace of Cups warns about emotional unavailability — either yours or theirs. If you just left a relationship and immediately started a new one, the cards may be asking: are you genuinely ready, or are you using this connection to avoid grieving the last one?"
+        ]
+      },
+      {
+        heading: "Nurturing What's Growing",
+        body: [
+          "The best new relationship readings end with guidance, not just assessment. Temperance appearing suggests: slow down. You don't need to define everything right now. Let the connection develop at its natural pace instead of rushing toward commitment.",
+          "The Three of Pentacles in a romantic context says: build something together. Shared activities, collaborative efforts, working on a project — connections strengthen through doing, not just talking and texting.",
+          "If the reading is overwhelmingly positive, receive that without immediately searching for problems. Not every new connection needs to be analyzed to death. Sometimes the cards simply say: this is good. Enjoy it. Let yourself be happy without needing to know exactly where it's going."
+        ]
+      }
+    ],
     faq: [
       { q: "What tarot cards mean a new relationship is promising?", a: "Ace of Cups (new love), Two of Cups (mutual connection), The Sun (joy), and The Star (hope) all suggest a promising new relationship with strong positive energy." },
-      { q: "When should I do a tarot reading about a new relationship?", a: "Wait until you've had meaningful interactions. Readings about someone you've barely met tend to reflect your projections rather than the actual connection's energy." }
+      { q: "When should I do a tarot reading about a new relationship?", a: "Wait until you've had meaningful interactions. Readings about someone you've barely met tend to reflect your projections rather than the actual connection's energy." },
+      { q: "Can tarot tell me if a new relationship will last?", a: "Tarot shows the current energy and trajectory, not guaranteed outcomes. Strong foundational cards suggest staying power, but all relationships require ongoing effort regardless of what the cards show." },
+      { q: "What if the cards show challenges in my new relationship?", a: "Challenge cards in new relationships often point to personal patterns you're bringing in — not flaws in the connection itself. Address the pattern, and the relationship has room to grow." },
+      { q: "Should I tell my new partner I did a tarot reading about us?", a: "That depends on their openness to spiritual tools. If they're receptive, it can be a bonding conversation. If not, keep the insights private and apply them quietly to how you show up in the relationship." }
     ],
-    relatedSlugs: ["love-tarot-reading", "soulmate-tarot-reading"]
+    relatedSlugs: ["love-tarot-reading", "soulmate-tarot-reading", "twin-flame-tarot-reading"]
   },
   {
     slug: "moving-house-tarot-reading",
@@ -469,11 +617,48 @@ export const questionPages: QuestionPage[] = [
       "The Wheel of Fortune suggests change is favored. The Four of Wands points to a happy new home. The Chariot indicates forward movement, while the Ten of Pentacles suggests long-term stability awaits.",
       "Consider what the cards reveal about both the practical and emotional aspects of your move. A home is more than a location — it's an energetic foundation for your life."
     ],
+    sections: [
+      {
+        heading: "Why Moving Decisions Carry So Much Weight",
+        body: [
+          "A home is more than an address. It's where you sleep, where you feel safe, where you become most yourself. Changing that foundation shakes everything above it — routines, relationships, your sense of identity tied to a place.",
+          "People turn to tarot for moving decisions because the practical pros-and-cons list never captures the full picture. You can list square footage and commute times, but what about the feeling of a place? The energy of a neighborhood? The intuition that says 'this is right' or 'something feels off'?",
+          "Tarot bridges the gap between practical analysis and gut feeling. The cards articulate what your intuition already knows but can't quite put into words."
+        ]
+      },
+      {
+        heading: "Cards That Support a Move",
+        body: [
+          "The Four of Wands is the homecoming card — celebration, stability, and domestic happiness. When it appears in a moving reading, the energy strongly favors the transition. You're moving toward something that will feel like home.",
+          "The Chariot represents determined forward movement. In a moving context, it says: you're ready, the path is clear, and momentum is on your side. The Wheel of Fortune suggests the timing is aligned — change is favored right now.",
+          "The Ten of Pentacles is the ultimate 'put down roots' card. Legacy, stability, family, long-term investment. If you're asking whether to buy versus rent, or whether this location is a long-term fit, this card says: think generationally, not temporarily."
+        ]
+      },
+      {
+        heading: "Cards That Suggest Waiting",
+        body: [
+          "The Four of Swords says: you need rest, not upheaval. If you're moving to escape something rather than move toward something, the cards will call it out. Running away and starting fresh look similar from the outside, but the energy is completely different.",
+          "The reversed Chariot suggests obstacles you haven't accounted for. Hidden costs, timing issues, a lease that falls through, or renovations that snowball. The cards aren't saying 'never move' — they're saying 'not yet, and here's why.'",
+          "The Eight of Cups reversed warns about leaving behind something you'll regret losing. Community, a neighborhood you love, proximity to people who matter. Make sure you're accounting for what you're giving up, not just what you're gaining."
+        ]
+      },
+      {
+        heading: "Making the Most of Your Moving Reading",
+        body: [
+          "Ask specific questions: 'What energy surrounds a move to [specific city]?' is more useful than 'Should I move?' The more precise your question, the more actionable the reading becomes.",
+          "If you're choosing between two locations, do a separate pull for each and compare the energy. The cards may favor one clearly, or they may show that both are viable but for different reasons — career growth in one place, emotional healing in another.",
+          "After your reading, sit with the cards for a day before acting. Moving decisions made in emotional heat — whether excitement or fear — tend to produce regret. The best relocations happen from a place of centered clarity, not reactive urgency."
+        ]
+      }
+    ],
     faq: [
       { q: "What tarot cards suggest a successful move?", a: "The Four of Wands (happy home), Ten of Pentacles (stable foundation), The Chariot (successful transition), and Ace of Pentacles (new material beginning) all suggest positive relocation energy." },
-      { q: "Can tarot help me decide where to move?", a: "Tarot won't give you an address, but it can reveal what qualities to prioritize in your new location — stability, community, adventure, or solitude." }
+      { q: "Can tarot help me decide where to move?", a: "Tarot won't give you an address, but it can reveal what qualities to prioritize in your new location — stability, community, adventure, or solitude." },
+      { q: "What if the cards say don't move but I have to?", a: "Cautionary cards during a necessary move suggest preparing more carefully, not canceling entirely. Address what the cards highlight — finances, timing, emotional readiness — before the move date." },
+      { q: "Should I do a reading before signing a lease?", a: "A reading during the decision phase is most valuable. Once you've signed, shift your question to: 'What energy should I bring to this new home?' to make the best of the transition." },
+      { q: "Can tarot sense energy about a specific house or apartment?", a: "Tarot can read the energy of your relationship to a place. If a specific property consistently pulls challenging cards, pay attention to your instinct about it — the cards may be confirming something you already sense." }
     ],
-    relatedSlugs: ["career-tarot-reading", "personal-growth-tarot-reading"]
+    relatedSlugs: ["career-tarot-reading", "personal-growth-tarot-reading", "money-tarot-reading"]
   },
   {
     slug: "pregnancy-tarot-reading",
@@ -486,28 +671,102 @@ export const questionPages: QuestionPage[] = [
       "The Empress is the quintessential fertility and motherhood card. The Ace of Cups represents new emotional beginnings, while The Sun radiates joy and vitality. The Page of Cups often signals happy news.",
       "Approach pregnancy readings with openness — the cards may speak to creative projects, new ventures, or personal rebirth alongside or instead of literal pregnancy."
     ],
+    sections: [
+      {
+        heading: "What Tarot Can (and Cannot) Say About Pregnancy",
+        body: [
+          "Let's be clear upfront: tarot is not a pregnancy test. The cards read energy and potential, not biology. Fertility-related cards can absolutely appear in a pregnancy reading, but they can also signify creative projects, business ventures, or personal transformation.",
+          "That said, tarot has a remarkable ability to reflect the energy surrounding conception and parenthood. Women have reported The Empress or Page of Cups appearing repeatedly in the weeks before discovering a pregnancy. Whether that's coincidence or intuition speaking through symbols, it's a pattern experienced readers recognize.",
+          "The most helpful approach: use pregnancy tarot readings for emotional preparation and spiritual alignment, not as a diagnostic tool. The cards can show you your readiness, your fears, and the energy you're bringing to this chapter of life."
+        ]
+      },
+      {
+        heading: "Fertility and Motherhood Cards",
+        body: [
+          "The Empress is the undisputed fertility card. She embodies creation in all its forms — biological, artistic, nurturing. In a pregnancy reading, she signals abundant creative energy and a body or life in harmony with bringing something new into being.",
+          "The Ace of Cups represents the beginning of a profound emotional experience. In pregnancy context, it's the overwhelm of new love — the moment you realize everything has changed. The Page of Cups delivers messages and happy news, often associated with announcements.",
+          "The Sun radiates pure vitality and joy. In fertility readings, it's the healthiest, most optimistic energy possible — suggesting conditions that support new life and new beginnings. The Three of Cups adds celebration to the mix, often pointing to shared joy with family and friends."
+        ]
+      },
+      {
+        heading: "When Challenging Cards Appear",
+        body: [
+          "The reversed Empress in a pregnancy reading doesn't mean infertility. It often points to creative blocks, self-nurturing issues, or the pressure of societal expectations around motherhood. The cards may be asking: is this desire genuinely yours, or are you responding to external pressure?",
+          "The Moon in pregnancy readings signals uncertainty — and that's honest. Trying to conceive, navigating fertility treatments, or facing an unexpected pregnancy all live in the Moon's territory. The card isn't negative; it's acknowledging that you don't have all the answers yet, and that's okay.",
+          "The Ten of Swords might feel alarming, but in this context it usually represents the end of a difficult chapter — perhaps the conclusion of a challenging fertility journey, the release of anxiety, or letting go of a specific timeline. Endings create space for beginnings."
+        ]
+      },
+      {
+        heading: "Emotional Preparation Through the Cards",
+        body: [
+          "Pregnancy changes everything — identity, relationships, daily life, your body, your priorities. Tarot can help you prepare emotionally by naming what you're actually feeling beneath the excitement or anxiety.",
+          "The Hermit in a pregnancy reading suggests taking time for inner reflection before this major life change. What kind of parent do you want to be? What patterns from your own childhood do you want to break? The Hermit asks these questions gently but directly.",
+          "Strength appears frequently in pregnancy readings, reminding you that you have the resilience for this journey. Not brute strength — the quiet, sustained kind. The kind that shows up at 3 AM and keeps going. The cards see that capacity in you, even when you doubt it."
+        ]
+      }
+    ],
     faq: [
       { q: "What tarot cards indicate pregnancy?", a: "The Empress (fertility), Ace of Cups (new emotional life), The Sun (vitality), Page of Cups (happy news), and the Three of Cups (celebration) are commonly associated with pregnancy and new life." },
-      { q: "Can tarot predict pregnancy?", a: "Tarot reads energy and potential rather than medical outcomes. Fertility-associated cards may appear to reflect creative energy, new beginnings, or literal pregnancy — context and intuition guide interpretation." }
+      { q: "Can tarot predict pregnancy?", a: "Tarot reads energy and potential rather than medical outcomes. Fertility-associated cards may appear to reflect creative energy, new beginnings, or literal pregnancy — context and intuition guide interpretation." },
+      { q: "Is it appropriate to do tarot readings about pregnancy?", a: "Yes, when approached as a reflective and emotional tool rather than a medical one. Pregnancy readings can help with emotional readiness, processing fears, and connecting with your intuitive sense of timing." },
+      { q: "What if I get 'negative' cards in a pregnancy reading?", a: "Challenging cards usually address emotional blocks, timing, or readiness — not fertility itself. The Tower might mean your timeline needs adjusting, not that pregnancy is impossible." },
+      { q: "Can tarot help with fertility anxiety?", a: "Tarot can help externalize fertility anxieties and examine them with some distance. The ritual of a reading creates a container for difficult emotions, which can reduce the spiral of worry." }
     ],
-    relatedSlugs: ["love-tarot-reading", "personal-growth-tarot-reading"]
+    relatedSlugs: ["love-tarot-reading", "personal-growth-tarot-reading", "new-relationship-tarot-reading"]
   },
   {
     slug: "spiritual-awakening-tarot",
     title: "Spiritual Awakening Tarot Reading — Free",
     h1: "Spiritual Awakening Tarot — Where Are You on the Journey?",
-    description: "Free spiritual awakening tarot reading. Discover what stage of spiritual development you're in and what the universe is guiding you toward.",
+    description: "Free spiritual awakening tarot reading. Discover what stage of spiritual development you're in and what the cards reveal.",
     topic: "growth" as const,
     intro: [
       "Spiritual awakening is not a single moment but an unfolding journey. Tarot's Major Arcana maps this path perfectly — from The Fool's innocent beginning through The World's integrated completion.",
       "The High Priestess signals deepening intuition. The Hermit calls for contemplative withdrawal. The Tower shatters illusions to reveal truth, and The Star promises the hope and clarity that follow dark nights of the soul.",
       "This reading helps you understand where you are on your awakening path and what the next stage of your spiritual evolution may look like."
     ],
+    sections: [
+      {
+        heading: "What Spiritual Awakening Actually Feels Like",
+        body: [
+          "Social media portrays spiritual awakening as blissful — light, peace, higher consciousness. The reality is messier. Awakening often starts with disorientation. Things that used to satisfy you don't anymore. Relationships feel shallow. Your career seems pointless. You're not depressed — you're outgrowing your old life.",
+          "Tarot captures this transition with unflinching honesty. The Tower doesn't show up because something went wrong — it shows up because something went right. Your illusions are cracking, and the truth underneath is demanding your attention.",
+          "The cards normalize this uncomfortable process. When The Hermit appears, it validates your need to withdraw. When Death arrives, it confirms that the old version of you is supposed to dissolve. The reading doesn't fix the discomfort — it places it in context."
+        ]
+      },
+      {
+        heading: "Stages of Awakening in the Major Arcana",
+        body: [
+          "The Fool begins in innocence — before the awakening, when you lived on autopilot. The Magician marks the first realization that you can shape your own reality. The High Priestess deepens this into intuitive knowing: there's more to existence than what's visible.",
+          "The middle journey is where most awakening people find themselves. The Wheel of Fortune shows you that everything is cyclical. The Hanged Man forces surrender — stop trying to control the process. Death strips away what no longer serves your emerging self.",
+          "Late-stage awakening cards carry tremendous power. The Star is the quiet peace after the storm. Judgement calls you to live in alignment with your highest truth. The World represents integration — not perfection, but wholeness. You've gathered every lesson and arrived at yourself."
+        ]
+      },
+      {
+        heading: "Common Awakening Reading Patterns",
+        body: [
+          "If your reading is heavy with Major Arcana cards, you're in an active awakening phase. The soul is demanding attention, and everyday concerns are taking a back seat. This is normal and temporary — your life isn't falling apart, it's rearranging.",
+          "The Tower followed by The Star is the most classic awakening sequence. Destruction of illusions followed by genuine hope and clarity. If you're in the Tower phase, know that the Star is coming — but you can't skip to it. The rubble needs to be acknowledged first.",
+          "The High Priestess appearing repeatedly suggests your intuition is trying to guide you. You already know the answers — you're just not trusting them yet. This card is a gentle reminder: the voice inside you is wiser than the noise around you."
+        ]
+      },
+      {
+        heading: "Supporting Your Awakening Through Tarot Practice",
+        body: [
+          "Regular readings during a spiritual awakening create continuity in a process that can feel chaotic. Pull a weekly card focused on: 'What is my soul asking me to understand this week?' This creates a spiritual dialogue that deepens over time.",
+          "Keep an awakening journal alongside your cards. Note synchronicities, dreams, and the feelings each card evokes. Patterns will emerge that individual readings can't show — recurring themes, cards that stalk you across weeks, gradual shifts from heavy energy to lighter cards.",
+          "Be patient with yourself. Awakening isn't a race, and there's no final destination where you're 'done.' Even The World card is a temporary resting place before The Fool begins again. The journey is circular, not linear — and each cycle brings you deeper."
+        ]
+      }
+    ],
     faq: [
       { q: "What tarot cards indicate spiritual awakening?", a: "The High Priestess (intuition), The Hermit (inner wisdom), The Tower (ego dissolution), The Star (spiritual renewal), and Judgement (higher calling) are the primary spiritual awakening cards." },
-      { q: "How can tarot support spiritual growth?", a: "Tarot provides a symbolic language for inner experiences that may be hard to articulate. Regular readings create a practice of self-reflection that supports ongoing spiritual development." }
+      { q: "How can tarot support spiritual growth?", a: "Tarot provides a symbolic language for inner experiences that may be hard to articulate. Regular readings create a practice of self-reflection that supports ongoing spiritual development." },
+      { q: "Am I having a spiritual awakening or just anxiety?", a: "Both can coexist. Awakening often triggers anxiety as old structures dissolve. If you're questioning reality, feeling disconnected from your former self, and drawn to deeper meaning — that's awakening. Professional support can help you navigate it." },
+      { q: "How long does spiritual awakening last?", a: "There's no fixed timeline. Some people experience acute awakening periods lasting months, while others have gradual shifts over years. Tarot can help you identify which phase you're currently in." },
+      { q: "Can tarot readings accelerate spiritual awakening?", a: "Tarot doesn't accelerate awakening, but it deepens your engagement with the process. Regular practice builds the self-awareness muscles that make each phase more conscious and less frightening." }
     ],
-    relatedSlugs: ["personal-growth-tarot-reading", "soulmate-tarot-reading"]
+    relatedSlugs: ["personal-growth-tarot-reading", "anxiety-tarot-reading", "soulmate-tarot-reading"]
   },
   {
     slug: "anxiety-tarot-reading",
@@ -520,11 +779,48 @@ export const questionPages: QuestionPage[] = [
       "The Nine of Swords directly represents anxiety and overthinking. Temperance offers the antidote — patience, balance, and emotional moderation. The Star brings hope, and Strength reminds you of your inner resilience.",
       "Tarot doesn't replace professional mental health support, but it can complement it by providing moments of structured reflection and self-compassion."
     ],
+    sections: [
+      {
+        heading: "How Tarot Becomes a Grounding Practice",
+        body: [
+          "Anxiety lives in the future — the 'what ifs,' the catastrophizing, the mental rehearsals of worst-case scenarios. Tarot pulls you into the present moment. The act of shuffling, focusing on a question, turning a card — each step requires presence. And presence is the antidote to anxiety.",
+          "The reading itself creates structure for shapeless worry. Instead of a fog of dread, you're looking at specific cards with specific meanings. The Nine of Swords names your anxiety. The Eight of Swords shows where you feel trapped. Suddenly the overwhelming feeling has a shape, a name, and boundaries.",
+          "This externalization is therapeutic in itself. Worry that stays inside your head grows. Worry that gets placed on a table in the form of cards becomes manageable. You're not solving the anxiety — you're containing it in a way that lets you examine it without drowning."
+        ]
+      },
+      {
+        heading: "Anxiety Cards and What They're Telling You",
+        body: [
+          "The Nine of Swords is the anxiety card. A figure sitting up in bed, head in hands, swords hanging above. But look closely — the swords aren't touching them. The threat is perceived, not actual. This card's deepest message: your worst fears are mental constructions, not reality.",
+          "The Eight of Swords shows a blindfolded figure surrounded by swords, loosely bound. The trap is psychological. The restrictions you feel — about your options, your abilities, your future — are beliefs, not facts. The card literally shows you that movement is possible if you remove the blindfold.",
+          "The Moon represents the deep anxiety that comes from not understanding what you're feeling. It's the 3 AM fear, the nameless dread, the sense that something is wrong but you can't identify what. The Moon's gift is this: it passes. What feels overwhelming in darkness becomes clear in morning light."
+        ]
+      },
+      {
+        heading: "Cards That Bring Relief",
+        body: [
+          "Temperance is anxiety's medicine. Balance, patience, moderation — everything that anxiety distorts, Temperance restores. When this card appears, the message is: you don't need to solve everything right now. One step at a time. One breath at a time.",
+          "The Star is the card of quiet hope after crisis. Not the manic optimism of 'everything will be fine!' but the gentle knowing that you've survived hard things before and you'll survive this too. It's the dawn after the dark night.",
+          "Strength — the woman gently closing the lion's mouth — shows that calming your inner beast doesn't require force. You don't need to fight your anxiety. You need to meet it with patience and steady compassion. That's a fundamentally different approach, and the cards are teaching it."
+        ]
+      },
+      {
+        heading: "Building a Tarot Practice for Anxious Minds",
+        body: [
+          "If you're anxiety-prone, set boundaries around your tarot practice. Don't read obsessively about the same worry. Don't read during a panic attack. Use tarot as a preventive practice — a morning pull that sets your intention, not a reactive tool you reach for in crisis mode.",
+          "Try a daily single-card practice focused on: 'What energy supports me today?' This isn't about prediction. It's about shifting your morning focus from dread to curiosity. Over time, this practice rewires how you start your day.",
+          "Important reminder: tarot is a complementary tool, not a replacement for professional mental health care. If anxiety is significantly impacting your daily life, the most powerful card you can play is reaching out to a therapist. Tarot and professional support work beautifully together."
+        ]
+      }
+    ],
     faq: [
       { q: "Can tarot help with anxiety?", a: "Tarot can serve as a mindfulness tool, helping you externalize worries and examine them with detachment. The focused ritual of a reading provides grounding structure during anxious moments." },
-      { q: "What tarot cards relate to anxiety?", a: "Nine of Swords (worry, overthinking), The Moon (uncertainty, fear), Eight of Swords (feeling trapped), and Five of Cups (dwelling on loss) commonly appear when anxiety is present." }
+      { q: "What tarot cards relate to anxiety?", a: "Nine of Swords (worry, overthinking), The Moon (uncertainty, fear), Eight of Swords (feeling trapped), and Five of Cups (dwelling on loss) commonly appear when anxiety is present." },
+      { q: "Is it okay to do tarot readings when anxious?", a: "Gentle, structured readings can be calming. But avoid obsessive pulling or reading during acute panic. The best anxiety readings happen from a place of curiosity, not desperation." },
+      { q: "What if a tarot reading increases my anxiety?", a: "If cards consistently increase your anxiety, pause the practice. Tarot should reduce worry, not amplify it. Consider whether you're approaching readings seeking reassurance rather than genuine insight." },
+      { q: "Can tarot replace therapy for anxiety?", a: "No. Tarot is a reflective tool that complements professional support. If anxiety significantly impacts your daily functioning, a therapist is the most important first step. Tarot can then support the therapeutic process." }
     ],
-    relatedSlugs: ["personal-growth-tarot-reading", "spiritual-awakening-tarot"]
+    relatedSlugs: ["personal-growth-tarot-reading", "spiritual-awakening-tarot", "breakup-tarot-reading"]
   },
 ];
 
