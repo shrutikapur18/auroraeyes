@@ -3,8 +3,11 @@ import { cardCombinations } from "../src/data/tarotCombinations";
 import { elderFuthark } from "../src/data/runes";
 import { questionPages, spreadGuides, generateCombinationPages, generateComparisonPages } from "../src/data/seoData";
 import { writeFileSync, mkdirSync } from "fs";
-import { resolve } from "path";
+import { resolve, dirname } from "path"; //
+import { fileURLToPath } from "url"; //
 
+const __filename = fileURLToPath(import.meta.url); //
+const __dirname = dirname(__filename); //
 const BASE = "https://auroraeyes.com";
 const months = ["january","february","march","april","may","june","july","august","september","october","november","december"];
 const slugify = (name: string) => name.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
