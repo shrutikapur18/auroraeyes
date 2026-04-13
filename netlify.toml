@@ -2,19 +2,16 @@
   publish = "dist"
   command = "npm run build"
 
-# Allow sitemap files to pass through
 [[redirects]]
   from = "/sitemaps/*"
   to = "/sitemaps/:splat"
   status = 200
 
-# Allow robots.txt
 [[redirects]]
   from = "/robots.txt"
   to = "/robots.txt"
   status = 200
 
-# SPA fallback (must be LAST)
 [[redirects]]
   from = "/*"
   to = "/index.html"
