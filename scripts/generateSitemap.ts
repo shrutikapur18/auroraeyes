@@ -5,7 +5,7 @@ import { questionPages, spreadGuides, generateCombinationPages, generateComparis
 import { writeFileSync, mkdirSync } from "fs";
 import { resolve } from "path";
 
-const BASE = "https://tarotguidance.lovable.app";
+const BASE = "https://auroraeyes.com";
 const months = ["january","february","march","april","may","june","july","august","september","october","november","december"];
 const slugify = (name: string) => name.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
 
