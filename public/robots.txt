@@ -14,7 +14,3 @@ User-agent: *
 Allow: /
 
 Sitemap: https://auroraeyes.com/sitemap.xml
-Sitemap: https://auroraeyes.com/sitemaps/sitemap-core.xml
-Sitemap: https://auroraeyes.com/sitemaps/sitemap-meanings.xml
-Sitemap: https://auroraeyes.com/sitemaps/sitemap-combinations.xml
-Sitemap: https://auroraeyes.com/sitemaps/sitemap-daily.xml

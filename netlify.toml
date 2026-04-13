@@ -3,8 +3,8 @@
   command = "npm run build"
 
 [[redirects]]
-  from = "/sitemaps/*"
-  to = "/sitemaps/:splat"
+  from = "/sitemap.xml"
+  to = "/sitemap.xml"
   status = 200
 
 [[redirects]]
