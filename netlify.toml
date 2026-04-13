@@ -1,15 +1,3 @@
-# Netlify Configuration
-
 [build]
-  publish = "dist"
   command = "npm run build"
-
-[redirects]
-  # Redirect to the sitemaps
-  [[redirects]]
-    from = "/sitemap.xml"
-    to = "/sitemaps/sitemap.xml"
-    status = 200
-
-[[plugins]]
-  package = "@netlify/plugin-sitemap"
+  publish = "dist"
