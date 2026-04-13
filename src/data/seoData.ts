@@ -142,11 +142,48 @@ export const questionPages: QuestionPage[] = [
       "Cards like Temperance and the Two of Cups suggest harmony and balance, while the Five of Cups or Three of Swords may point to unresolved grief that needs healing before progress can occur.",
       "The most powerful relationship readings don't just predict outcomes — they reveal the dynamics, communication patterns, and emotional needs that shape your partnership."
     ],
+    sections: [
+      {
+        heading: "Why Relationships Hit Plateaus",
+        body: [
+          "Every relationship encounters stretches where connection feels stale, communication breaks down, or resentment quietly accumulates. These aren't signs of failure — they're invitations for deeper work. Tarot can name the specific energy creating the stagnation.",
+          "The Four of Cups frequently appears during relationship plateaus. It shows emotional apathy — not hatred or conflict, but a quiet disengagement that's often harder to address than outright fighting. The Five of Pentacles suggests one or both partners feeling isolated within the relationship itself.",
+          "What makes tarot valuable here is its ability to identify root causes that conversations miss. You might argue about dishes, but the cards reveal it's really about feeling unseen. That distinction changes everything."
+        ]
+      },
+      {
+        heading: "Cards That Signal Growth and Renewal",
+        body: [
+          "The Star is the strongest healing card in relationship readings. After difficulty — represented by The Tower or Three of Swords — The Star emerges as genuine hope built on honest vulnerability, not wishful thinking.",
+          "Temperance shows two energies finding balance. In a relationship context, it means both partners are willing to adjust, compromise, and meet each other halfway. This card doesn't promise effortless harmony — it promises that the effort will be worthwhile.",
+          "The Ace of Cups signals a fresh emotional beginning within an existing relationship. Sometimes long-term partnerships need to fall in love again — not with a new person, but with the person beside them. This card says that renewal is possible if both partners choose it."
+        ]
+      },
+      {
+        heading: "What the Cards Can't Do for Your Relationship",
+        body: [
+          "Tarot can illuminate patterns, but it can't do the work for you. If The Emperor keeps appearing, the reading is pointing to a power imbalance — but it's up to you and your partner to address it through real conversation and changed behavior.",
+          "Beware of using tarot to avoid difficult conversations. Pulling cards about your relationship every day is often a form of procrastination — you already know what needs to be said, but you're hoping the cards will say it for you.",
+          "The most transformative relationship readings end with action: a conversation you've been postponing, a boundary you need to set, or an apology you owe. The cards provide clarity. What you do with it determines whether the relationship actually improves."
+        ]
+      },
+      {
+        heading: "How to Frame Relationship Questions for Tarot",
+        body: [
+          "Questions focused on understanding produce better readings than questions focused on prediction. 'What does my partner need from me right now?' is more actionable than 'Will we stay together?' The first gives you something to work with; the second gives you something to worry about.",
+          "Consider asking about your own role: 'What am I not seeing in this relationship?' or 'Where am I contributing to the disconnection?' These aren't about blame — they're about the only thing you can actually change: yourself.",
+          "If both partners are open to it, doing a reading together can be powerful. The cards create a neutral language for discussing difficult feelings, making it easier to address issues that normal conversation keeps circling around."
+        ]
+      }
+    ],
     faq: [
       { q: "What tarot cards indicate a relationship improving?", a: "The Star (hope and healing), Temperance (balance), Two of Cups (partnership), and The Sun (joy) are strong indicators of positive relationship development." },
-      { q: "Can tarot save a relationship?", a: "Tarot can't save a relationship directly, but it can reveal blind spots, communication blocks, and areas where both partners can grow — which can be the catalyst for positive change." }
+      { q: "Can tarot save a relationship?", a: "Tarot can't save a relationship directly, but it can reveal blind spots, communication blocks, and areas where both partners can grow — which can be the catalyst for positive change." },
+      { q: "How often should I read tarot about my relationship?", a: "Once every few weeks is ideal. Reading too frequently about the same issue creates anxiety and prevents you from implementing the guidance you've already received." },
+      { q: "What if the cards say my relationship won't improve?", a: "Cards showing endings — like Death or Ten of Swords — don't always mean the relationship is over. They often indicate that the current dynamic needs to end so a healthier pattern can emerge. Context matters." },
+      { q: "Can I do a relationship reading without my partner knowing?", a: "Yes, but the reading will reflect your energy and perspective. For the most balanced insight, focus questions on your own growth within the relationship rather than trying to read your partner's intentions." }
     ],
-    relatedSlugs: ["love-tarot-reading", "soulmate-tarot-reading"]
+    relatedSlugs: ["love-tarot-reading", "soulmate-tarot-reading", "breakup-tarot-reading"]
   },
   {
     slug: "soulmate-tarot-reading",
@@ -249,11 +286,47 @@ export const questionPages: QuestionPage[] = [
       "The Wheel of Fortune suggests that change is inevitable and may be favorable. Death indicates a necessary professional transformation. The Fool invites you to take a brave leap into the unknown.",
       "Pay attention to whether your reading is dominated by Pentacles (material security concerns), Wands (passion and creative drive), or Swords (mental clarity about the decision)."
     ],
+    sections: [
+      {
+        heading: "The Real Reason You're Considering a Career Change",
+        body: [
+          "Most people who ask tarot about changing careers already know the answer. They're not looking for permission — they're looking for courage. The cards don't grant permission, but they do name the fear that's keeping you stuck.",
+          "The Eight of Cups appears frequently in career-change readings. It shows someone walking away from something that looks fine from the outside but feels hollow inside. This card validates the quiet dissatisfaction that others might dismiss as ungrateful.",
+          "If The Devil appears, check whether golden handcuffs are part of the equation. Good salary, comfortable routine, impressive title — but no soul in the work. The Devil in career readings is about staying in a situation because of what you'd lose, not because of what you gain."
+        ]
+      },
+      {
+        heading: "Cards That Encourage the Leap",
+        body: [
+          "The Fool is the ultimate career-change card. It doesn't promise success — it promises that the unknown is worth exploring. Paired with the Ace of Wands, it suggests a new path ignited by genuine passion rather than desperation.",
+          "Death in a career reading isn't about losing your livelihood. It's the most natural transformation card in the deck — the old role dies so the new one can emerge. If Death appears alongside The Star, the transition may involve difficulty but leads somewhere hopeful.",
+          "The Wheel of Fortune reminds you that career cycles are natural. The job that was perfect five years ago may no longer fit who you've become. Growth isn't disloyalty — it's evolution."
+        ]
+      },
+      {
+        heading: "Cards That Urge Caution",
+        body: [
+          "Not every urge to quit is wisdom. The Seven of Swords in a career-change reading suggests you might be running from something rather than toward something. Make sure the desire for change isn't actually avoidance in disguise.",
+          "The Four of Pentacles says: evaluate the financial reality honestly. Passion is important, but so is paying rent. This card doesn't discourage change — it advises planning first. Build the bridge before you burn the current one.",
+          "The Hanged Man asks you to pause. Sometimes the timing isn't right, even when the desire is genuine. Waiting three months while saving money isn't cowardice — it's strategy."
+        ]
+      },
+      {
+        heading: "Making the Decision: A Practical Tarot Framework",
+        body: [
+          "Pull three cards: one for 'What happens if I stay,' one for 'What happens if I go,' and one for 'What I'm not seeing.' This spread gives you a balanced view without the bias that a single-card reading can carry.",
+          "Pay attention to your emotional reaction to the cards, not just their textbook meanings. If the 'stay' card is the Ten of Pentacles but you feel dread looking at it, your gut is telling you something the card's surface meaning isn't.",
+          "After the reading, set a concrete timeline. 'I will make a decision by [date].' Indefinite deliberation is its own form of suffering. The cards have spoken — now it's your turn to act."
+        ]
+      }
+    ],
     faq: [
       { q: "What tarot cards suggest I should change careers?", a: "Death (transformation), The Fool (new beginnings), Ace of Wands (new creative path), and The Tower (necessary upheaval) often appear when career change is aligned with your path." },
-      { q: "Is it safe to make career decisions based on tarot?", a: "Use tarot as one of many inputs in your decision-making process. The cards highlight patterns and blind spots — combine their insights with practical research and trusted advice." }
+      { q: "Is it safe to make career decisions based on tarot?", a: "Use tarot as one of many inputs in your decision-making process. The cards highlight patterns and blind spots — combine their insights with practical research and trusted advice." },
+      { q: "What if tarot says to stay but I want to leave?", a: "The cards reflect energy, not commands. If stability cards appear but your heart says go, the reading may be highlighting fears to address before transitioning — not telling you to stay forever." },
+      { q: "How do I know if it's the right time to change careers?", a: "Look for action cards (Aces, The Chariot, The Magician) combined with your own readiness — financial preparation, clear alternatives, and genuine excitement rather than just escape from discomfort." }
     ],
-    relatedSlugs: ["career-tarot-reading", "will-i-get-the-job-tarot"]
+    relatedSlugs: ["career-tarot-reading", "will-i-get-the-job-tarot", "money-tarot-reading"]
   },
   {
     slug: "will-i-get-the-job-tarot",
