@@ -10,7 +10,8 @@ import MiniCardDraw from "@/components/MiniCardDraw";
 import { questionPages } from "@/data/seoData";
 
 const QuestionReadingPage = () => {
-  const { slug } = useParams<{ slug: string }>();
+  const location = useLocation();
+  const slug = location.pathname.replace(/^\//, "");
   const page = questionPages.find((p) => p.slug === slug);
 
   if (!page) {
