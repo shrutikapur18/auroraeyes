@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import SEOHead from "@/components/SEOHead";
 import Breadcrumbs, { generateBreadcrumbJsonLd } from "@/components/Breadcrumbs";
@@ -10,7 +10,8 @@ import MiniCardDraw from "@/components/MiniCardDraw";
 import { questionPages } from "@/data/seoData";
 
 const QuestionReadingPage = () => {
-  const { slug } = useParams<{ slug: string }>();
+  const location = useLocation();
+  const slug = location.pathname.replace(/^\//, "");
   const page = questionPages.find((p) => p.slug === slug);
 
   if (!page) {
