@@ -6,6 +6,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SiteLayout from "@/components/SiteLayout";
 import Index from "./pages/Index";
 import FreeTarotReading from "./pages/FreeTarotReading";
+import ExploreReadings from "./pages/ExploreReadings";
+import TalkToReader from "./pages/TalkToReader";
 import YesNoTarotReading from "./pages/YesNoTarotReading";
 import PickACardReading from "./pages/PickACardReading";
 import RuneReading from "./pages/RuneReading";
