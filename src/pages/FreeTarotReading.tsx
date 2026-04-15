@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import SEOHead from "@/components/SEOHead";
+import PostReadingCTA from "@/components/PostReadingCTA";
 import QuestionInput from "@/components/QuestionInput";
 import ReadingModeSelector from "@/components/ReadingModeSelector";
 import FocusMoment from "@/components/FocusMoment";
@@ -136,11 +137,7 @@ const FreeTarotReading = () => {
                 <p className="font-heading text-primary text-sm tracking-widest animate-pulse">Channeling the cosmos...</p>
               </motion.div>
             )}
-            {phase === "reading" && (
-              <div className="flex justify-center mt-6 mb-4">
-                <button onClick={handleReset} className="px-6 py-3.5 md:py-3 rounded-lg bg-secondary border border-primary/30 text-primary font-heading text-sm tracking-wider hover:bg-primary/20 transition-all active:scale-95">Draw New Cards</button>
-              </div>
-            )}
+            {phase === "reading" && <PostReadingCTA onTryAnother={handleReset} />}
           </motion.div>
         )}
       </AnimatePresence>

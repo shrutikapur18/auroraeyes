@@ -6,6 +6,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SiteLayout from "@/components/SiteLayout";
 import Index from "./pages/Index";
 import FreeTarotReading from "./pages/FreeTarotReading";
+import ExploreReadings from "./pages/ExploreReadings";
+import TalkToReader from "./pages/TalkToReader";
 import YesNoTarotReading from "./pages/YesNoTarotReading";
 import PickACardReading from "./pages/PickACardReading";
 import RuneReading from "./pages/RuneReading";
@@ -59,6 +61,8 @@ const App = () => (
         <SiteLayout>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/explore" element={<ExploreReadings />} />
+            <Route path="/talk-to-a-reader" element={<TalkToReader />} />
             <Route path="/free-tarot-reading" element={<FreeTarotReading />} />
             <Route path="/yes-no-tarot-reading" element={<YesNoTarotReading />} />
             <Route path="/pick-a-card-reading" element={<PickACardReading />} />
