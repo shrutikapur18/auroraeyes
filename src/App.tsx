@@ -61,6 +61,8 @@ const App = () => (
         <SiteLayout>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/explore" element={<ExploreReadings />} />
+            <Route path="/talk-to-a-reader" element={<TalkToReader />} />
             <Route path="/free-tarot-reading" element={<FreeTarotReading />} />
             <Route path="/yes-no-tarot-reading" element={<YesNoTarotReading />} />
             <Route path="/pick-a-card-reading" element={<PickACardReading />} />
