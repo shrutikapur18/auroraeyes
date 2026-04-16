@@ -54,6 +54,16 @@ const corePages = [
   { path: "/daily-tarot-reading", changefreq: "daily", priority: "0.9" },
   { path: "/tarot-reading-archive", changefreq: "daily", priority: "0.7" },
   { path: "/sitemap-html", changefreq: "weekly", priority: "0.5" },
+  { path: "/explore", changefreq: "weekly", priority: "0.7" },
+  { path: "/talk-to-a-reader", changefreq: "monthly", priority: "0.6" },
+  { path: "/about", changefreq: "monthly", priority: "0.5" },
+  { path: "/methodology", changefreq: "monthly", priority: "0.4" },
+  { path: "/editorial-policy", changefreq: "monthly", priority: "0.4" },
+  { path: "/privacy-policy", changefreq: "yearly", priority: "0.3" },
+  { path: "/terms-of-service", changefreq: "yearly", priority: "0.3" },
+  { path: "/disclaimer", changefreq: "yearly", priority: "0.3" },
+  { path: "/horary-reading", changefreq: "weekly", priority: "0.8" },
+  { path: "/horary-astrology", changefreq: "monthly", priority: "0.7" },
 ];
 corePages.forEach(p => allUrls.push({ loc: `${BASE}${p.path}`, changefreq: p.changefreq, priority: p.priority }));
 
