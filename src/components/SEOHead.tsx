@@ -9,7 +9,7 @@ interface SEOHeadProps {
 }
 
 const SITE_NAME = "Aurora Eyes";
-const SITE_URL = "https://tarotguidance.lovable.app";
+const SITE_URL = "https://auroraeyes.com";
 const DEFAULT_OG = "/og-image.png";
 
 const SEOHead = ({ title, description, canonicalPath, ogImage, jsonLd }: SEOHeadProps) => {
@@ -51,7 +51,41 @@ const SEOHead = ({ title, description, canonicalPath, ogImage, jsonLd }: SEOHead
       link.setAttribute("href", canonical);
     }
 
-    // JSON-LD
+    // Global Organization + WebSite schema (always present)
+    const globalLd = {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": `${SITE_URL}/#organization`,
+          name: SITE_NAME,
+          url: SITE_URL,
+          logo: `${SITE_URL}/icon-512.png`,
+          sameAs: ["https://www.instagram.com/auroraeyes111"],
+        },
+        {
+          "@type": "WebSite",
+          "@id": `${SITE_URL}/#website`,
+          url: SITE_URL,
+          name: SITE_NAME,
+          publisher: { "@id": `${SITE_URL}/#organization` },
+          potentialAction: {
+            "@type": "SearchAction",
+            target: `${SITE_URL}/tarot-card-meanings?q={search_term_string}`,
+            "query-input": "required name=search_term_string",
+          },
+        },
+      ],
+    };
+    const existingGlobal = document.getElementById("json-ld-global");
+    if (existingGlobal) existingGlobal.remove();
+    const globalScript = document.createElement("script");
+    globalScript.id = "json-ld-global";
+    globalScript.type = "application/ld+json";
+    globalScript.textContent = JSON.stringify(globalLd);
+    document.head.appendChild(globalScript);
+
+    // Page-specific JSON-LD
     if (jsonLd) {
       const existingLd = document.getElementById("json-ld-seo");
       if (existingLd) existingLd.remove();

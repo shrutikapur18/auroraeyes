@@ -15,7 +15,7 @@ interface ShareButtonsProps {
   type?: "tarot" | "rune" | "angel";
 }
 
-const SITE_DOMAIN = "tarotguidance.lovable.app";
+const SITE_DOMAIN = "auroraeyes.com";
 
 /** Build a concise share caption: cards + link */
 function buildCaption(

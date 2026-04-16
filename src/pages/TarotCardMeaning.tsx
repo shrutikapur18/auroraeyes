@@ -69,7 +69,7 @@ const TarotCardMeaning = () => {
     "@type": "Article",
     headline: `${card.name} Tarot Card Meaning`,
     description: `${card.name} tarot card meaning: ${card.meaning_up}`,
-    image: `https://tarotguidance.lovable.app/og-image.png`,
+    image: `https://auroraeyes.com/og-image.png`,
     breadcrumb: generateBreadcrumbJsonLd(breadcrumbs),
     mainEntity: generateFAQJsonLd(faqItems).mainEntity,
   };

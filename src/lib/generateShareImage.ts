@@ -252,7 +252,7 @@ export async function generateShareImage(data: ShareImageData | LegacyShareImage
   // URL
   ctx.fillStyle = "rgba(255, 255, 255, 0.3)";
   ctx.font = "14px sans-serif";
-  ctx.fillText("tarotguidance.lovable.app", W / 2, H - 62);
+  ctx.fillText("auroraeyes.com", W / 2, H - 62);
 
   return new Promise((resolve) => {
     canvas.toBlob((blob) => resolve(blob!), "image/png");
