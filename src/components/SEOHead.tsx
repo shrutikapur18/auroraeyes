@@ -9,7 +9,7 @@ interface SEOHeadProps {
 }
 
 const SITE_NAME = "Aurora Eyes";
-const SITE_URL = "https://tarotguidance.lovable.app";
+const SITE_URL = "https://auroraeyes.com";
 const DEFAULT_OG = "/og-image.png";
 
 const SEOHead = ({ title, description, canonicalPath, ogImage, jsonLd }: SEOHeadProps) => {

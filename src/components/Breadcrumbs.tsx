@@ -17,7 +17,7 @@ interface BreadcrumbsProps {
   items: BreadcrumbEntry[];
 }
 
-const SITE_URL = "https://tarotguidance.lovable.app";
+const SITE_URL = "https://auroraeyes.com";
 
 export function generateBreadcrumbJsonLd(items: BreadcrumbEntry[]) {
   return {

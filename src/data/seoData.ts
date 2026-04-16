@@ -1074,7 +1074,7 @@ export function generateComparisonPages(): ComparisonPage[] {
 
 /* ── All dynamic URLs for sitemap ── */
 export function getAllSEOUrls(): { loc: string; changefreq: string; priority: string }[] {
-  const base = "https://tarotguidance.lovable.app";
+  const base = "https://auroraeyes.com";
   const urls: { loc: string; changefreq: string; priority: string }[] = [];
 
   // Static pages
