@@ -24,6 +24,13 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const distDir = resolve(__dirname, "../dist");
 
+// Opt-in: only run when PRERENDER=1. Keeps Vercel/CI builds fast and avoids
+// failing the deploy if Chromium isn't available in the build environment.
+if (process.env.PRERENDER !== "1") {
+  console.log("[prerender] Skipped (set PRERENDER=1 to enable).");
+  process.exit(0);
+}
+
 if (!existsSync(distDir)) {
   console.error("[prerender] dist/ not found — run `vite build` first.");
   process.exit(1);
