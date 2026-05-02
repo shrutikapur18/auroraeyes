@@ -91,10 +91,11 @@ console.log(`[prerender] Preparing to render ${routes.length} routes…`);
 const prerenderer = new Prerenderer({
   staticDir: distDir,
   renderer: new PuppeteerRenderer({
-    renderAfterDocumentEvent: "render-event",
+    renderAfterElementExists: "html[data-prerender-ready]",
     maxConcurrentRoutes: 4,
     headless: true,
     timeout: 30000,
+    skipThirdPartyRequests: true,
     launchOptions: {
       args: [
         "--no-sandbox",
