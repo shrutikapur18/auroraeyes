@@ -118,10 +118,6 @@ const prerenderer = new Prerenderer({
         "--disable-gpu",
       ],
     },
-    navigationOptions: {
-      waitUntil: "networkidle0",
-      timeout: 30000,
-    },
   }),
 });
 
