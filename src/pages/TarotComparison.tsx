@@ -46,14 +46,16 @@ const TarotComparison = () => {
     { q: `Can ${card1.name} and ${card2.name} appear together?`, a: `Yes — when both appear in a spread, they create a dialogue. ${card1.name} brings ${card1.keywords[0]} energy while ${card2.name} adds ${card2.keywords[0]}. Together they suggest a nuanced situation requiring attention to both themes.` },
   ];
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline: `${card1.name} vs ${card2.name}`,
-    description: page.description,
-    breadcrumb: generateBreadcrumbJsonLd(breadcrumbs),
-    mainEntity: generateFAQJsonLd(faqItems).mainEntity,
-  };
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      headline: `${card1.name} vs ${card2.name}`,
+      description: page.description,
+      breadcrumb: generateBreadcrumbJsonLd(breadcrumbs),
+    },
+    { "@context": "https://schema.org", ...generateFAQJsonLd(faqItems) },
+  ];
 
   return (
     <>

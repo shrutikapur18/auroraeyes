@@ -46,14 +46,16 @@ const HoraryContentPage = () => {
       .filter(Boolean) as { to: string; label: string }[],
   ];
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline: page.h1,
-    description: page.description,
-    breadcrumb: generateBreadcrumbJsonLd(breadcrumbs),
-    mainEntity: generateFAQJsonLd(page.faq).mainEntity,
-  };
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      headline: page.h1,
+      description: page.description,
+      breadcrumb: generateBreadcrumbJsonLd(breadcrumbs),
+    },
+    { "@context": "https://schema.org", ...generateFAQJsonLd(page.faq) },
+  ];
 
   return (
     <>

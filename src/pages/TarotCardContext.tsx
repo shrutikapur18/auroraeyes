@@ -75,14 +75,16 @@ const TarotCardContext = () => {
     { q: `Is ${card.name} a good card for ${meta.label.toLowerCase()} readings?`, a: `${card.name} in ${meta.label.toLowerCase()} readings brings the energy of ${card.keywords.join(", ")}. Whether this is "good" depends on your question and the surrounding cards — every card carries both gifts and warnings.` },
   ];
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline: `${card.name} ${meta.label} Meaning`,
-    description,
-    breadcrumb: generateBreadcrumbJsonLd(breadcrumbs),
-    mainEntity: generateFAQJsonLd(faqItems).mainEntity,
-  };
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      headline: `${card.name} ${meta.label} Meaning`,
+      description,
+      breadcrumb: generateBreadcrumbJsonLd(breadcrumbs),
+    },
+    { "@context": "https://schema.org", ...generateFAQJsonLd(faqItems) },
+  ];
 
   const otherContexts = (Object.keys(contextMeta) as Context[]).filter(c => c !== ctx);
 

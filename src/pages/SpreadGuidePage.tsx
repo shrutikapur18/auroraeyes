@@ -32,19 +32,21 @@ const SpreadGuidePage = () => {
     { q: `Is the ${spread.h1.split("—")[0].trim()} good for beginners?`, a: `This spread is rated ${spread.difficulty}. ${spread.difficulty === "Beginner" ? "It's an excellent starting point for new tarot readers." : "Some experience with simpler spreads is recommended before attempting this layout."}` },
   ];
 
-  const howToJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "HowTo",
-    name: `How to Read the ${spread.h1.split("—")[0].trim()}`,
-    description: spread.description,
-    step: spread.howTo.map((text, i) => ({
-      "@type": "HowToStep",
-      position: i + 1,
-      text,
-    })),
-    breadcrumb: generateBreadcrumbJsonLd(breadcrumbs),
-    mainEntity: generateFAQJsonLd(faqItems).mainEntity,
-  };
+  const howToJsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      name: `How to Read the ${spread.h1.split("—")[0].trim()}`,
+      description: spread.description,
+      step: spread.howTo.map((text, i) => ({
+        "@type": "HowToStep",
+        position: i + 1,
+        text,
+      })),
+      breadcrumb: generateBreadcrumbJsonLd(breadcrumbs),
+    },
+    { "@context": "https://schema.org", ...generateFAQJsonLd(faqItems) },
+  ];
 
   return (
     <>

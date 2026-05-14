@@ -31,13 +31,17 @@ const BlogArticle = () => {
     { label: displayArticle.title.length > 40 ? displayArticle.title.slice(0, 37) + "…" : displayArticle.title },
   ];
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline: displayArticle.title,
-    description: displayArticle.description,
-    ...(displayArticle.faq.length > 0 ? { mainEntity: generateFAQJsonLd(displayArticle.faq).mainEntity } : {}),
-  };
+  const jsonLd: Record<string, unknown>[] = [
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      headline: displayArticle.title,
+      description: displayArticle.description,
+    },
+  ];
+  if (displayArticle.faq.length > 0) {
+    jsonLd.push({ "@context": "https://schema.org", ...generateFAQJsonLd(displayArticle.faq) });
+  }
 
   return (
     <>
