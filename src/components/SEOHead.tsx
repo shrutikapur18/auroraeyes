@@ -107,7 +107,7 @@ const SEOHead = ({ title, description, canonicalPath, ogImage, ogType = "website
     return () => {
       document.querySelectorAll('script[data-jsonld="seo"]').forEach((n) => n.remove());
     };
-  }, [fullTitle, description, canonical, image, jsonLd]);
+  }, [fullTitle, description, canonical, image, ogType, jsonLd]);
 
   return null;
 };
