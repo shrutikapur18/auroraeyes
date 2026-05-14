@@ -108,9 +108,9 @@ const SiteLayout = ({ children }: { children: React.ReactNode }) => {
         </AnimatePresence>
       </nav>
 
-      <div className="relative z-10 px-4 lg:px-8 pb-20 max-w-[1400px] mx-auto">
+      <main id="main-content" className="relative z-10 px-4 lg:px-8 pb-20 max-w-[1400px] mx-auto">
         {children}
-      </div>
+      </main>
 
       {/* Footer */}
       <footer className="relative z-10 border-t border-border/30 bg-background/60 backdrop-blur-md py-12 lg:py-16 px-4 lg:px-8">
