@@ -37,7 +37,7 @@ const SEOHead = ({ title, description, canonicalPath, ogImage, ogType = "website
     setMeta("description", description);
     setMeta("og:title", fullTitle, "property");
     setMeta("og:description", description, "property");
-    setMeta("og:type", "website", "property");
+    setMeta("og:type", ogType, "property");
     setMeta("og:image", image, "property");
     setMeta("twitter:card", "summary_large_image");
     setMeta("twitter:title", fullTitle);
