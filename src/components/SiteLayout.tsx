@@ -170,13 +170,13 @@ const SiteLayout = ({ children }: { children: React.ReactNode }) => {
             <p className="text-xs lg:text-sm text-muted-foreground mb-4">For entertainment and spiritual guidance purposes. © {new Date().getFullYear()}</p>
 
             <div className="flex items-center justify-center gap-3 flex-wrap">
-              <Link to="/privacy-policy" className="text-xs text-muted-foreground/70 hover:text-primary transition-colors">Privacy Policy</Link>
-              <span className="text-muted-foreground/30">·</span>
-              <Link to="/terms-of-service" className="text-xs text-muted-foreground/70 hover:text-primary transition-colors">Terms of Service</Link>
-              <span className="text-muted-foreground/30">·</span>
-              <Link to="/disclaimer" className="text-xs text-muted-foreground/70 hover:text-primary transition-colors">Disclaimer</Link>
-              <span className="text-muted-foreground/30">·</span>
-              <Link to="/sitemap-html" className="text-xs text-muted-foreground/70 hover:text-primary transition-colors">Sitemap</Link>
+              <Link to="/privacy-policy" className="text-xs text-muted-foreground hover:text-primary transition-colors">Privacy Policy</Link>
+              <span className="text-muted-foreground/60">·</span>
+              <Link to="/terms-of-service" className="text-xs text-muted-foreground hover:text-primary transition-colors">Terms of Service</Link>
+              <span className="text-muted-foreground/60">·</span>
+              <Link to="/disclaimer" className="text-xs text-muted-foreground hover:text-primary transition-colors">Disclaimer</Link>
+              <span className="text-muted-foreground/60">·</span>
+              <Link to="/sitemap-html" className="text-xs text-muted-foreground hover:text-primary transition-colors">Sitemap</Link>
             </div>
           </div>
         </div>
