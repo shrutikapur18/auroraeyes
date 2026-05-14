@@ -5,7 +5,7 @@ interface SEOHeadProps {
   description: string;
   canonicalPath?: string;
   ogImage?: string;
-  jsonLd?: Record<string, unknown>;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
 const SITE_NAME = "Aurora Eyes";
@@ -85,20 +85,23 @@ const SEOHead = ({ title, description, canonicalPath, ogImage, jsonLd }: SEOHead
     globalScript.textContent = JSON.stringify(globalLd);
     document.head.appendChild(globalScript);
 
-    // Page-specific JSON-LD
+    // Remove any previous page-specific JSON-LD blocks
+    document.querySelectorAll('script[data-jsonld="seo"]').forEach((n) => n.remove());
+
     if (jsonLd) {
-      const existingLd = document.getElementById("json-ld-seo");
-      if (existingLd) existingLd.remove();
-      const script = document.createElement("script");
-      script.id = "json-ld-seo";
-      script.type = "application/ld+json";
-      script.textContent = JSON.stringify(jsonLd);
-      document.head.appendChild(script);
+      const blocks = Array.isArray(jsonLd) ? jsonLd : [jsonLd];
+      blocks.forEach((block, i) => {
+        const script = document.createElement("script");
+        script.setAttribute("data-jsonld", "seo");
+        script.id = `json-ld-seo-${i}`;
+        script.type = "application/ld+json";
+        script.textContent = JSON.stringify(block);
+        document.head.appendChild(script);
+      });
     }
 
     return () => {
-      const existingLd = document.getElementById("json-ld-seo");
-      if (existingLd) existingLd.remove();
+      document.querySelectorAll('script[data-jsonld="seo"]').forEach((n) => n.remove());
     };
   }, [fullTitle, description, canonical, image, jsonLd]);
 

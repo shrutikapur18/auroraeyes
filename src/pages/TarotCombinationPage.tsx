@@ -38,14 +38,16 @@ const TarotCombinationPage = () => {
     { q: `Is ${combo.card1Name} with ${combo.card2Name} a positive combination?`, a: `This combination carries ${combo.theme} energy. ${combo.meaning.split(".")[0]}.` },
   ];
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline: title,
-    description,
-    breadcrumb: generateBreadcrumbJsonLd(breadcrumbs),
-    mainEntity: generateFAQJsonLd(faqItems).mainEntity,
-  };
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      headline: title,
+      description,
+      breadcrumb: generateBreadcrumbJsonLd(breadcrumbs),
+    },
+    { "@context": "https://schema.org", ...generateFAQJsonLd(faqItems) },
+  ];
 
   return (
     <>

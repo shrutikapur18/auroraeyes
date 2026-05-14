@@ -57,15 +57,17 @@ const DailyTarotReading = () => {
     { q: "Should I draw my own card or use the daily card?", a: "Both approaches have value. The daily card offers a shared universal energy for the day, while a personal draw responds to your specific question and energy. Try both and see which resonates." },
   ];
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline: title,
-    description,
-    datePublished: date.toISOString().split("T")[0],
-    breadcrumb: generateBreadcrumbJsonLd(breadcrumbs),
-    mainEntity: generateFAQJsonLd(faqItems).mainEntity,
-  };
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      headline: title,
+      description,
+      datePublished: date.toISOString().split("T")[0],
+      breadcrumb: generateBreadcrumbJsonLd(breadcrumbs),
+    },
+    { "@context": "https://schema.org", ...generateFAQJsonLd(faqItems) },
+  ];
 
   return (
     <>

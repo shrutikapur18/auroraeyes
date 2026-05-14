@@ -64,15 +64,17 @@ const TarotCardMeaning = () => {
     { q: `Is ${card.name} a yes or no card?`, a: `${card.name} is generally considered a ${card.keywords.includes("beginnings") || card.keywords.includes("love") || card.keywords.includes("abundance") || card.keywords.includes("willpower") ? "yes" : "maybe"} card. Its core themes of ${card.keywords.slice(0, 2).join(" and ")} suggest ${card.keywords.includes("beginnings") || card.keywords.includes("love") ? "positive momentum" : "careful consideration of the circumstances"}.` },
   ];
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline: `${card.name} Tarot Card Meaning`,
-    description: `${card.name} tarot card meaning: ${card.meaning_up}`,
-    image: `https://auroraeyes.com/og-image.png`,
-    breadcrumb: generateBreadcrumbJsonLd(breadcrumbs),
-    mainEntity: generateFAQJsonLd(faqItems).mainEntity,
-  };
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      headline: `${card.name} Tarot Card Meaning`,
+      description: `${card.name} tarot card meaning: ${card.meaning_up}`,
+      image: `https://auroraeyes.com/og-image.png`,
+      breadcrumb: generateBreadcrumbJsonLd(breadcrumbs),
+    },
+    { "@context": "https://schema.org", ...generateFAQJsonLd(faqItems) },
+  ];
 
   return (
     <>

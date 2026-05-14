@@ -29,16 +29,18 @@ const TarotCardMeanings = () => {
   const majors = tarotDeck.filter((c) => c.arcana === "Major");
   const suits = ["Wands", "Cups", "Swords", "Pentacles"] as const;
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    name: "Tarot Card Meanings — Complete 78-Card Guide",
-    headline: "Tarot Card Meanings — Complete Guide to All 78 Cards",
-    description: "In-depth guide to all 78 tarot card meanings. Learn the Major Arcana, Minor Arcana suits, upright and reversed interpretations, and how to read tarot with confidence.",
-    author: { "@type": "Organization", name: "Aurora Eyes" },
-    publisher: { "@type": "Organization", name: "Aurora Eyes" },
-    mainEntity: generateFAQJsonLd(faqItems).mainEntity,
-  };
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      name: "Tarot Card Meanings — Complete 78-Card Guide",
+      headline: "Tarot Card Meanings — Complete Guide to All 78 Cards",
+      description: "In-depth guide to all 78 tarot card meanings. Learn the Major Arcana, Minor Arcana suits, upright and reversed interpretations, and how to read tarot with confidence.",
+      author: { "@type": "Organization", name: "Aurora Eyes" },
+      publisher: { "@type": "Organization", name: "Aurora Eyes" },
+    },
+    { "@context": "https://schema.org", ...generateFAQJsonLd(faqItems) },
+  ];
 
   return (
     <>
