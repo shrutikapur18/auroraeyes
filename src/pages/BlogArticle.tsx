@@ -45,7 +45,7 @@ const BlogArticle = () => {
 
   return (
     <>
-      <SEOHead title={displayArticle.title} description={displayArticle.description} canonicalPath={`/blog/${slug}`} jsonLd={jsonLd} />
+      <SEOHead title={displayArticle.title} description={displayArticle.description} canonicalPath={`/blog/${slug}`} ogType="article" jsonLd={jsonLd} />
       <motion.div className="max-w-3xl mx-auto pt-8 px-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
         <Breadcrumbs items={breadcrumbs} />
 

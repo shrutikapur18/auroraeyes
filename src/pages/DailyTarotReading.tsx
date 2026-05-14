@@ -75,6 +75,7 @@ const DailyTarotReading = () => {
         title={title}
         description={description}
         canonicalPath={isToday ? "/daily-tarot-reading" : `/daily-tarot/${dateToSlug(date)}`}
+        ogType="article"
         jsonLd={jsonLd}
       />
       <motion.div className="max-w-3xl mx-auto pt-6 px-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>

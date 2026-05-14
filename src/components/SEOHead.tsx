@@ -5,17 +5,21 @@ interface SEOHeadProps {
   description: string;
   canonicalPath?: string;
   ogImage?: string;
+  ogType?: "website" | "article" | "profile" | "book";
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
 const SITE_NAME = "Aurora Eyes";
 const SITE_URL = "https://auroraeyes.com";
-const DEFAULT_OG = "/og-image.png";
+const DEFAULT_OG = "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/020e7e26-9809-4f70-a334-8f84625d7d39";
 
-const SEOHead = ({ title, description, canonicalPath, ogImage, jsonLd }: SEOHeadProps) => {
+const toAbsolute = (url: string) =>
+  url.startsWith("http://") || url.startsWith("https://") ? url : `${SITE_URL}${url.startsWith("/") ? "" : "/"}${url}`;
+
+const SEOHead = ({ title, description, canonicalPath, ogImage, ogType = "website", jsonLd }: SEOHeadProps) => {
   const fullTitle = `${title} | ${SITE_NAME}`;
   const canonical = canonicalPath ? `${SITE_URL}${canonicalPath}` : undefined;
-  const image = ogImage || DEFAULT_OG;
+  const image = toAbsolute(ogImage || DEFAULT_OG);
 
   useEffect(() => {
     document.title = fullTitle;
@@ -33,7 +37,7 @@ const SEOHead = ({ title, description, canonicalPath, ogImage, jsonLd }: SEOHead
     setMeta("description", description);
     setMeta("og:title", fullTitle, "property");
     setMeta("og:description", description, "property");
-    setMeta("og:type", "website", "property");
+    setMeta("og:type", ogType, "property");
     setMeta("og:image", image, "property");
     setMeta("twitter:card", "summary_large_image");
     setMeta("twitter:title", fullTitle);
@@ -103,7 +107,7 @@ const SEOHead = ({ title, description, canonicalPath, ogImage, jsonLd }: SEOHead
     return () => {
       document.querySelectorAll('script[data-jsonld="seo"]').forEach((n) => n.remove());
     };
-  }, [fullTitle, description, canonical, image, jsonLd]);
+  }, [fullTitle, description, canonical, image, ogType, jsonLd]);
 
   return null;
 };
