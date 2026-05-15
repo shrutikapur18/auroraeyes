@@ -1,0 +1,52 @@
+# Aurora Eyes
+
+> Sacred, modern divination — tarot, runes, angel cards, and horary astrology readings with grounded, poetic interpretations.
+
+Aurora Eyes is a free divination platform offering instant tarot, rune, angel card, and horary astrology readings. Free readings run on a local interpretation engine; an optional premium tier unlocks AI-powered chat and deeper interpretations. The voice and aesthetic are calm and reflective — a "trusted friend," not a fortune teller.
+
+## Readings
+
+- [Free Tarot Reading](/free-tarot-reading): Multi-card tarot spreads with full interpretations.
+- [Yes/No Tarot Reading](/yes-no-tarot-reading): Single-card binary answers for quick decisions.
+- [Pick a Card Reading](/pick-a-card-reading): Intuitive pick-a-card guidance.
+- [Rune Reading](/rune-reading): Elder Futhark rune casts.
+- [Angel Card Reading](/angel-card-reading): Gentle angelic guidance.
+- [Horary Astrology Reading](/horary-reading): Question-based astrological chart readings.
+- [Daily Tarot Reading](/daily-tarot-reading): Today's collective tarot reading.
+
+## Daily Guidance
+
+- [Daily Tarot Card](/daily-tarot-card): A single card for the day.
+- [Daily Rune](/daily-rune): A daily rune draw.
+- [Daily Angel Message](/daily-angel-message): A daily angel card message.
+
+## Guides
+
+- [Complete Tarot Guide](/tarot-guide): Foundations of tarot reading.
+- [Rune Guide](/rune-guide): How runes work and how to read them.
+- [Angel Cards Guide](/angel-cards-guide): Working with angel card decks.
+- [Horary Astrology Guide](/horary-astrology): Principles of horary chart interpretation.
+- [Tarot Spreads](/tarot-spreads): Catalog of spreads and when to use them.
+
+## References
+
+- [All Tarot Card Meanings](/tarot-card-meanings): Upright and reversed meanings for the full 78-card deck.
+- [All Rune Meanings](/rune-meanings): Meanings for all 24 Elder Futhark runes.
+- [Tarot Combinations](/tarot-combinations): How pairs of cards interact in a reading.
+- [Tarot Comparisons](/tarot-comparisons): Side-by-side comparisons of similar cards.
+
+## Blog
+
+- [How Tarot Readings Work](/blog/how-tarot-readings-work): The mechanics behind a tarot reading.
+- [Major Arcana Guide](/blog/major-arcana-guide): Walkthrough of the 22 Major Arcana.
+- [Tarot Spreads Explained](/blog/tarot-spreads-explained): Choosing the right spread.
+- [Reversed Tarot Cards](/blog/reversed-tarot-cards): Reading reversals with nuance.
+- [All Articles](/blog): Full blog index.
+
+## Optional
+
+- [About](/about): The story and philosophy behind Aurora Eyes.
+- [Methodology](/methodology): How interpretations are generated.
+- [Editorial Policy](/editorial-policy): Standards for our written content.
+- [Talk to a Reader](/talk-to-a-reader): Connect with a human reader.
+- [Sitemap](/sitemap-html): Browse all pages.
