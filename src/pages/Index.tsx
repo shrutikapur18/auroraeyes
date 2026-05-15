@@ -78,7 +78,7 @@ const Index = () => {
   return (
     <>
       <SEOHead
-        title="Get Clarity in Seconds — Free Tarot, Rune & Angel Card Readings"
+        title="Free Tarot, Rune & Angel Card Readings"
         description="Ask your question and get instant intuitive guidance. Free tarot readings, rune casting, and angel card messages — no login required."
         canonicalPath="/"
         jsonLd={{ "@context": "https://schema.org", "@type": "WebSite", name: "Aurora Eyes", url: "https://auroraeyes.com", description: "Free online divination readings — instant clarity whenever you need it." }}
