@@ -13,4 +13,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://auroraeyes.com/sitemap.xml
+Sitemap: https://auroraeyes.lovable.app/sitemap.xml
