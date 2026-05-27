@@ -8,7 +8,7 @@ import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const BASE = "https://auroraeyes.com";
+const BASE = "https://auroraeyes.lovable.app";
 const slugify = (name: string) => name.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
 
 interface SitemapUrl {
