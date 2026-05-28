@@ -49,6 +49,13 @@ import NotFound from "./pages/NotFound";
 import { Navigate } from "react-router-dom";
 import { questionPages } from "./data/seoData";
 import { horaryContentPages } from "./data/horaryContentPages";
+import InterpretationGuide from "./pages/InterpretationGuide";
+import CardPositionPage from "./pages/CardPositionPage";
+import TopicSpreadPage from "./pages/TopicSpreadPage";
+import { interpretationGuides } from "./data/interpretationGuides";
+import { generateCardPositionPages, topicSpreads } from "./data/programmaticSeo";
+
+const cardPositionPages = generateCardPositionPages();
 
 const queryClient = new QueryClient();
 
@@ -99,6 +106,18 @@ const App = () => (
             {/* Question-based reading pages */}
             {questionPages.map((page) => (
               <Route key={page.slug} path={`/${page.slug}`} element={<QuestionReadingPage />} />
+            ))}
+            {/* Cornerstone spread-interpretation guides */}
+            {interpretationGuides.map((g) => (
+              <Route key={g.slug} path={`/${g.slug}`} element={<InterpretationGuide />} />
+            ))}
+            {/* Programmatic: topic three-card spreads */}
+            {topicSpreads.map((s) => (
+              <Route key={s.slug} path={`/${s.slug}`} element={<TopicSpreadPage />} />
+            ))}
+            {/* Programmatic: card-in-position pages */}
+            {cardPositionPages.map((p) => (
+              <Route key={p.slug} path={`/${p.slug}`} element={<CardPositionPage />} />
             ))}
             {/* Horary Astrology */}
             <Route path="/horary-reading" element={<HoraryReading />} />
