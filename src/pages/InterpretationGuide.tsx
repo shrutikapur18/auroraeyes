@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import SEOHead from "@/components/SEOHead";
 import Breadcrumbs, { generateBreadcrumbJsonLd } from "@/components/Breadcrumbs";
@@ -16,8 +16,8 @@ interface InterpretationGuideProps {
 }
 
 const InterpretationGuide = ({ slug: slugProp }: InterpretationGuideProps) => {
-  const params = useParams<{ slug: string }>();
-  const slug = slugProp ?? params.slug ?? "";
+  const location = useLocation();
+  const slug = slugProp ?? location.pathname.replace(/^\//, "").split("/")[0];
   const guide = getInterpretationGuide(slug);
 
   if (!guide) {

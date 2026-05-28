@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import SEOHead from "@/components/SEOHead";
 import Breadcrumbs, { generateBreadcrumbJsonLd } from "@/components/Breadcrumbs";
@@ -9,8 +9,9 @@ import ReadingCTA from "@/components/ReadingCTA";
 import { getCardPositionPage, spreadPositions } from "@/data/programmaticSeo";
 
 const CardPositionPage = () => {
-  const { slug } = useParams<{ slug: string }>();
-  const page = getCardPositionPage(slug ?? "");
+  const location = useLocation();
+  const slug = location.pathname.replace(/^\//, "").split("/")[0];
+  const page = getCardPositionPage(slug);
 
   if (!page) {
     return (

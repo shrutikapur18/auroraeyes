@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import SEOHead from "@/components/SEOHead";
 import Breadcrumbs, { generateBreadcrumbJsonLd } from "@/components/Breadcrumbs";
@@ -9,10 +9,9 @@ import ReadingCTA from "@/components/ReadingCTA";
 import { getTopicSpread } from "@/data/programmaticSeo";
 
 const TopicSpreadPage = () => {
-  const { slug } = useParams<{ slug: string }>();
-  const spread = slug ? getTopicSpread(slug) : getTopicSpread("");
-  // Support both /:slug routing and direct slug usage.
-  const page = spread ?? (slug ? getTopicSpread(slug) : undefined);
+  const location = useLocation();
+  const slug = location.pathname.replace(/^\//, "").split("/")[0];
+  const page = getTopicSpread(slug);
 
   if (!page) {
     return (
