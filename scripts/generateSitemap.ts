@@ -2,6 +2,8 @@ import { tarotDeck } from "../src/data/tarotDeck";
 import { cardCombinations } from "../src/data/tarotCombinations";
 import { elderFuthark } from "../src/data/runes";
 import { questionPages, spreadGuides, generateCombinationPages, generateComparisonPages } from "../src/data/seoData";
+import { interpretationGuides } from "../src/data/interpretationGuides";
+import { generateCardPositionPages, topicSpreads } from "../src/data/programmaticSeo";
 import { writeFileSync } from "fs";
 import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
@@ -94,6 +96,16 @@ elderFuthark.forEach(r => allUrls.push({ loc: `${BASE}/rune-meanings/${r.name.to
 // Combinations & comparisons
 generateCombinationPages().forEach(c => allUrls.push({ loc: `${BASE}/tarot-combinations/${c.slug}`, changefreq: "monthly", priority: "0.6" }));
 generateComparisonPages().forEach(c => allUrls.push({ loc: `${BASE}/tarot-comparisons/${c.slug}`, changefreq: "monthly", priority: "0.6" }));
+
+// Interpretation pillar + cornerstone guides
+allUrls.push({ loc: `${BASE}/what-does-my-spread-mean`, changefreq: "monthly", priority: "0.9" });
+interpretationGuides.forEach(g => allUrls.push({ loc: `${BASE}/${g.slug}`, changefreq: "monthly", priority: g.slug === "tarot-spread-interpretation" ? "0.9" : "0.7" }));
+
+// Topic three-card spreads
+topicSpreads.forEach(s => allUrls.push({ loc: `${BASE}/${s.slug}`, changefreq: "monthly", priority: "0.6" }));
+
+// Card-in-position programmatic pages
+generateCardPositionPages().forEach(p => allUrls.push({ loc: `${BASE}/${p.slug}`, changefreq: "monthly", priority: "0.5" }));
 
 // Daily readings (last 90 days)
 const today = new Date();

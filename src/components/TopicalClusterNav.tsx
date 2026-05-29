@@ -17,8 +17,9 @@ const clusters: Cluster[] = [
     heading: "Tarot Spreads",
     links: [
       { to: "/tarot-spreads", label: "Spread Guides" },
-      { to: "/tarot-spreads/three-card-spread", label: "Three Card" },
-      { to: "/tarot-spreads/celtic-cross-spread", label: "Celtic Cross" },
+      { to: "/tarot-spread-interpretation", label: "Spread Interpretation" },
+      { to: "/what-does-my-spread-mean", label: "Spread Interpreter" },
+      { to: "/celtic-cross-tarot-spread", label: "Celtic Cross" },
     ],
   },
   {
