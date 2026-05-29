@@ -11,7 +11,7 @@ serve(async (req) => {
   }
 
   try {
-    const { question, type, cards, runes, followUp, conversationHistory } = await req.json();
+    const { question, type, cards, runes, followUp, conversationHistory, spreadType } = await req.json();
 
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) {
@@ -75,6 +75,39 @@ Structure:
 
 The user should feel "this is accurate and helpful" and naturally want a deeper analysis.
 Keep paragraphs short for mobile. Ensure the response finishes clearly.`;
+    } else if (type === "spread-synthesis") {
+      symbolsDescription = (cards || [])
+        .map((c: { name: string; orientation: string; position: string; meaning: string }) =>
+          `${c.position}: ${c.name} (${c.orientation}) – ${c.meaning}`
+        )
+        .join("\n");
+
+      systemPrompt = `You are synthesising a tarot spread the user has already drawn. Your job is to weave the cards into ONE coherent interpretation — not a card-by-card walkthrough.
+
+Spread type: ${spreadType || "custom"}.
+
+Rules:
+- 220–280 words total.
+- Speak directly using "you".
+- NEVER use jargon: no "divine", "energy", "cosmic", "the universe is guiding you", "trine", "spirit", "vibrations".
+- Do not explain what each card "means" in the abstract. Read them in the position they landed in.
+- Be honest. Contradictions should be named, not smoothed over.
+- Conversational, grounded, the tone of a thoughtful friend who happens to read tarot.
+- Format the reply with these markdown headings, in order:
+
+## Overall Story
+2–3 sentences synthesising the whole spread into one shape — what is actually going on.
+
+## How the Cards Talk
+2–3 sentences on the relationships between cards: opposing, reinforcing, repeating suits, Major Arcana density. Mention the most important pair by name.
+
+## What's Underneath
+2–3 sentences naming the emotional or practical pattern the cards point to — including any contradiction.
+
+## One Honest Next Step
+2 sentences with a specific, doable action that flows from the spread (not generic advice).
+
+End cleanly. No closing flourish, no "trust the journey".`;
     } else {
       // Fallback tarot-style
       symbolsDescription = (cards || [])
