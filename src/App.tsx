@@ -54,6 +54,7 @@ import CardPositionPage from "./pages/CardPositionPage";
 import TopicSpreadPage from "./pages/TopicSpreadPage";
 import { interpretationGuides } from "./data/interpretationGuides";
 import { generateCardPositionPages, topicSpreads } from "./data/programmaticSeo";
+import SpreadInterpreter from "./pages/SpreadInterpreter";
 
 const cardPositionPages = generateCardPositionPages();
 
@@ -107,6 +108,8 @@ const App = () => (
             {questionPages.map((page) => (
               <Route key={page.slug} path={`/${page.slug}`} element={<QuestionReadingPage />} />
             ))}
+            {/* Interactive spread interpreter */}
+            <Route path="/what-does-my-spread-mean" element={<SpreadInterpreter />} />
             {/* Cornerstone spread-interpretation guides */}
             {interpretationGuides.map((g) => (
               <Route key={g.slug} path={`/${g.slug}`} element={<InterpretationGuide />} />
