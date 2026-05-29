@@ -22,7 +22,21 @@ const TarotSpreads = () => (
         </p>
       </header>
 
+      <div className="reading-panel rounded-xl p-5 mb-6 border-l-4 border-primary/40 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+        <div>
+          <h2 className="font-heading text-base text-foreground mb-1">Already drew your cards?</h2>
+          <p className="text-xs text-muted-foreground">Get an instant synthesis of any spread you've laid out.</p>
+        </div>
+        <Link
+          to="/what-does-my-spread-mean"
+          className="inline-block px-4 py-2 rounded-lg bg-primary text-primary-foreground font-heading text-xs hover:opacity-90 transition-opacity shrink-0"
+        >
+          Open Spread Interpreter
+        </Link>
+      </div>
+
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+
         {spreadGuides.map((spread) => (
           <Link
             key={spread.slug}
